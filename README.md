@@ -8,7 +8,7 @@
   - `packages:` contains version preferences for lower level dependencies
   - `specs:` contains E4S specs including versions
   
-**Packages *in E4S but not available in versioned form* are commented out in the `specs:` section.**
+*Packages in E4S but not available in versioned form are commented out*
 
 ### Spack
 
