@@ -1,6 +1,6 @@
 ## E4S October 2020 Release
 
-| Package         | Version   | SW Group  |
+| Package         | Version   | Group     |
 |-----------------|-----------|-----------|
 | adios           | 1.13.1    | data+viz  |
 | adios2          | 2.6.0     | data+viz  |
@@ -74,6 +74,7 @@
 | papyrus         | develop   | dev tools |
 | slate           | develop   | math      |
 |                 |           |           |
+
 ### Etc
 The file `spack-packages.txt` contains a list of Spack packages that are in E4S. Most of the packages contained therein are known to build using default variant concretizations on `x86_64` and `ppc64le`, and are built regularly as part of CI. Due to the plethora of variants available for each package, as well as the diversity of systems which may be targetted, we are not able to guarantee that all variants of these packages build on all target systems.
 
