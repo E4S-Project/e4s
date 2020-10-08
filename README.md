@@ -1,4 +1,4 @@
-### E4S October 2020 Release
+## E4S October 2020 Release
 
 | Package         | Version   | SW Group  |
 |-----------------|-----------|-----------|
