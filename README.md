@@ -1,5 +1,26 @@
 ## E4S October 2020 Release
 
+### Included Files
+
+* `spack-version.txt` -- contains the commit reference for the version of Spack used for this release
+* `spack-packages.txt` -- names of all Spack packages included in the release
+* `spack.yaml` -- Spack environment containing `packages:` and `specs:` section
+  - `packages:` section contains lower level dependencies pinned to specific versions
+  - `specs:` section contains the Spack packages pinned at specific versions
+  
+**Packages which *are in E4S but are only available in non-versioned form* are included in `specs:` but are commented out.**
+
+### Spack
+
+The October 2020 release of E4S is based on Spack version `0.15.4-1311-09d0623`
+* https://github.com/spack/spack
+* commit `09d0623be924ad72eb63342b733c14431208c323`
+* `Wed Oct 7 06:55:29 2020 -0700`
+
+### Packages
+
+The following table lists the packages contained in this release of E4S.
+
 | Package         | Version   | Group     |
 |-----------------|-----------|-----------|
 | adios           | 1.13.1    | data+viz  |
@@ -74,12 +95,3 @@
 | papyrus         | develop   | dev tools |
 | slate           | develop   | math      |
 |                 |           |           |
-
-### Etc
-The file `spack-packages.txt` contains a list of Spack packages that are in E4S. Most of the packages contained therein are known to build using default variant concretizations on `x86_64` and `ppc64le`, and are built regularly as part of CI. Due to the plethora of variants available for each package, as well as the diversity of systems which may be targetted, we are not able to guarantee that all variants of these packages build on all target systems.
-
-Most, if not all, of these packages are listed on the [E4S Product Info](https://e4s-project.github.io/Resources/ProductInfo.html) page. Use that page to find links to each product's website.
-
-Known build issues should be posted to the [Spack GitHub Issues](https://github.com/spack/spack/issues) page.
-
-<b>This package list is not final</b>. It is a work-in-progress and is intended to serve as a starting point for those looking to use Spack to build E4S packages.
