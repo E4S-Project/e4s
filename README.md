@@ -2,13 +2,13 @@
 
 ### Files
 
-* `spack-commit-ref.txt` -- contains the commit reference for the version of Spack used for this release
-* `spack-packages.txt` -- names of all Spack packages included in the release
-* `spack.yaml` -- Spack environment containing `packages:` and `specs:` section
-  - `packages:` section contains lower level dependencies pinned to specific versions
-  - `specs:` section contains the Spack packages pinned at specific versions
+* `spack-commit-ref.txt` -- Spack commit reference
+* `spack-packages.txt` -- Names of all Spack packages included in the release
+* `spack.yaml` -- Spack Environment containing `packages:` and `specs:` sections
+  - `packages:` contains version preferences for lower level dependencies
+  - `specs:` contains E4S specs including versions
   
-**Packages which *are in E4S but are only available in non-versioned form* are included in `specs:` but are commented out.**
+**Packages *in E4S but not available in versioned form* are commented out in the `specs:` section.**
 
 ### Spack
 
