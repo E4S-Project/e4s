@@ -1,8 +1,8 @@
 ## E4S October 2020 Release
 
-### Included Files
+### Files
 
-* `spack-version.txt` -- contains the commit reference for the version of Spack used for this release
+* `spack-commit-ref.txt` -- contains the commit reference for the version of Spack used for this release
 * `spack-packages.txt` -- names of all Spack packages included in the release
 * `spack.yaml` -- Spack environment containing `packages:` and `specs:` section
   - `packages:` section contains lower level dependencies pinned to specific versions
