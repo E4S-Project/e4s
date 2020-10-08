@@ -1,5 +1,7 @@
 ## E4S October 2020 Release
 
+This is a prototype of the October 2020 E4S release.
+
 ### Files
 
 * `spack-commit-ref.txt` -- Spack commit reference
