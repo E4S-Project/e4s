@@ -5,7 +5,6 @@ This is a prototype of the October 2020 E4S release.
 ### Files
 
 * `spack-commit-ref.txt` -- Spack commit reference
-* `spack-packages.txt` -- Names of all Spack packages included in the release
 * `spack.yaml` -- Spack Environment containing `packages:` and `specs:` sections
   - `packages:` contains version preferences for lower level dependencies
   - `specs:` contains E4S specs including versions
