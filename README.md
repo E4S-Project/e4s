@@ -1,4 +1,4 @@
-## E4S October 2020 Release
+## E4S October 2020 Release Prototype
 
 This is a prototype of the October 2020 E4S release.
 
