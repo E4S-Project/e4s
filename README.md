@@ -53,11 +53,13 @@ The following table lists the packages contained in this release of E4S.
 | magma           | 2.5.3     | math      |
 | mercury         | 1.0.1     | data+viz  |
 | mfem            | 4.1.0     | math      |
+| mpifileutils    | 0.10.1    | dev tools |
 | ninja           | 1.10.1    | dev tools |
 | omega-h         | 9.29.0    | math      |
 | openmpi         | 3.1.6     | pmr core  |
 | openpmd-api     | 0.12.0    |           |
 | papi            | 6.0.0.1   | dev tools |
+| papyrus         | 1.0.0     | dev tools |
 | parallel-netcdf | 1.12.1    | data+viz  |
 | pdt             | 3.25.1    |           |
 | petsc           | 3.14.0    | math      |
@@ -92,7 +94,5 @@ The following table lists the packages contained in this release of E4S.
 | zfp             | 0.5.5     | data+viz  |
 |                 |           |           |
 | ascent          | develop   | data+viz  |
-| mpifileutils    | develop   | dev tools |
-| papyrus         | develop   | dev tools |
 | slate           | develop   | math      |
 |                 |           |           |

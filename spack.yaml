@@ -137,11 +137,13 @@ spack:
   - magma@2.5.3 cuda_arch=70 ^cuda@10.2.89
   - mercury@1.0.1
   - mfem@4.1.0
+  - mpifileutils@0.10.1
   - ninja@1.10.1
   - omega-h@9.29.0
   - openmpi@3.1.6
   - openpmd-api@0.12.0
   - papi@6.0.0.1
+  - papyrus@1.0.0
   - parallel-netcdf@1.12.1
   - pdt@3.25.1
   - petsc@3.14.0
@@ -160,8 +162,8 @@ spack:
   - stc@0.8.3
   - strumpack@4.0.0
   - sundials@5.4.0
-  - superlu@5.2.1
   - superlu-dist@6.3.1
+  - superlu@5.2.1
   - swig@4.0.2
   - sz@2.1.10
   - tasmanian@7.3
@@ -176,6 +178,4 @@ spack:
   - zfp@0.5.5
 
   #- ascent@develop
-  #- mpifileutils@develop ~xattr
-  #- papyrus@develop
   #- slate@develop ^cuda@10.2.89
