@@ -13,7 +13,7 @@ This is the October 2020 release of E4S (20.10)
 
 ### Spack
 
-The October 2020 release of E4S is based on Spack version `0.15.4-1620-e1e0bbb4c`
+E4S 20.10 is based on Spack version `0.15.4-1620-e1e0bbb4c`
 * https://github.com/spack/spack
 * commit `e1e0bbb4cbe11a3f0d7e50466ffa86071ee653b7`
 * `Thu Oct 22 15:05:18 2020 -0400`
