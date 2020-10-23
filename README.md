@@ -38,7 +38,7 @@ The following table lists the packages contained in this release of E4S.
 | flecsi          | 1         | math      |
 | flit            | 2.1.0     | dev tools |
 | gasnet          | 2020.3.0  | pmr core  |
-| ginkgo          | 1.2.0     | math      |
+| ginkgo          | 1.3.0     | math      |
 | globalarrays    | 5.7       |           |
 | gotcha          | 1.0.3     | dev tools |
 | hdf5            | 1.10.6    | data+viz  |
@@ -50,7 +50,7 @@ The following table lists the packages contained in this release of E4S.
 | legion          | 20.03.0   | pmr core  |
 | libnrm          | 0.1.0     | pmr core  |
 | libquo          | 1.3.1     | dev tools |
-| magma           | 2.5.3     | math      |
+| magma           | 2.5.4     | math      |
 | mercury         | 1.0.1     | data+viz  |
 | mfem            | 4.1.0     | math      |
 | mpifileutils    | 0.10.1    | dev tools |
@@ -65,10 +65,10 @@ The following table lists the packages contained in this release of E4S.
 | petsc           | 3.14.0    | math      |
 | phist           | 1.9.1     | math      |
 | plasma          | 20.9.20   | math      |
-| precice         | 2.1.0     | math      |
+| precice         | 2.1.1     | math      |
 | pumi            | 2.2.2     | math      |
 | py-jupyterhub   | 1.0.0     | dev tools |
-| py-libensemble  | 0.7.0     | math      |
+| py-libensemble  | 0.7.1     | math      |
 | py-petsc4py     | 3.13.0    | math      |
 | qthreads        | 1.14      | pmr core  |
 | raja            | 0.12.1    | pmr core  |
@@ -76,14 +76,14 @@ The following table lists the packages contained in this release of E4S.
 | scr             | 2.0.0     | data+viz  |
 | slepc           | 3.14.0    | data+viz  |
 | stc             | 0.8.3     |           |
-| strumpack       | 4.0.0     | math      |
+| strumpack       | 5.0.0     | math      |
 | sundials        | 5.4.0     | math      |
 | superlu         | 5.2.1     | math      |
 | superlu-dist    | 6.3.1     | math      |
 | swig            | 4.0.2     | math      |
 | sz              | 2.1.10    | data+viz  |
 | tasmanian       | 7.3       | math      |
-| tau             | 2.29      | dev tools |
+| tau             | 2.29.1    | dev tools |
 | trilinos        | 13.0.0    | math      |
 | turbine         | 1.2.3     |           |
 | umap            | 2.1.0     | pmr core  |
