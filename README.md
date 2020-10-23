@@ -1,6 +1,6 @@
-## E4S October 2020 Release Prototype
+## E4S Release 20.10 
 
-This is a prototype of the October 2020 E4S release.
+This is the October 2020 release of E4S (20.10)
 
 ### Files
 
@@ -13,10 +13,10 @@ This is a prototype of the October 2020 E4S release.
 
 ### Spack
 
-The October 2020 release of E4S is based on Spack version `0.15.4-1311-09d0623`
+The October 2020 release of E4S is based on Spack version `0.15.4-1620-e1e0bbb4c`
 * https://github.com/spack/spack
-* commit `09d0623be924ad72eb63342b733c14431208c323`
-* `Wed Oct 7 06:55:29 2020 -0700`
+* commit `e1e0bbb4cbe11a3f0d7e50466ffa86071ee653b7`
+* `Thu Oct 22 15:05:18 2020 -0400`
 
 ### Packages
 
