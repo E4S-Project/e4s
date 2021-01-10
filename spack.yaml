@@ -121,6 +121,7 @@ spack:
   - faodel@1.1906.1
   - flecsi@1 +cinch
   - flit@2.1.0
+  - fortrilinos@2.0.0
   - gasnet@2020.3.0
   - ginkgo@1.3.0
   - globalarrays@5.7
@@ -164,7 +165,7 @@ spack:
   - sundials@5.4.0
   - superlu-dist@6.3.1
   - superlu@5.2.1
-  - swig@4.0.2
+  - swig@4.0.2-fortran
   - sz@2.1.10
   - tasmanian@7.3
   - tau@2.29.1

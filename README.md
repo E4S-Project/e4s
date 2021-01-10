@@ -37,6 +37,7 @@ The following table lists the packages contained in this release of E4S.
 | faodel          | 1.1906.1  | data+viz  |
 | flecsi          | 1         | math      |
 | flit            | 2.1.0     | dev tools |
+| fortrilinos     | 2.0.0     | math      |
 | gasnet          | 2020.3.0  | pmr core  |
 | ginkgo          | 1.3.0     | math      |
 | globalarrays    | 5.7       |           |
@@ -80,7 +81,7 @@ The following table lists the packages contained in this release of E4S.
 | sundials        | 5.4.0     | math      |
 | superlu         | 5.2.1     | math      |
 | superlu-dist    | 6.3.1     | math      |
-| swig            | 4.0.2     | math      |
+| swig            | 4.0.2-f   |           |
 | sz              | 2.1.10    | data+viz  |
 | tasmanian       | 7.3       | math      |
 | tau             | 2.29.1    | dev tools |
