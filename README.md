@@ -1,6 +1,6 @@
-## E4S Release 20.10 
+## E4S Release 21.02
 
-This is the October 2020 release of E4S (20.10)
+This is the February 2021 release candidate for E4S (21.02)
 
 ### Files
 
@@ -13,10 +13,10 @@ This is the October 2020 release of E4S (20.10)
 
 ### Spack
 
-E4S 20.10 is based on Spack version `0.15.4-1620-e1e0bbb4c`
+E4S 21.02 will be based on Spack version `0.16.1`
 * https://github.com/spack/spack
-* commit `e1e0bbb4cbe11a3f0d7e50466ffa86071ee653b7`
-* `Thu Oct 22 15:05:18 2020 -0400`
+* Tag `0.16.1`
+* Date TBD
 
 ### Packages
 
