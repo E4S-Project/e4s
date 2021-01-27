@@ -25,24 +25,24 @@ The following table lists the packages contained in this release of E4S.
 | Package         | Version   | Group     |
 |-----------------|-----------|-----------|
 | adios           | 1.13.1    | data+viz  |
-| adios2          | 2.6.0     | data+viz  |
+| adios2          | 2.7.0     | data+viz  |
 | aml             | 0.1.0     | pmr core  |
 | arborx          | 0.9-beta  | math      |
-| axom            | 0.3.3     |           |
+| axom            | 0.4.0     |           |
 | bolt            | 1.0       | dev tools |
 | caliper         | 2.4.0     | dev tools |
 | darshan-runtime | 3.2.1     | data+viz  |
 | darshan-util    | 3.2.1     | data+viz  |
 | dyninst         | 10.2.1    | dev tools |
 | faodel          | 1.1906.1  | data+viz  |
-| flecsi          | 1         | math      |
+| flecsi          | 1.4       | math      |
 | flit            | 2.1.0     | dev tools |
 | fortrilinos     | 2.0.0     | math      |
 | gasnet          | 2020.3.0  | pmr core  |
 | ginkgo          | 1.3.0     | math      |
-| globalarrays    | 5.7       |           |
+| globalarrays    | 5.8       |           |
 | gotcha          | 1.0.3     | dev tools |
-| hdf5            | 1.10.6    | data+viz  |
+| hdf5            | 1.10.7    | data+viz  |
 | hpctoolkit      | 2020.08.3 | dev tools |
 | hpx             | 1.5.1     |           |
 | hypre           | 2.20.0    | math      |
@@ -53,47 +53,47 @@ The following table lists the packages contained in this release of E4S.
 | libquo          | 1.3.1     | dev tools |
 | magma           | 2.5.4     | math      |
 | mercury         | 1.0.1     | data+viz  |
-| mfem            | 4.1.0     | math      |
+| mfem            | 4.2.0     | math      |
 | mpifileutils    | 0.10.1    | dev tools |
-| ninja           | 1.10.1    | dev tools |
-| omega-h         | 9.29.0    | math      |
-| openmpi         | 3.1.6     | pmr core  |
-| openpmd-api     | 0.12.0    |           |
+| ninja           | 1.10.2    | dev tools |
+| omega-h         | 9.32.5    | math      |
+| openmpi         | 4.0.5     | pmr core  |
+| openpmd-api     | 0.13.1    |           |
 | papi            | 6.0.0.1   | dev tools |
 | papyrus         | 1.0.0     | dev tools |
 | parallel-netcdf | 1.12.1    | data+viz  |
 | pdt             | 3.25.1    |           |
-| petsc           | 3.14.0    | math      |
-| phist           | 1.9.1     | math      |
+| petsc           | 3.14.1    | math      |
+| phist           | 1.9.3     | math      |
 | plasma          | 20.9.20   | math      |
-| precice         | 2.1.1     | math      |
-| pumi            | 2.2.2     | math      |
+| precice         | 2.2.0     | math      |
+| pumi            | 2.2.5     | math      |
 | py-jupyterhub   | 1.0.0     | dev tools |
 | py-libensemble  | 0.7.1     | math      |
-| py-petsc4py     | 3.13.0    | math      |
-| qthreads        | 1.14      | pmr core  |
-| raja            | 0.12.1    | pmr core  |
+| py-petsc4py     | 3.14.0    | math      |
+| qthreads        | 1.16      | pmr core  |
+| raja            | 0.13.0    | pmr core  |
 | rempi           | 1.1.0     | dev tools |
 | scr             | 2.0.0     | data+viz  |
-| slepc           | 3.14.0    | data+viz  |
+| slate           | 2020.10.0 | math      |
+| slepc           | 3.14.1    | data+viz  |
 | stc             | 0.8.3     |           |
-| strumpack       | 5.0.0     | math      |
-| sundials        | 5.4.0     | math      |
+| strumpack       | 5.1.1     | math      |
+| sundials        | 5.6.1     | math      |
 | superlu         | 5.2.1     | math      |
-| superlu-dist    | 6.3.1     | math      |
+| superlu-dist    | 6.4.0     | math      |
 | swig            | 4.0.2-f   |           |
-| sz              | 2.1.10    | data+viz  |
+| sz              | 2.1.11.1  | data+viz  |
 | tasmanian       | 7.3       | math      |
-| tau             | 2.29.1    | dev tools |
-| trilinos        | 13.0.0    | math      |
+| tau             | 2.30      | dev tools |
+| trilinos        | 13.0.1    | math      |
 | turbine         | 1.2.3     |           |
 | umap            | 2.1.0     | pmr core  |
-| umpire          | 4.0.1     | pmr core  |
-| unifyfs         | 0.9.0     | data+viz  |
-| upcxx           | 2020.3.0  | pmr core  |
+| umpire          | 4.1.2     | pmr core  |
+| unifyfs         | 0.9.1     | data+viz  |
+| upcxx           | 2020.10.0 | pmr core  |
 | veloc           | 1.4       | data+viz  |
 | zfp             | 0.5.5     | data+viz  |
 |                 |           |           |
 | ascent          | develop   | data+viz  |
-| slate           | develop   | math      |
 |                 |           |           |
