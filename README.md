@@ -20,8 +20,6 @@ E4S 21.02 will be based on Spack version `0.16.1`
 
 ### Packages
 
-The following table lists the packages contained in this release of E4S.
-
 | Package         | Version   | Group     | X86_64 | PPC64LE |
 |-----------------|-----------|-----------|--------|---------|
 | adios           | 1.13.1    | data+viz  |        |         |
