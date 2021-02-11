@@ -26,6 +26,7 @@ E4S 21.02 will be based on Spack version `0.16.1`
 | adios2          | 2.7.0     | data+viz  |        |         |
 | aml             | 0.1.0     | pmr core  |        |         |
 | arborx          | 0.9-beta  | math      |        |         |
+| ascent          | 0.6.0     | data+viz  |        |         |
 | axom            | 0.4.0     |           |        |         |
 | bolt            | 1.0       | dev tools |        |         |
 | caliper         | 2.4.0     | dev tools |        |         |
@@ -92,5 +93,4 @@ E4S 21.02 will be based on Spack version `0.16.1`
 | upcxx           | 2020.10.0 | pmr core  |        |         |
 | veloc           | 1.4       | data+viz  |        |         |
 | zfp             | 0.5.5     | data+viz  |        |         |
-| ascent          | 0.6.0     | data+viz  |        |         |
 |                 |           |           |        |         |
