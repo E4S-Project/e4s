@@ -112,6 +112,7 @@ spack:
   - adios2@2.6.0
   - aml@0.1.0
   - arborx@0.9-beta
+  - ascent@0.6.0
   - axom@0.3.3
   - bolt@1.0
   - caliper@2.4.0
@@ -159,6 +160,7 @@ spack:
   - raja@0.12.1
   - rempi@1.1.0
   - scr@2.0.0
+  - slate@2020.10.00 ^cuda@10.2.89
   - slepc@3.14.0
   - stc@0.8.3
   - strumpack@5.0.0
@@ -177,5 +179,3 @@ spack:
   - upcxx@2020.3.0
   - veloc@1.4
   - zfp@0.5.5
-  #- ascent@develop
-  #- slate@develop ^cuda@10.2.89
