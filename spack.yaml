@@ -109,25 +109,25 @@ spack:
 
   specs:
   - adios@1.13.1
-  - adios2@2.6.0
+  - adios2@2.7.1
   - aml@0.1.0
   - arborx@0.9-beta
   - ascent@0.6.0
-  - axom@0.3.3
-  - bolt@1.0
+  - axom@0.4.0
+  - bolt@2.0
   - caliper@2.4.0
   - darshan-runtime@3.2.1
   - darshan-util@3.2.1
   - dyninst@10.2.1
   - faodel@1.1906.1
-  - flecsi@1 +cinch
+  - flecsi@1.4 +cinch
   - flit@2.1.0
   - fortrilinos@2.0.0
   - gasnet@2020.3.0
   - ginkgo@1.3.0
-  - globalarrays@5.7
+  - globalarrays@5.8
   - gotcha@1.0.3
-  - hdf5@1.10.6
+  - hdf5@1.10.7
   - hpctoolkit@2020.08.03
   - hpx@1.5.1
   - hypre@2.20.0
@@ -137,45 +137,45 @@ spack:
   - libnrm@0.1.0
   - libquo@1.3.1
   - magma@2.5.4 cuda_arch=70 ^cuda@10.2.89
-  - mercury@1.0.1
-  - mfem@4.1.0
+  - mercury@2.0.0
+  - mfem@4.2.0
   - mpifileutils@0.10.1
-  - ninja@1.10.1
-  - omega-h@9.29.0
-  - openmpi@3.1.6
-  - openpmd-api@0.12.0
+  - ninja@1.10.2
+  - omega-h@9.32.5
+  - openmpi@4.0.5
+  - openpmd-api@0.13.2
   - papi@6.0.0.1
-  - papyrus@1.0.0
+  - papyrus@1.0.1
   - parallel-netcdf@1.12.1
   - pdt@3.25.1
-  - petsc@3.14.0
-  - phist@1.9.1
+  - petsc@3.14.4
+  - phist@1.9.3
   - plasma@20.9.20
-  - precice@2.1.1
-  - pumi@2.2.2
+  - precice@2.2.0
+  - pumi@2.2.5
   - py-jupyterhub@1.0.0
   - py-libensemble@0.7.1
-  - py-petsc4py@3.13.0
-  - qthreads@1.14
-  - raja@0.12.1
+  - py-petsc4py@3.14.1
+  - qthreads@1.16
+  - raja@0.13.0
   - rempi@1.1.0
   - scr@2.0.0
   - slate@2020.10.00 ^cuda@10.2.89
-  - slepc@3.14.0
+  - slepc@3.14.2
   - stc@0.8.3
-  - strumpack@5.0.0
-  - sundials@5.4.0
-  - superlu-dist@6.3.1
+  - strumpack@5.1.1
+  - sundials@5.7.0
+  - superlu-dist@6.4.0
   - superlu@5.2.1
   - swig@4.0.2-fortran
-  - sz@2.1.10
+  - sz@2.1.11.1
   - tasmanian@7.3
-  - tau@2.29.1
-  - trilinos@13.0.0
+  - tau@2.30.1
+  - trilinos@13.0.1
   - turbine@1.2.3
   - umap@2.1.0
-  - umpire@4.0.1
-  - unifyfs@0.9.0
-  - upcxx@2020.3.0
+  - umpire@4.1.2
+  - unifyfs@0.9.1
+  - upcxx@2020.10.0
   - veloc@1.4
   - zfp@0.5.5
