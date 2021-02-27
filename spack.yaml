@@ -151,7 +151,7 @@ spack:
   - magma@2.5.4 cuda_arch=70 ^cuda@10.2.89
   - mercury@2.0.0
   - mfem@4.2.0
-  - mpifileutils@develop~xattr # use @0.10.1
+  - mpifileutils@0.10.1
   - ninja@1.10.2
   - omega-h@9.32.5
   - openmpi@4.0.5
