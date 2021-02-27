@@ -1,22 +1,21 @@
 ## E4S Release 21.02
 
-This is the February 2021 release candidate for E4S (21.02)
+February 2021 release of E4S (21.02)
 
 ### Files
 
 * `spack-commit-ref.txt` -- Spack commit reference
-* `spack.yaml` -- Spack Environment containing `packages:` and `specs:` sections
-  - `packages:` contains version preferences for lower level dependencies
-  - `specs:` contains E4S specs including versions
+* `spack.yaml` -- Spack Environment containing `packages:` and `specs:`
+  - `packages:` version preferences for non-root specs
+  - `specs:` version-pinned root specs comprising this release of E4S
   
 *Packages in E4S but not available in versioned form are commented out*
 
 ### Spack
 
-E4S 21.02 will be based on Spack version `0.16.1`
+E4S 21.02 is based on Spack tag `e4s-21.02`
 * https://github.com/spack/spack
-* Tag `0.16.1`
-* Date TBD
+* Tag `e4s-21.02` (`@develop` as of `Fri Feb 26 14:57:40 2021 -0800`)
 
 ### Packages
 
@@ -25,11 +24,13 @@ E4S 21.02 will be based on Spack version `0.16.1`
 | adios           | 1.13.1    | data+viz  |        |         |
 | adios2          | 2.7.1     | data+viz  |        |         |
 | aml             | 0.1.0     | pmr core  |        |         |
+| amrex           | 21.02     |           |        |         |
 | arborx          | 0.9-beta  | math      |        |         |
+| argobots        | 1.0       |           |        |         |
 | ascent          | 0.6.0     | data+viz  |        |         |
 | axom            | 0.4.0     |           |        |         |
 | bolt            | 2.0       | dev tools |        |         |
-| caliper         | 2.4.0     | dev tools |        |         |
+| caliper         | 2.5.0     | dev tools |        |         |
 | darshan-runtime | 3.2.1     | data+viz  |        |         |
 | darshan-util    | 3.2.1     | data+viz  |        |         |
 | dyninst         | 10.2.1    | dev tools |        |         |
@@ -43,7 +44,7 @@ E4S 21.02 will be based on Spack version `0.16.1`
 | gotcha          | 1.0.3     | dev tools |        |         |
 | hdf5            | 1.10.7    | data+viz  |        |         |
 | hpctoolkit      | 2020.08.3 | dev tools |        |         |
-| hpx             | 1.5.1     |           |        |         |
+| hpx             | 1.6.0     |           |        |         |
 | hypre           | 2.20.0    | math      |        |         |
 | kokkos          | 3.2.00    | pmr core  |        |         |
 | kokkos-kernels  | 3.2.00    | pmr core  |        |         |
@@ -94,3 +95,4 @@ E4S 21.02 will be based on Spack version `0.16.1`
 | veloc           | 1.4       | data+viz  |        |         |
 | zfp             | 0.5.5     | data+viz  |        |         |
 |                 |           |           |        |         |
+| llvm-doe        | doe       | dev tools |        |         |
