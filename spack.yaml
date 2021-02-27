@@ -179,7 +179,7 @@ spack:
   - sundials@5.7.0
   - superlu@5.2.1
   - superlu-dist@6.4.0
-  - swig@4.0.2 # 4.0.2-fortran is the ECP funded SWIG effort
+  - swig@4.0.2-fortran
   - sz@2.1.11.1
   - tasmanian@7.3
   - tau@2.30.1
