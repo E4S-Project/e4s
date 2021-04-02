@@ -167,6 +167,9 @@ spack:
   - py-jupyterhub@1.0.0
   - py-libensemble@0.7.1
   - py-petsc4py@3.14.1
+  - py-warpx@21.04 ^warpx dims=3
+  - py-warpx@21.04 ^warpx dims=2
+  - py-warpx@21.04 ^warpx dims=rz
   - qthreads@1.16 scheduler=distrib
   - raja@0.13.0
   - rempi@1.1.0
