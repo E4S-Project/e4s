@@ -30,7 +30,9 @@ E4S 21.02 is based on Spack tag `e4s-21.02`
 | ascent          | 0.6.0     | data+viz  |
 | axom            | 0.4.0     |           |
 | bolt            | 2.0       | dev tools |
+| cabana          |           |           |
 | caliper         | 2.5.0     | dev tools |
+| conduit         |           |           |
 | darshan-runtime | 3.2.1     | data+viz  |
 | darshan-util    | 3.2.1     | data+viz  |
 | dyninst         | 10.2.1    | dev tools |
@@ -39,8 +41,10 @@ E4S 21.02 is based on Spack tag `e4s-21.02`
 | flit            | 2.1.0     | dev tools |
 | fortrilinos     | 2.0.0     | math      |
 | gasnet          | 2020.3.0  | pmr core  |
+| geopm           |           |           |
 | ginkgo          | 1.3.0     | math      |
 | globalarrays    | 5.8       |           |
+| gmp             |           |           |
 | gotcha          | 1.0.3     | dev tools |
 | hdf5            | 1.10.7    | data+viz  |
 | hpctoolkit      | 2020.08.3 | dev tools |
@@ -51,8 +55,11 @@ E4S 21.02 is based on Spack tag `e4s-21.02`
 | legion          | 20.03.0   | pmr core  |
 | libnrm          | 0.1.0     | pmr core  |
 | libquo          | 1.3.1     | dev tools |
+| libunwind       |           |           |
+| llvm-doe        | doe       | dev tools |
 | magma           | 2.5.4     | math      |
 | mercury         | 2.0.0     | data+viz  |
+| metall          |           |           |
 | mfem            | 4.2.0     | math      |
 | mpifileutils    | 0.10.1    | dev tools |
 | ninja           | 1.10.2    | dev tools |
@@ -71,6 +78,7 @@ E4S 21.02 is based on Spack tag `e4s-21.02`
 | py-jupyterhub   | 1.0.0     | dev tools |
 | py-libensemble  | 0.7.1     | math      |
 | py-petsc4py     | 3.14.1    | math      |
+| py-warpx        |           |           |
 | qthreads        | 1.16      | pmr core  |
 | raja            | 0.13.0    | pmr core  |
 | rempi           | 1.1.0     | dev tools |
@@ -92,7 +100,6 @@ E4S 21.02 is based on Spack tag `e4s-21.02`
 | umpire          | 4.1.2     | pmr core  |
 | unifyfs         | 0.9.1     | data+viz  |
 | upcxx           | 2020.10.0 | pmr core  |
+| variorum        |           |           |
 | veloc           | 1.4       | data+viz  |
 | zfp             | 0.5.5     | data+viz  |
-|                 |           |           |
-| llvm-doe        | doe       | dev tools |
