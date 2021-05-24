@@ -168,20 +168,38 @@ spack:
   definitions:
 
   - cuda_specs:
+    - amrex@21.05 +cuda cuda_arch=70
+    - axom@0.5.0 +cuda cuda_arch=70 ^umpire~shared
+    - caliper@2.5.0 +cuda cuda_arch=70
+    - chai@2.3.0 +cuda ~benchmarks ~tests cuda_arch=70 ^umpire~shared
+    - ginkgo@1.3.0 +cuda cuda_arch=70
+    - hpx@1.6.0 +cuda cuda_arch=70
     - kokkos@3.4.00 +cuda +wrapper cuda_arch=70
+    - kokkos-kernels@3.2.00 +cuda cuda_arch=70 ^kokkos +cuda +wrapper cuda_arch=70
     - magma@2.5.4 cuda_arch=70
+    - raja@0.13.0 +cuda cuda_arch=70
     - slate@2021.05.02 +cuda cuda_arch=70
+    - strumpack@5.1.1 +cuda ~slate cuda_arch=70
+    - sundials@5.7.0 +cuda cuda_arch=70
+    - superlu-dist@6.4.0 +cuda cuda_arch=70
+    - tasmanian@7.5 +cuda cuda_arch=70
+    - umpire@4.1.2 +cuda ~shared cuda_arch=70
+    - zfp +cuda cuda_arch=70
+    #- ascent@0.7.1 +cuda ~shared cuda_arch=70
+    #- hypre@2.20.0 +cuda cuda_arch=70
+    #- mfem@4.2.0 +cuda cuda_arch=70
 
   - rocm_specs:
     - kokkos@3.4.00 +rocm amdgpu_target=gfx906
     - strumpack@5.1.1 +rocm ~slate amdgpu_target=gfx906
-    #- amrex +rocm amdgpu_target=gfx906
-    #- chai +rocm ~benchmarks amdgpu_target=gfx906
-    #- raja +rocm ~openmp amdgpu_target=gfx906 # blt 0.3.6 issue with rocm
-    #- slate +rocm amdgpu_target=gfx906
-    #- sundials +rocm amdgpu_target=gfx906
-    #- tasmanian +rocm amdgpu_target=gfx906
-    #- umpire+rocm amdgpu_target=gfx906 # blt 0.3.6 issue with rocm
+    #- amrex@0.5.0 +rocm amdgpu_target=gfx906
+    #- chai@2.3.0 +rocm ~benchmarks amdgpu_target=gfx906
+    #- ginkgo@1.3.0 +rocm amdgpu_target=gfx906 # needs hip<4.1
+    #- raja@0.13.0 +rocm ~openmp amdgpu_target=gfx906 # blt 0.3.6 issue with rocm
+    #- slate@2021.05.02 +rocm amdgpu_target=gfx906
+    #- sundials@5.7.0 +rocm amdgpu_target=gfx906
+    #- tasmanian@7.5 +rocm amdgpu_target=gfx906
+    #- umpire@4.1.2 +rocm amdgpu_target=gfx906 # blt 0.3.6 issue with rocm
 
   - default_specs:
     - adios@1.13.1
