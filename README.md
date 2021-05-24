@@ -1,19 +1,17 @@
 ## E4S Release 21.05
 
-May 2021 release of E4S (21.05)
+May 2021 release of E4S
 
 ### Files
 
 * `spack-commit-ref.txt` -- Spack commit reference
-* `spack.yaml` -- Spack Environment containing `packages:` and `specs:`
-  - `packages:` version preferences for non-root specs
-  - `specs:` version-pinned root specs comprising this release of E4S
+* `spack.yaml` -- Model Spack environment
   
 *Packages in E4S but not available in versioned form are commented out*
 
+
 ### Spack
 
-E4S 21.05 uses Spack tag `e4s-21.05`
 * https://github.com/spack/spack
 * Tag `e4s-21.05` (`@develop` as of `Fri May 21 14:51:46 2021 -0400`)
 
