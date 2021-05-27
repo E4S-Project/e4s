@@ -207,6 +207,7 @@ spack:
     - aml@0.1.0
     - amrex@21.05
     - arborx@1.0
+    - archer@2.0.0
     - argobots@1.1
     - ascent@0.7.1
     - axom@0.5.0
@@ -228,6 +229,7 @@ spack:
     - gmp@6.2.1
     - gotcha@1.0.3
     - hdf5@1.10.7
+    - heffte@2.0.0 +fftw
     - hpctoolkit@2021.03.01
     - hpx@1.6.0
     - hypre@2.20.0

@@ -12,8 +12,9 @@ May 2021 release of E4S
 
 ### Spack
 
+E4S 21.05 uses Spack branch `e4s-21.05`
 * https://github.com/spack/spack
-* Tag `e4s-21.05` (`@develop` as of `Fri May 21 14:51:46 2021 -0400`)
+* Branch `e4s-21.05`
 
 ### Packages
 
@@ -24,6 +25,7 @@ May 2021 release of E4S
 | aml             | 0.1.0     | pmr core  |
 | amrex           | 21.05     |           |
 | arborx          | 1.0       | math      |
+| archer          | 2.0.0     |           |
 | argobots        | 1.1       |           |
 | ascent          | 0.7.1     | data+viz  |
 | axom            | 0.5.0     |           |
@@ -45,6 +47,7 @@ May 2021 release of E4S
 | gmp             | 6.2.1     |           |
 | gotcha          | 1.0.3     | dev tools |
 | hdf5            | 1.10.7    | data+viz  |
+| heffte          | 2.0.0     |           |
 | hpctoolkit      | 2021.03.1 | dev tools |
 | hpx             | 1.6.0     |           |
 | hypre           | 2.20.0    | math      |
