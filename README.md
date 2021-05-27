@@ -4,7 +4,6 @@ May 2021 release of E4S
 
 ### Files
 
-* `spack-commit-ref.txt` -- Spack commit reference
 * `spack.yaml` -- Model Spack environment
   
 *Packages in E4S but not available in versioned form are commented out*
