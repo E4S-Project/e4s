@@ -6,14 +6,21 @@ May 2021 release of E4S
 
 * `spack.yaml` -- Model Spack environment
   
-*Packages in E4S but not available in versioned form are commented out*
+*Specs in the Model Spack Environment are commented out if (a) there are outstanding build issues or (b) if they track branches and are not available in versioned form*
 
 
-### Spack
+### Spack Version
 
 E4S 21.05 uses Spack branch `e4s-21.05`
 * https://github.com/spack/spack
 * Branch `e4s-21.05`
+
+
+### Facility Adaptation Examples
+
+* [NERSC Cori - Intel 19.1.3.304](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/intel-spack.yaml)
+* [NERSC Cori - GCC 9.3.0](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/gcc-spack.yaml)
+* [Frank Jupiter - GCC 9.3.0](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/Frank-Jupiter/spack.yaml)
 
 ### Packages
 
