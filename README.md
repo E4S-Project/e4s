@@ -29,8 +29,8 @@ $> spack buildcache keys -it
 
 ### Facility Adaptation Examples
 
-* [NERSC Cori - Intel 19.1.3.304](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/intel-spack.yaml)
-* [NERSC Cori - GCC 9.3.0](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/gcc-spack.yaml)
+* [NERSC Cori - Intel 19.1.3.304](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/intel-spack.yaml) ([Instructions](https://github.com/spack/spack-configs/tree/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori))
+* [NERSC Cori - GCC 9.3.0](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/gcc-spack.yaml) ([Instructions](https://github.com/spack/spack-configs/tree/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori))
 * [Frank Jupiter - GCC 9.3.0](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/Frank-Jupiter/spack.yaml)
 
 ### Packages
