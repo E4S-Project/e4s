@@ -16,6 +16,17 @@ E4S 21.05 uses Spack branch `e4s-21.05`
 * Branch `e4s-21.05`
 
 
+### Spack Build Cache
+
+* https://cache.e4s.io
+* https://cache.e4s.io/21.05
+
+```
+$> spack mirror add E4S https://cache.e4s.io/21.05
+$> spack buildcache keys -it
+```
+
+
 ### Facility Adaptation Examples
 
 * [NERSC Cori - Intel 19.1.3.304](https://github.com/spack/spack-configs/blob/main/UOREGON/E4S-21.05-Facility-Examples/NERSC-Cori/intel-spack.yaml)
