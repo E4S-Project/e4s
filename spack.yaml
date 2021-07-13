@@ -222,7 +222,7 @@ spack:
     - faodel@1.1906.1
     - flecsi@1.4 +cinch
     - flit@2.1.0
-    - fortrilinos@2.0.0 ^trilinos +nox +superlu-dist +stratimikos
+    - fortrilinos@2.0.0
     - gasnet@2021.3.0
     - ginkgo@1.3.0
     - globalarrays@5.8
@@ -282,8 +282,7 @@ spack:
     - sz@2.1.11.1
     - tasmanian@7.5
     - tau@2.30.1
-    - trilinos@13.0.1
-    - trilinos@13.0.1 +nox +superlu-dist
+    - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +teuchos +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long
     - turbine@1.3.0
     - umap@2.1.0
     - umpire@4.1.2
