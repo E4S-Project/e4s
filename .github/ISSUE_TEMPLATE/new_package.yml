@@ -46,3 +46,11 @@ body:
         - Yes
         - No
         - Unsure     
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: E4S Community Policy
+      description: By submitting this issue, you agree to follow our [E4S Community Policy](https://e4s-project.github.io/policies.html)
+      options:
+        - label: I agree to follow the E4S Community Policy
+          required: true
