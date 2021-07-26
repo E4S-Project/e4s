@@ -1,0 +1,56 @@
+name: New Package Request
+description: Request Software Package to be part of E4S
+title: "[software]: "
+labels: [software]
+assignees:
+  - wspear
+  - eugeneswalker
+  - sameershende
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name of Software
+      description: Please specify name of software and url of project
+    validations:
+      required: false
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: Description
+    attributes:
+      label: Request Description
+      placeholder: "Description of your request"
+    validations:
+      required: true
+  - type: dropdown
+    id: spack
+    attributes:
+      label: Is there a Spack Package 
+      multiple: false
+      options:
+        - Yes
+        - No
+  - type: dropdown
+    id: ecp
+    attributes:
+      label: Is your project funded by ECP  
+      multiple: false
+      options:
+        - Yes
+        - No
+        - Unsure     
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: E4S Community Policy
+      description: By submitting this issue, you agree to follow our [E4S Community Policy](https://e4s-project.github.io/policies.html)
+      options:
+        - label: I agree to follow the E4S Community Policy
+          required: true
