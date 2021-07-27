@@ -35,17 +35,17 @@ body:
       label: Is there a Spack Package 
       multiple: false
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
   - type: dropdown
     id: ecp
     attributes:
       label: Is your project funded by ECP  
       multiple: false
       options:
-        - Yes
-        - No
-        - Unsure     
+        - "Yes"
+        - "No"
+        - "Unsure"     
   - type: checkboxes
     id: terms
     attributes:
