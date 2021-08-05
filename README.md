@@ -1,3 +1,5 @@
+![E4S Logo](logos/E4S-dark-green.png)
+
 # E4S
 
 The Extreme-scale Scientific Software Stack (E4S) is a community effort to provide open source 
