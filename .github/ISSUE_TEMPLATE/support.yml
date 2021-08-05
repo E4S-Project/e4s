@@ -1,0 +1,63 @@
+name: E4S Support
+description: General Support Request for E4S 
+title: "[support]: "
+labels: [support]
+assignees:
+  - wspear
+  - eugeneswalker
+  - sameershende
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name of Software
+      description: Please specify name of software and url of project
+    validations:
+      required: true
+      
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: true
+      
+  - type: input
+    id: hpc
+    attributes:
+      label: HPC System
+      description: Name of HPC Site
+      placeholder: ex. Summit
+    validations:
+      required: true
+      
+  - type: textarea
+    id: Description
+    attributes:
+      label: Request Description
+      placeholder: "Description of your request"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduce Bug
+      description: "Please describe how to reproduce this bug."
+      value: |
+        1.
+        2.
+        3.
+        ...
+      render: bash
+    validations:
+      required: false
