@@ -1,4 +1,6 @@
-# <img src="https://github.com/E4S-Project/e4s/logos/E4S-dark-green.png" width="100" alt="E4S"> E4S
+<img src="https://github.com/E4S-Project/e4s/blob/master/logos/E4S-dark-green.png" width="200" alt="E4S"> 
+
+# E4S
 
 The Extreme-scale Scientific Software Stack (E4S) is a community effort to provide open source 
 software packages for developing, deploying and running scientific applications on high-performance
