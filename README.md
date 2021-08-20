@@ -1,5 +1,7 @@
 <img src="https://github.com/E4S-Project/e4s/blob/master/logos/E4S-dark-green.png" width="200" alt="E4S"> 
 
+![GitHub](https://img.shields.io/github/license/E4S-Project/e4s)
+
 # E4S
 
 The [Extreme-scale Scientific Software Stack (E4S)](https://e4s-project.github.io/) is a community effort to provide open source 
