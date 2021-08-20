@@ -1,0 +1,27 @@
+name: Check URLs
+
+on: [push, pull_request]
+
+jobs:
+  urlcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: URLs-checker
+      uses: urlstechie/urlchecker-action@0.2.3
+      with:
+
+        # clone devel
+        branch: main
+        # A comma-separated list of file types to cover in the URL checks
+        file_types: .md
+
+        # Choose whether to include file with no URLs in the prints.
+        print_all: false
+
+        # timeout in 10 seconds if url is not reached
+        timeout: 10
+
+        # How many times to retry a failed request (defaults to 1)
+        retry_count: 5
