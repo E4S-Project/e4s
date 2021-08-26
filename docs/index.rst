@@ -9,12 +9,22 @@
 Welcome to E4S's documentation!
 ===============================
 
+
+| |docs| |license|
+
+.. |docs| image:: https://readthedocs.org/projects/e4s/badge/?version=latest
+    :alt: Documentation Status
+    :target: https://e4s.readthedocs.io/en/latest/?badge=latest
+
+.. |license| image:: https://img.shields.io/github/license/E4S-Project/e4s.svg
+
 .. toctree::
    :maxdepth: 2
 
    introduction.rst
    policy.rst
    spack.rst
+   contributing.rst
 
 
 
