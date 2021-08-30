@@ -177,6 +177,21 @@ spack:
       version:
       - 1.5.0
 
+  compilers:
+  - compiler:
+      spec: gcc@9.3.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
   definitions:
 
   - cuda_specs:
