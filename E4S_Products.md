@@ -1,7 +1,5 @@
 # E4S Product Dictionary
 
-## E4S Core Packages 
-
 |  Product                                              |   Latest Release        |  Release Date |  Spack Badge | Spack Package | Maintainer | 
 | ----------------------------------------------------- | ----------------------- | --------------|  ----------- | ------------- | ---------- |
 | [adios](https://github.com/ornladios/ADIOS)           | ![release](https://img.shields.io/github/v/release/ornladios/ADIOS) | ![release-date](https://img.shields.io/github/release-date/ornladios/ADIOS) | ![spack](https://img.shields.io/spack/v/adios) | [adios](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/adios) | 
@@ -73,11 +71,6 @@
 | [visit](https://github.com/visit-dav/visit) | ![release](https://img.shields.io/github/v/release/visit-dav/visit) | ![release-date](https://img.shields.io/github/release-date/visit-dav/visit) | ![spack](https://img.shields.io/spack/v/visit) | [visit](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/visit) | [cyrush](https://github.com/cyrush), [brugger1](https://github.com/brugger1)
 | [vtk-m](https://gitlab.kitware.com/vtk/vtk-m) | | |![spack](https://img.shields.io/spack/v/vtk-m) | [vtk-m](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/vtk-m)
 | [zfp](https://github.com/LLNL/zfp/) | ![release](https://img.shields.io/github/v/release/LLNL/zfp) | ![release-date](https://img.shields.io/github/release-date/LLNL/zfp) | ![spack](https://img.shields.io/spack/v/zfp) | [zfp](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/zfp)
-
-## E4S Auxilary Packages
-
-|  Product                                              |   Latest Release        |  Release Date |  Spack Badge | Spack Package | Maintainer |
-| ----------------------------------------------------- | ----------------------- | --------------|  ----------- | ------------- | -----------|
 | [Alquimia](https://github.com/LBL-EESA/alquimia-dev) | ![release](https://img.shields.io/github/v/release/LBL-EESA/alquimia-dev) | ![release-date](https://img.shields.io/github/release-date/LBL-EESA/alquimia-dev) | ![spack](https://img.shields.io/spack/v/alquimia) | [alquimia](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/alquimia) | [balay](https://github.com/balay)
 | [amdblis](https://github.com/amd/blis) | ![release](https://img.shields.io/github/v/release/amd/blis) | ![release-date](https://img.shields.io/github/release-date/amd/blis) | ![spack](https://img.shields.io/spack/v/amdblis) | [amdblis](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/amdblis)
 | [amrex](https://github.com/AMReX-Codes/amrex) | ![release](https://img.shields.io/github/v/release/AMReX-Codes/amrex) | ![release-date](https://img.shields.io/github/release-date/AMReX-Codes/amrex) | ![spack](https://img.shields.io/spack/v/amrex) | [amrex](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/amrex)
@@ -136,4 +129,3 @@
 | [turbine](https://github.com/swift-lang/swift-t) | ![release](https://img.shields.io/github/v/release/swift-lang/swift-t) | ![release-date](https://img.shields.io/github/release-date/swift-lang/swift-t) | ![spack](https://img.shields.io/spack/v/turbine) | [turbine](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/turbine)
 | [variorum](https://github.com/llnl/variorum) | ![release](https://img.shields.io/github/v/release/llnl/variorum) | ![release-date](https://img.shields.io/github/release-date/llnl/variorum) | ![spack](https://img.shields.io/spack/v/variorum) | [variorum](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/variorum)
 | [Warpx](https://github.com/ECP-WarpX/WarpX) | ![release](https://img.shields.io/github/v/release/ECP-WarpX/WarpX) | ![release-date](https://img.shields.io/github/release-date/ECP-WarpX/WarpX) | ![spack](https://img.shields.io/spack/v/warpx), ![spack](https://img.shields.io/spack/v/py-warpx) | [warpx](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/warpx),[py-warpx](https://github.com/spack/spack/tree/develop/var/spack/repos/builtin/packages/py-warpx) | [ax3l](https://github.com/ax3l)
-
