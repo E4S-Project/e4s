@@ -15,7 +15,7 @@ jobs:
         # clone devel
         branch: main
         # A comma-separated list of file types to cover in the URL checks
-        file_types: .md
+        file_types: .md,.rst
 
         # Choose whether to include file with no URLs in the prints.
         print_all: false
