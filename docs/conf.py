@@ -22,7 +22,7 @@ copyright = '2021, Mike Heroux, Sameer Shende'
 author = 'Mike Heroux, Sameer Shende'
 
 # The full version, including alpha/beta/rc tags
-release = '21.05'
+release = '21.08'
 
 
 # -- General configuration ---------------------------------------------------
