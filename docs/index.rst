@@ -22,9 +22,11 @@ Welcome to E4S's documentation!
    :maxdepth: 2
 
    introduction.rst
+   E4S_Products.md
    policy.rst
    spack.rst
    contributing.rst
+
 
 
 
