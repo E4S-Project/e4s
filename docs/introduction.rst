@@ -53,15 +53,16 @@ References
 .. csv-table::
     :header: "Conference", "Date", "Link"
     :widths:  60, 30, 30
+    :class: tight-table
 
      "Getting Started with E4S for Industry and Agencies Workshop", "June, 2021", "`E4S-IAW21 <https://www.exascaleproject.org/event/e4sforindustry/>`_"
      "E4S: Extreme-Scale Scientific Software Stack", "June, 2021", "`BSSW <https://bssw.io/blog_posts/e4s-extreme-scale-scientific-software-stack>`_"
      "E4S Tutorial at ECP Annual Meeting", "April, 2021", "`Video <https://youtu.be/vGKgAXtSFu0>`_"
-     "E4S BoF at ECP Annual Meeting", "April, 2021", "`Video <https://youtu.be/5UbIUxYKb6o>`_"
-     "State of E4S - July 2020 Update", "July 2020", "`PPTX <https://e4s-project.github.io/E4S_July20.pptx>`_"
-     "ECP Software Technology Capability Assessment Report (CAR) Version 1.5", "Feb, 2019", "`PDF <https://www.exascaleproject.org/wp-content/uploads/2019/02/ECP-ST-CAR.pdf>`_"
+     "E4S BoF at ECP Annual Meeting", "April, 2021", "`Video <https://youtu.be/5UbIUxYKb6o>`__"
+     "State of E4S - July 2020 Update", "July 2020", "`PPTX <https://e4s-project.github.io/E4S_July20.pptx>`__"
+     "ECP Software Technology Capability Assessment Report (CAR) Version 1.5", "Feb, 2019", "`PDF <https://www.exascaleproject.org/wp-content/uploads/2019/02/ECP-ST-CAR.pdf>`__"
      "DOE’S E4S Software Stack Takes An Extreme Step Towards Exascale", "Jan, 2019", "`Article <https://www.nextplatform.com/2019/01/22/does-e4s-software-stack-takes-an-extreme-step-towards-exascale/>`_"
-     "Extreme-Scale Scientific Software Stack (E4S) Release 0.1", "Nov, 2018", "`Video <https://www.youtube.com/watch?v=nfCXwX_0EBc>`_"
+     "Extreme-Scale Scientific Software Stack (E4S) Release 0.1", "Nov, 2018", "`Video <https://www.youtube.com/watch?v=nfCXwX_0EBc>`__"
 
 
 
