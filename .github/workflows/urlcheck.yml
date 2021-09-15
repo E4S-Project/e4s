@@ -25,3 +25,7 @@ jobs:
 
         # How many times to retry a failed request (defaults to 1)
         retry_count: 5
+
+        exclude_patterns: https://cache.e4s.io/
+
+        exclude_urls: https://img.shields.io/github/v/release/STEllAR-GROUP/hpx/,https://img.shields.io/github/release-date/STEllAR-GROUP/hpx/
