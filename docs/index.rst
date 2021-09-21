@@ -23,10 +23,10 @@ Welcome to E4S's documentation!
 
    introduction.rst
    E4S_Products.md
+   facility_e4s.md
    policy.rst
    spack.rst
    contributing.rst
-
 
 
 
