@@ -1,6 +1,6 @@
-# E4S Release 21.08
+# E4S Release 21.11
 
-August 2021 release of E4S
+November 2021 release of E4S
 
 ## Files
 
@@ -11,25 +11,25 @@ August 2021 release of E4S
 
 ## Spack Version
 
-E4S 21.08 uses Spack branch `e4s-21.08`
+E4S 21.11 uses Spack branch `e4s-21.11`
 * https://github.com/spack/spack
-* Branch [e4s-21.08](https://github.com/spack/spack/tree/e4s-21.08)
+* Branch [e4s-21.11](https://github.com/spack/spack/tree/e4s-21.11)
 
 
 ## Spack Build Cache
 
 * https://cache.e4s.io
-* https://cache.e4s.io/21.08
+* https://cache.e4s.io/21.11
 
 ```
-$> spack mirror add E4S https://cache.e4s.io/21.08
+$> spack mirror add E4S https://cache.e4s.io/21.11
 $> spack buildcache keys -it
 ```
 
 ## Model Environment
 
 * Built and tested on Ubuntu 20.04 for x86_64, using GCC 9.3.0
-* Docker container image: `ecpe4s/ubuntu20.04-runner-x86_64:2021-07-01`
+* Docker container image: `ecpe4s/ubuntu20.04-runner-x86_64:2021-11-01`
 * Output of `spack find`
 ```
 ==> 422 installed packages
