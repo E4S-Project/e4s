@@ -127,6 +127,7 @@ spack:
   - default_specs:
     - adios
     - adios2
+    - alquimia
     - aml
     - amrex
     - arborx
@@ -134,8 +135,10 @@ spack:
     - ascent
     - axom
     - bolt
+    - butterflypack
     - cabana
     - caliper
+    - catalyst
     - chai ~benchmarks ~tests
     - charliecloud
     - conduit
@@ -190,6 +193,7 @@ spack:
     - plasma
     - precice
     - pumi
+    - py-cinemasci
     - py-jupyterhub
     - py-libensemble
     - py-petsc4py

@@ -18,7 +18,6 @@ E4S 21.11 uses Spack branch `e4s-21.11`
 
 ## Spack Build Cache
 
-* https://cache.e4s.io
 * https://cache.e4s.io/21.11
 
 ```
