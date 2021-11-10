@@ -5,7 +5,7 @@ November 2021 release of E4S
 ## Files
 
 * `spack-x86_64.yaml` -- Model Spack environment, for x86_64
-* `spack-ppc64le.yaml` -- Model Spack environment for ppc64le
+* `spack-ppc64le.yaml` -- Model Spack environment, for ppc64le
   
 *Specs in the Model Spack Environment are commented out if (a) there are outstanding build issues or (b) if their Spack package does not offer a versioned installation option*
 
@@ -33,7 +33,7 @@ $> spack buildcache keys -it
 * Docker container images:
   * `ecpe4s/ubuntu20.04-runner-x86_64:2021-11-01`
   * `ecpe4s/ubuntu18.04-runner-ppc64le:2021-11-01`
-* Output of `spack find` for x86_64
+* Output of `spack find` for x86_64 model environment
 ```
 # spack find
 ==> 481 installed packages
