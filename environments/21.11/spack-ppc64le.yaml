@@ -1,0 +1,207 @@
+spack:
+
+  view: false
+  concretization: separately
+
+  packages:
+    all:
+      compiler:
+      - gcc@7.5.0
+      providers:
+        blas:
+        - openblas
+        mpi:
+        - mpich
+      target:
+      - ppc64le
+      variants: +mpi
+    cuda:
+      version:
+      - 11.0.3
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls +plugins
+      version:
+      - 2.36.1
+    boost:
+      variants: visibility=global
+    doxygen:
+      version:
+      - 1.8.20
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    fftw:
+      variants: +openmp
+    hdf5:
+      variants: +fortran +hl +shared api=v18
+      version:
+      - 1.12.1
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    mesa:
+      variants: ~llvm
+    mesa18:
+      variants: ~llvm
+    mpich:
+      variants: ~wrapperrpath
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+
+  definitions:
+
+  - compilers:
+    - gcc@11.2.0
+
+  - cuda_specs:
+    - amrex +cuda cuda_arch=70
+    - caliper +cuda cuda_arch=70
+    - chai ~benchmarks ~tests +cuda cuda_arch=70 ^umpire ~shared
+    - ginkgo +cuda cuda_arch=70
+    - heffte +cuda cuda_arch=70
+    - hpx +cuda cuda_arch=70
+    - hypre +cuda cuda_arch=70
+    - kokkos +wrapper +cuda cuda_arch=70
+    - kokkos-kernels +cuda cuda_arch=70 ^kokkos +wrapper +cuda cuda_arch=70
+    - magma +cuda cuda_arch=70
+    - mfem +cuda cuda_arch=70
+    - parsec +cuda cuda_arch=70
+    - petsc +cuda cuda_arch=70
+    - raja +cuda cuda_arch=70
+    - slate +cuda cuda_arch=70
+    - slepc +cuda cuda_arch=70
+    - strumpack ~slate +cuda cuda_arch=70
+    - sundials +cuda cuda_arch=70
+    - superlu-dist +cuda cuda_arch=70
+    - tasmanian +cuda cuda_arch=70
+    - trilinos@13.2.0 +cuda cuda_arch=70
+    - umpire ~shared +cuda cuda_arch=70
+    - vtk-m +cuda cuda_arch=70
+    - zfp +cuda cuda_arch=70
+   #- ascent ~shared +cuda cuda_arch=70
+   #- axom +cuda cuda_arch=70 ^umpire ~shared
+   #- dealii +cuda cuda_arch=70 # gmsh
+   #- flecsi@1.4.2 +cuda cuda_arch=70
+   #- paraview +cuda cuda_arch=70
+
+  - default_specs:
+    - adios
+    - adios2
+    - alquimia
+    - aml
+    - amrex
+    - arborx
+    - archer
+    - argobots
+    - ascent
+    - axom
+    - bolt
+    - butterflypack
+    - cabana
+    - caliper
+    - chai ~benchmarks ~tests
+    - charliecloud
+    - conduit
+    - darshan-runtime
+    - darshan-util
+    - datatransferkit
+    - dyninst
+    - exaworks
+    - faodel ~tcmalloc
+    - flecsi@1.4.2
+    - flit
+    - flux-core
+    - fortrilinos
+    - gasnet
+    - ginkgo
+    - globalarrays
+    - gmp
+    - gotcha
+    - hdf5
+    - heffte +fftw
+    - hpctoolkit
+    - hpx
+    - hypre
+    - kokkos +openmp
+    - kokkos-kernels +openmp
+    - legion
+    - libnrm
+    - libquo
+    - libunwind
+    - llvm +all_targets +clang +compiler-rt +libcxx +lld +lldb +llvm_dylib +flang ~cuda
+    - loki
+    - mercury
+    - metall
+    - mfem
+    - mpark-variant
+    - mpifileutils ~xattr
+    - netlib-scalapack
+    - ninja
+    - nrm
+    - nvhpc
+    - omega-h
+    - openmpi
+    - openpmd-api ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - papi
+    - papyrus@1.0.1
+    - parallel-netcdf
+    - paraview
+    - parsec ~cuda
+    - pdt
+    - petsc
+    - plasma
+    - precice
+    - pumi
+    - py-cinemasci
+    - py-jupyterhub
+    - py-libensemble
+    - py-petsc4py
+    - py-warpx ^warpx dims=2 ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - py-warpx ^warpx dims=3 ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - py-warpx ^warpx dims=rz ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - qthreads scheduler=distrib
+    - raja
+    - rempi
+    - scr
+    - slate ~cuda
+    - slepc
+    - stc
+    - strumpack ~slate
+    - sundials
+    - superlu
+    - superlu-dist
+    - swig
+    - swig@4.0.2-fortran
+    - sz
+    - tasmanian
+    - tau +mpi +python
+    - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    - turbine
+    - umap
+    - umpire
+    - unifyfs@0.9.1
+    - upcxx
+    - veloc
+    - vtk-m
+    - zfp
+    #- catalyst
+    #- dealii
+    #- geopm
+    #- phist
+    #- qt
+    #- qwt
+    #- stat
+    #- variorum
+
+  specs:
+  - $cuda_specs
+  - $default_specs
