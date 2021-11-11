@@ -81,6 +81,7 @@ spack:
     - tasmanian +cuda cuda_arch=70
     - trilinos@13.2.0 +cuda cuda_arch=70
     - umpire ~shared +cuda cuda_arch=70
+    - upcxx +cuda
     - vtk-m +cuda cuda_arch=70
     - zfp +cuda cuda_arch=70
    #- ascent ~shared +cuda cuda_arch=70
