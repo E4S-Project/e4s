@@ -59,31 +59,31 @@ spack:
 
   definitions:
   - cuda_specs:
-    - amrex +cuda cuda_arch=70
-    - caliper +cuda cuda_arch=70
-    - chai ~benchmarks ~tests +cuda cuda_arch=70 ^umpire ~shared
-    - ginkgo +cuda cuda_arch=70
-    - heffte +cuda cuda_arch=70
-    - hpx +cuda cuda_arch=70
-    - hypre +cuda cuda_arch=70
-    - kokkos +wrapper +cuda cuda_arch=70
-    - kokkos-kernels +cuda cuda_arch=70 ^kokkos +wrapper +cuda cuda_arch=70
-    - magma +cuda cuda_arch=70
-    - mfem +cuda cuda_arch=70
-    - parsec +cuda cuda_arch=70
-    - petsc +cuda cuda_arch=70
-    - raja +cuda cuda_arch=70
-    - slate +cuda cuda_arch=70
-    - slepc +cuda cuda_arch=70
-    - strumpack ~slate +cuda cuda_arch=70
-    - sundials +cuda cuda_arch=70
-    - superlu-dist +cuda cuda_arch=70
-    - tasmanian +cuda cuda_arch=70
+    - amrex@21.11 +cuda cuda_arch=70
+    - caliper@2.7.0 +cuda cuda_arch=70
+    - chai@2.4.0 ~benchmarks ~tests +cuda cuda_arch=70 ^umpire ~shared
+    - ginkgo@1.4.0 +cuda cuda_arch=70
+    - heffte@2.2.0 +cuda cuda_arch=70
+    - hpx@1.7.1 +cuda cuda_arch=70
+    - hypre@2.23.0 +cuda cuda_arch=70
+    - kokkos@3.4.01 +wrapper +cuda cuda_arch=70
+    - kokkos-kernels@3.4.01 +cuda cuda_arch=70 ^kokkos +wrapper +cuda cuda_arch=70
+    - magma@2.6.1 +cuda cuda_arch=70
+    - mfem@4.3.0 +cuda cuda_arch=70
+    - parsec@3.0.2012 +cuda cuda_arch=70
+    - petsc@3.16.1 +cuda cuda_arch=70
+    - raja@0.14.0 +cuda cuda_arch=70
+    - slate@2021.05.02 +cuda cuda_arch=70
+    - slepc@3.16.0 +cuda cuda_arch=70
+    - strumpack@6.1.0 ~slate +cuda cuda_arch=70
+    - sundials@5.8.0 +cuda cuda_arch=70
+    - superlu-dist@7.1.1 +cuda cuda_arch=70
+    - tasmanian@7.7 +cuda cuda_arch=70
     - trilinos@13.2.0 +cuda cuda_arch=70
-    - umpire ~shared +cuda cuda_arch=70
-    - upcxx +cuda
-    - vtk-m +cuda cuda_arch=70
-    - zfp +cuda cuda_arch=70
+    - umpire@6.0.0 ~shared +cuda cuda_arch=70
+    - upcxx@2021.9.0 +cuda
+    - vtk-m@1.6.0 +cuda cuda_arch=70
+    - zfp@0.5.5 +cuda cuda_arch=70
    #- ascent ~shared +cuda cuda_arch=70
    #- axom +cuda cuda_arch=70 ^umpire ~shared
    #- dealii +cuda cuda_arch=70 # gmsh
@@ -91,105 +91,105 @@ spack:
    #- paraview +cuda cuda_arch=70
 
   - default_specs:
-    - adios
-    - adios2
-    - alquimia
-    - aml
-    - amrex
-    - arborx
-    - archer
-    - argobots
-    - ascent
-    - axom
-    - bolt
-    - butterflypack
-    - cabana
-    - caliper
-    - chai ~benchmarks ~tests
-    - charliecloud
-    - conduit
-    - darshan-runtime
-    - darshan-util
-    - datatransferkit
-    - dyninst
-    - exaworks
-    - faodel ~tcmalloc
+    - adios@1.13.1
+    - adios2@2.7.1
+    - alquimia@1.0.9
+    - aml@0.1.0
+    - amrex@21.11
+    - arborx@1.1
+    - archer@2.0.0
+    - argobots@1.1
+    - ascent@0.7.1
+    - axom@0.5.0
+    - bolt@2.0
+    - butterflypack@2.0.0
+    - cabana@0.4.0
+    - caliper@2.7.0
+    - chai@2.4.0 ~benchmarks ~tests
+    - charliecloud@0.25
+    - conduit@0.7.2
+    - darshan-runtime@3.3.1
+    - darshan-util@3.3.1
+    - datatransferkit@3.1-rc3
+    - dyninst@11.0.1
+    - exaworks@0.1.0
+    - faodel@1.2108.1 ~tcmalloc
     - flecsi@1.4.2
-    - flit
-    - flux-core
-    - fortrilinos
-    - gasnet
-    - ginkgo
-    - globalarrays
-    - gmp
-    - gotcha
-    - hdf5
-    - heffte +fftw
-    - hpctoolkit
-    - hpx
-    - hypre
-    - kokkos +openmp
-    - kokkos-kernels +openmp
-    - legion
-    - libnrm
-    - libquo
-    - libunwind
-    - llvm +all_targets +clang +compiler-rt +libcxx +lld +lldb +llvm_dylib +flang ~cuda
-    - loki
-    - mercury
-    - metall
-    - mfem
-    - mpark-variant
-    - mpifileutils ~xattr
-    - netlib-scalapack
-    - ninja
-    - nrm
-    - nvhpc
-    - omega-h
-    - openmpi
-    - openpmd-api ^hdf5@1.12.0 +fortran +shared +hl api=default
-    - papi
+    - flit@2.1.0
+    - flux-core@0.30.0
+    - fortrilinos@2.0.0
+    - gasnet@2021.9.0
+    - ginkgo@1.4.0
+    - globalarrays@5.8
+    - gmp@6.2.1
+    - gotcha@1.0.3
+    - hdf5@1.12.1
+    - heffte@2.2.0 +fftw
+    - hpctoolkit@2021.10.15
+    - hpx@1.7.1
+    - hypre@2.23.0
+    - kokkos@3.4.01 +openmp
+    - kokkos-kernels@3.4.01 +openmp
+    - legion@21.03.0
+    - libnrm@0.1.0
+    - libquo@1.3.1
+    - libunwind@1.5.0
+    - llvm@13.0.0 +all_targets +clang +compiler-rt +libcxx +lld +lldb +llvm_dylib +flang ~cuda
+    - loki@0.1.7
+    - mercury@2.0.1
+    - metall@0.17
+    - mfem@4.3.0
+    - mpark-variant@1.4.0
+    - mpifileutils@0.11 ~xattr
+    - netlib-scalapack@2.1.0
+    - ninja@1.10.2
+    - nrm@0.1.0
+    - nvhpc@21.9
+    - omega-h@9.34.1
+    - openmpi@4.1.1
+    - openpmd-api@0.14.3 ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - papi@6.0.0.1
     - papyrus@1.0.1
-    - parallel-netcdf
-    - paraview
-    - parsec ~cuda
-    - pdt
-    - petsc
-    - plasma
-    - precice
-    - pumi
-    - py-cinemasci
-    - py-jupyterhub
-    - py-libensemble
-    - py-petsc4py
-    - py-warpx ^warpx dims=2 ^hdf5@1.12.0 +fortran +shared +hl api=default
-    - py-warpx ^warpx dims=3 ^hdf5@1.12.0 +fortran +shared +hl api=default
-    - py-warpx ^warpx dims=rz ^hdf5@1.12.0 +fortran +shared +hl api=default
-    - qthreads scheduler=distrib
-    - raja
-    - rempi
-    - scr
-    - slate ~cuda
-    - slepc
-    - stc
-    - strumpack ~slate
-    - sundials
-    - superlu
-    - superlu-dist
-    - swig
+    - parallel-netcdf@1.12.2
+    - paraview@5.9.1
+    - parsec@3.0.2012 ~cuda
+    - pdt@3.25.1
+    - petsc@3.16.1
+    - plasma@21.8.29
+    - precice@2.3.0
+    - pumi@2.2.6
+    - py-cinemasci@1.3
+    - py-jupyterhub@1.4.1
+    - py-libensemble@0.8.0
+    - py-petsc4py@3.16.1
+    - py-warpx@21.11 ^warpx dims=2 ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - py-warpx@21.11 ^warpx dims=3 ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - py-warpx@21.11 ^warpx dims=rz ^hdf5@1.12.0 +fortran +shared +hl api=default
+    - qthreads@1.16 scheduler=distrib
+    - raja@0.14.0
+    - rempi@1.1.0
+    - scr@3.0rc2
+    - slate@2021.05.02 ~cuda
+    - slepc@3.16.0
+    - stc@0.9.0
+    - strumpack@6.1.0 ~slate
+    - sundials@5.8.0
+    - superlu@5.3.0
+    - superlu-dist@7.1.1
+    - swig@4.0.2
     - swig@4.0.2-fortran
-    - sz
-    - tasmanian
-    - tau +mpi +python
-    - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
-    - turbine
-    - umap
-    - umpire
+    - sz@2.1.12
+    - tasmanian@7.7
+    - tau@2.31 +mpi +python
+    - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    - turbine@1.3.0
+    - umap@2.1.0
+    - umpire@6.0.0
     - unifyfs@0.9.1
-    - upcxx
-    - veloc
-    - vtk-m
-    - zfp
+    - upcxx@2021.9.0
+    - veloc@1.5
+    - vtk-m@1.6.0
+    - zfp@0.5.5
     #- catalyst
     #- dealii
     #- geopm
