@@ -57,23 +57,7 @@ spack:
     xz:
       variants: +pic
 
-  compilers:
-  - compiler:
-      spec: gcc@9.3.0
-      paths:
-        cc: /usr/bin/gcc
-        cxx: /usr/bin/g++
-        f77: /usr/bin/gfortran
-        fc: /usr/bin/gfortran
-      flags: {}
-      operating_system: ubuntu20.04
-      target: x86_64
-      modules: []
-      environment: {}
-      extra_rpaths: []
-
   definitions:
-
   - cuda_specs:
     - amrex +cuda cuda_arch=80
     - caliper +cuda cuda_arch=80
@@ -127,7 +111,6 @@ spack:
   - default_specs:
     - adios
     - adios2
-    - alquimia
     - aml
     - amrex
     - arborx
@@ -135,10 +118,8 @@ spack:
     - ascent
     - axom
     - bolt
-    - butterflypack
     - cabana
     - caliper
-    - catalyst
     - chai ~benchmarks ~tests
     - charliecloud
     - conduit
@@ -193,7 +174,6 @@ spack:
     - plasma
     - precice
     - pumi
-    - py-cinemasci
     - py-jupyterhub
     - py-libensemble
     - py-petsc4py

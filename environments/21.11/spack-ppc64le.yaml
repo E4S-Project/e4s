@@ -58,10 +58,6 @@ spack:
       variants: +pic
 
   definitions:
-
-  - compilers:
-    - gcc@11.2.0
-
   - cuda_specs:
     - amrex +cuda cuda_arch=70
     - caliper +cuda cuda_arch=70
