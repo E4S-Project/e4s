@@ -15,7 +15,7 @@ E4S is available to download in the following formats:
   
   - Spack manifest (`spack.yaml`) to install from source. These can be found in [environments](https://github.com/E4S-Project/e4s/tree/master/environments) directory.
   
-  - [AWS EC2 image](http://aws.amazon.com/) with image name `ami-057d49e585d0c6c7d` in **US-West-2 (Oregon)**
+  - [AWS EC2 image](http://aws.amazon.com/) with image name `ami-0db9d49091db1c25f` in **US-West-2 (Oregon)**
  
   - [E4S Build Cache](https://oaciss.uoregon.edu/e4s/inventory.html)
 
