@@ -1,6 +1,21 @@
 E4S Distribution via spack.yaml
 ================================
 
+21.11
+-------
+
+E4S 21.11 is based on Spack branch `e4s-21.11 <https://github.com/spack/spack/tree/e4s-21.11>`_. Shown
+below is the spack configuration from Univ of Oregon system. The specs are pushed to buildcache which
+can be retrieved using the following commands
+
+.. code-block:: console
+
+    $ spack mirror add E4S https://cache.e4s.io/21.11
+    $ spack buildcache keys -it
+
+.. literalinclude:: ../environments/21.11/spack-x86_64.yaml
+    :language: yaml
+
 21.08
 -------
 
