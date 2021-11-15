@@ -22,6 +22,10 @@ v21.11 (Nov, 2021)
   - Prefer `cuda@11.4.2` for x86_64 model environment
   - Prefer `cuda@11.0.2` for ppc64le model environment
 
+- CUDA compute capability
+  - x86_64: build for `cuda_arch=80` (A100)
+  - ppc64le: build for `cuda_arch=70` (V100)
+
 - Enabled additional `+cuda` variants
   - `flecsi +cuda`
   - `heffte +cuda`
