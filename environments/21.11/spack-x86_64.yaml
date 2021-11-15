@@ -110,8 +110,9 @@ spack:
    #- umpire +rocm amdgpu_target=gfx908
 
   - default_specs:
-    - adios@1.13.1
     - adios2@2.7.1
+    - adios@1.13.1
+    - alquimia@1.0.9
     - aml@0.1.0
     - amrex@21.11
     - arborx@1.1
@@ -119,8 +120,10 @@ spack:
     - ascent@0.7.1
     - axom@0.5.0
     - bolt@2.0
+    - butterflypack@2.0.0
     - cabana@0.4.0
     - caliper@2.7.0
+    - catalyst@5.6.0
     - chai@2.4.0 ~benchmarks ~tests
     - charliecloud@0.25
     - conduit@0.7.2
@@ -144,8 +147,8 @@ spack:
     - hpctoolkit@2021.10.15
     - hpx@1.7.1
     - hypre@2.23.0
-    - kokkos@3.4.01 +openmp
     - kokkos-kernels@3.4.01 +openmp
+    - kokkos@3.4.01 +openmp
     - legion@21.03.0
     - libnrm@0.1.0
     - libquo@1.3.1
@@ -175,6 +178,7 @@ spack:
     - plasma@21.8.29
     - precice@2.3.0
     - pumi@2.2.6
+    - py-cinemasci@1.3
     - py-jupyterhub@1.4.1
     - py-libensemble@0.8.0
     - py-petsc4py@3.16.1
@@ -190,8 +194,8 @@ spack:
     - stc@0.9.0
     - strumpack@6.1.0 ~slate
     - sundials@5.8.0
-    - superlu@5.3.0
     - superlu-dist@7.1.1
+    - superlu@5.3.0
     - swig@4.0.2
     - swig@4.0.2-fortran
     - sz@2.1.12
