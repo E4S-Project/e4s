@@ -26,6 +26,8 @@ v21.11 (Nov, 2021)
   - x86_64: build for `cuda_arch=80` (A100)
   - ppc64le: build for `cuda_arch=70` (V100)
 
+- AMD: building for `gfx908` (MI100)
+
 - Enabled additional `+cuda` variants
   - `flecsi +cuda`
   - `heffte +cuda`
