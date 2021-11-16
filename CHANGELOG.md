@@ -48,6 +48,7 @@ v21.11 (Nov, 2021)
 
 - Uses `ROCM 4.3.1` stack
 
+For more details see [E4S 21.11 release notes](https://www.dropbox.com/s/pfqefakku4f76zb/E4S_21.11.pptx)
 
 v21.08 (Aug, 2021)
 ----------------------
