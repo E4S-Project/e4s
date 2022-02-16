@@ -237,3 +237,8 @@ spack:
    #- sundials@6.1.1 +rocm amdgpu_target=gfx908
    #- tasmanian@7.7 +rocm amdgpu_target=gfx908 # https://github.com/spack/spack/issues/27896
    #- vtk-m@1.7.1 +rocm amdgpu_target=gfx908
+
+  specs:
+  - $cpu_specs
+  - $cuda_specs
+  - $rocm_specs
