@@ -13,7 +13,7 @@ February 2022 release of E4S
 
 E4S 22.02 uses Spack branch `e4s-22.02`
 * https://github.com/spack/spack
-* Branch [e4s-21.02](https://github.com/spack/spack/tree/e4s-22.02)
+* Branch [e4s-22.02](https://github.com/spack/spack/tree/e4s-22.02)
 
 
 ## Spack Build Cache
