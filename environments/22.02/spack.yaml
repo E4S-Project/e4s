@@ -95,7 +95,7 @@ spack:
     - gmp@6.2.1
     - gotcha@1.0.3
     - gptune@2.1.0
-    - hdf5@1.10.7
+    - hdf5@1.10.7 +fortran +hl +shared
     - heffte@2.2.0 +fftw
     - hpctoolkit@2022.01.15
     - hpx@1.7.1 networking=mpi
