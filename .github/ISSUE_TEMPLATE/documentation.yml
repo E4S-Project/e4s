@@ -1,7 +1,7 @@
 name: Documentation 
 description: Documentation Issue
 title: "[docs]: "
-labels: [docs]
+labels: [documentation]
 assignees:
   - wspear
   - eugeneswalker
@@ -10,8 +10,8 @@ body:
   - type: textarea
     id: Description
     attributes:
-      label: Request Description
-      placeholder: "Please describe issue with documentation"
+      label: Please describe the issue
+      placeholder: "Please describe issue with documentation with link to documentation"
       description: |
         Links? References? Anything that will give us more context about the issue you are encountering!
 
