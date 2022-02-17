@@ -1,6 +1,9 @@
 <img src="https://github.com/E4S-Project/e4s/blob/master/logos/E4S-dark-green.png" width="200" alt="E4S"> 
 
-![GitHub](https://img.shields.io/github/license/E4S-Project/e4s)
+![License](https://img.shields.io/github/license/E4S-Project/e4s)
+![Documentation](https://readthedocs.org/projects/e4s/badge/?version=latest)
+![GitHub Issues](https://img.shields.io/github/issues/E4S-Project/e4s.svg) 
+![GitHub pull requests](https://img.shields.io/github/issues-pr/E4S-Project/e4s)
 
 # E4S
 
