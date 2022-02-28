@@ -1,8 +1,10 @@
 spack:
   view: false
   concretization: separately
+
   config:
     concretizer: clingo
+
   packages:
     all:
       compiler:
@@ -55,6 +57,7 @@ spack:
         +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
     xz:
       variants: +pic
+
   definitions:
   - cpu_specs:
     - adios@1.13.1
@@ -164,32 +167,29 @@ spack:
     - vtk-m@1.7.1
     - wannier90@3.1.0
     - zfp@0.5.5
-     #- variorum@0.4.1
-     #- phist@1.9.5
-     #- geopm@1.1.0
-     #- catalyst@5.6.0
-     #- dealii
-     #- llvm +all_targets +clang +compiler-rt +libcxx +lld +lldb +link_llvm_dylib +flang ~cuda
-     #- qt
-     #- qwt
-     #- stat
+   #- catalyst@5.6.0
+   #- dealii@9.3.2
+   #- geopm@1.1.0
+   #- phist@1.9.5
+   #- stat@4.1.0
+   #- variorum@0.4.1
 
   - cuda_specs:
     - amrex@22.02 +cuda cuda_arch=70
     - caliper@2.7.0 +cuda cuda_arch=70
     - chai@2.4.0 ~benchmarks ~tests +cuda cuda_arch=70 ^umpire@6.0.0 ~shared
-    - flux-core@0.35.0 +cuda   # not CudaPackage
+    - flux-core@0.35.0 +cuda # not CudaPackage
     - ginkgo@1.4.0 +cuda cuda_arch=70
     - heffte@2.2.0 +cuda cuda_arch=70
-    - hpctoolkit@2022.01.15 +cuda   # not CudaPackage
+    - hpctoolkit@2022.01.15 +cuda # not CudaPackage
     - hpx@1.7.1 +cuda cuda_arch=70
     - hypre@2.24.0 +cuda cuda_arch=70
     - kokkos-kernels@3.5.00 +cuda cuda_arch=70 ^kokkos@3.5.00 +wrapper +cuda cuda_arch=70
     - kokkos@3.5.00 +wrapper +cuda cuda_arch=70
     - magma@2.6.1 +cuda cuda_arch=70
     - mfem@4.3.0 +cuda cuda_arch=70
-    - openmpi@4.1.2 +cuda   # not CudaPackage
-    - papi@6.0.0.1 +cuda   # not CudaPackage
+    - openmpi@4.1.2 +cuda # not CudaPackage
+    - papi@6.0.0.1 +cuda # not CudaPackage
     - parsec@3.0.2012 +cuda cuda_arch=70
     - petsc@3.16.4 +cuda cuda_arch=70
     - raja@0.14.0 +cuda cuda_arch=70
@@ -203,40 +203,16 @@ spack:
     - umpire@6.0.0 ~shared +cuda cuda_arch=70
     - vtk-m@1.7.1 +cuda cuda_arch=70
     - zfp@0.5.5 +cuda cuda_arch=70
-    #- flecsi@2.1.0 +cuda cuda_arch=70
-    #- arborx@1.1 +cuda # not CudaPackage
-    #- ascent@0.7.1 ~shared +cuda cuda_arch=70
-    #- axom@0.6.1 +cuda cuda_arch=70 ^umpire ~shared
-    #- cabana@0.4.0 +cuda # not CudaPackage 
-    #- dealii@9.3.2 +cuda cuda_arch=70 # gmsh
-    #- legion@21.03.0 +cuda cuda_arch=70
-    #- llvm@13.0.0 +cuda cuda_arch=70
-    #- paraview@5.10.0 +cuda cuda_arch=70
-    #- upcxx@2021.9.0 +cuda # not CudaPackage, needs driver
-
-  - rocm_specs:
-    - amrex@22.02 +rocm amdgpu_target=gfx908
-    - chai@2.4.0 ~benchmarks +rocm amdgpu_target=gfx908
-    - ginkgo@1.4.0 +rocm amdgpu_target=gfx908
-    - heffte@2.2.0 +rocm amdgpu_target=gfx908
-    - hpx@1.7.1 +rocm amdgpu_target=gfx908
-    - kokkos@3.5.00 +rocm amdgpu_target=gfx908
-    - magma@2.6.1 ~cuda +rocm amdgpu_target=gfx908
-    - mfem@4.3.0 +rocm amdgpu_target=gfx908
-    - petsc@3.16.4 +rocm amdgpu_target=gfx908
-    - raja@0.14.0 ~openmp +rocm amdgpu_target=gfx908
-    - slate@2021.05.02 +rocm amdgpu_target=gfx908
-    - slepc@3.16.2 +rocm amdgpu_target=gfx908 ^petsc +rocm amdgpu_target=gfx908
-    - strumpack@6.3.0 ~slate +rocm amdgpu_target=gfx908
-    - superlu-dist@7.2.0 +rocm amdgpu_target=gfx908
-    - umpire@6.0.0 +rocm amdgpu_target=gfx908
-    #- arborx@1.1 +rocm ^kokkos +rocm amdgpu_target=gfx908 # Not ROCmPackage # Could not find a package configuration file provided by "rocthrust"
-    #- cabana@0.4.0 +rocm # https://github.com/spack/spack/issues/27967
-    #- hpctoolkit@2022.01.15 +rocm # Not ROCmPackage
-    #- papi@6.0.0.1 +rocm amdgpu_target=gfx908 # https://github.com/spack/spack/issues/27898
-    #- sundials@6.1.1 +rocm amdgpu_target=gfx908
-    #- tasmanian@7.7 +rocm amdgpu_target=gfx908 # https://github.com/spack/spack/issues/27896
-    #- vtk-m@1.7.1 +rocm amdgpu_target=gfx908
+   #- arborx@1.1 +cuda # not CudaPackage
+   #- ascent@0.7.1 ~shared +cuda cuda_arch=70
+   #- axom@0.6.1 +cuda cuda_arch=70 ^umpire ~shared
+   #- cabana@0.4.0 +cuda # not CudaPackage 
+   #- dealii@9.3.2 +cuda cuda_arch=70 # gmsh
+   #- flecsi@2.1.0 +cuda cuda_arch=70
+   #- legion@21.03.0 +cuda cuda_arch=70
+   #- llvm@13.0.0 +cuda cuda_arch=70
+   #- paraview@5.10.0 +cuda cuda_arch=70
+   #- upcxx@2021.9.0 +cuda # not CudaPackage, needs driver
 
   specs:
   - $cpu_specs
