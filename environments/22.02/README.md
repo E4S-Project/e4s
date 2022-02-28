@@ -4,7 +4,8 @@ February 2022 release of E4S
 
 ## Files
 
-* `spack.yaml` -- Model Spack environment, for x86_64
+* `spack-x86_64.yaml` -- Model Spack environment, for x86_64
+* `spack-ppc64le.yaml` -- Model Spack environment, for ppc64le
   
 *Specs in the Model Spack Environment are commented out if (a) there are outstanding build issues or (b) if their Spack package does not offer a versioned installation option*
 
@@ -27,8 +28,8 @@ $> spack buildcache keys -it
 
 ## Model Environment
 
-* Built and tested on Ubuntu 20.04 w/ GCC 9.3.0
-* Built and tested on Ubuntu 18.04 w/ GCC 7.5.0
+* Built and tested on Ubuntu 20.04 w/ GCC 9.3.0 for x86_64
+* Built and tested on Ubuntu 18.04 w/ GCC 7.5.0 for ppc64le
 * Docker container images:
   * `ecpe4s/ubuntu20.04-runner-x86_64:2022-02-01`
   * `ecpe4s/ubuntu18.04-runner-ppc64le:2022-02-01`
