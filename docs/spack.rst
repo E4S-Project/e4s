@@ -1,6 +1,22 @@
 E4S Distribution via spack.yaml
 ================================
 
+22.02
+-------
+
+E4S 22.02 is based on Spack branch `e4s-22.02 <https://github.com/spack/spack/tree/e4s-22.02>`_. This release comes with
+100 full product releases. Shown below is the spack configuration from Univ of Oregon system. The specs are pushed to buildcache
+which can be retrieved using the following commands
+
+.. code-block:: console
+
+    $ spack mirror add E4S https://cache.e4s.io/22.02
+    $ spack buildcache keys -it
+
+.. literalinclude:: ../environments/22.02/spack-x86_64.yaml
+    :language: yaml
+
+
 21.11
 -------
 
