@@ -54,8 +54,8 @@ References
     :header: "Conference", "Date", "Link"
     :widths:  60, 30, 30
     :class: tight-table
+    
 
-     "E4S 21.11 Release Notes", "November, 2021", "`E4S 21.11 <https://e4s.io/talks/E4S_21.11.pdf>`_"
      "Getting Started with E4S for Industry and Agencies Workshop", "June, 2021", "`E4S-IAW21 <https://www.exascaleproject.org/event/e4sforindustry/>`_"
      "E4S: Extreme-Scale Scientific Software Stack", "June, 2021", "`BSSW <https://bssw.io/blog_posts/e4s-extreme-scale-scientific-software-stack>`_"
      "E4S Tutorial at ECP Annual Meeting", "April, 2021", "`Video <https://youtu.be/vGKgAXtSFu0>`_"
@@ -66,4 +66,5 @@ References
      "Extreme-Scale Scientific Software Stack (E4S) Release 0.1", "Nov, 2018", "`Video <https://www.youtube.com/watch?v=nfCXwX_0EBc>`__"
 
 
-
+- `E4S 22.02 Release Notes <https://e4s.io/talks/E4S_22.02.pdf>`_
+- `E4S 21.11 Release Notes <https://e4s.io/talks/E4S_21.11.pdf>`_
