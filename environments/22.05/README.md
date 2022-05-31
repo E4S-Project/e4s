@@ -35,7 +35,7 @@ $> spack buildcache keys -it
 * Docker container images:
   * `ecpe4s/ubuntu20.04-runner-x86_64:2022-05-01`
   * `ecpe4s/ubuntu18.04-runner-ppc64le:2022-05-01`
-* Output of `spack find` following installation of `cuda-x86_64.spack.yaml` model environment. Here we've installed all +cuda packages w/ both cuda_arch=70 and cuda_arch=80.
+* Output of `spack find` following installation of `cuda-x86_64.spack.yaml` model environment. Here we've installed all +cuda packages w/ both `cuda_arch=70` and `cuda_arch=80`.
 ```
 # spack find
 ==> 661 installed packages
