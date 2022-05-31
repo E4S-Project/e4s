@@ -6,6 +6,21 @@ spack:
   config:
     concretizer: clingo
 
+  compilers:
+  - compiler:
+      spec: gcc@7.5.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu18.04
+      target: ppc64le
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
   modules:
     default:
       enable:: [lmod]
