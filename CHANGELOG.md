@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+v22.05 (May, 2022)
+----------------------
+
+- Using Spack branch [e4s-22.05](https://github.com/spack/spack/tree/e4s-22.05) based on Spack v0.18.0-dev
+  - `Sun May 15 06:59:11 2022 -0400`
+- Package added to E4S: `bricks` and `bricks +cuda`
+- Replace `ninja` with `pruners-ninja`
+- Release separate environments for NVIDIA, ROCm, and Intel GPU
+
 v21.11 (Nov, 2021)
 ----------------------
 
