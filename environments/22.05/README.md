@@ -4,12 +4,12 @@ May 2022 release of E4S
 
 ## Files
 
-* `cuda-x86_64.spack.yaml` -- Model Spack environment for systems w/ NVIDIA GPUs (x86_64)
-* `cuda-ppc64le.spack.yaml` -- Model Spack environment for systems w/ NVIDIA GPUs (ppc64le)
-* `rocm.spack.yaml` -- Model Spack environment for systems w/ AMD GPUs
-* `oneapi.spack.yaml` -- Model Spack environment for systems w/ Intel GPUs
+* `cuda-x86_64.spack.yaml` -- Model Spack Environment for systems w/ NVIDIA GPUs (x86_64)
+* `cuda-ppc64le.spack.yaml` -- Model Spack Environment for systems w/ NVIDIA GPUs (ppc64le)
+* `rocm.spack.yaml` -- Model Spack Environment for systems w/ AMD GPUs
+* `oneapi.spack.yaml` -- Model Spack Environment for systems w/ Intel GPUs
   
-*Specs in the Model Spack Environment may be commented out if we encountered deployment issues or the package doesn't offer a non-branch tracking version.*
+*Specs in the Model Spack Environments may be commented out if we encountered deployment issues or the package doesn't offer a non-branch tracking version.*
 
 
 ## Spack Version
