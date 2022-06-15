@@ -65,6 +65,6 @@ References
      "DOE’S E4S Software Stack Takes An Extreme Step Towards Exascale", "Jan, 2019", "`Article <https://www.nextplatform.com/2019/01/22/does-e4s-software-stack-takes-an-extreme-step-towards-exascale/>`_"
      "Extreme-Scale Scientific Software Stack (E4S) Release 0.1", "Nov, 2018", "`Video <https://www.youtube.com/watch?v=nfCXwX_0EBc>`__"
 
-
+- `E4S 22.05 Release Notes <https://e4s.io/talks/E4S_22.05.pdf>`_
 - `E4S 22.02 Release Notes <https://e4s.io/talks/E4S_22.02.pdf>`_
 - `E4S 21.11 Release Notes <https://e4s.io/talks/E4S_21.11.pdf>`_
