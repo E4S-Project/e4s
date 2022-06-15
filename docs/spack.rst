@@ -13,7 +13,9 @@ which can be retrieved using the following commands
     $ spack mirror add E4S https://cache.e4s.io/22.05
     $ spack buildcache keys -it
 
-.. literalinclude:: ../environments/22.05/spack-x86_64.yaml
+Shown below is the spack configuration for CUDA based build for X86_64 platform.
+
+.. literalinclude:: ../environments/22.05/cuda-x86_64.spack.yaml
     :language: yaml
 
 22.02
