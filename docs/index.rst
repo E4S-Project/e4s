@@ -37,6 +37,7 @@ Useful Links
    introduction.rst
    E4S_Products.md
    facility_e4s.md
+   deployment.rst
    policy.rst
    spack.rst
    contributing.rst
