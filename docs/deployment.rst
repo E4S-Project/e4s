@@ -1,8 +1,13 @@
 E4S Deployments
 ===============
 
-`Perlmutter <https://www.nersc.gov/systems/perlmutter/>`_ @ `NERSC <https://www.nersc.gov/>`_
--------------------------------------------------------------------------------------------
+`Perlmutter <https://www.nersc.gov/systems/perlmutter/system_details/>`_ @ `NERSC <https://www.nersc.gov/>`_
+------------------------------------------------------------------------------------------------------------
+
+`Perlmutter <https://docs.nersc.gov/systems/perlmutter/system_details/>`__ is HPE Cray EX Super Computer at `National Energy Research Scientific Computing Center <https://nersc.gov/>`_ which is a comprised both of CPU-only and GPU-accelerated nodes. We have deployed E4S on Perlmutter which can seen upon system access. Please refer to https://docs.nersc.gov/connect/ for details on how to connect to Perlmutter.
+
+The E4S deployments can be accessed via **module**. Available E4S deployments are shown below.
+
 
 **Paratools Deployment: E4S 22.05**
 
@@ -16,7 +21,7 @@ This deployment is maintained by `Paratools <https://www.paratools.com/>`_ and m
         e4s/22.05/mvapich2    e4s/22.05/PrgEnv-gnu (D)
         
 
-The mvapich2 module provides an E4S deployment with mpi provied by mvapich2. 
+The **e4s/22.05/mvapich2** module provides an E4S deployment with mpi provided by `mvapich2 <https://mvapich.cse.ohio-state.edu/>`_. 
 
 .. code-block:: console
 
@@ -51,7 +56,7 @@ The mvapich2 module provides an E4S deployment with mpi provied by mvapich2.
     darshan-util/3.3.1        gotcha/1.0.3                      mvapich2/2.3.6-1             (L,D)    py-jupyterhub/1.4.1    umap/2.1.0
     ...
 
-The PrgEnv-gnu module provides an E4S deployment with mpi provided by the system software environment.
+The **e4s/22.05/PrgEnv-gnu** module provides an E4S deployment with mpi provided by the system software environment.
 
 .. code-block:: console
 
