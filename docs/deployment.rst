@@ -11,7 +11,8 @@ The E4S deployments can be accessed via **module**. Available E4S deployments ar
 
 **ParaTools Deployment: E4S 22.05**
 
-This deployment is maintained by `Paratools <https://www.paratools.com/>`_ and may not be officially supported by facility staff.
+This deployment is maintained by `ParaTools <https://www.paratools.com/>`_ and may not be officially supported by facility staff.
+
 
 .. code-block:: console
 
