@@ -1,10 +1,12 @@
-E4S Facility Deployments
-========================
+E4S Deployments
+===============
 
-Perlmutter
-----------
+`Perlmutter <https://www.nersc.gov/systems/perlmutter/>`_ @ `NERSC <https://www.nersc.gov/>`_
+-------------------------------------------------------------------------------------------
 
-**Paratools Deployment**
+**Paratools Deployment: E4S 22.05**
+
+This deployment is maintained by `Paratools <https://www.paratools.com/>`_ and may not be officially supported by facility staff.
 
 .. code-block:: console
 
