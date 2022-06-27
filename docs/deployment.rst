@@ -1,10 +1,10 @@
 E4S Deployments
 ===============
 
-`Perlmutter <https://www.nersc.gov/systems/perlmutter/system_details/>`_ @ `NERSC <https://www.nersc.gov/>`_
-------------------------------------------------------------------------------------------------------------
+Perlmutter
+----------
 
-`Perlmutter <https://docs.nersc.gov/systems/perlmutter/system_details/>`__ is HPE Cray EX Super Computer at `National Energy Research Scientific Computing Center <https://nersc.gov/>`_ which is a comprised both of CPU-only and GPU-accelerated nodes. We have deployed E4S on Perlmutter which can seen upon system access. Please refer to https://docs.nersc.gov/connect/ for details on how to connect to Perlmutter.
+`Perlmutter <https://docs.nersc.gov/systems/perlmutter/system_details/>`__ is HPE Cray EX Super Computer at `National Energy Research Scientific Computing Center (NERSC) <https://nersc.gov/>`_ which is a comprised both of CPU-only and GPU-accelerated nodes. We have deployed E4S on Perlmutter which can seen upon system access. Please refer to https://docs.nersc.gov/connect/ for details on how to connect to Perlmutter.
 
 The E4S deployments can be accessed via **module**. Available E4S deployments are shown below.
 
