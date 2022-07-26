@@ -25,6 +25,14 @@ E4S is available to download in the following formats:
 
 Please see [E4S Product Dictionary](https://github.com/E4S-Project/e4s/blob/master/E4S_Products.md) for complete list of E4S products. 
 
+## Useful Links
+
+- User Documentation: https://e4s.readthedocs.io
+- Main Page: https://e4s-project.github.io/
+- E4S GitHub: https://github.com/E4S-Project/
+- Slack Channel: https://e4s-project.slack.com
+- E4S Dashboard: https://dashboard.e4s.io/ 
+
 ## Related Projects
 
 - [E4S-Project/E4S-Project.github.io](https://github.com/E4S-Project/E4S-Project.github.io) - E4S Documentation repo that is hosted on https://e4s-project.github.io/
