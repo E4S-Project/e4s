@@ -46,6 +46,8 @@ This deployment is built using Spack at branch `e4s-22.05` and system-provided O
 Crusher
 ----------
 
+For more information on Crusher please see https://docs.olcf.ornl.gov/systems/crusher_quick_start_guide.html
+
 **ParaTools Deployment: E4S 22.05 / PrgEnv-gnu**
 
 This deployment is built using Spack at branch `e4s-22.05` and the following facility-provided external packages:
