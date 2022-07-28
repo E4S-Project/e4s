@@ -1,6 +1,48 @@
 E4S Deployments
 ===============
 
+JLSE
+----------
+
+**ParaTools Deployment: E4S 22.05**
+
+For more information on JLSE please see https://www.jlse.anl.gov.
+
+This deployment is maintained by `ParaTools <https://www.paratools.com/>`_ and may not be officially supported by facility staff.
+
+This deployment is built using Spack at branch `e4s-22.05` and system-provided OneAPI and MPI.
+
+.. code-block:: console
+
+    $arcticus> . /soft/ecp/ParaTools/E4S/22.05/module-use.sh
+    $arcticus> module avail
+    adios/1.13.1-oneapi-2022.1.0-mpi           kokkos-kernels/3.6.00-oneapi-2022.1.0       py-jupyterhub/1.4.1-oneapi-2022.1.0
+    adios2/2.8.0-oneapi-2022.1.0-mpi           kokkos-kernels/3.6.00-oneapi-2022.1.0-sycl  py-libensemble/0.9.1-oneapi-2022.1.0-mpi
+    alquimia/1.0.9-oneapi-2022.1.0-mpi         kokkos/3.6.00-oneapi-2022.1.0               py-petsc4py/3.17.1-oneapi-2022.1.0-mpi
+    aml/0.1.0-oneapi-2022.1.0                  kokkos/3.6.00-oneapi-2022.1.0-sycl          qthreads/1.16-oneapi-2022.1.0
+    amrex/22.05-oneapi-2022.1.0-mpi            lammps/20220107-oneapi-2022.1.0-mpi         raja/0.14.0-oneapi-2022.1.0
+    arborx/1.2-oneapi-2022.1.0-mpi             legion/21.03.0-oneapi-2022.1.0              slate/2021.05.02-oneapi-2022.1.0-mpi
+    argobots/1.1-oneapi-2022.1.0               libnrm/0.1.0-oneapi-2022.1.0-mpi            slepc/3.17.1-oneapi-2022.1.0-mpi
+    bolt/2.0-oneapi-2022.1.0                   libquo/1.3.1-oneapi-2022.1.0-mpi            stc/0.9.0-oneapi-2022.1.0-mpi
+    cabana/0.4.0-oneapi-2022.1.0-mpi           libunwind/1.6.2-oneapi-2022.1.0             sundials/6.2.0-oneapi-2022.1.0-mpi
+    chai/2.4.0-oneapi-2022.1.0                 loki/0.1.7-oneapi-2022.1.0                  superlu-dist/7.2.0-oneapi-2022.1.0-mpi
+    charliecloud/0.26-oneapi-2022.1.0          mercury/2.1.0-oneapi-2022.1.0-mpi           superlu/5.3.0-oneapi-2022.1.0
+    conduit/0.8.3-oneapi-2022.1.0-mpi          metall/0.20-oneapi-2022.1.0-mpi             swig/4.0.2-fortran-oneapi-2022.1.0
+    darshan-runtime/3.3.1-oneapi-2022.1.0-mpi  mfem/4.4.0-oneapi-2022.1.0-mpi              swig/4.0.2-oneapi-2022.1.0
+    darshan-util/3.3.1-oneapi-2022.1.0         mpark-variant/1.4.0-oneapi-2022.1.0         sz/2.1.12-oneapi-2022.1.0
+    faodel/1.2108.1-oneapi-2022.1.0-mpi        mpifileutils/0.11.1-oneapi-2022.1.0-mpi     tasmanian/7.7-oneapi-2022.1.0-mpi
+    flit/2.1.0-oneapi-2022.1.0                 nccmp/1.9.0.1-oneapi-2022.1.0-mpi           tau/2.31.1-oneapi-2022.1.0-mpi
+    fortrilinos/2.0.0-oneapi-2022.1.0-mpi      nco/5.0.1-oneapi-2022.1.0-mpi               tau/2.31.1-oneapi-2022.1.0-mpi-level-zero
+    gasnet/2022.3.0-oneapi-2022.1.0            netlib-scalapack/2.2.0-oneapi-2022.1.0-mpi  trilinos/13.0.1-oneapi-2022.1.0-mpi
+    ginkgo/1.4.0-oneapi-2022.1.0               papyrus/1.0.2-oneapi-2022.1.0-mpi           turbine/1.3.0-oneapi-2022.1.0-mpi
+    globalarrays/5.8-oneapi-2022.1.0-mpi       parsec/3.0.2012-oneapi-2022.1.0-mpi         umap/2.1.0-oneapi-2022.1.0
+    gmp/6.2.1-oneapi-2022.1.0                  petsc/3.17.1-oneapi-2022.1.0-mpi            umpire/6.0.0-oneapi-2022.1.0
+    gotcha/1.0.3-oneapi-2022.1.0               plasma/21.8.29-oneapi-2022.1.0              upcxx/2022.3.0-oneapi-2022.1.0-mpi
+    hdf5/1.10.7-oneapi-2022.1.0-mpi            plumed/2.6.3-oneapi-2022.1.0-mpi            veloc/1.5-oneapi-2022.1.0-mpi
+    heffte/2.2.0-oneapi-2022.1.0-mpi           precice/2.4.0-oneapi-2022.1.0-mpi           wannier90/3.1.0-oneapi-2022.1.0-mpi
+    hypre/2.24.0-oneapi-2022.1.0-mpi           pumi/2.2.7-oneapi-2022.1.0-mpi              zfp/0.5.5-oneapi-2022.1.0
+
+
 Perlmutter
 ----------
 
