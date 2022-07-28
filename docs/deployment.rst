@@ -3,6 +3,7 @@ E4S Deployments
 
 These deployments are maintained by `ParaTools <https://www.paratools.com/>`_ and may not be officially supported by facility staff.
 
+
 JLSE
 ----------
 
@@ -208,6 +209,10 @@ The E4S deployments can be accessed via **module**. Available E4S deployments ar
 
 **ParaTools Deployment: E4S 22.05**
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a700c3... remove duplicate mentions of ParaTools being supporter
 .. code-block:: console
 
     $perlmutter> module use /global/cfs/cdirs/m3896/shared/modulefiles/
