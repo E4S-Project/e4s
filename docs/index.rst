@@ -40,6 +40,7 @@ Useful Links
    deployment.rst
    policy.rst
    spack.rst
+   raising_issues.rst
    contributing.rst
 
 
