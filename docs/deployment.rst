@@ -197,7 +197,7 @@ The exact Spack environment used to build this configuration is available here:
        bolt/2.0        (D)    flux-core/0.38.0     (D)    gotcha/1.0.3          (D)    magma/2.6.2-rocm    (D)    plasma/21.8.29             swig/4.0.2-fortran        zfp/0.5.5         (D)
        chai/2.4.0-rocm        gasnet/2022.3.0-rocm        kokkos-kernels/3.6.00 (D)    mpark-variant/1.4.0 (D)    py-jupyterhub/1.4.1        swig/4.0.2         (D)
        chai/2.4.0      (D)    gasnet/2022.3.0      (D)    kokkos/3.6.00-rocm           mvapich2/3.0a       (L)    qthreads/1.16       (D)    sz/2.1.12          (D)
->>>>>>> 6d5c0ff... Update deployment.rst
+
 
 Perlmutter
 ----------
@@ -209,10 +209,6 @@ The E4S deployments can be accessed via **module**. Available E4S deployments ar
 
 **ParaTools Deployment: E4S 22.05**
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5a700c3... remove duplicate mentions of ParaTools being supporter
 .. code-block:: console
 
     $perlmutter> module use /global/cfs/cdirs/m3896/shared/modulefiles/
