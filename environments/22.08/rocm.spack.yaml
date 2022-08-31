@@ -1,0 +1,276 @@
+# built and tested in ecpe4s/ubuntu20.04-runner-x86_64:2022-08-01
+# using https://github.com/spack/spack checked out at branch e4s-22.08
+
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@9.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      compiler: [gcc@9.4.0]
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      target: [x86_64]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    mpich:
+      variants: ~wrapperrpath
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+    python:
+      version: [3.8.13]
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+
+  modules:
+    prefix_inspections:
+      ./lib:
+      - LD_LIBRARY_PATH
+      ./lib64:
+      - LD_LIBRARY_PATH
+    default:
+      enable:: [lmod]
+      lmod:
+        core_compilers: [gcc@9.4.0]
+        blacklist_implicits: true
+        verbose: true
+        hash_length: 0
+        whitelist: [mpich, cmake^ncurses@6.3]
+        hierarchy: [mpi]
+        projections: {}
+        core_specs: []
+        all:
+          autoload: direct
+          environment:
+            set:
+              ${PACKAGE}_ROOT: ${PREFIX}
+          suffixes:
+            amdgpu_target=gfx908: rocm-gfx908
+            amdgpu_target=gfx90a: rocm-gfx90a
+            +openmp: openmp
+        tau:
+          suffixes:
+            +rocm: rocm
+        hpctoolkit:
+          suffixes:
+            +rocm: rocm
+        mpich:
+          suffixes:
+            ^hwloc+cuda: hwloc-cuda
+            ^ncurses@6.3: ncurses6.3
+            ^ncurses@6.2: ncurses6.2
+        py-warpx:
+          suffixes:
+            ^warpx dims=2: dims2
+            ^warpx dims=3: dims3
+            ^warpx dims=rz: dimsRZ
+
+  specs:
+  # CPU
+  - adios@1.13.1
+  - adios2@2.8.3
+  - alquimia@1.0.9
+  - aml@0.2.0
+  - amrex@22.08
+  - arborx@1.2
+  - archer@2.0.0
+  - argobots@1.1
+  - ascent@0.8.0
+  - axom@0.6.1
+  - bolt@2.0
+  - bricks@r0.1
+  - butterflypack@2.1.1
+  - cabana@0.5.0
+  - caliper@2.8.0
+  - chai@2022.03.0 ~benchmarks ~tests
+  - conduit@0.8.3
+  - darshan-runtime@3.4.0
+  - darshan-util@3.4.0
+  - datatransferkit@3.1-rc3
+  - dyninst@12.2.0
+  - exaworks@0.1.0
+  - faodel@1.2108.1
+  - flecsi@1.4.2
+  - flit@2.1.0
+  - flux-core@0.40.0
+  - fortrilinos@2.0.0
+  - gasnet@2022.3.0
+  - geopm@1.1.0
+  - ginkgo@1.4.0
+  - globalarrays@5.8
+  - gmp@6.2.1
+  - gotcha@1.0.3
+  - gptune@3.0.0
+  - h5bench@1.2
+  - hdf5@1.12.2 +fortran +hl +shared
+  - hdf5-vol-async@1.2
+  - heffte@2.2.0 +fftw
+  - hpctoolkit@2022.05.15
+  - hpx@1.8.1 networking=mpi
+  - hypre@2.25.0
+  - kokkos@3.6.01 +openmp
+  - kokkos-kernels@3.6.00 +openmp
+  - lammps@20220623
+  - legion@21.03.0
+  - libnrm@0.1.0
+  - libquo@1.3.1
+  - libunwind@1.6.2
+  - loki@0.1.7
+  - mercury@2.1.0
+  - metall@0.21
+  - mfem@4.4.0
+  - mpark-variant@1.4.0
+  - mpifileutils@0.11.1 ~xattr
+  - nccmp@1.9.0.1
+  - nco@5.0.1
+  - netlib-scalapack@2.2.0
+  - nrm@0.1.0
+  - omega-h@9.34.1
+  - openmpi@4.1.4
+  - openpmd-api@0.14.5
+  - papi@6.0.0.1
+  - papyrus@1.0.2
+  - parallel-netcdf@1.12.2
+  - paraview@5.10.1 +qt ^mesa@21.3.8
+  - parsec@3.0.2012 ~cuda
+  - pdt@3.25.1
+  - petsc@3.17.4
+  - phist@1.9.5
+  - plasma@21.8.29
+  - plumed@2.8.0
+  - precice@2.5.0
+  - pruners-ninja@1.0.1
+  - pumi@2.2.7
+  - py-cinemasci@1.7.0
+  - py-jupyterhub@1.4.1
+  - py-libensemble@0.9.2
+  - py-petsc4py@3.17.4
+  - py-warpx@22.08 ^warpx dims=2
+  - py-warpx@22.08 ^warpx dims=3
+  - py-warpx@22.08 ^warpx dims=rz
+  - qthreads@1.16 scheduler=distrib
+  - raja@2022.03.0
+  - rempi@1.1.0
+  - scr@3.0
+  - slate@2022.06.00 ~cuda
+  - slepc@3.17.2
+  - stc@0.9.0
+  - strumpack@6.3.1 ~slate
+  - sundials@6.2.0
+  - superlu@5.3.0
+  - superlu-dist@7.2.0
+  - swig@4.0.2
+  - swig@4.0.2-fortran
+  - sz@2.1.12.2
+  - tasmanian@7.7
+  - tau@2.31.1 +mpi +python
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+    +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+    +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+    +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine@1.3.0
+  - umap@2.1.0
+  - umpire@2022.03.1
+  - unifyfs@0.9.2
+  - upcxx@2022.3.0
+  - variorum@0.4.1
+  - veloc@1.5
+  - vtk-m@1.8.0
+  - wannier90@3.1.0
+  - zfp@0.5.5
+
+  # no amdgpu_target
+  - hpctoolkit@2022.05.15 +rocm
+  - tau@2.31.1 +mpi +rocm ^mpich@4.0.2
+
+  # amdgpu_target=gfx90a
+  - amrex@22.08 +rocm amdgpu_target=gfx90a
+  - arborx@1.2 +rocm amdgpu_target=gfx90a
+  - caliper@2.8.0 +rocm amdgpu_target=gfx90a
+  - gasnet@2022.3.0 +rocm amdgpu_target=gfx90a
+  - heffte@2.2.0 +rocm amdgpu_target=gfx90a
+  - hpx@1.8.1 +rocm amdgpu_target=gfx90a
+  - kokkos@3.6.01 +rocm amdgpu_target=gfx90a
+  - magma@2.6.2 ~cuda +rocm amdgpu_target=gfx90a
+  - papi@6.0.0.1 +rocm amdgpu_target=gfx90a
+  - petsc@3.17.4 +rocm amdgpu_target=gfx90a  
+  - slate@2022.06.00 +rocm amdgpu_target=gfx90a
+  - slepc@3.17.2 +rocm amdgpu_target=gfx90a ^petsc@3.17.4 +rocm amdgpu_target=gfx90a
+  - strumpack@6.3.1 ~slate +rocm amdgpu_target=gfx90a
+  - sundials@6.2.0 +rocm amdgpu_target=gfx90a
+  - superlu-dist@7.2.0 +rocm amdgpu_target=gfx90a
+  - tasmanian@7.7 ~openmp +rocm amdgpu_target=gfx90a
+  - upcxx@2022.3.0 +rocm amdgpu_target=gfx90a
+  - vtk-m@1.8.0 ~openmp +rocm amdgpu_target=gfx90a
+
+  # amdgpu_target=gfx908
+  - amrex@22.08 +rocm amdgpu_target=gfx908
+  - arborx@1.2 +rocm amdgpu_target=gfx908
+  - caliper@2.8.0 +rocm amdgpu_target=gfx908
+  - gasnet@2022.3.0 +rocm amdgpu_target=gfx908
+  - heffte@2.2.0 +rocm amdgpu_target=gfx908
+  - hpx@1.8.1 +rocm amdgpu_target=gfx908
+  - kokkos@3.6.01 +rocm amdgpu_target=gfx908
+  - magma@2.6.2 ~cuda +rocm amdgpu_target=gfx908
+  - papi@6.0.0.1 +rocm amdgpu_target=gfx908
+  - petsc@3.17.4 +rocm amdgpu_target=gfx908
+  - slate@2022.06.00 +rocm amdgpu_target=gfx908
+  - slepc@3.17.2 +rocm amdgpu_target=gfx908 ^petsc@3.17.4 +rocm amdgpu_target=gfx908
+  - strumpack@6.3.1 ~slate +rocm amdgpu_target=gfx908
+  - sundials@6.2.0 +rocm amdgpu_target=gfx908
+  - superlu-dist@7.2.0 +rocm amdgpu_target=gfx908
+  - tasmanian@7.7 ~openmp +rocm amdgpu_target=gfx908
+  - upcxx@2022.3.0 +rocm amdgpu_target=gfx908
+  - vtk-m@1.8.0 ~openmp +rocm amdgpu_target=gfx908
+
+  # FAILURES
+  # - chai@2022.03.0 ~benchmarks    # umpire
+  # - raja@2022.03.0 ~openmp +rocm  # raja
+  # - umpire@2022.03.1 +rocm        # umpire
+  # - ginkgo@1.4.0 +rocm            # ginkgo
+  # ----
+  # ginkgo: padded length=256, problem with install phase: test_install: error while loading shared libraries: librocrand.so.1: cannot open shared object file: No such file or directory
+  # raja: CMake Error at cmake/SetupPackages.cmake:93: Could NOT find ROCPRIM (missing: ROCPRIM_INCLUDE_DIRS)
+  # raja: https://github.com/spack/spack/issues/32127
+  # umpire: CMake Error in CMakeLists.txt: Target "blt_hip" INTERFACE_INCLUDE_DIRECTORIES property contains path: "/tmp/root/spack-stage/spack-stage-umpire-2022.03.1-fvtxwq2n6zhmfhcrr6a4obg7w3uzljwa/spack-src/HIP_CLANG_INCLUDE_PATH-NOTFOUND/.." which is prefixed in the source directory.
+  # umpire: https://github.com/spack/spack/issues/32133
+
+  # SKIPPED
+  # - charliecloud

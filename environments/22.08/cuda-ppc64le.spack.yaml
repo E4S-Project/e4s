@@ -1,0 +1,319 @@
+# built and tested in ecpe4s/ubuntu18.04-runner-ppc64le:2022-08-01
+# using https://github.com/spack/spack checked out at branch e4s-22.08
+
+spack:
+  view: false
+
+  concretizer:
+    unify: false
+    reuse: false
+
+  compilers:
+  - compiler:
+      spec: gcc@7.5.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu18.04
+      target: ppc64le
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      compiler: [gcc@7.5.0]
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      target: [ppc64le]
+      variants: +mpi
+    cuda:
+      version: [11.0.3]
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    mpich:
+      variants: ~wrapperrpath
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+    python:
+      version: [3.8.13]
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+
+  modules:
+    prefix_inspections:
+      ./lib:
+      - LD_LIBRARY_PATH
+      ./lib64:
+      - LD_LIBRARY_PATH
+    default:
+      enable:: [lmod]
+      lmod:
+        core_compilers: [gcc@7.5.0]
+        blacklist_implicits: true
+        verbose: true
+        hash_length: 0
+        whitelist: [mpich, cmake^ncurses@6.3]
+        hierarchy: [mpi]
+        projections: {}
+        core_specs: []
+        all:
+          autoload: direct
+          environment:
+            set:
+              ${PACKAGE}_ROOT: ${PREFIX}
+          suffixes:
+            +cuda cuda_arch=70: cuda70
+            +cuda cuda_arch=80: cuda80
+            +openmp: openmp
+        cabana:
+          suffixes:
+            ^kokkos +cuda cuda_arch=70: cuda70
+            ^kokkos +cuda cuda_arch=80: cuda80
+        tau:
+          suffixes:
+            +cuda: cuda
+        hpctoolkit:
+          suffixes:
+            +cuda: cuda   
+        bricks:
+          suffixes:
+            +cuda: cuda     
+        flux-core:
+          suffixes:
+            +cuda: cuda
+        papi:
+          suffixes:
+            +cuda: cuda
+        mpich:
+          suffixes:
+            ^hwloc+cuda: hwloc-cuda
+            ^ncurses@6.3: ncurses6.3
+            ^ncurses@6.2: ncurses6.2
+        py-warpx:
+          suffixes:
+            ^warpx dims=2: dims2
+            ^warpx dims=3: dims3
+            ^warpx dims=rz: dimsRZ
+
+  specs:
+  - adios@1.13.1
+  - adios2@2.8.3
+  - alquimia@1.0.9
+  - aml@0.2.0
+  - amrex@22.08
+  - arborx@1.2
+  - archer@2.0.0
+  - argobots@1.1
+  - ascent@0.8.0
+  - axom@0.6.1
+  - bolt@2.0
+  - butterflypack@2.1.1
+  - cabana@0.5.0
+  - caliper@2.8.0
+  - chai@2022.03.0 ~benchmarks ~tests
+  - conduit@0.8.3
+  - darshan-runtime@3.4.0
+  - darshan-util@3.4.0
+  - datatransferkit@3.1-rc3
+  - dyninst@12.2.0
+  - exaworks@0.1.0
+  - faodel@1.2108.1 ~tcmalloc
+  - flecsi@1.4.2
+  - flit@2.1.0
+  - flux-core@0.40.0
+  - fortrilinos@2.0.0
+  - gasnet@2022.3.0
+  - ginkgo@1.4.0
+  - globalarrays@5.8
+  - gmp@6.2.1
+  - gotcha@1.0.3
+  - gptune@3.0.0
+  - h5bench@1.2
+  - hdf5@1.12.2 +fortran +hl +shared
+  - hdf5-vol-async@1.2
+  - heffte@2.2.0 +fftw
+  - hpctoolkit@2022.05.15
+  - hpx@1.7.1 networking=mpi
+  - hypre@2.25.0
+  - kokkos@3.6.01 +openmp
+  - kokkos-kernels@3.6.00 +openmp
+  - lammps@20220623
+  - legion@21.03.0
+  - libnrm@0.1.0
+  - libquo@1.3.1
+  - libunwind@1.6.2
+  - loki@0.1.7
+  - mercury@2.1.0
+  - metall@0.21
+  - mfem@4.4.0
+  - mpark-variant@1.4.0
+  - mpifileutils@0.11.1 ~xattr
+  - nccmp@1.9.0.1
+  - nco@5.0.1
+  - netlib-scalapack@2.2.0
+  - nrm@0.1.0
+  - nvhpc@22.7
+  - omega-h@9.34.1
+  - openmpi@4.1.4
+  - openpmd-api@0.14.5
+  - papi@6.0.0.1
+  - papyrus@1.0.2
+  - parallel-netcdf@1.12.2
+  - paraview@5.10.1 +qt ^mesa@21.3.8
+  - parsec@3.0.2012 ~cuda
+  - pdt@3.25.1
+  - petsc@3.17.4
+  - plasma@21.8.29
+  - plumed@2.8.0
+  - precice@2.5.0
+  - pruners-ninja@1.0.1
+  - pumi@2.2.7
+  - py-cinemasci@1.7.0
+  - py-jupyterhub@1.4.1
+  - py-libensemble@0.9.2
+  - py-petsc4py@3.17.4
+  - py-warpx@22.08 ^warpx dims=2
+  - py-warpx@22.08 ^warpx dims=3
+  - py-warpx@22.08 ^warpx dims=rz
+  - qthreads@1.16 scheduler=distrib
+  - raja@2022.03.0
+  - rempi@1.1.0
+  - scr@3.0
+  - slate@2022.06.00 ~cuda
+  - slepc@3.17.2
+  - stc@0.9.0
+  - strumpack@6.3.1 ~slate
+  - sundials@6.2.0
+  - superlu@5.3.0
+  - superlu-dist@7.2.0
+  - swig@4.0.2
+  - swig@4.0.2-fortran
+  - sz@2.1.12.2
+  - tasmanian@7.7
+  - tau@2.31.1 +mpi +python
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+    +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+    +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+    +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine@1.3.0
+  - umap@2.1.0
+  - umpire@2022.03.1
+  - unifyfs@0.9.2
+  - upcxx@2022.3.0
+  - veloc@1.5
+  - vtk-m@1.8.0
+  - wannier90@3.1.0
+  - zfp@0.5.5
+
+  # no cuda_arch
+  - tau +mpi +cuda ^mpich@4.0.2
+  - papi +cuda
+  - flux-core +cuda
+  - hpctoolkit +cuda
+
+  # cuda_arch=80
+  - adios2@2.8.3 +cuda cuda_arch=80
+  - amrex@22.08 +cuda cuda_arch=80
+  - arborx@1.2 +cuda cuda_arch=80 ^kokkos@3.6.01 +wrapper
+  - cabana@0.5.0 +cuda ^kokkos@3.6.01 +wrapper +cuda_lambda +cuda cuda_arch=80
+  - caliper@2.8.0 +cuda cuda_arch=80
+  - chai@2022.03.0 ~benchmarks ~tests +cuda cuda_arch=80 ^umpire ~shared
+  - flecsi@1.4.develop +cuda cuda_arch=80
+  - ginkgo@1.4.0 +cuda cuda_arch=80
+  - heffte@2.2.0 +cuda cuda_arch=80
+  - hpx@1.7.1 +cuda cuda_arch=80
+  - hypre@2.25.0 +cuda cuda_arch=80
+  - kokkos@3.6.01 +wrapper +cuda cuda_arch=80
+  - kokkos-kernels@3.6.00 +cuda cuda_arch=80 ^kokkos@3.6.00 +wrapper +cuda cuda_arch=80
+  - magma@2.6.2 +cuda cuda_arch=80
+  - mfem@4.4.0 +cuda cuda_arch=80
+  - parsec@3.0.2012 +cuda cuda_arch=80 
+  - petsc@3.17.4 +cuda cuda_arch=80
+  - raja@2022.03.0 +cuda cuda_arch=80
+  - slate@2022.06.00 +cuda cuda_arch=80
+  - slepc@3.17.2 +cuda cuda_arch=80
+  - strumpack@6.3.1 ~slate +cuda cuda_arch=80
+  - sundials@6.2.0 +cuda cuda_arch=80
+  - superlu-dist@7.2.0 +cuda cuda_arch=80
+  - tasmanian@7.7 +cuda cuda_arch=80
+  - trilinos@13.4.0 +cuda cuda_arch=80
+  - umpire@2022.03.1 ~shared +cuda cuda_arch=80
+  - zfp@0.5.5 +cuda cuda_arch=80
+
+  # cuda_arch=70
+  - adios2@2.8.3 +cuda cuda_arch=70
+  - amrex@22.08 +cuda cuda_arch=70
+  - arborx@1.2 +cuda cuda_arch=70 ^kokkos@3.6.01 +wrapper
+  - ascent@0.8.0 +cuda cuda_arch=70
+  - cabana@0.5.0 +cuda ^kokkos@3.6.01 +wrapper +cuda_lambda +cuda cuda_arch=70
+  - caliper@2.8.0 +cuda cuda_arch=70
+  - chai@2022.03.0 ~benchmarks ~tests +cuda cuda_arch=70 ^umpire ~shared
+  - flecsi@1.4.develop +cuda cuda_arch=70
+  - ginkgo@1.4.0 +cuda cuda_arch=70
+  - heffte@2.2.0 +cuda cuda_arch=70
+  - hpx@1.7.1 +cuda cuda_arch=70
+  - hypre@2.25.0 +cuda cuda_arch=70
+  - kokkos@3.6.01 +wrapper +cuda cuda_arch=70
+  - kokkos-kernels@3.6.00 +cuda cuda_arch=70 ^kokkos@3.6.00 +wrapper +cuda cuda_arch=70
+  - magma@2.6.2 +cuda cuda_arch=70
+  - mfem@4.4.0 +cuda cuda_arch=70
+  - parsec@3.0.2012 +cuda cuda_arch=70 
+  - petsc@3.17.4 +cuda cuda_arch=70
+  - raja@2022.03.0 +cuda cuda_arch=70
+  - slate@2022.06.00 +cuda cuda_arch=70
+  - slepc@3.17.2 +cuda cuda_arch=70
+  - strumpack@6.3.1 ~slate +cuda cuda_arch=70
+  - sundials@6.2.0 +cuda cuda_arch=70
+  - superlu-dist@7.2.0 +cuda cuda_arch=70
+  - tasmanian@7.7 +cuda cuda_arch=70
+  - trilinos@13.4.0 +cuda cuda_arch=70
+  - umpire@2022.03.1 ~shared +cuda cuda_arch=70
+  - vtk-m@1.8.0 +cuda cuda_arch=70
+  - zfp@0.5.5 +cuda cuda_arch=70
+
+  # GPU FAILURES
+  # - ascent@0.8.0 +cuda cuda_arch=80    # vtk-m@1.7.1
+  # - bricks@r0.1 +cuda                  # bricks
+  # - dealii@9.4.0 +cuda                 # dealii
+  # - vtk-m@1.8.0 +cuda cuda_arch=80     # vtk-m@1.8.0
+  # ----
+  # bricks: VSBrick-7pt.py-Scalar-8x8x8-1:30:3: error: 'vfloat512' was not declared in this scope
+  # fltk: pngrutil.c:(.text.png_read_filter_row+0x88): undefined reference to `png_init_filter_functions_vsx'
+  # vtk-m@1.7.1: nvcc fatal: Unsupported gpu architecture 'compute_86'
+  # vtk-m@1.8.0: nvcc fatal: Unsupported gpu architecture 'compute_86'
+
+  # CPU FAILURES
+  # - bricks@r0.1                       # bricks
+  # - geopm@@1.1.0                      # geopm
+  # - phist@1.9.5                       # phist
+  # - variorum@0.4.1                    # variorum
+  # ----
+  # bricks: VSBrick-7pt.py-Scalar-8x8x8-1:30:3: error: 'vfloat512' was not declared in this scope
+  # geopm: configure phase: libtool.m4: error: problem compiling CXX test program
+  # phist: src/kernels/builtin/axpy_kernels_nt.c:22:10: fatal error: emmintrin.h: No such file or directory
+  # variorum: src/variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
+
+  # SKIPPED
+  # - charliecloud
