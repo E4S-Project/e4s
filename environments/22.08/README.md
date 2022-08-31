@@ -31,31 +31,31 @@ $> spack buildcache keys -it
 
 ## Model Environments
 
-* For NVIDIA GPUs on x86_64 use:
+* For NVIDIA GPUs on x86_64 refer to:
   * `cuda-x86_64.spack.yaml`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 9.4.0`
     * `ecpe4s/ubuntu20.04-runner-x86_64:2022-08-01`
 
-* For NVIDIA GPUs on ppc64le use:
+* For NVIDIA GPUs on ppc64le refer to:
   * `cuda-ppc64le.spack.yaml`
   * Built and tested using:
     * `Ubuntu 18.04, GCC 7.5.0`
     * `ecpe4s/ubuntu18.04-runner-ppc64le:2022-08-01`
 
-* For NVIDIA GPUs on aarch64 use:
+* For NVIDIA GPUs on aarch64 refer to:
   * `cuda-aarch64.spack.yaml`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 9.4.0`
     * `ecpe4s/ubuntu20.04-runner-aarch64:2022-08-01`
 
-* For AMD GPUs use:
+* For AMD GPUs refer to:
   * `rocm.spack.yaml`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 9.4.0`
     * `ecpe4s/ubuntu20.04-runner-x86_64:2022-08-01`
 
-* For OneAPI and Intel GPUs use:
+* For OneAPI and Intel GPUs refer to:
   * `oneapi.spack.yaml`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 9.4.0`
