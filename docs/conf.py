@@ -65,4 +65,4 @@ html_static_path = ['_static']
 
 # add template for no scrollbar see https://knowyourtoolset.com/2018/02/controlling-the-width-of-a-table-with-read-the-docs/
 def setup(app):
-    app.add_css_file('custom.css')
+    app.add_css_file('_static/custom.css')
