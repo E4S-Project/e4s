@@ -41,6 +41,7 @@ Useful Links
    policy.rst
    spack.rst
    contributing.rst
+   support.md
 
 
 
