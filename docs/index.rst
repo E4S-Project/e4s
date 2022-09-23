@@ -29,6 +29,7 @@ Useful Links
 - GitHub Project: https://github.com/E4S-Project/e4s
 - E4S Dashboard: https://dashboard.e4s.io/
 - Slack Channel: https://e4s-project.slack.com
+- E4S Community Policy: https://e4s-project.github.io/policies.html
 
 
 .. toctree::
@@ -38,7 +39,6 @@ Useful Links
    E4S_Products.md
    facility_e4s.md
    deployment.rst
-   policy.rst
    spack.rst
    contributing.rst
    support.md
