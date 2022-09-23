@@ -1,6 +1,23 @@
 E4S Distribution via spack.yaml
 ================================
 
+22.08
+-------
+
+E4S 22.08 is based on Spack branch `e4s-22.08 <https://github.com/spack/spack/tree/e4s-22.08>`_. This release comes with
+100+ full product releases. Shown below is the spack configuration from Univ of Oregon system. The specs are pushed to buildcache
+which can be retrieved using the following commands
+
+.. code-block:: console
+
+    $ spack mirror add E4S https://cache.e4s.io/22.08
+    $ spack buildcache keys -it
+
+Shown below is the spack configuration for CUDA based build for X86_64 platform.
+
+.. literalinclude:: ../environments/22.08/cuda-x86_64.spack.yaml
+    :language: yaml
+
 22.05
 -------
 
