@@ -296,7 +296,7 @@ spack:
   # slepc: fetch error
   # variorum: src/variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
 
-  # ERRORS
+  # CUDA ERRORS
   # - bricks +cuda                  # bricks
   # - cusz +cuda cuda_arch=70       # cusz
   # - dealii +cuda cuda_arch=70     # fltk
