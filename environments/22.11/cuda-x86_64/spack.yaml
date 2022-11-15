@@ -1,0 +1,334 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      compiler: [gcc@11.1.0]
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      target: [x86_64]
+      variants: +mpi
+    tbb:
+      require: intel-tbb
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    cuda:
+      version: [11.7.0]
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+    mpich:
+      require: '@4.0.2 ~wrapperrpath ~hwloc'
+    ncurses:
+      require: '@6.3 +termlib'
+    python:
+      require: '@3.7.15'
+
+  compilers:
+  - compiler:
+      spec: gcc@11.1.0
+      paths:
+        cc: /usr/bin/gcc-11
+        cxx: /usr/bin/g++-11
+        f77: /usr/bin/gfortran-11
+        fc: /usr/bin/gfortran-11
+      flags: {}
+      operating_system: ubuntu20.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  modules:
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH]
+    default:
+      'enable:': [lmod]
+      lmod:
+        core_compilers: [gcc@11.1.0]
+        verbose: true
+        hash_length: 0
+        hierarchy: [mpi]
+        projections: {}
+        core_specs: []
+        exclude_implicits: true
+        include:
+        - adios2
+        - ascent
+        - autoconf
+        - automake
+        - cmake
+        - darshan-runtime
+        - darshan-util
+        - hdf5-vol-async
+        - mpich
+        - parallel-netcdf
+        - py-cinemasci
+        - sz
+        - unifyfs
+        - veloc
+        - vtk-m
+        - zfp
+        all:
+          autoload: direct
+          environment:
+            set:
+              ${PACKAGE}_ROOT: ${PREFIX}
+          suffixes:
+            +cuda cuda_arch=70: cuda70
+            +cuda cuda_arch=80: cuda80
+            +openmp: openmp
+        cabana:
+          suffixes:
+            ^kokkos +cuda cuda_arch=70: cuda70
+            ^kokkos +cuda cuda_arch=80: cuda80
+        tau:
+          suffixes:
+            +cuda: cuda
+        hpctoolkit:
+          suffixes:
+            +cuda: cuda
+        bricks:
+          suffixes:
+            +cuda: cuda
+        flux-core:
+          suffixes:
+            +cuda: cuda
+        papi:
+          suffixes:
+            +cuda: cuda
+        mpich:
+          suffixes:
+            ^xz@5.2.6: xz5.2.6
+        adios2:
+          suffixes:
+            ~cuda+hdf5: hdf5
+        py-warpx:
+          suffixes:
+            ^warpx dims=2: dims2
+            ^warpx dims=3: dims3
+            ^warpx dims=rz: dimsRZ
+
+  specs:
+  # CPU
+  - adios@1.13.1
+  - alquimia@1.0.10
+  - aml@0.2.0
+  - amrex@22.11
+  - arborx@1.3
+  - archer@2.0.0
+  - argobots@1.1
+  - axom@0.7.0
+  - bolt@2.0
+  - bricks@r0.1
+  - butterflypack@2.2.2
+  - cabana@0.5.0
+  - caliper@2.8.0
+  - chai@2022.03.0 ~benchmarks ~tests
+  - charliecloud@0.29
+  - conduit@0.8.4
+  - datatransferkit@3.1-rc3
+  - dyninst@12.2.0
+  - ecp-data-vis-sdk@1.0 ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp
+  - exaworks@0.1.0
+  - flecsi@1.4.2
+  - flit@2.1.0
+  - flux-core@0.44.0
+  - fortrilinos@2.1.0
+  - gasnet@2022.9.0
+  - ginkgo@1.4.0
+  - globalarrays@5.8
+  - gmp@6.2.1
+  - gotcha@1.0.4
+  - gptune@3.0.0
+  - h5bench@1.3
+  - hdf5-vol-async@1.3
+  - heffte@2.3.0 +fftw
+  - hpctoolkit@2022.10.01
+  - hpx@1.8.1 networking=mpi
+  - hypre@2.26.0
+  - kokkos@3.7.00 +openmp
+  - kokkos-kernels@3.7.00 +openmp
+  - lammps@20220623
+  - legion@21.03.0
+  - libnrm@0.1.0
+  - libpressio@0.88.0 +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf
+  - libquo@1.3.1
+  - libunwind@1.6.2
+  - mercury@2.1.0
+  - metall@0.21
+  - mfem@4.5.0
+  - mpark-variant@1.4.0
+  - mpifileutils@0.11.1 ~xattr
+  - nccmp@1.9.0.1
+  - nco@5.0.1
+  - netlib-scalapack@2.2.0
+  - nrm@0.1.0
+  - nvhpc@22.9
+  - omega-h@9.34.13
+  - openmpi@4.1.4
+  - openpmd-api@0.14.5
+  - papi@6.0.0.1
+  - papyrus@1.0.2
+  - parsec@3.0.2209 ~cuda
+  - pdt@3.25.1
+  - petsc@3.18.1
+  - phist@1.11.2
+  - plasma@22.9.29
+  - plumed@2.8.0
+  - precice@2.5.0
+  - pumi@2.2.7
+  - py-jupyterhub@1.4.1
+  - py-libensemble@0.9.3
+  - py-petsc4py@3.18.1
+  - py-warpx@22.10 ^warpx dims=2
+  - py-warpx@22.10 ^warpx dims=3
+  - py-warpx@22.10 ^warpx dims=rz
+  - qthreads@1.16 scheduler=distrib
+  - quantum-espresso@7.1
+  - raja@2022.03.0
+  - scr@3.0.1
+  - slate@2022.07.0 ~cuda
+  - slepc@3.18.1
+  - stc@0.9.0
+  - strumpack@7.0.1 ~slate
+  - sundials@6.4.1
+  - superlu@5.3.0
+  - superlu-dist@8.1.1
+  - swig@4.0.2
+  - swig@4.0.2-fortran
+  - tasmanian@7.9
+  - tau@2.32 +mpi +python
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+    +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+    +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+    +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine@1.3.0
+  - umap@2.1.0
+  - umpire@2022.03.1
+  - upcxx@2022.9.0
+  - variorum@0.6.0
+  - wannier90@3.1.0
+
+  # CUDA, NO ARCH
+  - bricks@r0.1 +cuda
+  - flux-core@0.44.0 +cuda
+  - hpctoolkit@2022.10.01 +cuda
+  - papi@6.0.0.1 +cuda
+  - tau@2.32 +mpi +cuda
+
+  # CUDA, CUDA_ARCH=80
+  - adios2@2.8.3 +cuda cuda_arch=80   # ecp-data-vis-sdk
+  - amrex@22.11 +cuda cuda_arch=80
+  - arborx@1.3 +cuda cuda_arch=80 ^kokkos@3.7.00 +wrapper
+  - ascent@0.8.0 +cuda cuda_arch=80   # ecp-data-vis-sdk
+  - cabana@0.5.0 +cuda ^kokkos@3.7.00 +wrapper +cuda_lambda +cuda cuda_arch=80
+  - caliper@2.8.0 +cuda cuda_arch=80
+  - chai@2022.03.0 ~benchmarks ~tests +cuda cuda_arch=80 ^umpire@2022.03.1 ~shared
+  - cusz@0.3 +cuda cuda_arch=80
+  - dealii@9.4.0 +cuda cuda_arch=80
+  - flecsi@2.1.0 +cuda cuda_arch=80
+  - ginkgo@1.4.0 +cuda cuda_arch=80
+  - heffte@2.3.0 +cuda cuda_arch=80
+  - hpx@1.8.1 +cuda cuda_arch=80
+  - hypre@2.26.0 +cuda cuda_arch=80
+  - kokkos-kernels@3.7.00 +cuda cuda_arch=80 ^kokkos@3.7.00 +wrapper +cuda cuda_arch=80
+  - kokkos@3.7.00 +wrapper +cuda cuda_arch=80
+  - magma@2.6.2 +cuda cuda_arch=80
+  - mfem@4.5.0 +cuda cuda_arch=80
+  - omega-h@9.34.13 +cuda cuda_arch=80
+  - petsc@3.18.1 +cuda cuda_arch=80
+  - raja@2022.03.0 +cuda cuda_arch=80
+  - slate@2022.07.0 +cuda cuda_arch=80
+  - slepc@3.18.1 +cuda cuda_arch=80
+  - strumpack@7.0.1 ~slate +cuda cuda_arch=80
+  - sundials@6.4.1 +cuda cuda_arch=80
+  - superlu-dist@8.1.1 +cuda cuda_arch=80
+  - tasmanian@7.9 +cuda cuda_arch=80
+  - trilinos@13.4.0 +cuda cuda_arch=80
+  - umpire@2022.03.1 ~shared +cuda cuda_arch=80
+  - vtk-m@1.9.0 +cuda cuda_arch=80    # ecp-data-vis-sdk
+  - zfp@0.5.5 +cuda cuda_arch=80      # ecp-data-vis-sdk
+
+  # CUDA, CUDA_ARCH=70
+  - adios2@2.8.3 +cuda cuda_arch=70   # ecp-data-vis-sdk
+  - amrex@22.11 +cuda cuda_arch=70
+  - arborx@1.3 +cuda cuda_arch=70 ^kokkos@3.7.00 +wrapper
+  - ascent@0.8.0 +cuda cuda_arch=70   # ecp-data-vis-sdk
+  - cabana@0.5.0 +cuda ^kokkos@3.7.00 +wrapper +cuda_lambda +cuda cuda_arch=70
+  - caliper@2.8.0 +cuda cuda_arch=70
+  - chai@2022.03.0 ~benchmarks ~tests +cuda cuda_arch=70 ^umpire@2022.03.1 ~shared
+  - cusz@0.3 +cuda cuda_arch=70
+  - dealii@9.4.0 +cuda cuda_arch=70
+  - flecsi@2.1.0 +cuda cuda_arch=70
+  - ginkgo@1.4.0 +cuda cuda_arch=70
+  - heffte@2.3.0 +cuda cuda_arch=70
+  - hpx@1.8.1 +cuda cuda_arch=70
+  - hypre@2.26.0 +cuda cuda_arch=70
+  - kokkos-kernels@3.7.00 +cuda cuda_arch=70 ^kokkos@3.7.00 +wrapper +cuda cuda_arch=70
+  - kokkos@3.7.00 +wrapper +cuda cuda_arch=70
+  - magma@2.6.2 +cuda cuda_arch=70
+  - mfem@4.5.0 +cuda cuda_arch=70
+  - omega-h@9.34.13 +cuda cuda_arch=70
+  - petsc@3.18.1 +cuda cuda_arch=70
+  - raja@2022.03.0 +cuda cuda_arch=70
+  - slate@2022.07.0 +cuda cuda_arch=70
+  - slepc@3.18.1 +cuda cuda_arch=70
+  - strumpack@7.0.1 ~slate +cuda cuda_arch=70
+  - sundials@6.4.1 +cuda cuda_arch=70
+  - superlu-dist@8.1.1 +cuda cuda_arch=70
+  - tasmanian@7.9 +cuda cuda_arch=70
+  - trilinos@13.4.0 +cuda cuda_arch=70
+  - umpire@2022.03.1 ~shared +cuda cuda_arch=70
+  - vtk-m@1.9.0 +cuda cuda_arch=70    # ecp-data-vis-sdk
+  - zfp@0.5.5 +cuda cuda_arch=70      # ecp-data-vis-sdk
+
+  # CPU SPECS IN ECP-DATA-VIS-SDK
+  # - adios2@2.8.3
+  # - ascent@0.8.0
+  # - darshan-runtime@3.4.0
+  # - darshan-util@3.4.0
+  # - faodel@1.2108.1
+  # - hdf5@1.12.2 +fortran +hl +shared
+  # - parallel-netcdf@1.12.3
+  # - paraview@5.10.1
+  # - py-cinemasci@1.3
+  # - sz@2.1.12.2
+  # - unifyfs@1.0
+  # - veloc@1.5
+  # - visit@3.2.2
+  # - vtk-m@1.7.1
+  # - zfp@0.5.5
+
+  # ERRORS
+  # - dealii@9.4.0                                                                    # slepc
+  # - ecp-data-vis-sdk@1.0 ~rocm +cuda cuda_arch=70 +adios2 +ascent +hdf5 +vtkm +zfp
+  # - ecp-data-vis-sdk@1.0 ~rocm +cuda cuda_arch=80 +adios2 +ascent +hdf5 +vtkm +zfp
+  # - loki@0.1.7                                                                      # loki
+  # - rempi@1.1.0                                                                     # rempi
+  # ---
+  # loki: https://github.com/spack/spack/issues/32122
+  # rempi: https://github.com/spack/spack/issues/32123
+  # slepc: fetch error
