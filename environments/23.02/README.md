@@ -57,7 +57,7 @@ gpg: inserting ownertrust of 6
   * For `cuda_arch=75` and `cuda_arch=80`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 11.1.0`
-    * `ecpe4s/ubuntu20.04-runner-aarch64:2023-03-01`
+    * `ecpe4s/ubuntu20.04-runner-aarch64:2023-02-01`
 
 * Model environment for AMD GPUs on x86_64 is:
   * `rocm-x86_64/spack.yaml`
