@@ -38,28 +38,28 @@ gpg: inserting ownertrust of 6
 
 ## Model Environments
 
-* For NVIDIA GPUs on x86_64 refer to:
+* Model environment for NVIDIA GPUs on x86_64 is:
   * `cuda-x86_64/spack.yaml`
   * For `cuda_arch=80` and `cuda_arch=90`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 11.1.0`
     * `ecpe4s/ubuntu20.04-runner-x86_64:2023-01-01`
 
-* For NVIDIA GPUs on ppc64le refer to:
+* Model environment for NVIDIA GPUs on ppc64le is:
   * `cuda-ppc64le/spack.yaml`
   * For `cuda_arch=70`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 9.4.0`
     * `ecpe4s/ubuntu20.04-runner-ppc64le:2023-01-01`
 
-* For NVIDIA GPUs on aarch64 refer to:
+* Model environment for NVIDIA GPUs on aarch64 is:
   * `cuda-aarch64/spack.yaml`
   * For `cuda_arch=75` and `cuda_arch=80`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 11.1.0`
     * `ecpe4s/ubuntu20.04-runner-aarch64:2023-03-01`
 
-* For AMD GPUs refer to:
+* Model environment for AMD GPUs on x86_64 is:
   * `rocm-x86_64/spack.yaml`
   * For `amdgpu_target=gfx908` and `amdgpu_target=gfx90a`
   * Built and tested using:
