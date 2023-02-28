@@ -66,7 +66,7 @@ gpg: inserting ownertrust of 6
 
 Here is what `spack find` would show following the installation of the `cuda-x86_64/spack.yaml` model environment.
 
-If you inspect this environment, you will notice it includes `+cuda` specs built for both `cuda_arch=70` (V100) and `cuda_arch=80` (A100).
+If you inspect this environment, you will notice it includes `+cuda` specs built for both `cuda_arch=80` (A100) and `cuda_arch=90` (H100).
 
 ```
 root@d8d252f1a181:/# spack find -x
