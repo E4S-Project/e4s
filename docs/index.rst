@@ -17,7 +17,7 @@ Welcome to E4S's documentation!
 
 .. |license| image:: https://img.shields.io/github/license/E4S-Project/e4s.svg
 
-The Extreme-scale Scientific Software Stack (E4S) is a community effort to provide open source
+The `Extreme-scale Scientific Software Stack (E4S) <https://e4s-project.github.io/>`_ is a community effort to provide open source
 software packages for developing, deploying and running scientific applications
 on high-performance computing (HPC) platforms. E4S provides from-source builds and containers of a
 broad collection of HPC software packages.
@@ -29,6 +29,7 @@ Useful Links
 - GitHub Project: https://github.com/E4S-Project/e4s
 - E4S Dashboard: https://dashboard.e4s.io/
 - Slack Channel: https://e4s-project.slack.com
+- Slack Channel Invitation: https://communityinviter.com/apps/e4s-project/e4s
 - E4S Community Policy: https://e4s-project.github.io/policies.html
 
 
