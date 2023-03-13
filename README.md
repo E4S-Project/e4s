@@ -30,7 +30,8 @@ Please see [E4S Product Dictionary](https://github.com/E4S-Project/e4s/blob/mast
 - User Documentation: https://e4s.readthedocs.io
 - Main Page: https://e4s-project.github.io/
 - E4S GitHub: https://github.com/E4S-Project/
-- Slack Channel: https://e4s-project.slack.com
+- E4S Slack Channel: https://e4s-project.slack.com
+- Slack Channel Invitation: https://communityinviter.com/apps/e4s-project/e4s
 - E4S Dashboard: https://dashboard.e4s.io/ 
 
 ## Related Projects
