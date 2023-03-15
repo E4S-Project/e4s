@@ -1,0 +1,308 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      require: '%oneapi'
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+        tbb: [intel-tbb]
+      target: [x86_64]
+      variants: +mpi
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    vtk-m:
+      require: ~openmp
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+    llvm:
+      require: '%gcc'
+    mpich:
+      require: '@4.1 ~wrapperrpath ~hwloc'
+    python:
+      require: '@3.7.15'
+    py-cryptography:
+      require: '@38.0.1'
+    m4:
+      require: '%gcc'
+    autoconf:
+      require: '%gcc'
+    unzip:
+      require: '%gcc'
+    binutils:
+      require: '%gcc'
+      variants: +ld +gold +headers +libiberty ~nls
+    llvm:
+      require: '%gcc'
+    ruby:
+      require: '%gcc'
+    rust:
+      require: '%gcc'
+    krb5:
+      require: '%gcc'
+    papi:
+      require: '%gcc'
+    openssh:
+      require: '%gcc'
+    adios2:
+      require: '%gcc'
+    bison:
+      require: '%gcc'
+
+  compilers:
+  - compiler:
+      spec: oneapi@2023.0.0
+      paths:
+        cc: /opt/intel/oneapi/compiler/2023.0.0/linux/bin/icx
+        cxx: /opt/intel/oneapi/compiler/2023.0.0/linux/bin/icpx
+        f77: /opt/intel/oneapi/compiler/2023.0.0/linux/bin/ifx
+        fc: /opt/intel/oneapi/compiler/2023.0.0/linux/bin/ifx
+      flags: {}
+      operating_system: ubuntu20.04
+      target: x86_64
+      modules: [compiler]
+      environment:
+        prepend_path:
+          LD_LIBRARY_PATH: /opt/intel/oneapi/compiler/2023.0.0/linux/compiler/lib/intel64_lin
+      extra_rpaths: []
+  - compiler:
+      spec: gcc@11.1.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  modules:
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH]
+    default:
+      'enable:': [lmod]
+      lmod:
+        projections:
+          all: '{name}/{version}-{compiler.name}-{compiler.version}'
+        core_compilers: [oneapi@2023.0.0, gcc@11.1.0]
+        verbose: true
+        hash_length: 0
+        hierarchy: [mpi]
+        projections: {}
+        core_specs: []
+        exclude_implicits: true
+        include:
+        - autoconf
+        - automake
+        - cmake
+        - mpich
+        all:
+          autoload: direct
+          environment:
+            set:
+              ${PACKAGE}_ROOT: ${PREFIX}
+          suffixes:
+            '%oneapi': oneapi
+            +sycl: sycl
+            +ze: level-zero
+            +level_zero: level-zero
+            +openmp: openmp
+        kokkos-kernels:
+          suffixes:
+            ^kokkos+sycl: sycl
+        mpich:
+          suffixes:
+            ^xz@5.2.6: xz5.2.6
+        adios2:
+          suffixes:
+            ~cuda+hdf5: hdf5
+        sz:
+          suffixes:
+            ^zstd+programs: zstd-programs
+        py-warpx:
+          suffixes:
+            ^warpx dims=2: dims2
+            ^warpx dims=3: dims3
+            ^warpx dims=rz: dimsRZ
+
+  specs:
+  # CPU
+  - adios
+  - adios2
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - archer
+  - argobots
+  - ascent
+  - axom
+  - bolt
+  - bricks
+  - butterflypack
+  - cabana
+  - caliper
+  - chai ~benchmarks ~tests
+  - charliecloud
+  - conduit
+  - darshan-runtime
+  - darshan-util
+  - datatransferkit
+  - exaworks
+  - faodel
+  - flit
+  - flux-core
+  - fortrilinos
+  - gasnet
+  - globalarrays
+  - gmp
+  - gotcha
+  - h5bench
+  - hdf5 +fortran +hl +shared
+  - hdf5-vol-async
+  - heffte +fftw
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - lammps
+  - legion
+  - libnrm
+  - libquo
+  - libunwind
+  - mercury
+  - metall
+  - mfem
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - netlib-scalapack
+  - omega-h
+  - openmpi
+  - openpmd-api
+  - papyrus
+  - parallel-netcdf
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist
+  - plasma
+  - plumed
+  - precice
+  - pumi
+  - py-libensemble
+  - py-petsc4py
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig
+  - swig@4.0.2-fortran
+  - sz
+  - tasmanian
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+    +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+    +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+    +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - unifyfs
+  - upcxx
+  - variorum
+  - veloc
+  - vtk-m ~openmp # can't build +openmp w/ %oneapi: https://github.com/spack/spack/issues/31830
+  - wannier90
+  - zfp
+
+  # GPU
+  - aml +ze
+  - arborx +sycl ^kokkos +sycl +openmp std=17 +tests +examples
+  - cabana +sycl ^kokkos +sycl +openmp std=17 +tests +examples
+  - kokkos +sycl +openmp std=17 +tests +examples
+  - kokkos-kernels build_type=Release %oneapi ^kokkos +sycl +openmp std=17 +tests +examples
+
+  # CPU ERRORS
+  # - dealii                                # assimp
+  # - dyninst ^intel-tbb                    # intel-tbb
+  # - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp # adios2~cuda, ascent~cuda, darshan-runtime, darshan-util, faodel, hdf5, libcatalyst, parallel-netcdf, paraview~cuda, py-cinemasci, sz, unifyfs, veloc, visit, vtk-m, zfp
+  # - flecsi ^pfunit max_array_rank=5       # pfunit: oneapi not supported
+  # - geopm                                 # geopm
+  # - ginkgo                                # ginkgo
+  # - gptune ~mpispawn                      # py-scipy@1.3.3
+  # - hpctoolkit                            # intel-tbb
+  # - hpx networking=mpi                    # boost@1.79.0
+  # - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp # py-numcodecs
+  # - nrm                                   # py-scipy@1.3.3
+  # - papi                                  # papi
+  # - paraview ~cuda +qt                    # gperf 
+  # - pruners-ninja                         # pruners-ninja
+  # - py-cinemasci                          # py-scipy@1.3.3
+  # - py-jupyterhub                         # py-ruamel-yaml-clib
+  # - py-warpx ^warpx dims=2                # py-scipy@1.5.4
+  # - py-warpx ^warpx dims=3                # py-scipy@1.5.4
+  # - py-warpx ^warpx dims=rz               # py-scipy@1.5.4
+  # - scr                                   # libyogrt
+  # - tau +mpi +python                      # tau
+  # - visit                                 # gperf
+  # --
+  # boost@1.79.0: ./boost/mpl/aux_/integral_wrapper.hpp:73:31: error: integer value -1 is outside the valid range of values [0, 3] for this enumeration type [-Wenum-constexpr-conversion]
+  # ginkgo: icpx: error: clang frontend command failed with exit code 139 (use -v to see invocation)
+  # gperf: ./getline.cc:58:7: error: ISO C++17 does not allow 'register' storage class specifier [-Wregister]
+  # intel-tbb: icpx: error: unknown argument: '-flifetime-dse=1'
+  # libxkbcommon: bison/skeletons/yacc.c:420: undefined macro `b4_symbol(51, code)'
+  # libyogrt: configure: error: slurm is not in specified location!
+  # mesa-glu: src/libnurbs/internals/varray.cc:76:5: error: ISO C++17 does not allow 'register' storage class specifier [-Wregister]
+  # mesa: bison/skeletons/yacc.c:420: undefined macro `b4_symbol(61, code)'
+  # papi: papi_internal.c:124:3: error: use of undeclared identifier '_papi_hwi_my_thread'; did you mean '_papi_hwi_read'?
+  # parsec: interfaces/ptg/ptg-compiler/parsec.y:189:5: error: unknown type name 'jdf_external_entry
+  # pfunit: oneapi not supported
+  # py-numcodecs: c-blosc/internal-complibs/zlib-1.2.8/gzread.c:30:15: error: call to undeclared function 'read'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+  # py-ruamel-yaml-clib:  _ruamel_yaml.c:1889:17: warning: assigning to 'char *' from 'const char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+  # py-scipy: gcc: error: unrecognized command-line option '-fp-model=strict'
+  # tau: ctau_impl.c:838:3: error: call to undeclared function 'Tau_profile_exit_all_threads'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+
+  # GPU ERRORS
+  # - amrex +sycl                             # amrex
+  # - ginkgo +oneapi                          # ginkgo
+  # - hpctoolkit +level_zero                  # intel-tbb
+  # - sundials +sycl cxxstd=17                # sundials
+  # - tau +mpi +opencl +level_zero ~pdt       # tau
+  # --
+  # amrex: Base/AMReX_GpuDevice.cpp:465:22: error: no matching member function for call to 'get_info'
+  # ginkgo: InstallError: Ginkgo's oneAPI backend requires theDPC++ compiler as main CXX compiler.
+  # sundials: include/sunmemory/sunmemory_sycl.h:20:10: fatal error: 'CL/sycl.hpp' file not found
+  # tau: Error: TAU requires libdrm.so to be installed 
