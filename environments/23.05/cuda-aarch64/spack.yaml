@@ -131,6 +131,7 @@ spack:
   - arborx
   - archer
   - argobots
+  - ascent # ecp dav
   - axom
   - bolt
   - boost
@@ -226,7 +227,6 @@ spack:
   - xyce +mpi +shared +pymi +pymi_static_tpls ^trilinos~shylu
   # INCLUDED IN ECP DAV CPU
   # - adios2
-  # - ascent
   # - darshan-runtime
   # - darshan-util
   # - faodel
