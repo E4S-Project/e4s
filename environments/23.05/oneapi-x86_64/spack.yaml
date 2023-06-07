@@ -5,7 +5,6 @@ spack:
     reuse: false
     unify: false
 
-
   packages:
     all:
       require: '%oneapi'
@@ -125,7 +124,7 @@ spack:
           autoload: direct
           environment:
             set:
-              ${PACKAGE}_ROOT: ${PREFIX}
+              '{name}_ROOT': '{PREFIX}'
           suffixes:
             '%oneapi': oneapi
             +sycl: sycl

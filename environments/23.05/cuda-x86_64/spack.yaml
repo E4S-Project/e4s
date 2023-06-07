@@ -69,6 +69,7 @@ spack:
       modules: []
       environment: {}
       extra_rpaths: []
+
   modules:
     prefix_inspections:
       lib: [LD_LIBRARY_PATH]
@@ -93,7 +94,7 @@ spack:
           autoload: direct
           environment:
             set:
-              ${PACKAGE}_ROOT: ${PREFIX}
+              '{name}_ROOT': '{PREFIX}'
           suffixes:
             +cuda cuda_arch=70: cuda70
             +cuda cuda_arch=80: cuda80
