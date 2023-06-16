@@ -1,0 +1,352 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      require: '%gcc@11.1.0'
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      target: [aarch64]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+    mpich:
+      require: '@4.1.1 ~wrapperrpath ~hwloc'
+    ncurses:
+      require: '@6.3 +termlib'
+    python:
+      require: '@3.7.15'
+    tbb:
+      require: intel-tbb
+    boost:
+      version: [1.79.0]
+      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
+        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
+        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
+        cxxstd=17 visibility=global
+    libffi:
+      require: "@3.4.4"
+    vtk-m:
+      require: "+examples"
+
+    # EXTERNALS
+    cuda:
+      require: "@11.8.0"
+
+  compilers:
+  - compiler:
+      spec: gcc@11.1.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: aarch64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  modules:
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH]
+    default:
+      'enable:': [lmod]
+      lmod:
+        core_compilers: [gcc@=11.1.0]
+        verbose: true
+        hash_length: 5
+        hierarchy: [mpi]
+        exclude_implicits: false
+        all:
+          autoload: direct
+          environment:
+            set:
+              '{name}_ROOT': '{PREFIX}'
+          suffixes:
+            +cuda cuda_arch=70: cuda70
+            +cuda cuda_arch=75: cuda75
+            +cuda cuda_arch=80: cuda80
+            +cuda cuda_arch=90: cuda90
+            +openmp: openmp
+        cabana:
+          suffixes:
+            ^kokkos +cuda cuda_arch=70: cuda70
+            ^kokkos +cuda cuda_arch=75: cuda75
+            ^kokkos +cuda cuda_arch=80: cuda80
+            ^kokkos +cuda cuda_arch=90: cuda90
+        tau:
+          suffixes:
+            +cuda: cuda
+        hpctoolkit:
+          suffixes:
+            +cuda: cuda
+        bricks:
+          suffixes:
+            +cuda: cuda
+        flux-core:
+          suffixes:
+            +cuda: cuda
+        papi:
+          suffixes:
+            +cuda: cuda
+        py-warpx:
+          suffixes:
+            ^warpx dims=2: dims2
+            ^warpx dims=3: dims3
+            ^warpx dims=rz: dimsRZ
+
+  specs:
+  # CPU
+  - adios
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - archer
+  - argobots
+  - ascent # ecp dav
+  - axom
+  - bolt
+  - boost
+  - butterflypack
+  - cabana
+  - caliper
+  - chai ~benchmarks ~tests
+  - charliecloud
+  - conduit
+  - datatransferkit
+  - dyninst
+  - exaworks
+  - flecsi@2.1.0
+  - flit
+  - flux-core
+  - fortrilinos
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - gmp
+  - gotcha
+  - gptune ~mpispawn
+  - h5bench
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpctoolkit
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - lammps
+  - lbann
+  - legion
+  - libnrm
+  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
+  - libquo
+  - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - netlib-scalapack
+  - nrm
+  - nvhpc
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - plasma
+  - plumed
+  - precice
+  - pumi
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - py-warpx ^warpx dims=2
+  - py-warpx ^warpx dims=3
+  - py-warpx ^warpx dims=rz
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz3
+  - tasmanian
+  - tau +mpi +python
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - wannier90
+  - xyce +mpi +shared +pymi +pymi_static_tpls ^trilinos~shylu
+  # INCLUDED IN ECP DAV CPU
+  # - adios2
+  # - darshan-runtime
+  # - darshan-util
+  # - faodel
+  # - hdf5
+  # - libcatalyst
+  # - parallel-netcdf
+  # - paraview
+  # - py-cinemasci
+  # - sz
+  # - unifyfs
+  # - veloc
+  # - visit
+  # - vtk-m
+  # - zfp
+  # --
+  # - bricks ~cuda        # bricks: VSBrick-mpi9pt.py-Scalar-4x4x4x4-1:84:3: error: 'vfloat256' was not declared in this scope
+  # - dealii              # dealii: cmake/ShyLU/ShyLUConfig.cmake: include could not find requested file: cmake/ShyLU/../ShyLU_Node/ShyLU_NodeConfig.cmake
+  # - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp # ispc: CMake Error at CMakeLists.txt:268 (message): Either X86, ARM, WASM or XE targets need to be enabled.
+  # - geopm               # geopm: src/ProfileTable.hpp:79:45: error: 'string' in namespace 'std' does not name a type; note: 'std::string' is defined in header '<string>'; did you forget to '#include <string>'
+  # - hpx networking=mpi  # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_impl.cpp.o: hpx/coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
+  # - phist               # phist: kernels/builtin/axpy_kernels_nt.c:22:10: fatal error: emmintrin.h: No such file or directory
+  # - pruners-ninja       # pruners-ninja: test/ninja_test_util.c:34: multiple definition of `a';
+  # - variorum            # variorum: variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
+
+  # CUDA NOARCH
+  - cabana +cuda ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=80
+  - flux-core +cuda
+  - hpctoolkit +cuda
+  - papi +cuda
+  - tau +mpi +cuda
+  # --
+  # - bricks +cuda      # bricks: VSBrick-mpi9pt.py-Scalar-4x4x4x4-1:84:3: error: 'vfloat256' was not declared in this scope
+  # - legion +cuda      # legion: CMake Error: The following variables are used in this project, but they are set to NOTFOUND. Please set them or make sure they are set and tested correctly in the CMake files: CUDA_CUDA_LIBRARY (ADVANCED)
+
+  # CUDA 75
+  - amrex +cuda cuda_arch=75
+  - arborx +cuda cuda_arch=75 ^kokkos +wrapper
+  - caliper +cuda cuda_arch=75
+  - chai ~benchmarks ~tests +cuda cuda_arch=75 ^umpire ~shared
+  - dealii +cuda cuda_arch=75
+  - flecsi@2.1.0 +cuda cuda_arch=75
+  - ginkgo +cuda cuda_arch=75
+  - heffte +cuda cuda_arch=75
+  - hypre +cuda cuda_arch=75
+  - kokkos +wrapper +cuda cuda_arch=75
+  - kokkos-kernels +cuda cuda_arch=75 ^kokkos +wrapper +cuda cuda_arch=75
+  - magma +cuda cuda_arch=75
+  - mfem +cuda cuda_arch=75
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=75
+  - omega-h +cuda cuda_arch=75
+  - parsec +cuda cuda_arch=75
+  - petsc +cuda cuda_arch=75
+  - py-torch +cuda cuda_arch=75
+  - raja +cuda cuda_arch=75
+  - slate +cuda cuda_arch=75
+  - slepc +cuda cuda_arch=75
+  - strumpack ~slate +cuda cuda_arch=75
+  - sundials +cuda cuda_arch=75
+  - superlu-dist +cuda cuda_arch=75
+  - tasmanian +cuda cuda_arch=75
+  - "trilinos@13.4.1: +cuda cuda_arch=75"
+  - umpire ~shared +cuda cuda_arch=75
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=75
+  # - paraview +cuda cuda_arch=75
+  # - vtk-m +cuda cuda_arch=75
+  # - zfp +cuda cuda_arch=75
+  # --
+  # - ascent +cuda cuda_arch=75   # ascent: ascent/runtimes/expressions/ascent_execution_policies.hpp(135): error: namespace "RAJA" has no member "cuda_exec"
+  # - axom +cuda cuda_arch=75     # axom: utilities/FileUtilities.cpp.o: in function `__sti____cudaRegisterAll()': undefined reference to `__cudaRegisterLinkedBinary_
+  # - cusz +cuda cuda_arch=75     # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
+  # - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=75  # ispc:  CMake Error at CMakeLists.txt:268 (message): Either X86, ARM, WASM or XE targets need to be enabled.
+  # - hpx +cuda cuda_arch=75      # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_self.cpp.o: coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
+  # - lammps +cuda cuda_arch=75   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
+  # - lbann +cuda cuda_arch=75    # lbann: FAILED: CMakeFiles/lbann.dir/src/layers/misc/dist_embedding.cu.o: lbann/utils/impl/cuda.hpp(145): error: specializing function "lbann::gpu_lib::isfinite(const T &) [with T=__half]" requires "template<>" syntax
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=75 ^cusz +cuda cuda_arch=75 # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
+  # - upcxx +cuda cuda_arch=75    # upcxx: failed to link against CUDA Driver API
+
+  # CUDA 80
+  - amrex +cuda cuda_arch=80
+  - arborx +cuda cuda_arch=80 ^kokkos +wrapper
+  - caliper +cuda cuda_arch=80
+  - chai ~benchmarks ~tests +cuda cuda_arch=80 ^umpire ~shared
+  - dealii +cuda cuda_arch=80
+  - flecsi@2.1.0 +cuda cuda_arch=80
+  - ginkgo +cuda cuda_arch=80
+  - heffte +cuda cuda_arch=80
+  - hypre +cuda cuda_arch=80
+  - kokkos +wrapper +cuda cuda_arch=80
+  - kokkos-kernels +cuda cuda_arch=80 ^kokkos +wrapper +cuda cuda_arch=80
+  - magma +cuda cuda_arch=80
+  - mfem +cuda cuda_arch=80
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=80
+  - omega-h +cuda cuda_arch=80
+  - parsec +cuda cuda_arch=80
+  - petsc +cuda cuda_arch=80
+  - py-torch +cuda cuda_arch=80
+  - raja +cuda cuda_arch=80
+  - slate +cuda cuda_arch=80
+  - slepc +cuda cuda_arch=80
+  - strumpack ~slate +cuda cuda_arch=80
+  - sundials +cuda cuda_arch=80
+  - superlu-dist +cuda cuda_arch=80
+  - tasmanian +cuda cuda_arch=80
+  - "trilinos@13.4.1: +cuda cuda_arch=80"
+  - umpire ~shared +cuda cuda_arch=80
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=80
+  # - paraview +cuda cuda_arch=80
+  # - vtk-m +cuda cuda_arch=80
+  # - zfp +cuda cuda_arch=80
+  # --
+  # - ascent +cuda cuda_arch=80   # ascent: runtimes/expressions/ascent_execution_policies .hpp(135): error: namespace "RAJA" has no member "cuda_exec"
+  # - axom +cuda cuda_arch=80     # axom: utilities/FileUtilities.cpp.o: in function `__sti____cudaRegisterAll()': undefined reference to `__cudaRegisterLinkedBinary_
+  # - cusz +cuda cuda_arch=80     # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
+  # - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=80 # ispc:  CMake Error at CMakeLists.txt:268 (message): Either X86, ARM, WASM or XE targets need to be enabled.
+  # - hpx +cuda cuda_arch=80      # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_self.cpp.o: coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
+  # - lammps +cuda cuda_arch=80   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
+  # - lbann +cuda cuda_arch=80    # lbann: lbann/utils/impl/cuda.hpp(145): error: specializing function "lbann::gpu_lib::isfinite(const T &) [with T=__half]" requires "template<>" syntax
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
+  # - upcxx +cuda cuda_arch=80    # upcxx: failed to link against CUDA Driver API
+
+

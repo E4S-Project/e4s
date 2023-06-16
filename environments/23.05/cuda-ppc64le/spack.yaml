@@ -1,0 +1,313 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      require: "%gcc@9.4.0"
+      compiler: [gcc@9.4.0]
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      target: [ppc64le]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+    mpich:
+      require: '@4.1.1 ~wrapperrpath ~hwloc'
+    ncurses:
+      require: '@6.3 +termlib'
+    python:
+      require: '@3.7.15'
+    faodel:
+      require: "~tcmalloc"
+    tbb:
+      require: intel-tbb
+    libffi:
+      require: "@3.4.4"
+    vtk-m:
+      require: "+examples"
+    cuda:
+      require: "@11.4.4"
+
+  compilers:
+  - compiler:
+      spec: gcc@9.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: ppc64le
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  modules:
+    prefix_inspections:
+      lib: [LD_LIBRARY_PATH]
+      lib64: [LD_LIBRARY_PATH]
+    default:
+      'enable:': [lmod]
+      lmod:
+        core_compilers: [gcc@9.4.0]
+        verbose: true
+        hash_length: 0
+        hierarchy: [mpi]
+        projections: {}
+        core_specs: []
+        exclude_implicits: true
+        include:
+        - autoconf
+        - automake
+        - cmake
+        - mpich
+        all:
+          autoload: direct
+          environment:
+            set:
+              '{name}_ROOT': '{PREFIX}'
+          suffixes:
+            +cuda cuda_arch=70: cuda70
+            +cuda cuda_arch=80: cuda80
+            +openmp: openmp
+        cabana:
+          suffixes:
+            ^kokkos +cuda cuda_arch=70: cuda70
+            ^kokkos +cuda cuda_arch=80: cuda80
+        tau:
+          suffixes:
+            +cuda: cuda
+        hpctoolkit:
+          suffixes:
+            +cuda: cuda
+        bricks:
+          suffixes:
+            +cuda: cuda
+        flux-core:
+          suffixes:
+            +cuda: cuda
+        papi:
+          suffixes:
+            +cuda: cuda
+        mpich:
+          suffixes:
+            ^xz@5.2.6: xz5.2.6
+        sz:
+          suffixes:
+            ^zstd+programs: zstd-programs
+        py-warpx:
+          suffixes:
+            ^warpx dims=2: dims2
+            ^warpx dims=3: dims3
+            ^warpx dims=rz: dimsRZ
+
+  specs:
+  # CPU
+  - adios
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - axom
+  - bolt
+  - boost
+  - butterflypack
+  - cabana
+  - caliper
+  - chai ~benchmarks ~tests
+  - charliecloud
+  - conduit
+  - datatransferkit
+  - dyninst
+  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 ~paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp # +paraview fails due to rkcommon: tasking/detail/tasking_system_init.cpp:24: /usr/lib/gcc/powerpc64le-linux-gnu/11/include/xmmintrin.h:54:2: error: #error "Please read comment above.  Use -DNO_WARN_X86_INTRINSICS to disable this error."
+  - exaworks
+  - flecsi
+  - flit
+  - flux-core
+  - fortrilinos
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - gmp
+  - gotcha
+  - gptune
+  - h5bench
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpctoolkit
+  - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - lammps
+  - lbann
+  - legion
+  - libnrm
+  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
+  - libquo
+  - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - netlib-scalapack
+  - nrm
+  - nvhpc
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist +mpi
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - py-warpx ^warpx dims=2
+  - py-warpx ^warpx dims=3
+  - py-warpx ^warpx dims=rz
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz3
+  - tasmanian
+  - tau +mpi +python
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - wannier90
+  - xyce +mpi +shared +pymi +pymi_static_tpls ^trilinos~shylu
+  # INCLUDED IN ECP DAV CPU
+  # - adios2
+  # - ascent
+  # - darshan-runtime
+  # - darshan-util
+  # - faodel
+  # - hdf5
+  # - libcatalyst
+  # - parallel-netcdf
+  # - paraview
+  # - py-cinemasci
+  # - sz
+  # - unifyfs
+  # - veloc
+  # - visit
+  # - vtk-m
+  # - zfp
+  # -- 
+  # - archer                # llvm@8: tools/clang/lib/Lex/CMakeFiles/clangLex.dir/Lexer.cpp.o: clang/lib/Lex/Lexer.cpp:2547:34: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+  # - bricks                # bricks: VSBrick-7pt.py-Scalar-8x8x8-1:30:3: error: 'vfloat512' was not declared in this scope
+  # - dealii                # fltk: /usr/bin/ld: ../lib/libfltk_png.a(pngrutil.o): in function `png_read_filter_row': undefined reference to `png_init_filter_functions_vsx'
+  # - geopm                 # geopm: libtool.m4: error: problem compiling CXX test program
+  # - paraview ~cuda ~rocm  # paraview: VTK/Filters/Statistics/CMakeFiles/FiltersStatistics-objects.dir/vtkPCAStatistics.cxx.o: Assembler messages: /tmp/ccPZY4pg.s:62036: Error: invalid machine `power10'
+  # - variorum              # variorum: variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
+
+  # CUDA NOARCH
+  - cabana +cuda ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=70
+  - flux-core +cuda
+  - hpctoolkit +cuda
+  - papi +cuda
+  - tau +mpi +cuda
+  # --
+  # - bricks +cuda    # bricks: VSBrick-7pt.py-Scalar-8x8x8-1:30:3: error: 'vfloat512' was not declared in this scope
+  # - legion +cuda    # legion: CMake Error: The following variables are used in this project, but they are set to NOTFOUND. Please set them or make sure they are set and tested correctly in the CMake files: CUDA_CUDA_LIBRARY (ADVANCED)
+
+  # CUDA 70
+  - amrex +cuda cuda_arch=70
+  - arborx +cuda cuda_arch=70 ^kokkos +wrapper
+  - caliper +cuda cuda_arch=70
+  - chai ~benchmarks ~tests +cuda cuda_arch=70 ^umpire ~shared
+  - ecp-data-vis-sdk ~rocm +adios2 ~ascent +hdf5 +vtkm +zfp ~paraview +cuda cuda_arch=70 # +ascent fails because fides: fidesrapidjson/reader.h:1446:171: error: expected class-name before '{' token; +paraview fails due to rkcommon: tasking/detail/tasking_system_init.cpp:24: /usr/lib/gcc/powerpc64le-linux-gnu/11/include/xmmintrin.h:54:2: error: #error "Please read comment above.  Use -DNO_WARN_X86_INTRINSICS to disable this error."
+  - flecsi +cuda cuda_arch=70
+  - ginkgo +cuda cuda_arch=70
+  - heffte +cuda cuda_arch=70
+  - hpx +cuda cuda_arch=70
+  - hypre +cuda cuda_arch=70
+  - kokkos +wrapper +cuda cuda_arch=70
+  - kokkos-kernels +cuda cuda_arch=70 ^kokkos +wrapper +cuda cuda_arch=70
+  - magma +cuda cuda_arch=70
+  - mfem +cuda cuda_arch=70
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=70
+  - omega-h +cuda cuda_arch=70
+  - parsec +cuda cuda_arch=70
+  - petsc +cuda cuda_arch=70
+  - raja +cuda cuda_arch=70
+  - slate +cuda cuda_arch=70
+  - slepc +cuda cuda_arch=70
+  - strumpack ~slate +cuda cuda_arch=70
+  - sundials +cuda cuda_arch=70
+  - superlu-dist +cuda cuda_arch=70
+  - tasmanian +cuda cuda_arch=70
+  - umpire ~shared +cuda cuda_arch=70
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=70
+  # - ascent +cuda cuda_arch=70
+  # - paraview +cuda cuda_arch=70
+  # - vtk-m +cuda cuda_arch=70
+  # - zfp +cuda cuda_arch=70
+  # --
+  # - axom +cuda cuda_arch=70     # axom: utilities/FileUtilities.cpp.o: in function `__sti____cudaRegisterAll()': undefined reference to `__cudaRegisterLinkedBinary
+  # - cusz +cuda cuda_arch=70     # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
+  # - dealii +cuda cuda_arch=70   # fltk: /usr/bin/ld: ../lib/libfltk_png.a(pngrutil.o): in function `png_read_filter_row': undefined reference to `png_init_filter_functions_vsx' 
+  # - lammps +cuda cuda_arch=70   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
+  # - lbann +cuda cuda_arch=70    # lbann: lbann/utils/dnn_lib/cudnn.hpp:34:10: fatal error: cudnn.h: No such file or directory
+  # - "trilinos@13.4.1: +cuda cuda_arch=70" # trilinos: cub/device/dispatch/../../agent/agent_radix_sort_onesweep.cuh(225): error: expected an identifier
+  # - upcxx +cuda cuda_arch=70    # upcxx: failed to link against CUDA Driver API
+
+  # SKIPPED
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=70 ^cusz +cuda cuda_arch=70 # depends_on("cuda@11.7.1:", when="+cuda")
+  # - py-torch +cuda cuda_arch=70
