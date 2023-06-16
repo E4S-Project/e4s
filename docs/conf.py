@@ -34,7 +34,8 @@ release = '21.08'
 # myst_parser: https://myst-parser.readthedocs.io/en/latest/sphinx/intro.html
 
 extensions = [
-    'myst_parser'
+    'myst_parser',
+    'sphinx_design'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
