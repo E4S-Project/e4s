@@ -152,7 +152,7 @@ spack:
   - aml
   - amrex
   - arborx
-  - archer
+  - archer # now maintained in llvm +libomp_tsan
   - argobots
   - axom
   - bolt
@@ -272,7 +272,7 @@ spack:
   # --
   # - dealii        # dealii: cmake/ShyLU/ShyLUConfig.cmake: include could not find requested file: cmake/ShyLU/../ShyLU_Node/ShyLU_NodeConfig.cmake
   # - geopm         # geopm: src/ProfileTable.hpp:79:45: error: 'string' in namespace 'std' does not name a type; note: 'std::string' is defined in header '<string>'; did you forget to '#include <string>'
-  # - pruners-ninja # pruners-ninja: test/ninja_test_util.c:34: multiple definition of `a';
+  # - pruners-ninja # pruners-ninja: https://github.com/spack/spack/issues/32112
 
   # ROCM NOARCH
   - cabana +rocm ^kokkos +rocm amdgpu_target=gfx908

@@ -152,7 +152,7 @@ spack:
   - aml
   - amrex
   - arborx
-  - archer
+  - archer # included in llvm +libomp_tsan
   - argobots
   - axom
   - bolt
@@ -272,7 +272,7 @@ spack:
   # --
   # - dealii        # dealii: cmake/ShyLU/ShyLUConfig.cmake: include could not find requested file: cmake/ShyLU/../ShyLU_Node/ShyLU_NodeConfig.cmake
   # - geopm         # geopm: src/ProfileTable.hpp:79:45: error: 'string' in namespace 'std' does not name a type; note: 'std::string' is defined in header '<string>'; did you forget to '#include <string>'
-  # - pruners-ninja # pruners-ninja: test/ninja_test_util.c:34: multiple definition of `a';
+  # - pruners-ninja # pruners-ninja: https://github.com/spack/spack/issues/32112
 
   # CUDA NOARCH
   - bricks +cuda
@@ -282,7 +282,7 @@ spack:
   - papi +cuda
   - tau +mpi +cuda
   # --
-  # - legion +cuda  # legion: CMake Error: The following variables are used in this project, but they are set to NOTFOUND. Please set them or make sure they are set and tested correctly in the CMake files: CUDA_CUDA_LIBRARY (ADVANCED)
+  # - legion +cuda  # legion: needs NVIDIA driver
 
   # CUDA 80
   - amrex +cuda cuda_arch=80
@@ -322,11 +322,11 @@ spack:
   # - vtk-m +cuda cuda_arch=80
   # - zfp +cuda cuda_arch=80
   # --
-  # - axom +cuda cuda_arch=80       # axom: FileUtilities.cpp.o: in function `__sti____cudaRegisterAll()': undefined reference to `__cudaRegisterLinkedBinary_
+  # - axom +cuda cuda_arch=80       # axom: https://github.com/spack/spack/issues/29520
   # - lammps +cuda cuda_arch=80     # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
   # - lbann +cuda cuda_arch=80      # lbann: CMakeFiles/lbann.dir/src/layers/activations/softmax.cu.o: lbann/utils/dnn_lib/cudnn.hpp:34:10: fatal error: cudnn.h: No such file or directory
-  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # libpressio: /usr/bin/ld: lib/libcuszhuff.so: undefined reference to `cuMemGetAddressRange_v2'
-  # - upcxx +cuda cuda_arch=80      # upcxx: failed to link against CUDA Driver API
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # libpressio: /usr/bin/ld: lib/libcuszhuff.so: undefined reference to `cuMemGetAddressRange_v2' (see discussion here: https://github.com/spack/spack/pull/34222)
+  # - upcxx +cuda cuda_arch=80      # upcxx: needs NVIDIA driver
 
   # CUDA 90
   - arborx +cuda cuda_arch=90 ^kokkos +wrapper
@@ -362,12 +362,12 @@ spack:
   # - vtk-m +cuda cuda_arch=90
   # - zfp +cuda cuda_arch=90
   # --
-  # - amrex +cuda cuda_arch=90    # amrex: Segmentation fault (core dumped)
-  # - axom +cuda cuda_arch=90     # axom: FileUtilities.cpp.o: in function `__sti____cudaRegisterAll()': undefined reference to `__cudaRegisterLinkedBinary_ 
-  # - ecp-data-vis-sdk ~rocm +adios2 +ascent +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=90 # vtk-m: CMake Error at CMake/VTKmDeviceAdapters.cmake:216 (message): Error detecting architecture flags for CUDA.  Please set VTKm_CUDA_Architecture manually.
+  # - amrex +cuda cuda_arch=90      # amrex: https://github.com/spack/spack/issues/38556
+  # - axom +cuda cuda_arch=90       # axom: https://github.com/spack/spack/issues/29520
+  # - ecp-data-vis-sdk ~rocm +adios2 +ascent +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=90 # vtk-m: https://github.com/spack/spack/issues/38560
   # - kokkos-kernels +cuda cuda_arch=90 ^kokkos +wrapper +cuda cuda_arch=90 # kokkos@3.7.00 cuda_arch=90: CMake Error at cmake/kokkos_arch.cmake:776 (MESSAGE): CUDA enabled but no NVIDIA GPU architecture currently enabled and auto-detection failed.  Please give one -DKokkos_ARCH_{..}=ON' to enable an NVIDIA GPU architecture.
-  # - lammps +cuda cuda_arch=90   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found (try using -rpath or -rpath-link)
-  # - lbann +cuda cuda_arch=90    # lbann: lbann/utils/dnn_lib/cudnn.hpp:34:10: fatal error: cudnn.h: No such file or directory
-  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=90 ^cusz +cuda cuda_arch=90 # libpressio: /usr/bin/ld: lib/libcuszhuff.so: undefined reference to `cuMemGetAddressRange_v2'
-  # - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=90 # mgard: Segmentation fault (core dumped)
-  # - upcxx +cuda cuda_arch=90    # upcxx: failed to link against CUDA Driver API
+  # - lammps +cuda cuda_arch=90     # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found (try using -rpath or -rpath-link)
+  # - lbann +cuda cuda_arch=90      # lbann: lbann/utils/dnn_lib/cudnn.hpp:34:10: fatal error: cudnn.h: No such file or directory
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=90 ^cusz +cuda cuda_arch=90 # libpressio: /usr/bin/ld: lib/libcuszhuff.so: undefined reference to `cuMemGetAddressRange_v2' (see discussion here: https://github.com/spack/spack/pull/34222)
+  # - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=90 # mgard: https://github.com/spack/spack/issues/38558
+  # - upcxx +cuda cuda_arch=90      # upcxx: needs NVIDIA driver
