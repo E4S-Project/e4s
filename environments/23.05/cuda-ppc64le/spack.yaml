@@ -301,7 +301,7 @@ spack:
   # - zfp +cuda cuda_arch=70
   # --
   # - axom +cuda cuda_arch=70     # axom: https://github.com/spack/spack/issues/29520
-  # - cusz +cuda cuda_arch=70     # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
+  # - cusz +cuda cuda_arch=70     # cusz: https://github.com/spack/spack/issues/38787
   # - dealii +cuda cuda_arch=70   # fltk: /usr/bin/ld: ../lib/libfltk_png.a(pngrutil.o): in function `png_read_filter_row': undefined reference to `png_init_filter_functions_vsx' 
   # - lammps +cuda cuda_arch=70   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
   # - lbann +cuda cuda_arch=70    # lbann: lbann/utils/dnn_lib/cudnn.hpp:34:10: fatal error: cudnn.h: No such file or directory
