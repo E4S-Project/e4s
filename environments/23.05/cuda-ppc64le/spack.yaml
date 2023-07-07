@@ -250,11 +250,11 @@ spack:
   # - zfp
   # -- 
   # - archer                # llvm@8: tools/clang/lib/Lex/CMakeFiles/clangLex.dir/Lexer.cpp.o: clang/lib/Lex/Lexer.cpp:2547:34: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
-  # - bricks                # bricks: VSBrick-7pt.py-Scalar-8x8x8-1:30:3: error: 'vfloat512' was not declared in this scope
+  # - bricks                # bricks: https://github.com/spack/spack/issues/38785
   # - dealii                # fltk: /usr/bin/ld: ../lib/libfltk_png.a(pngrutil.o): in function `png_read_filter_row': undefined reference to `png_init_filter_functions_vsx'
   # - geopm                 # geopm: libtool.m4: error: problem compiling CXX test program
   # - paraview ~cuda ~rocm  # paraview: https://github.com/spack/spack/issues/38497
-  # - variorum              # variorum: variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
+  # - variorum              # variorum: https://github.com/spack/spack/issues/38786
 
   # CUDA NOARCH
   - cabana +cuda ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=70
@@ -263,7 +263,7 @@ spack:
   - papi +cuda
   - tau +mpi +cuda
   # --
-  # - bricks +cuda          # bricks: VSBrick-7pt.py-Scalar-8x8x8-1:30:3: error: 'vfloat512' was not declared in this scope
+  # - bricks +cuda          # bricks: https://github.com/spack/spack/issues/38785
   # - legion +cuda          # legion: needs NVIDIA driver
 
   # CUDA 70
