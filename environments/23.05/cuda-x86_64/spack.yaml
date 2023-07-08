@@ -271,7 +271,7 @@ spack:
   # - zfp
   # --
   # - dealii        # dealii: https://github.com/spack/spack/issues/38789
-  # - geopm         # geopm: src/ProfileTable.hpp:79:45: error: 'string' in namespace 'std' does not name a type; note: 'std::string' is defined in header '<string>'; did you forget to '#include <string>'
+  # - geopm         # geopm: https://github.com/spack/spack/issues/38795
   # - pruners-ninja # pruners-ninja: https://github.com/spack/spack/issues/32112
 
   # CUDA NOARCH
@@ -323,7 +323,7 @@ spack:
   # - zfp +cuda cuda_arch=80
   # --
   # - axom +cuda cuda_arch=80       # axom: https://github.com/spack/spack/issues/29520
-  # - lammps +cuda cuda_arch=80     # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
+  # - lammps +cuda cuda_arch=80     # lammps: needs NVIDIA driver
   # - lbann +cuda cuda_arch=80      # lbann: https://github.com/spack/spack/issues/38788
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # libpressio: https://github.com/spack/spack/pull/34222#issuecomment-1430459365
   # - upcxx +cuda cuda_arch=80      # upcxx: needs NVIDIA driver
@@ -366,7 +366,7 @@ spack:
   # - axom +cuda cuda_arch=90       # axom: https://github.com/spack/spack/issues/29520
   # - ecp-data-vis-sdk ~rocm +adios2 +ascent +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=90 # vtk-m: https://github.com/spack/spack/issues/38560
   # - kokkos-kernels +cuda cuda_arch=90 ^kokkos +wrapper +cuda cuda_arch=90 # kokkos@3.7.00 cuda_arch=90: CMake Error at cmake/kokkos_arch.cmake:776 (MESSAGE): CUDA enabled but no NVIDIA GPU architecture currently enabled and auto-detection failed.  Please give one -DKokkos_ARCH_{..}=ON' to enable an NVIDIA GPU architecture.
-  # - lammps +cuda cuda_arch=90     # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found (try using -rpath or -rpath-link)
+  # - lammps +cuda cuda_arch=90     # lammps: needs NVIDIA driver
   # - lbann +cuda cuda_arch=90      # lbann: https://github.com/spack/spack/issues/38788
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=90 ^cusz +cuda cuda_arch=90 # libpressio: https://github.com/spack/spack/pull/34222#issuecomment-1430459365
   # - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=90 # mgard: https://github.com/spack/spack/issues/38558

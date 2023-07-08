@@ -303,7 +303,7 @@ spack:
   # - axom +cuda cuda_arch=70               # axom: https://github.com/spack/spack/issues/29520
   # - cusz +cuda cuda_arch=70               # cusz: https://github.com/spack/spack/issues/38787
   # - dealii +cuda cuda_arch=70             # fltk: https://github.com/spack/spack/issues/38791
-  # - lammps +cuda cuda_arch=70             # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
+  # - lammps +cuda cuda_arch=70             # lammps: needs NVIDIA driver
   # - lbann +cuda cuda_arch=70              # lbann: https://github.com/spack/spack/issues/38788
   # - "trilinos@13.4.1: +cuda cuda_arch=70" # trilinos: https://github.com/trilinos/Trilinos/issues/11630
   # - upcxx +cuda cuda_arch=70              # upcxx: needs NVIDIA driver
