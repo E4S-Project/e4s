@@ -270,7 +270,7 @@ spack:
   # - vtk-m
   # - zfp
   # --
-  # - dealii        # dealii: cmake/ShyLU/ShyLUConfig.cmake: include could not find requested file: cmake/ShyLU/../ShyLU_Node/ShyLU_NodeConfig.cmake
+  # - dealii        # dealii: https://github.com/spack/spack/issues/38789
   # - geopm         # geopm: src/ProfileTable.hpp:79:45: error: 'string' in namespace 'std' does not name a type; note: 'std::string' is defined in header '<string>'; did you forget to '#include <string>'
   # - pruners-ninja # pruners-ninja: https://github.com/spack/spack/issues/32112
 
