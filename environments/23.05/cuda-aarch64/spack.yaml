@@ -300,7 +300,7 @@ spack:
   # - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=75  # ispc: https://github.com/spack/spack/issues/38044
   # - hpx +cuda cuda_arch=75      # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_self.cpp.o: coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
   # - lammps +cuda cuda_arch=75   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
-  # - lbann +cuda cuda_arch=75    # lbann: FAILED: CMakeFiles/lbann.dir/src/layers/misc/dist_embedding.cu.o: lbann/utils/impl/cuda.hpp(145): error: specializing function "lbann::gpu_lib::isfinite(const T &) [with T=__half]" requires "template<>" syntax
+  # - lbann +cuda cuda_arch=75    # lbann: https://github.com/spack/spack/issues/38788
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=75 ^cusz +cuda cuda_arch=75 # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
   # - upcxx +cuda cuda_arch=75    # upcxx: needs NVIDIA driver
 
@@ -344,6 +344,6 @@ spack:
   # - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=80 # ispc:  CMake Error at CMakeLists.txt:268 (message): Either X86, ARM, WASM or XE targets need to be enabled.
   # - hpx +cuda cuda_arch=80      # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_self.cpp.o: coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
   # - lammps +cuda cuda_arch=80   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
-  # - lbann +cuda cuda_arch=80    # lbann: lbann/utils/impl/cuda.hpp(145): error: specializing function "lbann::gpu_lib::isfinite(const T &) [with T=__half]" requires "template<>" syntax
+  # - lbann +cuda cuda_arch=80    # lbann: https://github.com/spack/spack/issues/38788
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # cusz: CMake Error at CMakeLists.txt:9 (find_package): By not providing "FindCUB.cmake" in CMAKE_MODULE_PATH this project has asked CMake to find a package configuration file provided by "CUB", but CMake did not find one.
   # - upcxx +cuda cuda_arch=80    # upcxx: needs NVIDIA driver
