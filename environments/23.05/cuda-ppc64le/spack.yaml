@@ -251,7 +251,7 @@ spack:
   # -- 
   # - archer                # llvm@8: tools/clang/lib/Lex/CMakeFiles/clangLex.dir/Lexer.cpp.o: clang/lib/Lex/Lexer.cpp:2547:34: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
   # - bricks                # bricks: https://github.com/spack/spack/issues/38785
-  # - dealii                # fltk: /usr/bin/ld: ../lib/libfltk_png.a(pngrutil.o): in function `png_read_filter_row': undefined reference to `png_init_filter_functions_vsx'
+  # - dealii                # fltk: https://github.com/spack/spack/issues/38791
   # - geopm                 # geopm: libtool.m4: error: problem compiling CXX test program
   # - paraview ~cuda ~rocm  # paraview: https://github.com/spack/spack/issues/38497
   # - variorum              # variorum: https://github.com/spack/spack/issues/38786
@@ -300,13 +300,13 @@ spack:
   # - vtk-m +cuda cuda_arch=70
   # - zfp +cuda cuda_arch=70
   # --
-  # - axom +cuda cuda_arch=70     # axom: https://github.com/spack/spack/issues/29520
-  # - cusz +cuda cuda_arch=70     # cusz: https://github.com/spack/spack/issues/38787
-  # - dealii +cuda cuda_arch=70   # fltk: /usr/bin/ld: ../lib/libfltk_png.a(pngrutil.o): in function `png_read_filter_row': undefined reference to `png_init_filter_functions_vsx' 
-  # - lammps +cuda cuda_arch=70   # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
-  # - lbann +cuda cuda_arch=70    # lbann: https://github.com/spack/spack/issues/38788
-  # - "trilinos@13.4.1: +cuda cuda_arch=70" # trilinos: cub/device/dispatch/../../agent/agent_radix_sort_onesweep.cuh(225): error: expected an identifier
-  # - upcxx +cuda cuda_arch=70    # upcxx: needs NVIDIA driver
+  # - axom +cuda cuda_arch=70               # axom: https://github.com/spack/spack/issues/29520
+  # - cusz +cuda cuda_arch=70               # cusz: https://github.com/spack/spack/issues/38787
+  # - dealii +cuda cuda_arch=70             # fltk: https://github.com/spack/spack/issues/38791
+  # - lammps +cuda cuda_arch=70             # lammps: /usr/bin/ld: warning: libcuda.so.1, needed by liblammps.so.0, not found
+  # - lbann +cuda cuda_arch=70              # lbann: https://github.com/spack/spack/issues/38788
+  # - "trilinos@13.4.1: +cuda cuda_arch=70" # trilinos: https://github.com/trilinos/Trilinos/issues/11630
+  # - upcxx +cuda cuda_arch=70              # upcxx: needs NVIDIA driver
 
   # SKIPPED
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=70 ^cusz +cuda cuda_arch=70 # depends_on("cuda@11.7.1:", when="+cuda")
