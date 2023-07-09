@@ -245,8 +245,8 @@ spack:
   # - dealii              # dealii: https://github.com/spack/spack/issues/38789
   # - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp  # ispc: https://github.com/spack/spack/issues/38044
   # - geopm               # geopm: https://github.com/spack/spack/issues/38795
-  # - hpx networking=mpi  # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_impl.cpp.o: hpx/coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
-  # - phist               # phist: kernels/builtin/axpy_kernels_nt.c:22:10: fatal error: emmintrin.h: No such file or directory
+  # - hpx networking=mpi  # hpx: https://github.com/spack/spack/issues/38796
+  # - phist               # phist: https://github.com/spack/spack/issues/38797
   # - pruners-ninja       # pruners-ninja: https://github.com/spack/spack/issues/32112
   # - variorum            # variorum: https://github.com/spack/spack/issues/38786
 
@@ -298,7 +298,7 @@ spack:
   # - axom +cuda cuda_arch=75     # axom: https://github.com/spack/spack/issues/29520
   # - cusz +cuda cuda_arch=75     # cusz: https://github.com/spack/spack/issues/38787
   # - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=75  # ispc: https://github.com/spack/spack/issues/38044
-  # - hpx +cuda cuda_arch=75      # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_self.cpp.o: coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
+  # - hpx +cuda cuda_arch=75      # hpx: https://github.com/spack/spack/issues/38796
   # - lammps +cuda cuda_arch=75   # lammps: needs NVIDIA driver
   # - lbann +cuda cuda_arch=75    # lbann: https://github.com/spack/spack/issues/38788
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=75 ^cusz +cuda cuda_arch=75 # cusz: https://github.com/spack/spack/issues/38787
@@ -342,7 +342,7 @@ spack:
   # - axom +cuda cuda_arch=80     # axom: https://github.com/spack/spack/issues/29520
   # - cusz +cuda cuda_arch=80     # cusz: https://github.com/spack/spack/issues/38787
   # - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=80 # ispc: https://github.com/spack/spack/issues/38044
-  # - hpx +cuda cuda_arch=80      # hpx: FAILED: libs/core/coroutines/CMakeFiles/hpx_coroutines.dir/src/detail/coroutine_self.cpp.o: coroutines/detail/context_linux_x86.hpp:206:41: error: static assertion failed
+  # - hpx +cuda cuda_arch=80      # hpx: https://github.com/spack/spack/issues/38796
   # - lammps +cuda cuda_arch=80   # lammps: needs NVIDIA driver
   # - lbann +cuda cuda_arch=80    # lbann: https://github.com/spack/spack/issues/38788
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # cusz: https://github.com/spack/spack/issues/38787
