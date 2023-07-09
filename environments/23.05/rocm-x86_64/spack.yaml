@@ -316,7 +316,7 @@ spack:
   # - vtk-m ~openmp +rocm amdgpu_target=gfx90a
   # --
   # - legion +rocm amdgpu_target=gfx90a       # legion: https://github.com/spack/spack/issues/37232
-  # - lbann ~cuda +rocm amdgpu_target=gfx90a  # aluminum: FAILED: src/CMakeFiles/Al.dir/progress.cpp.o: g++: error: unrecognized command-line option '--offload-arch=gfx90a'
+  # - lbann ~cuda +rocm amdgpu_target=gfx90a  # aluminum: https://github.com/spack/spack/issues/38807
 
   # ROCM 908
   - amrex +rocm amdgpu_target=gfx908
@@ -354,4 +354,4 @@ spack:
   # - vtk-m ~openmp +rocm amdgpu_target=gfx908
   # --
   # - legion +rocm amdgpu_target=gfx908       # legion: https://github.com/spack/spack/issues/37232
-  # - lbann ~cuda +rocm amdgpu_target=gfx908  # aluminum: FAILED: src/CMakeFiles/Al.dir/Al.cpp.o: g++: error: unrecognized command-line option '--offload-arch=gfx908'
+  # - lbann ~cuda +rocm amdgpu_target=gfx908  # aluminum: https://github.com/spack/spack/issues/38807
