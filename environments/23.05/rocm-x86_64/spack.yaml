@@ -315,7 +315,7 @@ spack:
   # - paraview +rocm amdgpu_target=gfx90a
   # - vtk-m ~openmp +rocm amdgpu_target=gfx90a
   # --
-  # - legion +rocm amdgpu_target=gfx90a       # legion: CMake Error at cmake/FindHIP.cmake:40 (HIP_GET_SOURCES_AND_OPTIONS): Unknown CMake command "HIP_GET_SOURCES_AND_OPTIONS".
+  # - legion +rocm amdgpu_target=gfx90a       # legion: https://github.com/spack/spack/issues/37232
   # - lbann ~cuda +rocm amdgpu_target=gfx90a  # aluminum: FAILED: src/CMakeFiles/Al.dir/progress.cpp.o: g++: error: unrecognized command-line option '--offload-arch=gfx90a'
 
   # ROCM 908
@@ -353,5 +353,5 @@ spack:
   # - paraview +rocm amdgpu_target=gfx908
   # - vtk-m ~openmp +rocm amdgpu_target=gfx908
   # --
-  # - legion +rocm amdgpu_target=gfx908       # legion: CMake Error at cmake/FindHIP.cmake:40 (HIP_GET_SOURCES_AND_OPTIONS): Unknown CMake command "HIP_GET_SOURCES_AND_OPTIONS".
+  # - legion +rocm amdgpu_target=gfx908       # legion: https://github.com/spack/spack/issues/37232
   # - lbann ~cuda +rocm amdgpu_target=gfx908  # aluminum: FAILED: src/CMakeFiles/Al.dir/Al.cpp.o: g++: error: unrecognized command-line option '--offload-arch=gfx908'
