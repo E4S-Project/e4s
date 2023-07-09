@@ -252,7 +252,7 @@ spack:
   # - archer                # llvm@8: tools/clang/lib/Lex/CMakeFiles/clangLex.dir/Lexer.cpp.o: clang/lib/Lex/Lexer.cpp:2547:34: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
   # - bricks                # bricks: https://github.com/spack/spack/issues/38785
   # - dealii                # fltk: https://github.com/spack/spack/issues/38791
-  # - geopm                 # geopm: libtool.m4: error: problem compiling CXX test program
+  # - geopm                 # geopm: https://github.com/spack/spack/issues/38798
   # - paraview ~cuda ~rocm  # paraview: https://github.com/spack/spack/issues/38497
   # - variorum              # variorum: https://github.com/spack/spack/issues/38786
 
