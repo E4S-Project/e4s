@@ -80,28 +80,32 @@ $> spack buildcache list -al
 
 Here is what `spack find` would show following the installation of the `cuda-x86_64/spack.yaml` with the `cuda_arch=80` specs enabled.
 
+Note that many packages represented twice in the output below, such as `kokkos@4.1.00`, the reason is because both `kokkos@4.1.00 ~cuda` and `kokkos@4.1.00 +cuda` are installed.
 
 ```
-root@2cf0ba0183ed:/# spack find -x
+root@0741a576c1d4:/# spack find -x
 -- linux-ubuntu20.04-x86_64 / gcc@11.4.0 ------------------------
-adios@1.13.1         caliper@2.10.0           flecsi@2.2.1         heffte@2.3.0           libpressio@0.95.1       nvhpc@23.7              plumed@2.9.0           slepc@3.19.1        turbine@1.3.0
-adios2@2.9.1         caliper@2.10.0           flit@2.1.0           hpctoolkit@2023.03.01  libpressio@0.95.1       omega-h@9.34.13         precice@2.5.0          slepc@3.19.1        umap@2.1.0
-adios2@2.9.1         chai@2022.03.0           flux-core@0.53.0     hpctoolkit@2023.03.01  libquo@1.3.1            omega-h@9.34.13         pruners-ninja@1.0.1    stc@0.9.0           umpire@2022.03.1
-alquimia@1.0.10      chai@2022.03.0           flux-core@0.53.0     hpx@1.9.1              libunwind@1.6.2         openfoam@2306           pumi@2.2.7             strumpack@7.1.3     umpire@2022.03.1
-aml@0.2.1            charliecloud@0.33        fortrilinos@2.3.0    hpx@1.9.1              loki@0.1.7              openmpi@4.1.5           py-cinemasci@1.3       strumpack@7.1.3     unifyfs@1.1
-amrex@23.08          conduit@0.8.8            gasnet@2023.3.0      hypre@2.29.0           magma@2.7.1             openpmd-api@0.15.1      py-h5py@3.8.0          sundials@6.5.1      upcxx@2023.3.0
-amrex@23.08          cuda@11.8.0              ginkgo@1.6.0         hypre@2.29.0           mercury@2.3.0           papi@6.0.0.1            py-jupyterhub@1.4.1    sundials@6.5.1      upcxx@2023.3.0
-arborx@1.4.1         cusz@0.3.1               ginkgo@1.6.0         kokkos@4.1.00          metall@0.25             papi@6.0.0.1            py-libensemble@0.10.2  superlu@5.3.0       variorum@0.6.0
-arborx@1.4.1         darshan-runtime@3.4.4    globalarrays@5.8.2   kokkos@4.1.00          mfem@4.5.2              papyrus@1.0.2           py-petsc4py@3.19.4     superlu-dist@8.1.2  veloc@1.6
-argobots@1.1         darshan-util@3.4.4       gmp@6.2.1            kokkos-kernels@4.0.00  mfem@4.5.2              parallel-netcdf@1.12.3  py-torch@2.0.1         superlu-dist@8.1.2  visit@3.3.3
-ascent@0.9.1         datatransferkit@3.1-rc3  gotcha@1.0.4         kokkos-kernels@4.0.00  mgard@2023-03-31        paraview@5.11.1         py-warpx@23.08         swig@4.0.2-fortran  vtk-m@1.9.0
-axom@0.7.0           dealii@9.4.2             gptune@4.0.0         lammps@20230802        mgard@2023-03-31        paraview@5.11.1         qthreads@1.18          sz@2.1.12.5         vtk-m@2.0.0
-bolt@2.0             dealii@9.4.2             h5bench@1.4          lammps@20230802        mpark-variant@1.4.0     parsec@3.0.2209         quantum-espresso@7.2   sz3@3.1.7           wannier90@3.1.0
-boost@1.79.0         dyninst@12.3.0           hdf5@1.12.2          lbann@0.102            mpich@4.1.2             parsec@3.0.2209         raja@2022.10.4         tasmanian@7.9       xyce@7.6.0
-bricks@r0.1          ecp-data-vis-sdk@1.0     hdf5@1.12.2          legion@23.06.0         mpifileutils@0.11.1     pdt@3.25.1              raja@2022.10.4         tasmanian@7.9       zfp@0.5.5
-bricks@r0.1          ecp-data-vis-sdk@1.0     hdf5-vol-async@1.7   legion@23.06.0         nccmp@1.9.1.0           petsc@3.19.4            rempi@1.1.0            tau@2.32.1          zfp@0.5.5
-butterflypack@2.2.2  exaworks@0.1.0           hdf5-vol-cache@v1.1  libcatalyst@2.0.0-rc3  nco@5.1.6               petsc@3.19.4            scr@3.0.1              tau@2.32.1
-cabana@0.5.0         faodel@1.2108.1          hdf5-vol-log@1.4.0   libcatalyst@2.0.0-rc3  netlib-scalapack@2.2.0  phist@1.11.2            slate@2022.07.00       trilinos@14.4.0
-cabana@0.5.0         flecsi@2.2.1             heffte@2.3.0         libnrm@0.1.0           nrm@0.1.0               plasma@22.9.29          slate@2022.07.00       trilinos@14.4.0
-==> 168 installed packages
+adios@1.13.1         chai@2022.03.0         fortrilinos@2.3.0     hypre@2.29.0           mgard@2023-03-31        parsec@3.0.2209       scr@3.0.1           trilinos@14.4.0
+adios2@2.9.1         charliecloud@0.34      gasnet@2023.3.0       kokkos@4.1.00          mgard@2023-03-31        pdt@3.25.1            slate@2023.08.25    turbine@1.3.0
+adios2@2.9.1         conduit@0.8.8          ginkgo@1.6.0          kokkos@4.1.00          mpark-variant@1.4.0     petsc@3.20.1          slate@2023.08.25    umap@2.1.0
+alquimia@1.1.0       cuda@11.8.0            ginkgo@1.6.0          kokkos-kernels@4.0.00  mpich@4.1.2             petsc@3.20.1          slepc@3.20.0        umpire@2022.10.0
+aml@0.2.1            cusz@0.3.1             globalarrays@5.8.2    kokkos-kernels@4.0.00  mpifileutils@0.11.1     phist@1.12.0          slepc@3.20.0        umpire@2022.10.0
+amrex@23.11          darshan-runtime@3.4.4  gmp@6.2.1             lammps@20230802        nccmp@1.9.1.0           plasma@23.8.2         stc@0.9.0           unifyfs@1.1
+amrex@23.11          darshan-util@3.4.4     gotcha@1.0.4          lammps@20230802        nco@5.1.6               plumed@2.9.0          strumpack@7.2.0     upcxx@2023.3.0
+arborx@1.4.1         datatransferkit@3.1.1  gptune@4.0.0          lbann@0.102            netlib-scalapack@2.2.0  precice@2.5.0         strumpack@7.2.0     upcxx@2023.3.0
+arborx@1.4.1         dealii@9.4.2           h5bench@1.4           legion@23.06.0         nrm@0.1.0               pruners-ninja@1.0.1   sundials@6.6.1      variorum@0.7.0
+argobots@1.1         dealii@9.4.2           hdf5@1.12.2           legion@23.06.0         nvhpc@23.9              pumi@2.2.8            sundials@6.6.1      veloc@1.7
+ascent@0.9.1         dyninst@12.3.0         hdf5@1.14.3           libcatalyst@2.0.0-rc4  omega-h@9.34.13         py-cinemasci@1.3      superlu@5.3.0       visit@3.3.3
+axom@0.8.1           ecp-data-vis-sdk@1.0   hdf5-vol-async@1.7    libnrm@0.1.0           omega-h@9.34.13         py-h5py@3.8.0         superlu-dist@8.1.2  vtk-m@1.9.0
+bolt@2.0             ecp-data-vis-sdk@1.0   hdf5-vol-cache@v1.1   libpressio@0.95.1      openfoam@2306           py-jupyterhub@1.4.1   superlu-dist@8.1.2  vtk-m@2.0.0
+boost@1.79.0         exago@1.6.0            hdf5-vol-log@1.4.0    libpressio@0.95.1      openmpi@4.1.6           py-libensemble@1.0.0  swig@4.0.2-fortran  wannier90@3.1.0
+bricks@2023.08.25    exago@1.6.0            hdf5-vol-log@1.4.0    libquo@1.3.1           openpmd-api@0.15.2      py-petsc4py@3.20.1    sz@2.1.12.5         xyce@7.7.0
+bricks@2023.08.25    exaworks@0.1.0         heffte@2.4.0          libunwind@1.6.2        papi@6.0.0.1            py-torch@2.1.0        sz3@3.1.7           zfp@0.5.5
+butterflypack@2.4.0  faodel@1.2108.1        heffte@2.4.0          loki@0.1.7             papi@6.0.0.1            py-warpx@23.08        tasmanian@8.0       zfp@0.5.5
+cabana@0.6.0         flecsi@2.2.1           hpctoolkit@2023.08.1  magma@2.7.2            papyrus@1.0.2           qthreads@1.18         tasmanian@8.0
+cabana@0.6.0         flecsi@2.2.1           hpctoolkit@2023.08.1  mercury@2.3.1          parallel-netcdf@1.12.3  quantum-espresso@7.2  tau@2.33
+caliper@2.10.0       flit@2.1.0             hpx@1.9.1             metall@0.25            paraview@5.11.2         raja@2022.10.4        tau@2.33
+caliper@2.10.0       flux-core@0.55.0       hpx@1.9.1             mfem@4.6.0             paraview@5.11.2         raja@2022.10.4        trilinos@13.0.1
+chai@2022.03.0       flux-core@0.55.0       hypre@2.29.0          mfem@4.6.0             parsec@3.0.2209         rempi@1.1.0           trilinos@14.4.0
+==> 171 installed packages
 ```
