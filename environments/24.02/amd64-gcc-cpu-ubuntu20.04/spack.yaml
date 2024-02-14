@@ -1,0 +1,211 @@
+
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@=11.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      require: '%gcc'
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      target: [x86_64]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mesa:
+      version: [21.3.8]
+    mpi:
+      require: mpich
+    mpich:
+      require: '@4.1.2 ~wrapperrpath ~hwloc'
+      buildable: false
+      externals:
+      - spec: mpich@4.1.2 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=pmi
+        prefix: /usr/local/mpich/install/mpich
+    ncurses:
+      require: '@6.3 +termlib'
+    tbb:
+      require: intel-tbb
+    boost:
+      version: [1.79.0]
+      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
+        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
+        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
+        cxxstd=17 visibility=global
+    libffi:
+      require: "@3.4.4"
+    vtk-m:
+      require: "+examples"
+    cuda:
+      version: [11.8.0]
+    raja:
+      variants: +plugins 
+
+  specs:
+  # CPU
+  - adios
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - axom
+  - bolt
+  - boost
+  - bricks ~cuda
+  - butterflypack
+  - cabana
+  - caliper
+  - chai ~benchmarks ~tests
+  - charliecloud
+  - conduit
+  - cp2k +mpi
+  - datatransferkit
+  - dealii
+  - dyninst
+  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp ^visit ~gui # +visit +gui: https://github.com/spack/spack/issues/40731
+  - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
+  - exaworks
+  - flecsi
+  - flit
+  - flux-core
+  - fortrilinos
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - gmp
+  - gotcha
+  - gptune ~mpispawn
+  - gromacs
+  - h5bench
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpctoolkit
+  - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - lammps
+  - lbann
+  - legion
+  - libnrm
+  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
+  - libquo
+  - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - netlib-scalapack
+  - nrm
+  - nvhpc
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - py-warpx
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz3
+  - tasmanian
+  - tau +mpi +python +syscall
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - variorum
+  - wannier90
+  - xyce +mpi +shared +pymi +pymi_static_tpls
+  # INCLUDED IN ECP DAV CPU
+  # - adios2
+  # - ascent
+  # - darshan-runtime
+  # - darshan-util
+  # - faodel
+  # - hdf5
+  # - libcatalyst
+  # - parallel-netcdf
+  # - paraview
+  # - py-cinemasci
+  # - sz
+  # - unifyfs
+  # - veloc
+  # - vtk-m
+  # - zfp
+  # --
+  # - visit                                     # silo: https://github.com/spack/spack/issues/39538
+  # --
+  # - geopm                                     # py-tables: tables/utilsextension.c:22352:13: error: '_PyErr_StackItem' {aka 'struct _err_stackitem'} has no member named 'exc_traceback'; geopm: https://github.com/spack/spack/issues/38795
+  # - glvis ^mesa@23.0.3                        # mesa: https://github.com/spack/spack/issues/42632
+  # - laghos ^mfem~cuda                         # laghos: https://github.com/spack/spack/issues/42633
