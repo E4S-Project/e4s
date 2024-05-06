@@ -49,7 +49,7 @@ $> spack buildcache list -al
   * For `cuda_arch=80` and `cuda_arch=90`
   * Built and tested using:
     * `Ubuntu 22.04, GCC 11.4.0`
-    * `ecpe4s/e4s-release-base-cuda-amd64:24.05
+    * `ecpe4s/e4s-release-base-cuda-amd64:24.05`
 
 * Model environment for NVIDIA GPUs on ppc64le is:
   * `ppc64le-gcc-cuda-ubuntu20.04/spack.yaml`
