@@ -1,0 +1,210 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@9.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: ppc64le
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      target: [ppc64le]
+      require: "%gcc@9.4.0 target=ppc64le"
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      require: "@1.18.1 target=ppc64le"
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: mpich
+    mpich:
+      require: '@4.1.2 ~wrapperrpath ~hwloc target=ppc64le'
+      buildable: false
+      externals:
+      - spec: mpich@4.1.2 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=pmi
+        prefix: /usr/local/mpich/install/mpich
+    faodel:
+      require: "~tcmalloc target=ppc64le"
+    tbb:
+      require: intel-tbb
+    vtk-m:
+      require: "+examples target=ppc64le"
+    cuda:
+      require: "@11.4.4 target=ppc64le"
+    raja:
+      variants: +plugins
+
+
+  specs:
+  # CPU
+  - adios
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - axom
+  - bolt
+  - boost
+  - bricks
+  - butterflypack
+  - cabana
+  - caliper
+  - chai tests=none
+  - charliecloud
+  - conduit
+  - cp2k +mpi
+  - datatransferkit
+  - dyninst
+  - e4s-alc
+  - e4s-cl
+  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp ^paraview+qt  ^visit ~gui # +visit +gui: https://github.com/spack/spack/issues/40731
+  - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
+  - exaworks
+  - flecsi
+  - flit
+  - flux-core
+  - fortrilinos
+  - fpm
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - glvis ^mesa@23.2.1
+  - gmp
+  - gotcha
+  - gptune
+  - gromacs
+  - h5bench
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpctoolkit
+  - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - laghos ^mfem~cuda
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff
+  - lbann
+  - legion
+  - libnrm
+  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
+  - libquo
+  - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - nek5000 +mpi ~visit
+  - nekbone +mpi
+  - netcdf-fortran
+  - netlib-scalapack
+  - nrm
+  - nvhpc
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-deephyper
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - py-warpx
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz3
+  - tasmanian
+  - tau +mpi +python +dyninst ^dyninst@13.0.0
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - wannier90
+  - xyce +mpi +shared +pymi +pymi_static_tpls
+  # INCLUDED IN ECP DAV CPU
+  # - adios2
+  # - ascent
+  # - darshan-runtime
+  # - darshan-util
+  # - faodel
+  # - hdf5
+  # - libcatalyst
+  # - parallel-netcdf
+  # - paraview
+  # - paraview ~cuda ~rocm
+  # - py-cinemasci
+  # - sz
+  # - unifyfs
+  # - veloc
+  # - vtk-m
+  # - zfp
+  # --
+  # - visit                   # silo: https://github.com/spack/spack/issues/39538
+  # -- 
+  # - dealii                  # fltk: https://github.com/spack/spack/issues/38791
+  # - geopm                   # py-tables: tables/utilsextension.c:22152:17: error: '_PyErr_StackItem' {aka 'struct _err_stackitem'} has no member named 'exc_traceback'; geopm: https://github.com/spack/spack/issues/38798
+  # - phist +mpi              # phist: kernels/petsc/kernels_def.hpp:308:53: error: cannot convert 'int*' to 'PetscInt*' {aka 'long int*'}
+  # - variorum                # variorum: https://github.com/spack/spack/issues/38786

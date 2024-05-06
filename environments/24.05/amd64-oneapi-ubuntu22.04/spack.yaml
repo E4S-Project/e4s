@@ -1,0 +1,251 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@=11.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu22.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+  - compiler:
+      spec: oneapi@=2024.0.2
+      paths:
+        cc: /opt/intel/oneapi/compiler/2024.0/bin/icx
+        cxx: /opt/intel/oneapi/compiler/2024.0/bin/icpx
+        f77: /opt/intel/oneapi/compiler/2024.0/bin/ifx
+        fc: /opt/intel/oneapi/compiler/2024.0/bin/ifx
+      flags: {}
+      operating_system: ubuntu22.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      target: [x86_64]
+      require: '%oneapi target=x86_64'
+      providers:
+        blas: [openblas]
+        tbb: [intel-tbb]
+      variants: +mpi
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      require: "%gcc target=x86_64"
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: intel-oneapi-mpi
+    intel-oneapi-mpi:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-mpi@2021.11.0
+        prefix: /opt/intel/oneapi
+    gcc-runtime:
+      require: "%gcc target=x86_64"
+    unzip:
+      require: '%gcc target=x86_64'
+    binutils:
+      require: '%gcc target=x86_64'
+      variants: +ld +gold +headers +libiberty ~nls
+    llvm:
+      require: '%gcc target=x86_64'
+    ruby:
+      require: '%gcc target=x86_64'
+    rust:
+      require: '%gcc target=x86_64'
+    krb5:
+      require: '%gcc target=x86_64'
+    papi:
+      require: '%gcc target=x86_64'
+    openssh:
+      require: '%gcc target=x86_64'
+    dyninst:
+      require: "%gcc target=x86_64"
+    bison:
+      require: '%gcc target=x86_64'
+    raja:
+      variants: +plugins
+
+  specs:
+  # CPU
+  - adios
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - axom
+  - bolt
+  - boost
+  - bricks ~cuda
+  - butterflypack
+  - cabana
+  - caliper
+  - chai tests=none
+  - charliecloud
+  - conduit
+  - datatransferkit
+  - dealii
+  - e4s-alc
+  - e4s-cl
+  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc ~visit +vtkm +zfp ^paraview~qt # +paraview: struct format_handler : error_handler {; +visit ^visit~gui: visit_vtk/lightweight/vtkSkewLookupTable.C:32:10: error: cannot initialize return object of type 'unsigned char *' with an rvalue of type 'const unsigned char *'
+  - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
+  - exaworks
+  - flecsi
+  - flit
+  - flux-core
+  - fortrilinos
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - gmp
+  - gotcha
+  - gptune ~mpispawn
+  - gromacs
+  - h5bench
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff
+  - lbann
+  - legion
+  - libnrm
+  - libquo
+  - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - nekbone +mpi
+  - netcdf-fortran
+  - netlib-scalapack
+  - nrm
+  - omega-h
+  - openmpi
+  - openpmd-api
+  - papi target=x86_64
+  - papyrus
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - py-warpx
+  - qthreads scheduler=distrib
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz3
+  - tasmanian
+  - tau +mpi +python +syscall # +dyninst ^dyninst@13.0.0: dyninst: libiberty-2.41-4h2aql7qozkig4eeieptu5zfi4nltyeb/spack-src/libiberty/./d-demangle.c:159: undefined reference to `_intel_fast_memcpy'
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - variorum
+  - wannier90
+  - xyce +mpi +shared +pymi +pymi_static_tpls
+  - laghos ^mfem~cuda
+  - glvis ^mesa@23.2.1
+  # INCLUDED IN ECP DAV CPU
+  # - adios2
+  # - ascent
+  # - darshan-runtime
+  # - darshan-util
+  # - faodel
+  # - hdf5
+  # - libcatalyst
+  # - parallel-netcdf
+  # - py-cinemasci
+  # - sz
+  # - unifyfs
+  # - veloc
+  # - vtk-m ~openmp                 # +openmp: https://github.com/spack/spack/issues/31830
+  # - zfp
+  # --
+  # - paraview ~qt                  # paraview: VTK/ThirdParty/cgns/vtkcgns/src/adfh/ADFH.c:1993:21: error: incompatible function pointer types passing 'herr_t (hid_t, const char *, const H5L_info1_t *, void *)' (aka 'int (long, const char *, const H5L_info1_t *, void *)') to parameter of type 'H5L_iterate2_t' (aka 'int (*)(long, const char *, const H5L_info2_t *, void *)') [-Wincompatible-function-pointer-types]
+  # - visit                         # silo: https://github.com/spack/spack/issues/39538
+  # --
+  # - alquimia                      # pflotran: https://github.com/spack/spack/issues/39474
+  # - cp2k +mpi                     # dbcsr: FAILED: src/CMakeFiles/dbcsr.dir/block/dbcsr_block_operations.F-pp.f src/CMakeFiles/dbcsr.dir/block/dbcsr_block_operations.F.o.ddi: dbcsr_block_operations.F(1207): #error: incomplete macro call DBCSR_ABORT.
+  # - fpm                           # fpm: fpm.F90(28205): error #6136: Derived-type declared must be ABSTRACT [GIT_TARGET_T]
+  # - geopm                         # py-tables: tables/utilsextension.c:23020:5: error: incomplete definition of type 'struct _frame'; geopm: https://github.com/spack/spack/issues/38795
+  # - hpctoolkit                    # dyninst%gcc: /usr/bin/ld: libiberty/./d-demangle.c:142: undefined reference to `_intel_fast_memcpy'; can't mix intel-tbb@%oneapi with dyninst%gcc
+  # - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp # py-numcodecs: https://github.com/spack/spack/issues/40766
+  # - nek5000 +mpi ~visit           # nek5000: Error: RuntimeError: Cannot build example: short_tests/eddy.
+  # - openfoam                      # cgal: https://github.com/spack/spack/issues/39481
+  # - py-deephyper                  # py-dm-tree: abseil-cpp/src/abseil-cpp/absl/random/internal/randen_detect.cc:46:13: error: static declaration of '__cpuid' follows non-static declaration
+  # - quantum-espresso              # quantum-espresso: PHonon/CMakeFiles/qe_phonon_ph.dir/build.make:1846: PHonon/CMakeFiles/qe_phonon_ph.dir/PH/symdynph_gq.f90.o: ICE
+
+  # GPU
+  - aml +ze
+  - amrex +sycl
+  - arborx +sycl ^kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - cabana +sycl ^kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - ginkgo +sycl
+  - heffte +sycl
+  - kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - kokkos-kernels build_type=Release %oneapi ^kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - petsc +sycl
+  - slate +sycl ^intel-oneapi-mkl@2023
+  - sundials +sycl +examples-install cxxstd=17
+  - tau +mpi +opencl +level_zero +syscall
+  - upcxx +level_zero
+  # --
+  # - hpctoolkit +level_zero                    # dyninst@12.3.0%gcc: /usr/bin/ld: libiberty/./d-demangle.c:142: undefined reference to `_intel_fast_memcpy'; can't mix intel-tbb@%oneapi with dyninst%gcc
+  # - hypre +sycl                               # hypre: _hypre_onedpl.hpp:18:10: fatal error: 'oneapi/dpl/execution' file not found
