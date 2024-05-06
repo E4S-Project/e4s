@@ -1,0 +1,216 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@11.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu22.04
+      target: aarch64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      target: [aarch64]
+      require: '%gcc@11.4.0 target=aarch64'
+      providers:
+        blas: [openblas]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: mpich
+    mpich:
+      require: '@4.1.2 ~wrapperrpath ~hwloc target=aarch64'
+      buildable: false
+      externals:
+      - spec: mpich@4.1.2 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=pmi
+        prefix: /usr/local/mpich/install/mpich
+    tbb:
+      require: intel-tbb
+    boost:
+      version: [1.79.0]
+      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
+        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
+        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
+        cxxstd=17 visibility=global
+    vtk-m:
+      require: "+examples target=aarch64"
+    cuda:
+      require: '@:12.2.0 target=aarch64'
+      prefer:
+      - '@12.2.0'
+      - '@11.8.0'
+      externals:
+      - spec: cuda@12.2.0
+        prefix: /usr/local/cuda
+    raja:
+      variants: +plugins
+
+  specs:
+  # CPU
+  - adios
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - axom
+  - bolt
+  - boost
+  - butterflypack
+  - cabana
+  - caliper
+  - chai tests=none
+  - charliecloud
+  - conduit
+  - cp2k +mpi
+  - datatransferkit
+  - dealii
+  - dyninst
+  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp ^paraview+qt  ^visit ~gui # +visit +gui: https://github.com/spack/spack/issues/40731
+  - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
+  - exaworks
+  - flecsi
+  - flit
+  - flux-core
+  - fortrilinos
+  - fpm
+  - e4s-cl
+  - e4s-alc
+  - netcdf-fortran
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - gmp
+  - gotcha
+  - gptune ~mpispawn
+  - gromacs
+  - h5bench
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpctoolkit
+  - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff
+  - lbann
+  - legion
+  - libnrm
+  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
+  - libquo
+  - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - nek5000 +mpi ~visit
+  - nekbone +mpi
+  - netlib-scalapack
+  - nrm
+  - nvhpc
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-deephyper
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - py-warpx
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz3
+  - tasmanian
+  - tau +mpi +python +syscall +dyninst ^dyninst@13.0.0
+  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - wannier90
+  - xyce +mpi +shared +pymi +pymi_static_tpls
+  # INCLUDED IN ECP DAV CPU
+  # - ascent
+  # - adios2
+  # - darshan-runtime
+  # - darshan-util
+  # - faodel
+  # - hdf5
+  # - libcatalyst
+  # - parallel-netcdf
+  # - paraview
+  # - py-cinemasci
+  # - sz
+  # - unifyfs
+  # - veloc
+  # - vtk-m
+  # - zfp 
+  # --
+  # - visit                         # silo: https://github.com/spack/spack/issues/39538
+  # --
+  # - bricks ~cuda                  # bricks: stencils/cpuvfold.h:27:2: error: #error "This is for SVE512"
+  # - geopm                         # py-tables: tables/utilsextension.c:445:62: error: invalid use of incomplete typedef 'PyFrameObject' {aka 'struct _frame'}; geopm: https://github.com/spack/spack/issues/38795
+  # - glvis ^mesa@23.0.3            # mesa: https://github.com/spack/spack/issues/42632
+  # - laghos ^mfem~cuda             # laghos: https://github.com/spack/spack/issues/42633
+  # - variorum                      # variorum: https://github.com/spack/spack/issues/38786

@@ -1,0 +1,233 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@11.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu22.04
+      target: aarch64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      target: [aarch64]
+      require: '%gcc@11.4.0 target=aarch64'
+      providers:
+        blas: [openblas]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: mpich
+    mpich:
+      require: '@4.1.2 ~wrapperrpath ~hwloc target=aarch64'
+      buildable: false
+      externals:
+      - spec: mpich@4.1.2 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=pmi
+        prefix: /usr/local/mpich/install/mpich
+    tbb:
+      require: intel-tbb
+    boost:
+      version: [1.79.0]
+      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
+        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
+        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
+        cxxstd=17 visibility=global
+    vtk-m:
+      require: "+examples target=aarch64"
+    cuda:
+      require: '@:12.2.0 target=aarch64'
+      prefer:
+      - '@12.2.0'
+      - '@11.8.0'
+      externals:
+      - spec: cuda@12.2.0
+        prefix: /usr/local/cuda
+    raja:
+      variants: +plugins
+
+  specs:
+  # CUDA NOARCH
+  - flux-core +cuda
+  - hpctoolkit +cuda
+  - legion +cuda
+  - papi +cuda
+  - tau +mpi +cuda +syscall
+  # --
+  # - bricks +cuda                    # bricks: VSBrick-cond.py-ASIMD-8x8x8-2:1542:19: error: 'vst1q_u32' was not declared in this scope; did you mean 'svst1h_u32'?
+
+
+  # CUDA 75
+  - amrex +cuda cuda_arch=75
+  - arborx +cuda cuda_arch=75 ^kokkos +wrapper
+  - axom +cuda cuda_arch=75
+  - cabana +cuda cuda_arch=75 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=75
+  - caliper +cuda cuda_arch=75
+  - chai tests=none +cuda cuda_arch=75 ^umpire ~shared
+  - cusz +cuda cuda_arch=75
+  - dealii +cuda cuda_arch=75
+  - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=75
+  - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=75 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=75
+  - flecsi +cuda cuda_arch=75
+  - ginkgo +cuda cuda_arch=75
+  - gromacs +cuda cuda_arch=75
+  - heffte +cuda cuda_arch=75
+  - hpx +cuda cuda_arch=75
+  - hypre +cuda cuda_arch=75
+  - kokkos +wrapper +cuda cuda_arch=75
+  - kokkos-kernels +cuda cuda_arch=75 ^kokkos +wrapper +cuda cuda_arch=75
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=75
+  - lbann +cuda cuda_arch=75  ^cuda@11.8.0
+  - magma +cuda cuda_arch=75
+  - mfem +cuda cuda_arch=75
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=75
+  - omega-h +cuda cuda_arch=75  ^cuda@11.8.0
+  - parsec +cuda cuda_arch=75
+  - petsc +cuda cuda_arch=75
+  - raja +cuda cuda_arch=75
+  - slate +cuda cuda_arch=75
+  - slepc +cuda cuda_arch=75
+  - strumpack ~slate +cuda cuda_arch=75
+  - sundials +cuda cuda_arch=75
+  - superlu-dist +cuda cuda_arch=75
+  - tasmanian +cuda cuda_arch=75
+  - trilinos +cuda cuda_arch=75
+  - umpire ~shared +cuda cuda_arch=75
+  - upcxx +cuda cuda_arch=75
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=75
+  # - paraview +cuda cuda_arch=75
+  # - vtk-m +cuda cuda_arch=75
+  # - zfp +cuda cuda_arch=75
+  # --
+  # - ascent +cuda cuda_arch=75       # ascent: https://github.com/spack/spack/issues/38045
+  # --
+  # - cp2k +mpi +cuda cuda_arch=75    # cp2k: concretization failed for the following reasons: 1. cp2k: cp2k only supports cuda_arch ('35', '37', '60', '70', '80')
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf ~cusz +mgard +cuda cuda_arch=75 # libpressio: CMake Error at CMakeLists.txt:498 (find_library): Could not find CUFile_LIBRARY using the following names: cufile
+
+
+  # CUDA 80
+  - amrex +cuda cuda_arch=80
+  - arborx +cuda cuda_arch=80 ^kokkos +wrapper
+  - axom +cuda cuda_arch=80
+  - cabana +cuda cuda_arch=80 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=80
+  - caliper +cuda cuda_arch=80
+  - chai tests=none +cuda cuda_arch=80 ^umpire ~shared
+  - cusz +cuda cuda_arch=80
+  - dealii +cuda cuda_arch=80
+  - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=80
+  - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=80 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=80
+  - flecsi +cuda cuda_arch=80
+  - ginkgo +cuda cuda_arch=80
+  - gromacs +cuda cuda_arch=80
+  - heffte +cuda cuda_arch=80
+  - hpx +cuda cuda_arch=80
+  - hypre +cuda cuda_arch=80
+  - kokkos +wrapper +cuda cuda_arch=80
+  - kokkos-kernels +cuda cuda_arch=80 ^kokkos +wrapper +cuda cuda_arch=80
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=80
+  - lbann +cuda cuda_arch=80  ^cuda@11.8.0
+  - magma +cuda cuda_arch=80
+  - mfem +cuda cuda_arch=80
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=80
+  - omega-h +cuda cuda_arch=80  ^cuda@11.8.0
+  - parsec +cuda cuda_arch=80
+  - petsc +cuda cuda_arch=80
+  - raja +cuda cuda_arch=80
+  - slate +cuda cuda_arch=80
+  - slepc +cuda cuda_arch=80
+  - strumpack ~slate +cuda cuda_arch=80
+  - sundials +cuda cuda_arch=80
+  - superlu-dist +cuda cuda_arch=80
+  - tasmanian +cuda cuda_arch=80
+  - trilinos +cuda cuda_arch=80
+  - umpire ~shared +cuda cuda_arch=80
+  - upcxx +cuda cuda_arch=80
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=80
+  # - paraview +cuda cuda_arch=80
+  # - vtk-m +cuda cuda_arch=80
+  # - zfp +cuda cuda_arch=80
+  # --
+  # - ascent +cuda cuda_arch=80       # ascent: https://github.com/spack/spack/issues/38045
+  # --
+  # - cp2k +mpi +cuda cuda_arch=80    # cp2k: KeyError: 'Point environment variable LIBSMM_PATH to the absolute path of the libsmm.a file'
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf ~cusz +mgard +cuda cuda_arch=80 # libpressio: CMake Error at CMakeLists.txt:498 (find_library): Could not find CUFile_LIBRARY using the following names: cufile
+
+
+  # CUDA 90
+  - amrex +cuda cuda_arch=90
+  - arborx +cuda cuda_arch=90 ^kokkos +wrapper
+  - axom +cuda cuda_arch=90
+  - cabana +cuda cuda_arch=90 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=90
+  - caliper +cuda cuda_arch=90
+  - chai tests=none +cuda cuda_arch=90 ^umpire ~shared
+  - cusz +cuda cuda_arch=90
+  - ecp-data-vis-sdk +adios2 +hdf5 +vtkm +zfp ~paraview +cuda cuda_arch=90
+  - flecsi +cuda cuda_arch=90
+  - ginkgo +cuda cuda_arch=90
+  - gromacs +cuda cuda_arch=90
+  - heffte +cuda cuda_arch=90
+  - hpx +cuda cuda_arch=90
+  - hypre +cuda cuda_arch=90
+  - kokkos +wrapper +cuda cuda_arch=90
+  - kokkos-kernels +cuda cuda_arch=90 ^kokkos +wrapper +cuda cuda_arch=90
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=90
+  - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf ~cusz +mgard +cuda cuda_arch=90 # libpressio: CMake Error at CMakeLists.txt:498 (find_library): Could not find CUFile_LIBRARY using the following names: cufile
+  - magma +cuda cuda_arch=90
+  - mfem +cuda cuda_arch=90
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=90
+  - parsec +cuda cuda_arch=90
+  - petsc +cuda cuda_arch=90
+  - raja +cuda cuda_arch=90
+  - slate +cuda cuda_arch=90
+  - slepc +cuda cuda_arch=90
+  - strumpack ~slate +cuda cuda_arch=90
+  - sundials +cuda cuda_arch=90
+  - superlu-dist +cuda cuda_arch=90
+  - tasmanian +cuda cuda_arch=90
+  - trilinos +cuda cuda_arch=90
+  - umpire ~shared +cuda cuda_arch=90
+  - upcxx +cuda cuda_arch=90
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=90
+  # - vtk-m +cuda cuda_arch=90 target=aarch64
+  # - zfp +cuda cuda_arch=90
+  # --
+  # - ascent +cuda cuda_arch=90     # ascent: https://github.com/spack/spack/issues/38045
+  # - paraview +cuda cuda_arch=90   # paraview: InstallError: Incompatible cuda_arch=90
+  # --
+  # - cp2k +mpi +cuda cuda_arch=90  # cp2k: concretization failed for the following reasons: 1. cp2k: cp2k only supports cuda_arch ('35', '37', '60', '70', '80')
+  # - dealii +cuda cuda_arch=90     # trilinos@13.4.1: CMake Error: File /tmp/root/spack-stage/spack-stage-trilinos-13.4.1-totrl2sqhecbgedub6i43vtokaxcjgj6/spack-src/cmake/compile_tests/cuda_compute_capability.cc does not exist.; dealii: https://github.com/spack/spack/issues/39532
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=90 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=90 # hiop conflicts with cuda@12 needed for cuda_arch=90
+  # - lbann +cuda cuda_arch=90      # dihydrogen: gpu/memory_utils.cpp:112:34: error: 'MemoryPool' is not a member of 'hydrogen::cub'
+  # - omega-h +cuda cuda_arch=90    # omega-h: https://github.com/spack/spack/issues/39535
