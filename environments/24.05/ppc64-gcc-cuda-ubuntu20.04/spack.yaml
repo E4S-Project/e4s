@@ -1,0 +1,127 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@9.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu20.04
+      target: ppc64le
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    all:
+      target: [ppc64le]
+      require: "%gcc@9.4.0 target=ppc64le"
+      providers:
+        blas: [openblas]
+        mpi: [mpich]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      require: "@1.18.1 target=ppc64le"
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: mpich
+    mpich:
+      require: '@4.1.2 ~wrapperrpath ~hwloc target=ppc64le'
+      buildable: false
+      externals:
+      - spec: mpich@4.1.2 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=pmi
+        prefix: /usr/local/mpich/install/mpich
+    faodel:
+      require: "~tcmalloc target=ppc64le"
+    tbb:
+      require: intel-tbb
+    vtk-m:
+      require: "+examples target=ppc64le"
+    cuda:
+      require: "@11.4.4 target=ppc64le"
+    raja:
+      variants: +plugins
+
+
+  specs:
+  # CUDA NOARCH
+  - bricks +cuda
+  - flux-core +cuda
+  - hpctoolkit +cuda
+  - legion +cuda
+  - papi +cuda
+  - tau +mpi +cuda
+
+
+  # CUDA 70
+  - amrex +cuda cuda_arch=70
+  - arborx +cuda cuda_arch=70 ^kokkos +wrapper
+  - axom +cuda cuda_arch=70
+  - cabana +cuda cuda_arch=70 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=70
+  - caliper +cuda cuda_arch=70
+  - chai tests=none +cuda cuda_arch=70 ^umpire ~shared
+  - cusz +cuda cuda_arch=70
+  - ecp-data-vis-sdk ~rocm +adios2 ~ascent +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=70
+  - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=70 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=70
+  - flecsi +cuda cuda_arch=70
+  - ginkgo +cuda cuda_arch=70
+  - gromacs +cuda cuda_arch=70
+  - heffte +cuda cuda_arch=70
+  - hpx +cuda cuda_arch=70
+  - hypre +cuda cuda_arch=70
+  - kokkos +wrapper +cuda cuda_arch=70
+  - kokkos-kernels +cuda cuda_arch=70 ^kokkos +wrapper +cuda cuda_arch=70
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=70
+  - lbann +cuda cuda_arch=70
+  - magma +cuda cuda_arch=70
+  - mfem +cuda cuda_arch=70
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=70
+  - omega-h +cuda cuda_arch=70
+  - parsec +cuda cuda_arch=70
+  - petsc +cuda cuda_arch=70
+  - raja +cuda cuda_arch=70
+  - slate +cuda cuda_arch=70
+  - slepc +cuda cuda_arch=70
+  - strumpack ~slate +cuda cuda_arch=70
+  - sundials +cuda cuda_arch=70
+  - superlu-dist +cuda cuda_arch=70
+  - tasmanian +cuda cuda_arch=70
+  - umpire ~shared +cuda cuda_arch=70
+  - upcxx +cuda cuda_arch=70
+  # INCLUDED IN ECP DAV CUDA
+  # - adios2 +cuda cuda_arch=70
+  # - paraview +cuda cuda_arch=70
+  # - vtk-m +cuda cuda_arch=70
+  # - zfp +cuda cuda_arch=70
+  # --
+  # - ascent +cuda cuda_arch=70           # ascent: https://github.com/spack/spack/issues/38045
+  # --
+  # - cp2k +mpi +cuda cuda_arch=70        # cp2k: pw/fft/fftw3_lib.F:758: undefined reference to `fftw_plan_with_nthreads'
+  # - dealii +cuda cuda_arch=70           # fltk: https://github.com/spack/spack/issues/38791
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=70 ^cusz +cuda cuda_arch=70 # depends_on("cuda@11.7.1:", when="+cuda")
+  # - trilinos +cuda cuda_arch=70         # trilinos: packages/stokhos/src/CMakeFiles/stokhos.dir/epetra/Stokhos_AdaptivityManager.cpp.o: boost-1.84.0-gfnpmygtdtflkpno55odpiroadby7prl/include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed
