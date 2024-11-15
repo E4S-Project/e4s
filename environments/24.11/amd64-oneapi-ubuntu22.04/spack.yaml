@@ -1,0 +1,140 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@=11.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu22.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+  - compiler:
+      spec: oneapi@=2024.2.1
+      paths:
+        cc: /opt/intel/oneapi/compiler/2024.2/bin/icx
+        cxx: /opt/intel/oneapi/compiler/2024.2/bin/icpx
+        f77: /opt/intel/oneapi/compiler/2024.2/bin/ifx
+        fc: /opt/intel/oneapi/compiler/2024.2/bin/ifx
+      flags: {}
+      operating_system: ubuntu22.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    python:
+      prefer:
+      - "@3.10.12" 
+      externals:
+      - spec: python@3.10.12+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /usr
+    all:
+      target: [x86_64]
+      require: '%oneapi target=x86_64'
+      providers:
+        blas: [openblas]
+        tbb: [intel-tbb]
+      variants: +mpi
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      #require: "%gcc target=x86_64"
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: intel-oneapi-mpi
+    intel-oneapi-mpi:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-mpi@2021.13.1
+        prefix: /opt/intel/oneapi
+    gcc-runtime:
+      require: '%gcc target=x86_64'
+    unzip:
+      require: '%gcc target=x86_64'
+    binutils:
+      require: '%gcc target=x86_64'
+      variants: +ld +gold +headers +libiberty ~nls
+    llvm:
+      require: '%gcc target=x86_64'
+    ruby:
+      require: '%gcc target=x86_64'
+    rust:
+      require: '%gcc target=x86_64'
+    krb5:
+      require: '%gcc target=x86_64'
+    papi:
+      require: '%gcc target=x86_64'
+    openssh:
+      require: '%gcc target=x86_64'
+    dyninst:
+      require: '%gcc target=x86_64'
+    bison:
+      require: '%gcc target=x86_64'
+    raja:
+      variants: +plugins
+    paraview:
+      variants: +qt +examples
+    intel-oneapi-mkl:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-mkl@2024.2.1
+        prefix: /opt/intel/oneapi
+        modules: [mkl/2024.2]
+    intel-oneapi-dpl:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-dpl@2022.6.0
+        prefix: /opt/intel/oneapi
+        modules: [dpl/2022.6]
+    intel-oneapi-tbb:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-tbb@2021.13.1
+        prefix: /opt/intel/oneapi
+        modules: []
+
+  specs:
+  # GPU
+  - aml +ze
+  - amrex +sycl
+  - arborx +sycl ^kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - cabana +sycl ^kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - ginkgo +sycl
+  - heffte +sycl
+  - kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - kokkos-kernels build_type=Release %oneapi ^kokkos +sycl +openmp cxxstd=17 +tests +examples
+  - petsc +sycl
+  - sundials +sycl +examples-install cxxstd=17
+  - tau +mpi +opencl +level_zero +syscall
+  - upcxx +level_zero
+  # --
+  # - hpctoolkit +level_zero        # dyninst@12.3.0%gcc: /usr/bin/ld: libiberty/./d-demangle.c:142: undefined reference to `_intel_fast_memcpy'; can't mix intel-tbb@%oneapi with dyninst%gcc
+  # - hypre +sycl                   # configure: error: unable to find oneMKL ... Ensure that MKLROOT is set
+  # - slate +sycl                   # ifx: error #10426: option '-fopenmp-targets' requires '-fiopenmp' 
