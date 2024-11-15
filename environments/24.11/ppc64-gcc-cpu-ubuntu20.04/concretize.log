@@ -1,0 +1,1146 @@
+==> Starting concretization pool with 72 processes
+==> Environment concretized in 151.76 seconds
+==> Concretized 119 specs:
+[+]  j25uckz  adios@1.13.1%gcc@9.4.0+blosc~bzip2~fortran~hdf5~infiniband+lz4+mpi~netcdf+shared+sz~szip+zfp+zlib build_system=autotools patches=8ae17f6,aea47e5,d24b79b staging=none arch=linux-ubuntu20.04-ppc64le
+[+]  u5qn2tw      ^autoconf@2.72%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  mlzezqe      ^automake@1.16.5%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  lmvlazr      ^c-blosc@1.21.5%gcc@9.4.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ysfs53d          ^snappy@1.2.1%gcc@9.4.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  pkj53kz      ^gcc-runtime@9.4.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[e]  3llucrc      ^glibc@2.31%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  myd4qpy      ^gmake@4.4.1%gcc@9.4.0~guile build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ifqohz4      ^gnuconfig@2024-07-27%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  lzch6j7      ^libtool@2.4.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  gxo3wxm          ^findutils@4.9.0%gcc@9.4.0 build_system=autotools patches=440b954 arch=linux-ubuntu20.04-ppc64le
+[+]  uvvcsas      ^lz4@1.10.0%gcc@9.4.0+pic build_system=makefile libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  4oqnvji      ^m4@1.4.19%gcc@9.4.0+sigsegv build_system=autotools patches=9dc5fbd,bfdffa7 arch=linux-ubuntu20.04-ppc64le
+[+]  zutla2r          ^libsigsegv@2.14%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[e]  mhjxbgs      ^mpich@4.2.3%gcc@9.4.0~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default arch=linux-ubuntu20.04-ppc64le
+[+]  2smug7i      ^python@3.10.14%gcc@9.4.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,7d40923,ebdca64,f2fd060 arch=linux-ubuntu20.04-ppc64le
+[+]  5oemfkf          ^expat@2.6.3%gcc@9.4.0+libbsd build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  y3ulo2d          ^gdbm@1.23%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  u24mbis          ^gettext@0.22.5%gcc@9.4.0+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  2n23khl              ^tar@1.34%gcc@9.4.0 build_system=autotools zip=pigz arch=linux-ubuntu20.04-ppc64le
+[+]  bwx3qxr                  ^pigz@2.8%gcc@9.4.0 build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  w6u3u4j          ^libffi@3.4.6%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  inauity          ^libxcrypt@4.4.35%gcc@9.4.0~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu20.04-ppc64le
+[+]  3644hk2          ^readline@8.2%gcc@9.4.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu20.04-ppc64le
+[+]  c5qdjpf      ^sz@1.4.12.3%gcc@9.4.0~examples~fortran~hdf5~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  b4yc3ms      ^zfp@0.5.5%gcc@9.4.0~aligned~c~cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  wajzl6x      ^zlib-ng@2.2.1%gcc@9.4.0+compat+new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  h6lpvoi  alquimia@1.1.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  rypwwvu      ^cmake@3.30.5%gcc@9.4.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu20.04-ppc64le
+[+]  hai4via      ^hdf5@1.14.5%gcc@9.4.0~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  hiqcpon      ^pflotran@5.0.0%gcc@9.4.0~rxn build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  u5kmc7s          ^petsc@3.21.6%gcc@9.4.0~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu20.04-ppc64le
+[+]  lmufmai  aml@0.2.1%gcc@9.4.0~cuda~hip+hwloc~opencl~ze build_system=autotools hip-platform=none arch=linux-ubuntu20.04-ppc64le
+[+]  b7dwwkg      ^hwloc@2.11.1%gcc@9.4.0~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  wpbqsaf      ^numactl@2.0.18%gcc@9.4.0 build_system=autotools patches=85c50da arch=linux-ubuntu20.04-ppc64le
+[+]  22ewa2l      ^pkgconf@2.2.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ry7alfo  amrex@24.10%gcc@9.4.0~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp~particles~petsc~pic~plotfile_tools~rocm~shared~sundials~sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu20.04-ppc64le
+[+]  cmnt26k  arborx@1.7%gcc@9.4.0~cuda~ipo+mpi~openmp~rocm+serial~sycl~trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xb3jn3b      ^kokkos@4.4.01%gcc@9.4.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu20.04-ppc64le
+[+]  vm5qzmm  argobots@1.2%gcc@9.4.0~affinity~debug+perf~stackunwind~tool~valgrind build_system=autotools stackguard=none arch=linux-ubuntu20.04-ppc64le
+[+]  jeoitvu  axom@0.9.0%gcc@9.4.0+cpp14~cuda~devtools+examples+fortran+hdf5~ipo+lua~mfem+mpi+openmp~python+raja~rocm~scr+shared+tools+umpire build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  6x6ygps      ^blt@0.6.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  6hwyvbq      ^cmake@3.30.5%gcc@9.4.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu20.04-ppc64le
+[+]  7c5ivrf          ^curl@8.10.1%gcc@9.4.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu20.04-ppc64le
+[+]  eseabmu      ^hdf5@1.8.23%gcc@9.4.0~cxx+fortran+hl~ipo+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu20.04-ppc64le
+[+]  t63opua      ^lua@5.4.6%gcc@9.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu20.04-ppc64le
+[+]  eue36fm      ^raja@2024.07.0%gcc@9.4.0~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  yxlxwve          ^camp@2024.07.0%gcc@9.4.0~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  37aget3      ^umpire@2024.07.0%gcc@9.4.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget+openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu20.04-ppc64le
+[+]  reiwt3s          ^fmt@11.0.2%gcc@9.4.0~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  75ezw3c  bolt@2.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  cngsn6u  boost@1.86.0%gcc@9.4.0~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex~serialization+shared~signals~singlethreaded~stacktrace~system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  rqwz6b6  bricks@2023.08.25%gcc@9.4.0~cuda~ipo build_system=cmake build_type=Release generator=make patches=7fe8d1d arch=linux-ubuntu20.04-ppc64le
+[+]  roeftx7  butterflypack@2.4.0%gcc@9.4.0~ipo+openmp+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  tr33jp7      ^arpack-ng@3.9.0%gcc@9.4.0~icb~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  kzk4klc      ^openblas@0.3.28%gcc@9.4.0~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic+shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu20.04-ppc64le
+[+]  mnrimrz      ^sed@4.9%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  n4bo3vg  cabana@0.7.0%gcc@9.4.0~all~arborx~cajita~cuda~examples~grid~hdf5~heffte~hypre~ipo+mpi~openmp~openmptarget~performance_testing~rocm+serial+shared~silo~sycl~testing~threads build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  q3cxavy      ^cmake@3.25.3%gcc@9.4.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu20.04-ppc64le
+[+]  tszzrut      ^kokkos@4.4.01%gcc@9.4.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu20.04-ppc64le
+[+]  gdp4xie  caliper@2.11.0%gcc@9.4.0+adiak~cuda~fortran+gotcha~ipo+kokkos+libdw~libpfm+libunwind+mpi+papi~rocm+sampler+shared~sosflow~tests~variorum~vtune build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  wlurltl      ^adiak@0.4.0%gcc@9.4.0~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  sbych7j      ^elfutils@0.191%gcc@9.4.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ux2yfsh          ^libiconv@1.17%gcc@9.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  ppfe4o7  chai@2024.07.0%gcc@9.4.0~cuda~enable_pick+examples~ipo+mpi~openmp~raja~rocm+separable_compilation+shared build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu20.04-ppc64le
+[+]  bg3czov      ^blt@0.6.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  rszkvlv  chapel@2.2.0%gcc@9.4.0~chpldoc~cuda+curl~developer+hdf5+libevent+protobuf~rocm+ssl+yaml+zmq atomics=unset build_system=autotools comm=none gmp=spack gpu_mem_strategy=array_on_device host_arch=unset host_jemalloc=unset host_mem=jemalloc host_platform=unset hwloc=bundled launcher=unset lib_pic=none llvm=spack patches=8b4f06c re2=bundled target_arch=unset target_cpu=unset target_platform=unset tasks=qthreads timers=unset unwind=none arch=linux-ubuntu20.04-ppc64le
+[+]  xg5kmrz      ^curl@8.10.1%gcc@9.4.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu20.04-ppc64le
+[+]  ll6gdjx          ^nghttp2@1.63.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  57lqbtm      ^hdf5@1.14.5%gcc@9.4.0~cxx+fortran+hl~ipo~java~map~mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  jh2nrhn      ^libevent@2.1.12%gcc@9.4.0+openssl build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ck3pvuq      ^libyaml@0.1.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xxzocpb      ^libzmq@4.3.5%gcc@9.4.0~docs~drafts+libbsd+libsodium~libunwind build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  qdzyhnc          ^libbsd@0.12.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xukjiei              ^libmd@1.0.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  5tq3v4c          ^libsodium@1.0.20%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  svmpikf      ^llvm@18.1.8%gcc@9.4.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu20.04-ppc64le
+[+]  ru64aua          ^libedit@3.1-20240808%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  p6pmetm          ^perl-data-dumper@2.173%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  ddkfpwu      ^openssl@3.3.1%gcc@9.4.0~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu20.04-ppc64le
+[+]  hnkpozs          ^ca-certificates-mozilla@2023-05-30%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  mys3kxc      ^py-protobuf@5.28.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jygqm5p          ^protobuf@3.28.2%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  s3toenp              ^abseil-cpp@20240722.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release cxxstd=14 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  5iykvth                  ^googletest@1.12.1%gcc@9.4.0+gmock~ipo+pthreads+shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  sdcp53q  charliecloud@0.38%gcc@9.4.0~docs+squashfuse build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  72rk7iz      ^bats@1.10.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  xefjlsq      ^git@2.45.2%gcc@9.4.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  3jcnrj7          ^libidn2@2.3.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  gaj53cf              ^libunistring@1.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  wuzw3gr          ^pcre2@10.44%gcc@9.4.0~jit+multibyte build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  pxn4dwp      ^libfuse@3.16.2%gcc@9.4.0~strip~system_install~useroot+utils build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  cvns3gf          ^meson@1.5.1%gcc@9.4.0 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu20.04-ppc64le
+[+]  44j5zdb      ^py-requests@2.32.3%gcc@9.4.0~socks build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gogss7n          ^py-certifi@2023.7.22%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3cquddk          ^py-charset-normalizer@3.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jtd55qr          ^py-idna@3.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dshyoui          ^py-urllib3@2.1.0%gcc@9.4.0~brotli~socks build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  wd34b37      ^squashfuse@0.5.2%gcc@9.4.0+lz4+lzo~min_size+shared+static+xz+zlib+zstd build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ok3fgki          ^lzo@2.10%gcc@9.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  4vpkogq  conduit@0.9.2%gcc@9.4.0~adios+blt_find_mpi~caliper~doc~doxygen+examples+fortran+hdf5+hdf5_compat~ipo+mpi+parmetis~python+shared~silo+test+utilities~zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  a2kw5gk      ^metis@5.1.0%gcc@9.4.0~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903,b1225da arch=linux-ubuntu20.04-ppc64le
+[+]  cdb7o7c      ^parmetis@4.0.3%gcc@9.4.0~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu20.04-ppc64le
+[+]  fwzyk5b  cp2k@2024.3%gcc@9.4.0~cosma~cuda~dlaf~elpa~enable_regtests~ipo+libint~libvori+libxc+mpi+mpi_f08+openmp~pexsi~plumed~pytorch~quip~rocm~sirius~spglib~spla build_system=cmake build_type=Release generator=make lmax=5 patches=cf8e9cf smm=blas arch=linux-ubuntu20.04-ppc64le
+[+]  amzlin4      ^dbcsr@2.7.0%gcc@9.4.0~cuda~cuda_arch_35_k20x~examples~g2g~ipo+mpi+mpi_f08~opencl+openmp~rocm+shared build_system=cmake build_type=Release generator=ninja smm=blas arch=linux-ubuntu20.04-ppc64le
+[+]  nqctk6n      ^fftw@3.3.10%gcc@9.4.0+mpi+openmp~pfft_patches+shared build_system=autotools patches=872cff9 precision=double,float arch=linux-ubuntu20.04-ppc64le
+[+]  bwqdy6x      ^libint@2.6.0%gcc@9.4.0~debug~fma+fortran build_system=autotools tune=cp2k-lmax-5 arch=linux-ubuntu20.04-ppc64le
+[+]  5pg3shq          ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded~stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  wjljjif      ^libxc@6.2.2%gcc@9.4.0~cuda~kxc~lxc+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  vqfcsg2      ^py-fypp@3.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qatcto4  datatransferkit@3.1.1%gcc@9.4.0~external-arborx~ipo~openmp+serial+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  vwzuwfo      ^boost@1.86.0%gcc@9.4.0~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug+exception~fiber~filesystem+graph~graph_parallel~icu~iostreams~json~locale~log+math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex~serialization+shared~signals~singlethreaded+stacktrace~system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  qn7uyiv  dyninst@13.0.0%gcc@9.4.0~ipo+openmp~stat_dysect~static build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  3hk7unt      ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug~exception~fiber+filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex~serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test+thread+timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  t2kkyte      ^elfutils@0.191%gcc@9.4.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  j2f53fw      ^intel-tbb@2021.12.0%gcc@9.4.0~ipo+shared+tm build_system=cmake build_type=Release cxxstd=default generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  wkugzkm      ^libiberty@2.41%gcc@9.4.0+pic build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  4dbjrt6  e4s-alc@1.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gbmeruu      ^py-pip@23.1.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  zwf5ol4      ^py-pyyaml@6.0.2%gcc@9.4.0+libyaml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  znmpwwx          ^libyaml@0.2.5%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  oytasgh      ^py-setuptools@69.2.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  aoo7pi5      ^py-wheel@0.41.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  kfdpxds      ^python-venv@1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  norzqqy  e4s-cl@1.0.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  h3fe7j7      ^py-pyelftools@0.27%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gb5ctsg      ^py-python-ptrace@0.9.8%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7bgumdq      ^py-python-sotools@0.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pxxtz6d      ^py-termcolor@1.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  f6uapdf      ^py-texttable@1.6.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7lryyly      ^py-tinydb@4.5.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  57ft5q6          ^py-poetry-core@1.8.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  h5r3wyv  ecp-data-vis-sdk@1.0%gcc@9.4.0+adios2+ascent+cinema~cuda+darshan+faodel+fortran+hdf5+paraview+pnetcdf~rocm~sensei+sz+unifyfs+veloc+visit+vtkm+zfp build_system=bundle arch=linux-ubuntu20.04-ppc64le
+[+]  tpokqlt      ^adios2@2.7.1%gcc@9.4.0+blosc+bzip2~cuda+dataman~dataspaces+fortran+hdf5~ipo+mpi+pic+png+python~rocm+shared+ssc+sst+sz+zfp build_system=cmake build_type=Release generator=make patches=8221073,88b2cd1,9e67deb arch=linux-ubuntu20.04-ppc64le
+[+]  6oxd4pw          ^c-blosc@1.21.5%gcc@9.4.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  dplxlna              ^snappy@1.2.1%gcc@9.4.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  upf57av          ^libpng@1.6.39%gcc@9.4.0~ipo~pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  vil2se7          ^py-mpi4py@4.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hemt6ik              ^py-cython@3.0.11%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  43a6nsx          ^py-numpy@1.24.4%gcc@9.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu20.04-ppc64le
+[+]  avg3fdj              ^py-cython@0.29.36%gcc@9.4.0 build_system=python_pip patches=c4369ad arch=linux-ubuntu20.04-ppc64le
+[+]  7cqlcfk              ^py-setuptools@63.4.3%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  4wkv7fs          ^python@3.8.19%gcc@9.4.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,4c24573,ebdca64,f2fd060 arch=linux-ubuntu20.04-ppc64le
+[+]  5jq3rtm          ^python-venv@1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  nglsxm6      ^ascent@0.9.3%gcc@9.4.0+adios2~babelflow+blt_find_mpi~caliper~cuda~doc+dray+fides~fortran~ipo~mfem+mpi~occa+openmp+python+raja+serial+shared~test+umpire+vtkh build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  sfk3iho          ^fides@master%gcc@9.4.0~ipo+mpi build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  bkypnkp          ^py-pip@23.1.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  nfsxndz          ^raja@2024.02.1%gcc@9.4.0~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  blvnt5h              ^camp@2024.02.1%gcc@9.4.0~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  yblpedk          ^umpire@2024.02.1%gcc@9.4.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu20.04-ppc64le
+[+]  67zpjqd      ^conduit@0.9.2%gcc@9.4.0~adios+blt_find_mpi~caliper~doc~doxygen+examples+fortran+hdf5~hdf5_compat~ipo+mpi+parmetis+python+shared~silo+test+utilities~zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  bspq5ko      ^darshan-runtime@3.4.5%gcc@9.4.0~apmpi~apmpi_sync~apxc~group_readable_logs~hdf5~lustre~mmap_logs+mpi~parallel-netcdf build_system=autotools log_path=none scheduler=NONE arch=linux-ubuntu20.04-ppc64le
+[+]  ad7spg7          ^autoconf@2.72%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xtq4pdr          ^automake@1.16.5%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  gw5t2ll      ^darshan-util@3.4.5%gcc@9.4.0~apmpi~apxc~bzip2 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ihszcnx      ^faodel@1.2108.1%gcc@9.4.0+hdf5~ipo+mpi+shared~tcmalloc build_system=cmake build_type=Release generator=make logging=stdout network=libfabric serializer=xdr arch=linux-ubuntu20.04-ppc64le
+[+]  7bxynqg          ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt+container~context~contract~coroutine+date_time~debug+exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json+locale+log~math+mpi+multithreaded~nowide~numpy~pic+program_options~python~random+regex+serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test+thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  zz6bvrf      ^hdf5@1.12.3%gcc@9.4.0~cxx+fortran+hl~ipo~java+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu20.04-ppc64le
+[+]  c65my4q      ^libcatalyst@2.0.0%gcc@9.4.0~conduit~fortran~ipo+mpi~python build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  h5hnx6h      ^parallel-netcdf@1.12.3%gcc@9.4.0~burstbuffer+cxx+fortran+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  dxoqpid          ^perl@5.40.0%gcc@9.4.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  akxse76      ^paraview@5.13.1%gcc@9.4.0+adios2~advanced_debug+catalyst~cdi~cuda+development_files+examples~eyedomelighting~fortran+hdf5~ipo+kits+libcatalyst+mpi~nvindex+opengl2+openpmd~pagosa+python+qt~raytracing~rocm+shared~tbb~visitbridge build_edition=canonical build_system=cmake build_type=Release generator=ninja patches=02253c7 use_vtkm=on arch=linux-ubuntu20.04-ppc64le
+[+]  glcwore          ^cli11@1.9.1%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  r63ntu2          ^double-conversion@3.3.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  gzoubox          ^eigen@3.4.0%gcc@9.4.0~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  o7qjhj4          ^freetype@2.10.2%gcc@9.4.0+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  bqtesyk          ^glew@2.2.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu20.04-ppc64le
+[+]  a5p24zg              ^libx11@1.8.10%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  pkfcghc          ^glx@1.4%gcc@9.4.0 build_system=bundle arch=linux-ubuntu20.04-ppc64le
+[+]  6ysdqq2              ^mesa@23.3.6%gcc@9.4.0+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  m7vp7j4                  ^llvm@17.0.6%gcc@9.4.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu20.04-ppc64le
+[+]  qtgagty                      ^binutils@2.43.1%gcc@9.4.0~gas+gold~gprofng+headers~interwork+ld+libiberty~lto~nls~pgo+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  p6rjjs5                      ^lua@5.3.6%gcc@9.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu20.04-ppc64le
+[+]  l2nvd2r                      ^perl-data-dumper@2.173%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  d2apaiy                      ^swig@4.1.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  wloj6zg                  ^meson@1.5.1%gcc@9.4.0 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu20.04-ppc64le
+[+]  lzz63di                  ^py-mako@1.2.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4cauopm                  ^xrandr@1.5.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  dny7emg                      ^libxrandr@1.5.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  kdzpfmc          ^jsoncpp@1.9.5%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  wrs5tbu          ^libjpeg-turbo@3.0.3%gcc@9.4.0~ipo~jpeg8~partial_decoder+pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  cpeoyer              ^nasm@2.16.03%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nh7q2vz          ^libogg@1.3.5%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  lxgds5g          ^libtheora@1.1.1%gcc@9.4.0~doc build_system=autotools patches=d9bb5a9,e01511a,e01ef71,ff8478d arch=linux-ubuntu20.04-ppc64le
+[+]  a77qdxj          ^libtiff@4.7.0%gcc@9.4.0+ccitt~ipo~jbig+jpeg~jpeg12~lerc~libdeflate+logluv~lzma+lzw+next~old-jpeg~opengl+packbits~pic~pixarlog+shared+thunder~webp+zlib~zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  li4szwj          ^libxml2@2.10.3%gcc@9.4.0+pic~python+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  a2kteqn          ^libxt@1.3.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xhnjnsy              ^kbproto@1.0.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  cyayfyc              ^libice@1.1.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xp3bzob              ^libsm@1.2.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  sgcnojj          ^netcdf-c@4.9.2%gcc@9.4.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu20.04-ppc64le
+[+]  n3bfdte              ^libaec@1.0.6%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  6fqkilf          ^ninja@1.12.1%gcc@9.4.0+re2c build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ys7bwrh              ^re2c@3.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  b7lsa7d          ^nlohmann-json@3.11.3%gcc@9.4.0~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  hi2p6aq          ^openpmd-api@0.16.0%gcc@9.4.0+adios2+hdf5~ipo+mpi+python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu20.04-ppc64le
+[+]  shqjpub              ^py-pybind11@2.13.5%gcc@9.4.0+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu20.04-ppc64le
+[+]  ikdtdb6              ^toml11@4.0.2%gcc@9.4.0~ipo build_system=cmake build_type=Release cxx_std=11 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  fysrswn          ^pegtl@2.8.3%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  rxhmugf          ^proj@8.1.0%gcc@9.4.0+curl~ipo~pic+shared+tiff build_system=cmake build_type=Release generator=make patches=8d85a64,dc620ff arch=linux-ubuntu20.04-ppc64le
+[+]  fr5ebod          ^pugixml@1.14%gcc@9.4.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  447mfub          ^py-matplotlib@3.7.5%gcc@9.4.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  trbvhxb              ^py-certifi@2023.7.22%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gw435zm              ^py-contourpy@1.0.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  w4q3e7k                  ^py-meson-python@0.16.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ataha42                      ^py-pyproject-metadata@0.7.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sr73wpp              ^py-cycler@0.11.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  j2eowae              ^py-fonttools@4.39.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jo6wf3z              ^py-importlib-resources@5.12.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ogjyzsx                  ^py-zipp@3.17.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gqhdkkt              ^py-kiwisolver@1.4.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qxajgda                  ^py-cppy@1.2.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  asrydyh              ^py-packaging@24.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4v4o7ur                  ^py-flit-core@3.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rubz666              ^py-pyparsing@3.1.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5z4kdti              ^py-python-dateutil@2.8.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  athtmf6                  ^py-six@1.16.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gqdw2kw              ^py-setuptools-scm@8.0.4%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6n32akt                  ^git@2.45.2%gcc@9.4.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  rqrmo6l                      ^openssh@9.8p1%gcc@9.4.0+gssapi build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  l6tlrod                          ^krb5@1.21.3%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  3lzlzg4                  ^py-typing-extensions@4.12.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  c3ufw2a              ^qhull@2020.2%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  j6m77ao          ^py-pandas@1.5.3%gcc@9.4.0~excel+performance build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jy34ixy              ^py-bottleneck@1.3.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  wb24xra                  ^py-versioneer@0.29%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yqvygng              ^py-numexpr@2.8.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fox3owg              ^py-pytz@2023.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kscdsfs          ^qt@5.14.2%gcc@9.4.0~dbus~debug~doc~examples~framework~gtk+gui~location+opengl~phonon+shared+sql+ssl+tools~webkit build_system=generic patches=51aeba5,75bcb42,7f34d48,8449b9f,ea411b9 arch=linux-ubuntu20.04-ppc64le
+[+]  6xpyjct              ^assimp@5.4.3%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  2va3u3o              ^fontconfig@2.15.0%gcc@9.4.0~pic build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  4nfxjd4                  ^font-util@1.4.1%gcc@9.4.0 build_system=autotools fonts=encodings,font-adobe-100dpi,font-adobe-75dpi,font-adobe-utopia-100dpi,font-adobe-utopia-75dpi,font-adobe-utopia-type1,font-alias,font-arabic-misc,font-bh-100dpi,font-bh-75dpi,font-bh-lucidatypewriter-100dpi,font-bh-lucidatypewriter-75dpi,font-bh-type1,font-bitstream-100dpi,font-bitstream-75dpi,font-bitstream-speedo,font-bitstream-type1,font-cronyx-cyrillic,font-cursor-misc,font-daewoo-misc,font-dec-misc,font-ibm-type1,font-isas-misc,font-jis-misc,font-micro-misc,font-misc-cyrillic,font-misc-ethiopic,font-misc-meltho,font-misc-misc,font-mutt-misc,font-schumacher-misc,font-screen-cyrillic,font-sun-misc,font-winitzki-cyrillic,font-xfree86-type1 arch=linux-ubuntu20.04-ppc64le
+[+]  kanwfwn                      ^bdftopcf@1.1.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  hs6adr7                          ^libxfont@1.5.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  5xbs7k3                      ^mkfontdir@1.0.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nwtkxge                      ^mkfontscale@1.2.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  bmwimre                          ^libfontenc@1.1.8%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  7gtrcqf              ^glib@2.78.3%gcc@9.4.0~libmount~strip build_system=meson buildtype=release default_library=shared tracing=none arch=linux-ubuntu20.04-ppc64le
+[+]  iudklb5                  ^elfutils@0.191%gcc@9.4.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  7q25wjp              ^harfbuzz@10.0.1%gcc@9.4.0~graphite2~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  jxd4phz                  ^cairo@1.16.0%gcc@9.4.0~X~fc+ft+gobject+pdf+pic~png+shared~svg build_system=autotools patches=7097196,7c4da77 arch=linux-ubuntu20.04-ppc64le
+[+]  ib2h7f2                      ^pixman@0.42.2%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  svvouq3                      ^which@2.21%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  gorpafc                  ^gobject-introspection@1.78.1%gcc@9.4.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  fagjqq3              ^icu4c@74.2%gcc@9.4.0 build_system=autotools cxxstd=11 arch=linux-ubuntu20.04-ppc64le
+[+]  gphf564              ^libmng@2.0.3%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  z5hvphc                  ^lcms@2.16%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  oawkas4              ^libxcb@1.17.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  spv6gr5                  ^libxau@1.0.11%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  7pbaonz                  ^libxdmcp@1.1.5%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  53e6w6h                  ^xcb-proto@1.17.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  6cacfo3              ^libxext@1.3.6%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  u56dddf              ^libxkbcommon@1.7.0%gcc@9.4.0~strip~wayland build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  pgzktp3                  ^xkbdata@1.0.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  jew5wfw                      ^xkbcomp@1.4.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  dwmf5gk                          ^libxkbfile@1.1.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  n2p4ch5              ^libxrender@0.9.11%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xkvcvt7                  ^renderproto@0.11.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  7b2besg              ^xcb-util-image@0.4.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  glvw4is                  ^xcb-util@0.4.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  32ue3j7              ^xcb-util-keysyms@0.4.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  hmjfs3o              ^xcb-util-renderutil@0.3.10%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  eth27kw              ^xcb-util-wm@0.4.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  moyypjc      ^py-cinemasci@1.3%gcc@9.4.0+mpi build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  y4kbo6w          ^py-h5py@3.11.0%gcc@9.4.0+mpi build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  z5oxwfg              ^py-pkgconfig@1.5.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  l4rvk4b                  ^py-poetry-core@1.8.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3olhlh5          ^py-ipywidgets@8.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  idr2ypd              ^py-ipykernel@6.29.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pzncqy7                  ^py-comm@0.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  h22e7a6                  ^py-debugpy@1.6.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  h2p4kbp                  ^py-jupyter-client@8.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4wuu2vy                  ^py-matplotlib-inline@0.1.6%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dsd4kvx                  ^py-nest-asyncio@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  43heaai                  ^py-psutil@5.9.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6bxzhqn                  ^py-pyzmq@25.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  wp43r2c                      ^py-gevent@23.7.0%gcc@9.4.0 build_system=python_pip patches=2d19534 arch=linux-ubuntu20.04-ppc64le
+[+]  y2r7b3b                          ^py-cffi@1.17.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xh4u6xu                              ^py-pycparser@2.21%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cbofe4a                          ^py-greenlet@2.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  naxj6jn                          ^py-zope-event@5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rikfrtt                          ^py-zope-interface@7.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4wp2ntc              ^py-ipython@8.11.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5xgzd4y                  ^py-backcall@0.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pte7de7                  ^py-decorator@5.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  e5asagj                  ^py-jedi@0.18.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qjaapmq                      ^py-parso@0.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ci6zpcb                  ^py-pexpect@4.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sk4krwa                      ^py-ptyprocess@0.7.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kdjpm4p                  ^py-pickleshare@0.7.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  obrh4iz                  ^py-prompt-toolkit@3.0.43%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rygblbn                      ^py-wcwidth@0.2.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3xby32f                  ^py-pygments@2.18.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ir5jsex                  ^py-stack-data@0.6.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  34aydsb                      ^py-asttokens@2.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sq6ajdi                      ^py-executing@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ggpizhi                      ^py-pure-eval@0.2.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ictjuw4              ^py-jupyterlab-widgets@3.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  p4tayp6              ^py-traitlets@5.14.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vicltvz              ^py-widgetsnbextension@4.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gdjvgwy                  ^py-jupyter-packaging@0.12.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  q2kr5oo                      ^py-deprecation@2.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fijdhs6                      ^py-tomlkit@0.12.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ytuej5r          ^py-jupyterlab@4.0.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ozpbmak              ^py-async-lru@1.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  b2g52ed              ^py-hatch-jupyter-builder@0.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  i4auavy              ^py-hatchling@1.25.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  otndxgh                  ^py-editables@0.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  svdkutp                  ^py-pathspec@0.11.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ay6o5f7                  ^py-pluggy@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  x5wvuvb                  ^py-trove-classifiers@2023.8.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qjn5dqy                      ^py-calver@2022.6.26%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ea7zhye              ^py-importlib-metadata@7.0.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jo6m3bj              ^py-jinja2@3.1.4%gcc@9.4.0~i18n build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  smzapfx                  ^py-markupsafe@2.1.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  m66kl5f              ^py-jupyter-core@5.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  n2kh6wf                  ^py-platformdirs@3.10.0%gcc@9.4.0~wheel build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7bejjou                      ^py-hatch-vcs@0.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qaezqlk              ^py-jupyter-lsp@2.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  x4mtws5              ^py-jupyter-server@2.14.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mguwi3w                  ^py-anyio@4.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uvjudt3                      ^py-exceptiongroup@1.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  s25trv3                          ^py-flit-scm@1.7.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qzjmdwv                      ^py-idna@3.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  taedf36                      ^py-sniffio@1.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7iwnq6b                  ^py-argon2-cffi@21.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  37ygv63                      ^py-argon2-cffi-bindings@21.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4r7uyt4                  ^py-jupyter-events@0.10.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7utmny6                      ^py-python-json-logger@2.0.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xckwgru                      ^py-pyyaml@6.0.2%gcc@9.4.0+libyaml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jpheg4v                      ^py-referencing@0.35.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dyfmcsf                      ^py-rfc3339-validator@0.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fyuiqdk                      ^py-rfc3986-validator@0.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qfhpymu                          ^py-pytest-runner@6.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bnw2mje                  ^py-jupyter-server-terminals@0.4.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6dhjfkx                  ^py-nbconvert@7.14.1%gcc@9.4.0+serve build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cqtfzn5                      ^py-beautifulsoup4@4.12.3%gcc@9.4.0~html5lib~lxml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  nsiju66                          ^py-soupsieve@2.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  e5beq7w                      ^py-bleach@6.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vxr77q4                          ^py-webencodings@0.5.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qelsoob                      ^py-defusedxml@0.7.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ryjjoxo                      ^py-jupyterlab-pygments@0.2.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hibytob                      ^py-mistune@2.0.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  tudjfsy                      ^py-nbclient@0.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vkp53ob                      ^py-pandocfilters@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qdg3dzs                      ^py-tinycss2@1.2.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  n3o7mxu                  ^py-nbformat@5.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  nhpufo7                      ^py-fastjsonschema@2.16.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mt6ftk7                      ^py-hatch-nodejs-version@0.3.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kw7gark                  ^py-overrides@7.3.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dbt75zh                  ^py-prometheus-client@0.17.0%gcc@9.4.0~twisted build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  l44mzls                  ^py-send2trash@1.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ix3flof                  ^py-terminado@0.17.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yvv7cp5                  ^py-websocket-client@1.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jivuhlo              ^py-jupyterlab-server@2.22.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yaewfm2                  ^py-babel@2.15.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  423ellm                  ^py-json5@0.9.14%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gl2qe5h                  ^py-jsonschema@4.22.0%gcc@9.4.0+format-nongpl build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2tifwup                      ^py-attrs@23.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ughzwa4                      ^py-fqdn@1.5.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pmacbtd                      ^py-hatch-fancy-pypi-readme@23.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  i63crb7                      ^py-isoduration@20.11.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mjwauos                          ^py-arrow@1.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sec6cbf                              ^py-types-python-dateutil@2.8.19.14%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  b44latg                      ^py-jsonpointer@2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  wbdhswx                      ^py-jsonschema-specifications@2023.12.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5l2zgon                      ^py-pkgutil-resolve-name@1.3.10%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  e64qb42                          ^py-flit-core@2.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6dovxad                              ^py-pytoml@0.1.21%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  tpodsts                      ^py-rpds-py@0.20.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xlamhjp                          ^py-maturin@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  k27ay4t                              ^py-setuptools-rust@1.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jknscwa                                  ^py-semantic-version@2.10.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  24qt72t                          ^rust@1.81.0%gcc@9.4.0~dev~docs+src build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  vrmhcqj                              ^libgit2@1.8.0%gcc@9.4.0~curl~ipo+mmap+ssh build_system=cmake build_type=Release generator=make https=system arch=linux-ubuntu20.04-ppc64le
+[+]  yv5uel2                              ^libssh2@1.11.0%gcc@9.4.0+shared build_system=autotools crypto=openssl patches=011d926 arch=linux-ubuntu20.04-ppc64le
+[+]  h2mwg47                      ^py-uri-template@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6d2lu2s                      ^py-webcolors@24.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ef3uv5s                  ^py-requests@2.32.3%gcc@9.4.0~socks build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vt6tw26                      ^py-charset-normalizer@3.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  oqi54zz                      ^py-urllib3@2.1.0%gcc@9.4.0~brotli~socks build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lnk3aym              ^py-notebook-shim@0.2.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pyqsctw              ^py-tomli@2.0.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ah74kzf              ^py-tornado@6.3.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yd76y6c          ^py-pillow@10.4.0%gcc@9.4.0~freetype~imagequant+jpeg~jpeg2000~lcms~tiff~webp~xcb+zlib build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  r32g4vt          ^py-setuptools@69.2.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  chfxmts          ^py-wheel@0.41.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  vhumozm      ^sz@2.1.12.5%gcc@9.4.0~examples+fortran+hdf5~ipo~netcdf~openmp~pastri~python+random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  gg6hfuk      ^unifyfs@2.0%gcc@9.4.0+auto-mount~boostsys+fortran~pmi~pmix~preload+spath build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  oppwaex          ^gotcha@1.0.7%gcc@9.4.0~ipo~test build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  s7ifl2w          ^mercury@2.3.1%gcc@9.4.0~bmi~boostsys+checksum~debug~hwloc~ipo+mpi+ofi~psm~psm2+shared+sm~ucx~udreg build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  d4bnuln          ^mochi-margo@0.17.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  q2cm2m6              ^json-c@0.16%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  3mnvzzg          ^openssl@3.3.1%gcc@9.4.0~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu20.04-ppc64le
+[+]  diiwxm7          ^spath@0.3.0%gcc@9.4.0~ipo~mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  vwz64ao      ^veloc@1.7%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  2mqx5z7          ^axl@0.8.0%gcc@9.4.0+bbapi~bbapi_fallback~dw~ipo+pthreads+shared async_api=daemon build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  q7763tg              ^kvtree@1.4.0%gcc@9.4.0~ipo+mpi+shared build_system=cmake build_type=Release file_lock=FLOCK generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xch6bux          ^er@0.4.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  pgmpr34              ^rankstr@0.3.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  gjau2zz              ^redset@0.3.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ryznd6y              ^shuffile@0.3.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  2ykmblo          ^libpthread-stubs@0.5%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  gcpciu7      ^visit@3.3.3%gcc@9.4.0+adios2+conduit+gui+hdf5~ipo+mfem+mpi+netcdf+plugins+python+silo~vtkm build_system=cmake build_type=Release generator=ninja patches=8fb2ef2,bd43c00,ea46f78 arch=linux-ubuntu20.04-ppc64le
+[+]  b5ucld7          ^libfms@0.2.0%gcc@9.4.0+conduit~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ftq2gyp          ^mesa-glu@9.0.2%gcc@9.4.0 build_system=autotools patches=3d03e55 arch=linux-ubuntu20.04-ppc64le
+[+]  hbduv3p          ^mfem@4.7.0%gcc@9.4.0~amgx+conduit~cuda~debug~examples+exceptions+fms~ginkgo~gnutls~gslib~hiop~lapack~libceed~libunwind+metis~miniapps~mpfr+mpi~mumps~netcdf~occa~openmp~petsc~pumi~raja~rocm+shared~slepc+static~strumpack~suite-sparse~sundials~superlu-dist~threadsafe~umpire+zlib build_system=generic cxxstd=auto patches=71ce9ee precision=double timer=auto arch=linux-ubuntu20.04-ppc64le
+[+]  53f42wr          ^netcdf-cxx@4.2%gcc@9.4.0+netcdf4 build_system=autotools patches=8892291 arch=linux-ubuntu20.04-ppc64le
+[+]  nbgg6yh          ^qwt@6.1.6%gcc@9.4.0~designer+opengl build_system=qmake patches=73df727 arch=linux-ubuntu20.04-ppc64le
+[+]  etfplr5          ^silo@4.11.1%gcc@9.4.0+fortran+fpzip+hdf5+hzip+mpi+pic+python+shared~silex build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  wdrdc3k              ^autoconf-archive@2023.02.20%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  3bsdi5g          ^vtk@8.2.1a%gcc@9.4.0~examples~ffmpeg~ipo+mpi+opengl2+python+qt~xdmf build_system=cmake build_type=Release generator=make patches=34960ef,36b22cd,3b47ee0,541dc51,760fd6d,9535683,a4c63c6,b0c3cea,b790d00 arch=linux-ubuntu20.04-ppc64le
+[+]  sgh4kap              ^gl2ps@1.4.2%gcc@9.4.0~doc~ipo+png+zlib build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  jrwacsw      ^vtk-m@2.2.0%gcc@9.4.0~64bitids~cuda+doubleprecision+examples+fpic~ipo~kokkos~logging+mpi+openmp+rendering~rocm+shared~sycl~tbb~testlib build_system=cmake build_type=Release generator=make patches=2111608,34704cc,34f203b,7cc9541 arch=linux-ubuntu20.04-ppc64le
+[+]  f7y6du3      ^zfp@0.5.5%gcc@9.4.0~aligned~c~cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  eoxrlzl  exago@1.6.0%gcc@9.4.0~cuda+hiop~ipo~ipopt+logging+mpi~python+raja~rocm build_system=cmake build_type=Release generator=make patches=7f74f3c arch=linux-ubuntu20.04-ppc64le
+[+]  uddbw5z      ^camp@0.2.3%gcc@9.4.0~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make patches=cb9e25b arch=linux-ubuntu20.04-ppc64le
+[+]  epbbzwg          ^blt@0.4.1%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  zidvz6a      ^hiop@1.0.0%gcc@9.4.0~cuda~deepchecking~ginkgo~ipo~jsrun~kron+mpi+raja~rocm~shared~sparse build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  p2nxzto      ^raja@0.14.0%gcc@9.4.0~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests+shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  fglosqs      ^umpire@6.0.0%gcc@9.4.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu20.04-ppc64le
+[+]  n4etyjn  exaworks@0.1.0%gcc@9.4.0 build_system=bundle arch=linux-ubuntu20.04-ppc64le
+[+]  uymkbcj      ^flux-sched@0.36.1%gcc@9.4.0~cuda~docs~ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu20.04-ppc64le
+[+]  damrchk          ^boost@1.86.0%gcc@9.4.0~atomic~charconv~chrono~clanglibcpp~cobalt+container~context~contract~coroutine~date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random+regex+serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  6onf2pd          ^py-jsonschema@4.22.0%gcc@9.4.0~format-nongpl build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3r2b22f              ^py-attrs@23.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xai5wwq              ^py-hatch-fancy-pypi-readme@23.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fhof5nx              ^py-hatch-vcs@0.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ex5v7dv              ^py-jsonschema-specifications@2023.12.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  iiwrjvc              ^py-referencing@0.35.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7nzboty              ^py-rpds-py@0.20.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6v4fx5q                  ^py-maturin@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  u4tugdb                  ^rust@1.81.0%gcc@9.4.0~dev~docs+src build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  hs4jlom                      ^libgit2@1.8.0%gcc@9.4.0~curl~ipo+mmap+ssh build_system=cmake build_type=Release generator=make https=system arch=linux-ubuntu20.04-ppc64le
+[+]  dl22ayo                      ^libssh2@1.11.0%gcc@9.4.0+shared build_system=autotools crypto=openssl patches=011d926 arch=linux-ubuntu20.04-ppc64le
+[+]  3r7thgv                      ^rust-bootstrap@1.81.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  n5oi4tp          ^yaml-cpp@0.6.3%gcc@9.4.0~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  zvrne2u      ^py-parsl@2023.08.21%gcc@9.4.0~monitoring build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  whip5kj          ^py-dill@0.3.6%gcc@9.4.0 build_system=python_pip patches=daf79b1 arch=linux-ubuntu20.04-ppc64le
+[+]  le2tyad          ^py-globus-sdk@3.42.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6tmhz7n              ^py-cryptography@42.0.8%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bomwydy                  ^py-setuptools-rust@1.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xl5n2um                      ^py-semantic-version@2.10.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  tn6wov6              ^py-pyjwt@2.4.0%gcc@9.4.0+crypto build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bwp6alz          ^py-paramiko@3.4.0%gcc@9.4.0~invoke build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bi5u4d3              ^py-bcrypt@3.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hlbfzzn              ^py-pynacl@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uqmqiwl          ^py-pyzmq@25.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  u43qn3d          ^py-setproctitle@1.1.10%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  thwkvlr          ^py-tblib@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ummbzeg          ^py-typeguard@2.13.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  g5eiigb          ^py-typing-extensions@4.12.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  q6cihds      ^py-psij-python@0.1.0.post2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  umadbkp          ^py-filelock@3.12.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mshu5rf          ^py-pystache@0.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  tlertqc      ^py-radical-entk@1.47.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qyqleah      ^py-radical-gtod@1.47.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kjw6hhd      ^py-radical-pilot@1.47.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  27md5k3      ^py-radical-saga@1.47.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xbevbvb          ^py-apache-libcloud@1.2.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5lqocyf          ^py-parse@1.18.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bbslpp3      ^py-radical-utils@1.47.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3f6lkif          ^py-colorama@0.4.6%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  aupfspo          ^py-msgpack@1.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vponvvo          ^py-netifaces@0.10.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2o3d77a          ^py-ntplib@0.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  zeuqwfm          ^py-regex@2022.8.17%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4lqeh54  fftx@1.2.0%gcc@9.4.0~cuda~ipo~rocm build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  kpwnow6      ^spiral-software@8.5.1%gcc@9.4.0+fftx~hcol~ipo+jit+mpi+simt build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  gvcg2r4          ^spiral-package-fftx@1.3.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  oggbzu5          ^spiral-package-jit@1.1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  372cxzp          ^spiral-package-mpi@1.1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  gf6tary          ^spiral-package-simt@1.1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  hjbikmd  flecsi@2.3.0%gcc@9.4.0~cuda~doc~flog~graphviz+hdf5~ipo~kokkos~openmp~rocm+shared backend=mpi build_system=cmake build_type=Release caliper_detail=none generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xaoduld      ^boost@1.86.0%gcc@9.4.0~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic+program_options~python~random~regex~serialization+shared~signals~singlethreaded+stacktrace~system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=17 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  jwwhntt      ^metis@5.1.0%gcc@9.4.0~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903,b1225da arch=linux-ubuntu20.04-ppc64le
+[+]  zfpkbit      ^parmetis@4.0.3%gcc@9.4.0~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu20.04-ppc64le
+[+]  vcqrupx  flit@2.1.0%gcc@9.4.0 build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  4ga7msz      ^py-pyelftools@0.29%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uqgx4lj      ^py-toml@0.10.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pfmevm5      ^sqlite@3.46.0%gcc@9.4.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xz2smhw  flux-core@0.66.0%gcc@9.4.0~cuda~docs~security build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  b5o5mrz      ^jansson@2.14%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  2akp4g3      ^libarchive@3.7.6%gcc@9.4.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu20.04-ppc64le
+[+]  qvpnh57      ^lua@5.3.6%gcc@9.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu20.04-ppc64le
+[+]  ogpnhys      ^lua-luaposix@36.1%gcc@9.4.0 build_system=lua arch=linux-ubuntu20.04-ppc64le
+[+]  s75bvmb      ^ncurses@6.5%gcc@9.4.0~symlinks+termlib abi=none build_system=autotools patches=7a351bc arch=linux-ubuntu20.04-ppc64le
+[+]  66e3cmu      ^py-cffi@1.17.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  j4svgpf          ^py-pycparser@2.21%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cta4bov      ^py-ply@3.11%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  g5jjjmd      ^util-linux-uuid@2.40.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  6mzfaad  fortrilinos@2.3.0%gcc@9.4.0+hl~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  jnroqhv      ^trilinos@14.0.0%gcc@9.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu20.04-ppc64le
+[+]  yffjxo4  fpm@0.10.0%gcc@9.4.0+openmp build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  26lx6lg  gasnet@2024.5.0%gcc@9.4.0~cuda~debug~level_zero~rocm build_system=generic conduits=smp arch=linux-ubuntu20.04-ppc64le
+[+]  7kedm65  geopm-runtime@3.1.0%gcc@9.4.0~beta~checkprogs~debug+fortran~gnu-ld~intel-mkl+mpi~ompt+openmp~overhead build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  pjcosex      ^bash-completion@2.12.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  iraauhv          ^bash@5.2%gcc@9.4.0 build_system=autotools patches=094b4fd,155853b,1c48cec,2500a3f,2fb107c,325c268,3882772,3ef9246,45cc5e1,4641dd4,5138f48,6a090cd,6b4bd92,78b5230,831b5f2,8334b88,96ee1f5,9715344,af90550,b6fc252,c7705e0,d1e0566,ece0eb5,ef73905,f42f2fe,f95a817 arch=linux-ubuntu20.04-ppc64le
+[+]  gz7gdcg      ^file@5.45%gcc@9.4.0+static build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  w4zppx7      ^geopm-service@3.1.0%gcc@9.4.0~debug~gnu-ld~levelzero+libcap+liburing~nvml+systemd build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  2uc5fnz          ^liburing@2.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  wuvdhc4          ^systemd@256.7%gcc@9.4.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  te6l4nw              ^util-linux@2.40.2%gcc@9.4.0~bash build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ncgesge      ^libelf@0.8.13%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  spxkgca      ^py-geopmdpy@3.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  adfgb4q          ^py-build@1.2.1%gcc@9.4.0~virtualenv build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  drb36rl              ^py-pyproject-hooks@1.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mcdliz5          ^py-dasbus@1.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kqx72h5              ^py-pygobject@3.46.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ozydd3k                  ^gobject-introspection@1.78.1%gcc@9.4.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  2lvl3gs                      ^cairo@1.16.0%gcc@9.4.0+X+fc+ft+gobject+pdf+pic+png+shared~svg build_system=autotools patches=7097196,7c4da77 arch=linux-ubuntu20.04-ppc64le
+[+]  gdzrgq3                          ^pixman@0.42.2%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  dd3hbsi                  ^gtkplus@3.24.29%gcc@9.4.0~cups build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  t34v4da                      ^at-spi2-atk@2.38.0%gcc@9.4.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  fkyytud                          ^at-spi2-core@2.54.0%gcc@9.4.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  woemnax                              ^dbus@1.15.10%gcc@9.4.0~strip~xml_docs build_system=meson buildtype=release default_library=shared system-socket=default arch=linux-ubuntu20.04-ppc64le
+[+]  riagcdt                                  ^docbook-xml@4.5%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  at3ekdb                                  ^docbook-xsl@1.79.2%gcc@9.4.0 build_system=generic patches=a92c397 arch=linux-ubuntu20.04-ppc64le
+[+]  ohgekqu                              ^libxtst@1.2.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nnngm57                              ^recordproto@1.14.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  itjgvyp                      ^atk@2.38.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  mop6otk                      ^fixesproto@5.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  2ce6vb3                      ^fribidi@1.0.12%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nlvugwr                      ^gdk-pixbuf@2.42.12%gcc@9.4.0~man~tiff build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  fxtcwpq                      ^libepoxy@1.5.10%gcc@9.4.0+glx~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  pxsyqwb                          ^glx@1.4%gcc@9.4.0 build_system=bundle arch=linux-ubuntu20.04-ppc64le
+[+]  uulipw6                              ^mesa@23.3.6%gcc@9.4.0+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  vzuyw5v                      ^librsvg@2.56.2%gcc@9.4.0~doc build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  slvt4jy                          ^harfbuzz@10.0.1%gcc@9.4.0~graphite2~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  jrkltcl                              ^icu4c@74.2%gcc@9.4.0 build_system=autotools cxxstd=11 arch=linux-ubuntu20.04-ppc64le
+[+]  qq3huax                      ^libxi@1.7.10%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  va5cr2j                          ^libxfixes@5.0.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  rgwal2j                      ^libxkbcommon@1.7.0%gcc@9.4.0~strip~wayland build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  hohc4ot                          ^xkbdata@1.0.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  p55cjsz                              ^xkbcomp@1.4.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  25zlh5f                                  ^libxkbfile@1.1.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  3qranpj                      ^pango@1.52.2%gcc@9.4.0+X~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  llnhsnb                          ^json-glib@1.6.6%gcc@9.4.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  sped3pk                          ^libxft@2.3.8%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nj27apb                      ^shared-mime-info@1.10%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ogrjn76                          ^intltool@0.51.0%gcc@9.4.0 build_system=autotools patches=ca9d656 arch=linux-ubuntu20.04-ppc64le
+[+]  4xzwwgz                              ^perl-xml-parser@2.47%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  erqqa73                                  ^perl-libwww-perl@6.68%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  qt5aafl                                      ^perl-clone@0.46%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  73bs75q                                      ^perl-encode-locale@1.05%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  x4u2qgg                                      ^perl-file-listing@6.16%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  levrvbz                                      ^perl-html-parser@3.72%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  ud6asjv                                          ^perl-html-tagset@3.24%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  b2pvaeg                                      ^perl-http-cookies@6.11%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  7vlcemx                                      ^perl-http-daemon@6.16%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  pnm4eos                                          ^perl-module-build-tiny@0.048%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  eulmipt                                              ^perl-extutils-config@0.010%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  cy2agtt                                              ^perl-extutils-helpers@0.026%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  xbbwiyk                                              ^perl-extutils-installpaths@0.013%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  fvhedsa                                              ^perl-module-build@0.4234%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  b73y7yf                                      ^perl-http-date@6.06%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  2rebeqn                                      ^perl-http-message@6.45%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  se4bpks                                          ^perl-io-html@1.004%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  lcp4dv6                                      ^perl-http-negotiate@6.01%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  ndqfnbl                                      ^perl-lwp-mediatypes@6.04%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  4yeobwb                                      ^perl-net-http@6.23%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  3o5gwmy                                      ^perl-try-tiny@0.31%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  7vjw4wz                                      ^perl-uri@5.08%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  ank3a5d                                          ^perl-test-needs@0.002010%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  fhozn5m                                      ^perl-www-robotrules@6.02%gcc@9.4.0 build_system=perl arch=linux-ubuntu20.04-ppc64le
+[+]  hfdwalo                  ^py-pycairo@1.24.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  65tp2jd          ^py-jsonschema@4.22.0%gcc@9.4.0~format-nongpl build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  tlngxti              ^py-attrs@23.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  p2pzqbf              ^py-hatch-fancy-pypi-readme@23.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  g7fnkaq              ^py-jsonschema-specifications@2023.12.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7mhryxt              ^py-referencing@0.35.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5bqi53s              ^py-rpds-py@0.20.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  m6bxgt7                  ^py-maturin@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ntxpssc                      ^py-setuptools-rust@1.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  j5vto5e          ^py-pyyaml@6.0.2%gcc@9.4.0+libyaml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  az3voce      ^py-geopmpy@3.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dguiybg          ^py-docutils@0.20.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  zuykemz          ^py-natsort@8.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ouzuev7          ^py-numpy@1.25.2%gcc@9.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu20.04-ppc64le
+[+]  bccj5hf          ^py-pandas@1.5.3%gcc@9.4.0~excel+performance build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  c5sojh5              ^py-bottleneck@1.3.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7tnhunl              ^py-numexpr@2.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  45gmv2g          ^py-tables@3.9.0%gcc@9.4.0~bzip2~lzo+zlib build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mn2nhrx              ^py-blosc2@2.6.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vead7el                  ^py-msgpack@1.0.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ifkm2m5                  ^py-ndindex@1.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qiofdcc                  ^py-scikit-build@0.17.6%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6cqeiel                      ^py-distro@1.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mbmvhck      ^py-setuptools-scm@8.0.4%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3mmdkka          ^py-packaging@24.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jup2yr5          ^py-setuptools@63.4.3%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  clmubbi      ^unzip@6.0%gcc@9.4.0 build_system=makefile patches=881d2ed,f6f6236 arch=linux-ubuntu20.04-ppc64le
+[+]  j7eatoi  ginkgo@1.8.0%gcc@9.4.0~cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  pue6ng6  globalarrays@5.8.2%gcc@9.4.0~scalapack armci=mpi-ts build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  tvgvag2  glvis@4.2%gcc@9.4.0+fonts build_system=makefile screenshots=png arch=linux-ubuntu20.04-ppc64le
+[+]  u6utekl      ^fontconfig@2.15.0%gcc@9.4.0~pic build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  aoqjan3          ^font-util@1.4.1%gcc@9.4.0 build_system=autotools fonts=encodings,font-adobe-100dpi,font-adobe-75dpi,font-adobe-utopia-100dpi,font-adobe-utopia-75dpi,font-adobe-utopia-type1,font-alias,font-arabic-misc,font-bh-100dpi,font-bh-75dpi,font-bh-lucidatypewriter-100dpi,font-bh-lucidatypewriter-75dpi,font-bh-type1,font-bitstream-100dpi,font-bitstream-75dpi,font-bitstream-speedo,font-bitstream-type1,font-cronyx-cyrillic,font-cursor-misc,font-daewoo-misc,font-dec-misc,font-ibm-type1,font-isas-misc,font-jis-misc,font-micro-misc,font-misc-cyrillic,font-misc-ethiopic,font-misc-meltho,font-misc-misc,font-mutt-misc,font-schumacher-misc,font-screen-cyrillic,font-sun-misc,font-winitzki-cyrillic,font-xfree86-type1 arch=linux-ubuntu20.04-ppc64le
+[+]  kql4eal              ^bdftopcf@1.1.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  euvubsk                  ^fontsproto@2.1.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  s3y7xwm                  ^libxfont@1.5.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  i2nlxr6              ^mkfontdir@1.0.7%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  aijvx54              ^mkfontscale@1.2.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  4unuzzl                  ^libfontenc@1.1.8%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  2nretid          ^gperf@3.1%gcc@9.4.0 build_system=autotools patches=3dd36db arch=linux-ubuntu20.04-ppc64le
+[+]  5tbhymm      ^freetype@2.13.2%gcc@9.4.0+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  2murwr5      ^glew@2.2.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu20.04-ppc64le
+[+]  q2w5s3b          ^libx11@1.8.10%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  62ga2xq              ^inputproto@2.3.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  abjkoml              ^libxcb@1.17.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  l6gkcbi                  ^xcb-proto@1.17.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  j6aps6v              ^xextproto@7.3.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  63upzqn              ^xtrans@1.5.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  fgqesl4          ^xproto@7.0.31%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ulgyxar      ^glm@1.0.1%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  tfizwnj      ^glx@1.4%gcc@9.4.0 build_system=bundle arch=linux-ubuntu20.04-ppc64le
+[+]  fpdo5qn          ^mesa@23.2.1%gcc@9.4.0+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu20.04-ppc64le
+[+]  35j47zu              ^glproto@1.4.17%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  t2ihkat              ^libxt@1.3.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  fgcydtu              ^llvm@17.0.6%gcc@9.4.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu20.04-ppc64le
+[+]  nbsaeza              ^xrandr@1.5.2%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  xdkxn6t                  ^libxrandr@1.5.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ew4jxts                  ^libxrender@0.9.11%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  34r43je                  ^randrproto@1.5.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nfqo6x6      ^libpng@1.6.39%gcc@9.4.0~ipo~pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  l2uukb6      ^sdl2@2.30.3%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  nvaxthx          ^libxext@1.3.6%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  qefr5mk      ^xxd-standalone@8.2.1201%gcc@9.4.0 build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  ivxuni4  gmp@6.3.0%gcc@9.4.0+cxx build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  enee4hf  gotcha@1.0.7%gcc@9.4.0~ipo~test build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  t2iqmp3  gptune@4.0.0%gcc@9.4.0~hypre~ipo~mpispawn~superlu build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  mapzse4      ^jq@1.7.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  zgbdt2o          ^oniguruma@6.9.9%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  h7ljtlx      ^openturns@1.20%gcc@9.4.0~ipo~libxml2+python build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  h333hl3          ^boost@1.86.0%gcc@9.4.0~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex+serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test+thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  wmvwgzu          ^py-cloudpickle@3.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yfbkfdl          ^py-urllib3@2.1.0%gcc@9.4.0~brotli~socks build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xfuxf3l      ^py-filelock@3.12.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xiqxi4p          ^py-hatch-vcs@0.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2wvzplw          ^py-hatchling@1.25.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qg5xd6t              ^py-editables@0.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  47l7c4m              ^py-pathspec@0.11.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  57dzpjm              ^py-pluggy@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xg5zhgl              ^py-trove-classifiers@2023.8.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  n3lehkw                  ^py-calver@2022.6.26%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fcyghlp      ^py-gpy@1.10.0%gcc@9.4.0~plotting build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6xyu4ld          ^py-paramz@0.9.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dwlg32o          ^py-scipy@1.14.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  psy6afj              ^py-pythran@0.16.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  g37jlpy      ^py-hpbandster@0.7.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2lootox          ^py-configspace@1.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  upixlci              ^py-more-itertools@9.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cqrptp2          ^py-pyro4@4.81%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  parq2cj          ^py-serpent@1.40%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  j5d7xvf      ^py-ipyparallel@8.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hwnelo5          ^py-decorator@5.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dziifq5          ^py-ipykernel@6.29.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ffvvir4              ^py-comm@0.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  icr7g2j              ^py-debugpy@1.6.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  l767qm3              ^py-jupyter-core@5.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hbvka2u                  ^py-platformdirs@3.10.0%gcc@9.4.0~wheel build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4zpyrkx              ^py-matplotlib-inline@0.1.6%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2ispbq3              ^py-nest-asyncio@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4bw6z7w          ^py-ipython@8.28.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ul6x5e5              ^py-exceptiongroup@1.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  723u7if                  ^py-flit-scm@1.7.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2dhymhl              ^py-jedi@0.18.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qdne5ob                  ^py-parso@0.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  erd2t3v              ^py-pexpect@4.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ma576os              ^py-prompt-toolkit@3.0.43%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mrlapqv                  ^py-wcwidth@0.2.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  no4wjb6              ^py-pygments@2.18.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  j43nmfr              ^py-stack-data@0.6.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dvu3bgn                  ^py-asttokens@2.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  33mxucx                  ^py-executing@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uel674a                  ^py-pure-eval@0.2.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yosblgy          ^py-jupyter-client@8.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xjlmkjo          ^py-jupyterlab@3.4.8%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5gsrmgd              ^py-jupyter-server@1.21.0%gcc@9.4.0~typescript build_system=python_pip patches=0430f63 arch=linux-ubuntu20.04-ppc64le
+[+]  vcrm3c5                  ^py-anyio@3.6.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cggfrhi                      ^py-sniffio@1.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  loxxnmq                  ^py-argon2-cffi@21.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pxeans4                      ^py-argon2-cffi-bindings@21.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lhfsvy6                  ^py-nbconvert@7.14.1%gcc@9.4.0+serve build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4yb2oyv                      ^py-beautifulsoup4@4.12.3%gcc@9.4.0~html5lib~lxml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cbjikch                          ^py-soupsieve@2.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4hqjlbk                      ^py-bleach@6.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fby6jvo                      ^py-jupyterlab-pygments@0.2.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  234p6n3                      ^py-nbclient@0.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3a5votd                  ^py-nbformat@5.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  332nind                      ^py-hatch-nodejs-version@0.3.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gsikjg2                  ^py-pre-commit@3.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  aqggshy                      ^py-cfgv@3.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  nau3ksz                      ^py-identify@2.5.24%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3lfyzum                      ^py-nodeenv@1.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3hxqhtz                      ^py-virtualenv@20.26.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yiur3rm                          ^py-distlib@0.3.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ctykodb                  ^py-terminado@0.17.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qav26qm                  ^py-websocket-client@1.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  zqw55pe              ^py-jupyterlab-server@2.22.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ngtq4zz                  ^py-babel@2.15.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vdbcc4v                  ^py-json5@0.9.14%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xihqbbx              ^py-nbclassic@1.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ivhqtse                  ^py-notebook-shim@0.2.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mgoead2              ^py-notebook@6.5.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  amv5y46          ^py-python-dateutil@2.8.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  v7k27bh          ^py-pyzmq@25.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yt5jiq6              ^py-gevent@23.7.0%gcc@9.4.0 build_system=python_pip patches=2d19534 arch=linux-ubuntu20.04-ppc64le
+[+]  dcjtqbu                  ^py-zope-event@5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gbezlqh                  ^py-zope-interface@7.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vmemyth          ^py-tqdm@4.66.3%gcc@9.4.0~notebook~telegram build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  eri5bs6          ^py-traitlets@5.14.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yrokky3      ^py-joblib@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  im6gthh      ^py-lhsmdu@1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rdhkdam      ^py-matplotlib@3.9.2%gcc@9.4.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qcqjgka          ^py-contourpy@1.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5d3kmee          ^py-cycler@0.11.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  r74cwxr          ^py-fonttools@4.39.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pvq7rgs          ^py-kiwisolver@1.4.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7fpca3r              ^py-cppy@1.2.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2dxpii4          ^py-meson-python@0.16.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rx4e4gh              ^py-pyproject-metadata@0.7.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  custm5x          ^py-pillow@11.0.0%gcc@9.4.0~freetype~imagequant+jpeg~jpeg2000~lcms~tiff~webp~xcb+zlib build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vp7bdt2          ^py-pyparsing@3.1.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lggcj7r          ^qhull@2020.2%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  6x37y5v      ^py-mpi4py@4.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rvrlseo      ^py-numpy@1.24.4%gcc@9.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu20.04-ppc64le
+[+]  3qph65s          ^py-cython@0.29.36%gcc@9.4.0 build_system=python_pip patches=c4369ad arch=linux-ubuntu20.04-ppc64le
+[+]  rwqmrus      ^py-opentuner@0.8.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  blulvss          ^py-fn-py@0.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  a7tserr          ^py-future@1.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  d2lse6i      ^py-pandas@1.5.3%gcc@9.4.0~excel+performance build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jfhcv2q          ^py-bottleneck@1.3.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hbtrxp7              ^py-versioneer@0.29%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ufod74z          ^py-numexpr@2.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uii2ikj          ^py-pytz@2023.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mmd4ju2      ^py-pyaml@21.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qlcbfz7      ^py-pymoo@0.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ugxw6lg          ^py-autograd@1.6.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7za4m5s      ^py-requests@2.32.3%gcc@9.4.0~socks build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hxeoup5      ^py-scikit-learn@1.5.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kpwcznd          ^py-threadpoolctl@3.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ohefs5e      ^py-scikit-optimize@0.9.0%gcc@9.4.0+plots build_system=python_pip patches=21f43c9 arch=linux-ubuntu20.04-ppc64le
+[+]  ihy7fp2      ^py-statsmodels@0.13.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  aensvtq          ^py-patsy@0.5.3%gcc@9.4.0~splines build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yn6l3z3      ^py-ytopt-autotune@1.1.0%gcc@9.4.0 build_system=python_pip patches=60375df arch=linux-ubuntu20.04-ppc64le
+[+]  t3xnsqt      ^pygmo@2.18.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  fxybys5          ^pagmo2@2.18.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  sudkcch  gromacs@2024.3%gcc@9.4.0~cp2k~cuda~cycle_subcounters~double+gmxapi+hwloc~intel_provided_gcc~ipo~mdrun_only+mpi+nblib~nosuffix~opencl+openmp~relaxed_double_precision+shared~sycl build_system=cmake build_type=Release generator=make openmp_max_threads=none arch=linux-ubuntu20.04-ppc64le
+[+]  3w4emby      ^fftw@3.3.10%gcc@9.4.0+mpi~openmp~pfft_patches+shared build_system=autotools patches=872cff9 precision=double,float arch=linux-ubuntu20.04-ppc64le
+[+]  6zfclcx  h5bench@1.4%gcc@9.4.0~all~amrex~async~e3sm~exerciser~ipo~metadata~openpmd build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xhq5xjc  hdf5-vol-async@1.7%gcc@9.4.0~ipo~memcpy build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xmj5lgx      ^hdf5@1.14.5%gcc@9.4.0~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip+threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  5xnckg3  hdf5-vol-cache@v1.1%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  bx4fheb  hdf5-vol-log@1.4.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  raoi2gc  heffte@2.4.0%gcc@9.4.0~cuda+fftw~fortran~ipo~magma~mkl~python~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  24smj4s  hpctoolkit@2024.01.1%gcc@9.4.0~cray~cuda~debug~level_zero+mpi~opencl+papi~python~rocm+viewer build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  vuckxum      ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug~exception~fiber+filesystem+graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random+regex~serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test+thread+timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=global arch=linux-ubuntu20.04-ppc64le
+[+]  igs5znc      ^bzip2@1.0.8%gcc@9.4.0~debug~pic+shared build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  h6dp3rw      ^dyninst@13.0.0%gcc@9.4.0~ipo+openmp~stat_dysect~static build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  woa4jvf      ^elfutils@0.190%gcc@9.4.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  7qle6cr      ^hpcviewer@2024.09%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  rk2tqeb      ^libmonitor@2023.03.15%gcc@9.4.0~commrank~dlopen+hpctoolkit build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  cgd7gqz      ^xerces-c@3.2.5%gcc@9.4.0 build_system=autotools cxxstd=default netaccessor=curl transcoder=iconv arch=linux-ubuntu20.04-ppc64le
+[+]  bfp6cew      ^xz@5.4.6%gcc@9.4.0+pic build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  gngzy46      ^yaml-cpp@0.8.0%gcc@9.4.0~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  m63rp6p  hpx@1.10.0%gcc@9.4.0~async_cuda~async_mpi~cuda~examples~generic_coroutines~ipo~rocm~tools build_system=cmake build_type=Release cxxstd=17 generator=ninja instrumentation=none malloc=tcmalloc max_cpu_count=auto networking=mpi arch=linux-ubuntu20.04-ppc64le
+[+]  vtmxxba      ^asio@1.30.2%gcc@9.4.0~boost_coroutine~boost_regex~separate_compilation build_system=autotools cxxstd=17 arch=linux-ubuntu20.04-ppc64le
+[+]  jm2n4wd      ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded~stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=17 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  ro4yv4l      ^gperftools@2.15%gcc@9.4.0+debugalloc~dynamic_sized_delete_support~ipo+libunwind~sized_delete build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  yiakud4      ^ninja@1.12.1%gcc@9.4.0+re2c build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  2ydk25i          ^re2c@3.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  5sbmuma  hypre@2.32.0%gcc@9.4.0~caliper~complex~cublas~cuda~debug+fortran~gptune~gpu-aware-mpi~int64~internal-superlu~magma~mixedint+mpi~openmp~rocblas~rocm+shared~superlu-dist~sycl~umpire~unified-memory build_system=autotools precision=double arch=linux-ubuntu20.04-ppc64le
+[+]  krxseyb  kokkos@4.4.01%gcc@9.4.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl+openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu20.04-ppc64le
+[+]  frr3z3x  kokkos-kernels@4.4.01%gcc@9.4.0~blas~cblas~cublas~cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl+openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu20.04-ppc64le
+[+]  p7m57gq  laghos@3.1%gcc@9.4.0+metis~ofast build_system=makefile patches=e783a71 arch=linux-ubuntu20.04-ppc64le
+[+]  lmt3he7  lammps@20240829%gcc@9.4.0~adios+amoeba+asphere~atc~awpmd+bocs+body+bpm+brownian+cg-dna+cg-spica+class2+colloid+colvars+compress+coreshell~cuda~cuda_mps~curl+dielectric+diffraction+dipole+dpd-basic+dpd-meso+dpd-react+dpd-smooth+drude+eff+electrode+extra-compute+extra-dump+extra-fix+extra-molecule+extra-pair+fep~ffmpeg+granular~h5md~intel+interlayer~ipo~jpeg~kim~kokkos+kspace~latboltz+lepton+lib+machdyn~manifold+manybody+mc+meam+mesont~mgpt+misc~ml-hdnnp+ml-iap+ml-pod~ml-rann+ml-snap~ml-uf3+mofff+molecule~molfile+mpi~netcdf~opencl+openmp+openmp-package+opt+orient+peri+phonon+plugin~plumed~png+poems~ptm~python+qeq~qtb+reaction+reaxff+replica~rheo+rigid~rocm+shock~smtbq+sph+spin+srd+tally~tools+uef+voronoi~vtk+yaff build_system=cmake build_type=Release fft=fftw3 fftw_precision=double generator=make gpu_precision=mixed lammps_sizes=smallbig arch=linux-ubuntu20.04-ppc64le
+[+]  vur7hxd      ^eigen@3.4.0%gcc@9.4.0~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  cyraw3v      ^voropp@0.4.6%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make patches=b12e401 arch=linux-ubuntu20.04-ppc64le
+[+]  s2xx6es  lbann@0.104%gcc@9.4.0~asan~boost~caliper~cuda~deterministic~distconv~fft~gold~half~ipo~lld~numpy~nvprof~onednn~onnx+pfe+python~rocm+shared~unit_tests~vision~vtune build_system=cmake build_type=Release dtype=float generator=ninja patches=222052b arch=linux-ubuntu20.04-ppc64le
+[+]  p7eiu5q      ^aluminum@1.4.1%gcc@9.4.0~benchmarks~cuda~hang_check~ht~ipo~mpi_serialize~nccl~rocm+shared~stream_mem_ops~tests~thread_multiple~trace build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ccm43yz      ^cereal@1.3.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make patches=27c9b59,2dfa0bf,7202653,91f968e arch=linux-ubuntu20.04-ppc64le
+[+]  ydekgeo      ^clara@1.1.5%gcc@9.4.0+single_header build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  edbfdu3      ^dihydrogen@0.3.0%gcc@9.4.0~ci~coverage~cuda~dace~developer~distconv~ipo~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  noiiv6o      ^hwloc@2.11.1%gcc@9.4.0~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  24rga7v      ^hydrogen@1.5.3%gcc@9.4.0+al~cuda~half+int64~int64_blas~ipo~omp_taskloops+openmp~rocm+shared~test blas=any build_system=cmake build_type=Release generator=make patches=9266350 arch=linux-ubuntu20.04-ppc64le
+[+]  7p2pc55      ^ninja@1.12.1%gcc@9.4.0+re2c build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  peokq7i          ^re2c@3.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  zqqeupf      ^protobuf@3.21.12%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make patches=9b6dcfa arch=linux-ubuntu20.04-ppc64le
+[+]  p2fukpo      ^py-protobuf@4.21.9%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uqdpacd          ^py-pip@23.1.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  n746fqa          ^py-wheel@0.41.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  txnl3bz      ^py-setuptools@69.2.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ki2uct3      ^python@3.10.14%gcc@9.4.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,7d40923,ebdca64,f2fd060 arch=linux-ubuntu20.04-ppc64le
+[+]  gkxrjip          ^gettext@0.22.5%gcc@9.4.0+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  444hvxh              ^tar@1.34%gcc@9.4.0 build_system=autotools zip=pigz arch=linux-ubuntu20.04-ppc64le
+[+]  yvq6ks5                  ^pigz@2.8%gcc@9.4.0 build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  uarhkz3          ^libxcrypt@4.4.35%gcc@9.4.0~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu20.04-ppc64le
+[+]  wqjepws          ^sqlite@3.46.0%gcc@9.4.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  apsytfn      ^python-venv@1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  vmojbzg      ^spdlog@1.12.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ntfxgli      ^zlib-ng@2.2.1%gcc@9.4.0+compat~new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  nphr3hl      ^zstr@1.0.7%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  det2vhr  legion@24.09.0%gcc@9.4.0~bindings~bounds_checks~cuda~cuda_hijack~cuda_unsupported_compiler~fortran~gc~hdf5~hwloc~ipo~kokkos+libdl~openmp~papi~privilege_checks~prof~python~redop_complex~redop_half~rocm~shared~spy~sysomp+zlib build_system=cmake build_type=Release cuda_arch=70 cxxstd=17 generator=make max_dims=3 max_fields=512 max_num_nodes=1024 network=none output_level=warning arch=linux-ubuntu20.04-ppc64le
+[+]  k547zyg  libnrm@0.1.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  6xe6yg4  libpressio@0.99.4%gcc@9.4.0~arc+bitgrooming~blosc~blosc2~boost+bzip2~clang+core~cuda~cusz~digitrounding~docs+fpzip~ftk+hdf5~ipo~json+libdistributed+lua~magick~matio~mgard~mgardx+mpi~ndzip~netcdf+openmp~openssl~petsc~pybind+python~qoz~remote+sz+sz3~szauto~szx+unix+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  hghugqu      ^bitgroomingz@2022-10-14%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  reayc2y      ^fpzip@1.3.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xnlsvlj      ^libdistributed@0.4.3%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  mn44tdr      ^libstdcompat@0.0.21%gcc@9.4.0~boost+cpp_unstable~ipo build_system=cmake build_type=Release cpp_compat=auto generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  lkxvsqy      ^lua-sol2@3.3.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  kktmzov          ^lua@5.4.6%gcc@9.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu20.04-ppc64le
+[+]  tvmoynu      ^py-numcodecs@0.13.0%gcc@9.4.0~msgpack build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pdxnr7g          ^py-py-cpuinfo@9.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cwopht6          ^py-setuptools-scm@8.0.4%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  nunj3qj      ^py-numpy@2.1.2%gcc@9.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu20.04-ppc64le
+[+]  7hqq6zo      ^swig@4.1.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  p2euctl      ^sz@2.1.12.5%gcc@9.4.0~examples~fortran~hdf5~ipo~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  nphbnj7      ^sz3@3.2.0%gcc@9.4.0~hdf5~ipo+mdz build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  xperbvm      ^zfp@1.0.0%gcc@9.4.0~aligned~c~cuda~daz~fasthash~fortran~ipo~openmp~profile~python+shared~strided~tight-error~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make round=never arch=linux-ubuntu20.04-ppc64le
+[+]  sny422t  libquo@1.4%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  twl6akv  libunwind@1.6.2%gcc@9.4.0~block_signals~conservative_checks~cxx_exceptions~debug~debug_frame+docs+pic+tests+weak_backtrace+xz~zlib build_system=autotools components=none libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  4nvbe3d  loki@0.1.7%gcc@9.4.0+shared build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  473dp4k  mercury@2.3.1%gcc@9.4.0~bmi+boostsys+checksum~debug~hwloc~ipo+mpi+ofi~psm~psm2+shared+sm~ucx~udreg build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  aaizrvz      ^libfabric@1.22.0%gcc@9.4.0~cuda~debug~kdreg~uring build_system=autotools fabrics=rxm,sockets,tcp,udp arch=linux-ubuntu20.04-ppc64le
+[+]  qjentgv  metall@0.28%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  sdil7z2      ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded~stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  newxgn7  mfem@4.7.0%gcc@9.4.0~amgx~conduit~cuda~debug~examples~exceptions~fms~ginkgo~gnutls~gslib~hiop~lapack~libceed~libunwind+metis~miniapps~mpfr+mpi~mumps~netcdf~occa~openmp~petsc~pumi~raja~rocm~shared~slepc+static~strumpack~suite-sparse~sundials~superlu-dist~threadsafe~umpire+zlib build_system=generic cxxstd=auto patches=71ce9ee precision=double timer=auto arch=linux-ubuntu20.04-ppc64le
+[+]  lvh2npa  mgard@2023-12-09%gcc@9.4.0~cuda~ipo+openmp+serial+timing+unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  utspw5j      ^protobuf@3.21.12%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make patches=9b6dcfa arch=linux-ubuntu20.04-ppc64le
+[+]  rcqvzfz      ^zstd@1.5.6%gcc@9.4.0+programs build_system=makefile compression=none libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  liafspy  mpark-variant@1.4.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make patches=21a4f8d,4e173fe,b3501f7 arch=linux-ubuntu20.04-ppc64le
+[+]  w7p4scf  mpifileutils@0.11.1%gcc@9.4.0~daos~experimental~gpfs~ipo~lustre~xattr build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  mni46em      ^dtcmp@1.1.4%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  aq4o4o7          ^lwgrp@1.0.5%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  6wgj2f5      ^libarchive@3.7.6%gcc@9.4.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu20.04-ppc64le
+[+]  2hnoczs      ^libcap@2.69%gcc@9.4.0 build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  5qquv7i      ^libcircle@0.3.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  2lstifr  nccmp@1.9.1.0%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  4kpgt27      ^netcdf-c@4.9.2%gcc@9.4.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu20.04-ppc64le
+[+]  q5ceqou          ^c-blosc@1.21.5%gcc@9.4.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  36qepq5          ^libaec@1.0.6%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  74rdwu2  nco@5.2.4%gcc@9.4.0~doc build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  mtsyyvv      ^antlr@2.7.7%gcc@9.4.0+cxx~java~pic~python build_system=autotools patches=33897ad arch=linux-ubuntu20.04-ppc64le
+[+]  vida36z      ^bison@3.8.2%gcc@9.4.0~color build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  adghgem      ^flex@2.6.3%gcc@9.4.0+lex~nls build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ek7tbtj      ^gsl@2.7.1%gcc@9.4.0~external-cblas+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  wekbpop      ^udunits@2.2.28%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  bcfj5i3  nek5000@19.0%gcc@9.4.0+mpi+profiling~visit build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  n2bdc7f  nekbone@17.0%gcc@9.4.0+mpi build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  giso75h  netcdf-fortran@4.6.1%gcc@9.4.0~doc+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  kp3unzr  netlib-scalapack@2.2.0%gcc@9.4.0~ipo~pic+shared build_system=cmake build_type=Release generator=make patches=072b006,1c9ce5f,244a9aa arch=linux-ubuntu20.04-ppc64le
+[+]  cw7q2pn  nrm@0.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  u5yngmu      ^py-jsonschema@2.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hfstbmb          ^py-vcversioner@2.16.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kv2uqjv      ^py-pip@23.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  tgkod63      ^py-pyzmq@17.1.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  auq46c4          ^py-gevent@23.7.0%gcc@9.4.0 build_system=python_pip patches=2d19534 arch=linux-ubuntu20.04-ppc64le
+[+]  5eb2kyp              ^py-zope-event@5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2js7xrf              ^py-zope-interface@7.0.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  axr33kf          ^py-py@1.11.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  z3sqznu          ^py-setuptools@59.4.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  e2g72fm      ^py-scipy@1.14.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  au3nve6          ^py-pythran@0.16.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  voexw67              ^py-beniget@0.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sjeuk5g              ^py-gast@0.5.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mv5rrgd      ^py-six@1.16.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  usgxulx      ^py-tornado@5.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  umb4zqj      ^py-warlock@1.3.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mcst2fp          ^py-jsonpatch@1.23%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7fzvjgf              ^py-jsonpointer@1.9%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  y75j6dw  nwchem@7.2.3%gcc@9.4.0~elpa~extratce~fftw3~libxc~openmp armci=mpi-ts build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  siwye7a  omega-h@9.34.13%gcc@9.4.0~cuda~examples~gmsh~ipo~kokkos+mpi+optimize+shared+symbols~throw+trilinos~warnings+zlib build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  it4ynqx      ^trilinos@13.4.1%gcc@9.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu20.04-ppc64le
+[+]  d7mmkv4  openfoam@2312%gcc@9.4.0~int64~kahip~knl~metis~mgridgen~paraview+scotch+source~vtk~zoltan build_system=generic precision=dp arch=linux-ubuntu20.04-ppc64le
+[+]  ibqropn      ^adios2@2.10.1%gcc@9.4.0~aws+blosc2+bzip2~campaign~cuda~dataspaces~fortran~hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi~pic+png~python~rocm+sst~sycl+sz+zfp build_system=cmake build_type=Release generator=make patches=4247a85 arch=linux-ubuntu20.04-ppc64le
+[+]  dmayipn          ^c-blosc2@2.15.1%gcc@9.4.0+avx2~ipo+lizard+lz4+snappy+zlib+zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  7r4aovz              ^lizard@2.0%gcc@9.4.0 build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  jgjfpse          ^libcatalyst@2.0.0%gcc@9.4.0~conduit~fortran~ipo+mpi~python build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  mefmpdd          ^mgard@2020-10-01%gcc@9.4.0~cuda~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ofpz26k      ^boost@1.86.0%gcc@9.4.0+atomic~charconv+chrono~clanglibcpp~cobalt+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded~stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  o3tnscs      ^cgal@5.6%gcc@9.4.0~core~demos+eigen~header_only~imageio~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  dveealr          ^mpfr@4.2.1%gcc@9.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  b6knel4              ^texinfo@7.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  3iuut23      ^flex@2.6.4%gcc@9.4.0+lex~nls build_system=autotools patches=f8b85a0 arch=linux-ubuntu20.04-ppc64le
+[+]  wunnltz          ^help2man@1.49.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  pfzov6j      ^scotch@7.0.4%gcc@9.4.0+compression~esmumps~int64~ipo~metis+mpi~mpi_thread~noarch+shared+threads build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ew4sj35  openmpi@5.0.5%gcc@9.4.0+atomics~cuda~debug~gpfs~internal-hwloc~internal-libevent~internal-pmix~java~lustre~memchecker~openshmem~romio+rsh~static+vt+wrapper-rpath build_system=autotools fabrics=none romio-filesystem=none schedulers=none arch=linux-ubuntu20.04-ppc64le
+[+]  hijfoym      ^openssh@9.8p1%gcc@9.4.0+gssapi build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  kw3avb5          ^krb5@1.21.3%gcc@9.4.0+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  c3fhep5      ^perl@5.40.0%gcc@9.4.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  crs4cw3          ^berkeley-db@18.1.40%gcc@9.4.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu20.04-ppc64le
+[+]  yvorj7e      ^pmix@5.0.3%gcc@9.4.0~munge~python~restful build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  niy3vfr  openpmd-api@0.16.0%gcc@9.4.0+adios2+hdf5~ipo+mpi~python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu20.04-ppc64le
+[+]  thkv5by      ^adios2@2.10.1%gcc@9.4.0~aws+blosc2+bzip2~campaign~cuda~dataspaces+fortran~hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi~pic+png~python~rocm+sst~sycl+sz+zfp build_system=cmake build_type=Release generator=make patches=4247a85 arch=linux-ubuntu20.04-ppc64le
+[+]  sqziywx          ^c-blosc2@2.15.1%gcc@9.4.0+avx2~ipo+lizard+lz4+snappy+zlib+zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  gx67db5          ^mgard@2020-10-01%gcc@9.4.0~cuda~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  cgt7px3          ^sz@2.1.12.5%gcc@9.4.0~examples~fortran~hdf5~ipo~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  3e2o45a      ^nlohmann-json@3.11.3%gcc@9.4.0~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  jgwxi6d      ^toml11@4.0.2%gcc@9.4.0~ipo build_system=cmake build_type=Release cxx_std=11 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  qazep5l  papi@7.1.0%gcc@9.4.0~cuda~debug+example~infiniband~lmsensors~nvml~powercap~rapl+rdpmc~rocm~rocm_smi~sde+shared~static_tools build_system=autotools patches=48cb202 arch=linux-ubuntu20.04-ppc64le
+[+]  nptlau3  papyrus@1.0.2%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  bt53ai5  parsec@3.0.2209%gcc@9.4.0~cuda~debug_verbose~ipo~profile+shared build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ausdusl  pdt@3.25.2%gcc@9.4.0~pic build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ihpxap4  petsc@3.22.0%gcc@9.4.0~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu20.04-ppc64le
+[+]  ivrry5x      ^diffutils@3.10%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  inugxhv  plasma@24.8.7%gcc@9.4.0~ipo~lua+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  6gviybo  plumed@2.9.2%gcc@9.4.0+gsl+mpi+shared arrayfire=none build_system=autotools optional_modules=all arch=linux-ubuntu20.04-ppc64le
+[+]  w2rt6yl      ^py-cython@3.0.11%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gknucta  precice@3.1.2%gcc@9.4.0~ipo+mpi+petsc~python+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  ppviqmi      ^boost@1.86.0%gcc@9.4.0~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale+log~math+mpi+multithreaded~nowide~numpy~pic+program_options~python~random~regex~serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout+test+thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=a440f96 visibility=hidden arch=linux-ubuntu20.04-ppc64le
+[+]  4ec7d7j      ^libxml2@2.10.3%gcc@9.4.0+pic~python+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  ooc2eai  pruners-ninja@1.0.1%gcc@9.4.0 build_system=autotools patches=66619be arch=linux-ubuntu20.04-ppc64le
+[+]  cxmxkzk  pumi@2.2.8%gcc@9.4.0~fortran~int64~ipo~shared+simmodsuite_version_check~testing~zoltan build_system=cmake build_type=Release generator=make simmodsuite=none arch=linux-ubuntu20.04-ppc64le
+[+]  scsiogz  py-deephyper@0.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  wtxsi5q      ^py-configspace@1.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ubsxf7w          ^py-more-itertools@9.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  y5kvel2          ^py-pyparsing@3.1.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3tfc6kg          ^py-setuptools@63.4.3%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  aa3adxh          ^py-typing-extensions@4.12.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  s7jqxyo      ^py-cython@3.0.11%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dpiy4am      ^py-dm-tree@0.1.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5qbzojo      ^py-jinja2@3.1.4%gcc@9.4.0~i18n build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  y7xtd5g          ^py-flit-core@3.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  crtvwtc          ^py-markupsafe@2.1.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ijuwi5x      ^py-numpy@1.25.2%gcc@9.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu20.04-ppc64le
+[+]  vbi2ayh          ^py-cython@0.29.36%gcc@9.4.0 build_system=python_pip patches=c4369ad arch=linux-ubuntu20.04-ppc64le
+[+]  ojiv6lz      ^py-packaging@24.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5r762f7      ^py-pandas@1.5.3%gcc@9.4.0~excel+performance build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mmysine          ^py-bottleneck@1.3.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ao7ynva              ^py-versioneer@0.29%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rudutub          ^py-numexpr@2.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uearayn          ^py-python-dateutil@2.8.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  j3arer5              ^py-six@1.16.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ladgttm          ^py-pytz@2023.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  yu6wl3f      ^py-pip@23.1.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  w6u7f42      ^py-pyyaml@6.0.2%gcc@9.4.0+libyaml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bw2unzn      ^py-scikit-learn@1.5.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rpnh3so          ^py-joblib@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pvot2vw          ^py-meson-python@0.16.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mwn3b33              ^meson@1.5.1%gcc@9.4.0 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu20.04-ppc64le
+[+]  ogv5554              ^py-pyproject-metadata@0.7.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xohhoqb              ^py-tomli@2.0.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7hinblp          ^py-threadpoolctl@3.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  r3n3ozj      ^py-scipy@1.13.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5jfkyr4          ^py-pybind11@2.13.5%gcc@9.4.0+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu20.04-ppc64le
+[+]  qhorrbe              ^ninja@1.12.1%gcc@9.4.0+re2c build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  qpdbhec                  ^re2c@3.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  wa2yalo          ^py-pythran@0.16.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2j4i7nl              ^py-beniget@0.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uj3ylec              ^py-gast@0.5.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  dfohgny              ^py-ply@3.11%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5c7nlkq      ^py-setuptools@46.1.3%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ar5o4jo      ^py-tqdm@4.66.3%gcc@9.4.0~notebook~telegram build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  v25247d          ^py-setuptools-scm@8.0.4%gcc@9.4.0+toml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  66lqdcc      ^py-wheel@0.36.2%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  mghcdsw      ^python@3.9.19%gcc@9.4.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,4c24573,ebdca64,f2fd060 arch=linux-ubuntu20.04-ppc64le
+[+]  ky54kxw      ^python-venv@1.0%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ga6rx2u  py-h5py@3.11.0%gcc@9.4.0+mpi build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pv3ww5y      ^py-pkgconfig@1.5.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rydtejg  py-jupyterhub@1.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mi3aqnw      ^py-alembic@1.5.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  wetkw7w          ^py-python-editor@1.0.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  kcm3xuq      ^py-async-generator@1.10%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ylevacb      ^py-certipy@0.1.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2j2igwd          ^py-pyopenssl@23.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xyudevz              ^py-cryptography@41.0.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3gi4pna      ^py-entrypoints@0.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  opisof2          ^py-flit-core@3.9.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ipz3qmp      ^py-jinja2@3.1.4%gcc@9.4.0~i18n build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qkaasul          ^py-markupsafe@2.1.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  frgeygo      ^py-jupyter-telemetry@0.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  pqba2yw          ^py-jsonschema@4.22.0%gcc@9.4.0+format-nongpl build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  iubb5za              ^py-fqdn@1.5.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hnmx22c              ^py-isoduration@20.11.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  552mvoa                  ^py-arrow@1.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  fvlpjil                      ^py-types-python-dateutil@2.8.19.14%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lm22kf3              ^py-jsonpointer@2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mpexlfn              ^py-rfc3339-validator@0.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mz3dep7              ^py-rfc3986-validator@0.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qoqusfb                  ^py-pytest-runner@6.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xkzhb2s              ^py-uri-template@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gbkvx3m              ^py-webcolors@24.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  aio7aqq          ^py-python-json-logger@2.0.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  nljr3i7          ^py-ruamel-yaml@0.17.32%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mqoemhs              ^py-ruamel-yaml-clib@0.2.7%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mmxeyre      ^py-mako@1.2.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uh54bgz      ^py-notebook@6.5.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hcxvqll          ^py-argon2-cffi@21.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  3ijwihj              ^py-argon2-cffi-bindings@21.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4qai6fr          ^py-ipykernel@6.29.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qh2a6b5              ^py-comm@0.1.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ljfw4aw              ^py-ipython@8.28.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ceomz2v                  ^py-exceptiongroup@1.1.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jmcknfy                      ^py-flit-scm@1.7.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  u3vayni                  ^py-jedi@0.18.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  xpvqzg5                  ^py-stack-data@0.6.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  l5mrnfe                      ^py-asttokens@2.4.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  k6smrd4                      ^py-executing@1.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  gwmmceo                      ^py-pure-eval@0.2.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qfthnpb              ^py-matplotlib-inline@0.1.6%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  x3yww5p                  ^py-matplotlib@3.9.2%gcc@9.4.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  7ozsgss                      ^py-contourpy@1.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hsbpuku                      ^py-kiwisolver@1.4.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jl7tue3                          ^py-cppy@1.2.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ds7qvow          ^py-ipython-genutils@0.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bjkhfn5          ^py-jupyter-client@8.2.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ruyilbw          ^py-jupyter-core@5.3.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2s7ehwc              ^py-platformdirs@3.10.0%gcc@9.4.0~wheel build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qnxhyzf          ^py-jupyter-packaging@0.12.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4gqawnw              ^py-deprecation@2.1.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lmweozv              ^py-tomlkit@0.12.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jjz3ht3          ^py-nbclassic@1.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4sr7hmm              ^py-babel@2.15.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  afcdv5w              ^py-jupyter-server@2.14.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5maiecq                  ^py-anyio@4.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5c43aok                  ^py-hatch-jupyter-builder@0.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  llfkk42                  ^py-jupyter-events@0.10.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  nc3f6dw                  ^py-jupyter-server-terminals@0.4.4%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  s3p4bjd                  ^py-overrides@7.3.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  adyqx5j              ^py-notebook-shim@0.2.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ghf5mql          ^py-nbconvert@7.14.1%gcc@9.4.0+serve build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  peyvdrk              ^py-beautifulsoup4@4.12.3%gcc@9.4.0~html5lib~lxml build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sunhovl                  ^py-soupsieve@2.4.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  uyj7e6r              ^py-bleach@6.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  5lv7747                  ^py-webencodings@0.5.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  cmnhyel              ^py-defusedxml@0.7.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lka4ego              ^py-jupyterlab-pygments@0.2.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6cwsg4n              ^py-mistune@2.0.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  udsihkr              ^py-nbclient@0.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vmrd2db              ^py-pandocfilters@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  titbk6z              ^py-pygments@2.18.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rglth4i              ^py-tinycss2@1.2.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bsb4yuo          ^py-nbformat@5.8.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  etmn6hu              ^py-fastjsonschema@2.16.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  jltsrtq              ^py-hatch-nodejs-version@0.3.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  zu5jgjt          ^py-nest-asyncio@1.6.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ahatw6f          ^py-send2trash@1.8.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  sjnkaas          ^py-terminado@0.17.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  frwjtm5              ^py-ptyprocess@0.7.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vi4yym7      ^py-oauthlib@3.2.2%gcc@9.4.0~rsa~signals~signedtoken build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  zes6hs5      ^py-pamela@1.0.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  6jcglsn      ^py-prometheus-client@0.17.0%gcc@9.4.0~twisted build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bq4agwp      ^py-python-dateutil@2.8.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  oljqofh      ^py-sqlalchemy@1.4.49%gcc@9.4.0 backend=none build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  bu5yvxa          ^py-greenlet@2.0.2%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  ftsbxhb      ^py-tornado@6.3.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qrav2rp      ^py-traitlets@5.14.3%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  qg76uhf          ^py-hatchling@1.25.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  f3da7qq              ^py-pluggy@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  lmnravr  py-libensemble@1.4.2%gcc@9.4.0~deap+mpi~mpmath~nlopt~petsc4py~scipy~tasmanian build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  rpeg7fd      ^py-psutil@5.9.5%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  htqfkna      ^py-pydantic@1.10.9%gcc@9.4.0~dotenv build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  mbdzxqr      ^py-tomli@2.0.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  hz7qisw  py-petsc4py@3.22.0%gcc@9.4.0+mpi build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  4ayiuz3  qthreads@1.18%gcc@9.4.0+hwloc~spawn_cache+static build_system=autotools scheduler=distrib stack_size=4096 arch=linux-ubuntu20.04-ppc64le
+[+]  eqxhtjs  quantum-espresso@7.3.1%gcc@9.4.0~clock~elpa+epw~fox~gipaw~ipo~libxc+mpi~nvtx+openmp+patch~qmcpack+scalapack build_system=cmake build_type=Release generator=make hdf5=none patches=f43b741 arch=linux-ubuntu20.04-ppc64le
+[+]  3rwk6er  raja@2024.07.0%gcc@9.4.0~cuda~desul+examples+exercises~ipo~omptarget~omptask~openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  zv7aptm      ^camp@2024.07.0%gcc@9.4.0~cuda~ipo~omptarget~openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  wrou73e  rempi@1.1.0%gcc@9.4.0 build_system=autotools patches=2296f83 arch=linux-ubuntu20.04-ppc64le
+[+]  rrkgane      ^libpciaccess@0.17%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  jolfufh          ^util-macros@1.20.1%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  5rug3f3  scr@3.0.1%gcc@9.4.0+bbapi~bbapi_fallback~dw+examples+fortran~ipo+libyogrt+pdsh+shared+tests build_system=cmake build_type=Release cache_base=/dev/shm cntl_base=/dev/shm copy_config=none file_lock=FLOCK generator=make resource_manager=SLURM scr_config=scr.conf arch=linux-ubuntu20.04-ppc64le
+[+]  3zm7iwv      ^axl@0.7.1%gcc@9.4.0+bbapi~bbapi_fallback~dw~ipo+pthreads+shared async_api=daemon build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  vgyjijl      ^er@0.2.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  oggqy3f      ^kvtree@1.3.0%gcc@9.4.0~ipo+mpi+shared build_system=cmake build_type=Release file_lock=FLOCK generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  qjg4ur3      ^libyogrt@1.35%gcc@9.4.0~static build_system=autotools scheduler=slurm arch=linux-ubuntu20.04-ppc64le
+[+]  xqkh725          ^slurm@23-11-1-1%gcc@9.4.0~cgroup~gtk~hdf5~hwloc~mariadb~nvml~pam~pmix+readline~restd~rsmi build_system=autotools sysconfdir=PREFIX/etc arch=linux-ubuntu20.04-ppc64le
+[+]  kg75et2              ^glib@2.78.3%gcc@9.4.0~libmount~strip build_system=meson buildtype=release default_library=shared tracing=none arch=linux-ubuntu20.04-ppc64le
+[+]  ftbrb4j              ^json-c@0.16%gcc@9.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  4sclccm              ^munge@0.5.15%gcc@9.4.0 build_system=autotools localstatedir=PREFIX/var arch=linux-ubuntu20.04-ppc64le
+[+]  lqlgg5a                  ^libgcrypt@1.11.0%gcc@9.4.0 build_system=autotools patches=4e308ba arch=linux-ubuntu20.04-ppc64le
+[+]  g3wnw53                      ^libgpg-error@1.50%gcc@9.4.0 build_system=autotools patches=0b2a0ff arch=linux-ubuntu20.04-ppc64le
+[+]  motanze                          ^gawk@5.3.1%gcc@9.4.0~nls build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  okoqttw      ^pdsh@2.31%gcc@9.4.0+ssh+static_modules build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  maooh7a      ^rankstr@0.1.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  3ssrq67      ^redset@0.2.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  3yhlwgh      ^shuffile@0.2.0%gcc@9.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  g5fvhgn      ^spath@0.2.0%gcc@9.4.0~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  kmveezn  slate@2024.05.31%gcc@9.4.0~cuda~ipo+mpi+openmp~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  4egmivq      ^blaspp@2024.05.31%gcc@9.4.0~cuda~ipo+openmp~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  odhs4ni      ^lapackpp@2024.05.31%gcc@9.4.0~cuda~ipo~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  sgroqu6  slepc@3.22.0%gcc@9.4.0+arpack~blopex~cuda~hpddm~rocm build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ys6m24e  stc@0.9.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  667zma6      ^ant@1.10.14%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  mitgoj2      ^openjdk@11.0.17_8%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  mju3moi      ^zsh@5.9%gcc@9.4.0~etcdir~lmod+skip-tcsetpgrp-test build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  74a5cvs  strumpack@7.2.0%gcc@9.4.0+butterflypack+c_interface~count_flops~cuda~ipo~magma+mpi+openmp+parmetis~rocm~scotch+shared~slate~task_timers+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  pod5fzg  sundials@7.1.1%gcc@9.4.0+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=14 generator=make logging-level=2 precision=double arch=linux-ubuntu20.04-ppc64le
+[+]  mhbjh2y  superlu@5.3.0%gcc@9.4.0~ipo+pic build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  yu4zpky  superlu-dist@8.2.1%gcc@9.4.0~cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  6yz44mz  swig@4.0.2-fortran%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  6bunjvv      ^pcre@8.45%gcc@9.4.0~jit+multibyte+pic+shared+static+utf build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  4wcu3gh  sz3@3.2.0%gcc@9.4.0~hdf5~ipo+mdz build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  hkieaqi      ^zstd@1.5.6%gcc@9.4.0~programs build_system=makefile libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  jqu6rj7  tasmanian@8.0%gcc@9.4.0~blas~cuda~fortran~ipo~magma+mpi~openmp~python~rocm~xsdkflags build_system=cmake build_type=Release generator=make patches=8b8d74c arch=linux-ubuntu20.04-ppc64le
+[+]  adwusx6  tau@2.34%gcc@9.4.0~adios2+binutils~comm~craycnl~cuda~disable-no-pie+dyninst+elf+fortran~gasnet+io~level_zero+libdwarf+libunwind+mpi~ompt~opari~opencl~openmp+otf2+papi+pdt~phase~ppc64le~profileparam+pthreads+python~rocm~rocprofiler~rocprofv2~roctracer~scorep~shmem~sqlite~syscall~x86_64 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  itbaiqa      ^binutils@2.43.1%gcc@9.4.0~gas+gold~gprofng+headers~interwork+ld+libiberty~lto~nls~pgo+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  tjzqn3q      ^dyninst@13.0.0%gcc@9.4.0~ipo+openmp~stat_dysect~static build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  cvwovzj      ^libdwarf@0.11.0%gcc@9.4.0+decompression+dwarfdump~dwarfgen~examples~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  i7vi3ln      ^openjdk@17.0.4.1_1%gcc@9.4.0 build_system=generic arch=linux-ubuntu20.04-ppc64le
+[+]  ba6u7pw      ^otf2@3.0.3%gcc@9.4.0 build_system=autotools patches=7e56d93 arch=linux-ubuntu20.04-ppc64le
+[+]  ntea35f  trilinos@13.0.1%gcc@9.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu20.04-ppc64le
+[+]  ltoxe7n      ^superlu-dist@7.2.0%gcc@9.4.0~cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release generator=make patches=8da9e21 arch=linux-ubuntu20.04-ppc64le
+[+]  fvwodna  trilinos@16.0.0%gcc@9.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu20.04-ppc64le
+[+]  iko4c5d      ^kokkos@4.3.01%gcc@9.4.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu20.04-ppc64le
+[+]  btrukr6  turbine@1.3.0%gcc@9.4.0~hdf5~python~r build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  docnhe2      ^adlbx@1.0.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  geki4ip          ^exmcutils@0.6.0%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  vogvwg6      ^tcl@8.6.12%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  x7lqkwo  umap@2.1.1%gcc@9.4.0~ipo~logging~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  qogza2p  umpire@2024.07.0%gcc@9.4.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu20.04-ppc64le
+[+]  fusldm5      ^fmt@11.0.2%gcc@9.4.0~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  5nkyk7w  upcxx@2023.9.0%gcc@9.4.0~cuda+gasnet~level_zero+mpi~rocm build_system=generic cross=none patches=89a2eeb arch=linux-ubuntu20.04-ppc64le
+[+]  e6d3lae      ^gasnet@2024.5.0%gcc@9.4.0~cuda~debug~level_zero~rocm build_system=generic conduits=none arch=linux-ubuntu20.04-ppc64le
+[+]  arp23qj  wannier90@3.1.0%gcc@9.4.0+shared build_system=makefile arch=linux-ubuntu20.04-ppc64le
+[+]  swedvbr  warpx@24.10%gcc@9.4.0+app~ascent~catalyst+eb+fft~ipo+lib+mpi+mpithreadmultiple+openpmd+python+python_ipo+qed~qedtablegen~sensei+shared+tprof build_system=cmake build_type=Release compute=omp dims=1,2,3,rz generator=make precision=double arch=linux-ubuntu20.04-ppc64le
+[+]  cuktatv      ^amrex@24.10%gcc@9.4.0~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi+openmp+particles~petsc+pic~plotfile_tools~rocm+shared~sundials~sycl+tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu20.04-ppc64le
+[+]  475blfr      ^openpmd-api@0.16.0%gcc@9.4.0+adios2+hdf5~ipo+mpi~python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu20.04-ppc64le
+[+]  g5tdopk          ^adios2@2.10.1%gcc@9.4.0~aws+blosc2+bzip2~campaign~cuda~dataspaces+fortran~hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi~pic+png~python~rocm+sst~sycl+sz+zfp build_system=cmake build_type=Release generator=make patches=4247a85 arch=linux-ubuntu20.04-ppc64le
+[+]  vhvm3dg      ^py-amrex@24.10%gcc@9.4.0~cuda+ipo+mpi+openmp~rocm~sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu20.04-ppc64le
+[+]  7tl6j2g      ^py-numpy@1.26.4%gcc@9.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu20.04-ppc64le
+[+]  qxrzk2d      ^py-periodictable@1.5.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  vwnyt6t      ^py-picmistandard@0.30.0%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  2zt2nte          ^py-scipy@1.14.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  b4rhaup              ^py-pythran@0.16.1%gcc@9.4.0 build_system=python_pip arch=linux-ubuntu20.04-ppc64le
+[+]  b5lztzt      ^py-pybind11@2.13.5%gcc@9.4.0+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu20.04-ppc64le
+[+]  e7hpmdb  wps@4.5%gcc@9.4.0 build_system=generic build_type=serial patches=62c1bcc,92c2511,e86d029 arch=linux-ubuntu20.04-ppc64le
+[+]  la6zmge      ^jasper@2.0.32%gcc@9.4.0~ipo+jpeg~opengl+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  th5hnuh          ^libjpeg-turbo@3.0.3%gcc@9.4.0~ipo~jpeg8~partial_decoder+pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu20.04-ppc64le
+[+]  chd7f2p      ^netcdf-c@4.9.2%gcc@9.4.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu20.04-ppc64le
+[+]  ic7wtbg      ^netcdf-fortran@4.6.1%gcc@9.4.0~doc+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  knlhstz      ^tcsh@6.24.00%gcc@9.4.0 build_system=autotools patches=3a4e60f arch=linux-ubuntu20.04-ppc64le
+[+]  o26jblf      ^time@1.9%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  lsipdcp      ^wrf@4.5.2%gcc@9.4.0~adios2~chem~netcdf_classic+pnetcdf build_system=generic build_type=dmpar compile_type=em_real nesting=basic patches=68548f6,908c718,f3dd50d arch=linux-ubuntu20.04-ppc64le
+[+]  qt7ieck  wrf@4.5.2%gcc@9.4.0~adios2~chem~netcdf_classic+pnetcdf build_system=generic build_type=dmpar compile_type=em_real nesting=basic patches=68548f6,908c718,f3dd50d arch=linux-ubuntu20.04-ppc64le
+[+]  tp2sc4s      ^jasper@4.2.4%gcc@9.4.0~ipo+jpeg~opengl+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu20.04-ppc64le
+[+]  l2w4nep      ^libtirpc@1.3.3%gcc@9.4.0 build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  7ickoaq      ^parallel-netcdf@1.12.3%gcc@9.4.0~burstbuffer+cxx+fortran+pic+shared build_system=autotools arch=linux-ubuntu20.04-ppc64le
+[+]  5wevw7v  xyce@7.8.0%gcc@9.4.0~ipo+mpi~plugin+pymi+pymi_static_tpls+shared build_system=cmake build_type=Release cxxstd=11 generator=make patches=4d47cd1 arch=linux-ubuntu20.04-ppc64le
+[+]  ee2wllx      ^openblas@0.3.28%gcc@9.4.0~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic~shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu20.04-ppc64le
+[+]  e4woxfx      ^trilinos@16.0.0%gcc@9.4.0~adelus~adios2+amesos+amesos2~anasazi+aztec+basker+belos+boost~chaco+complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext+epetraextbtf+epetraextexperimental+epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack~ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor~ml+mpi~muelu~mumps+nox~openmp~pamgen~panzer+phalanx~piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack+suite-sparse~superlu~superlu-dist~teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan~zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu20.04-ppc64le
+[+]  6xzlh7w          ^suite-sparse@7.3.1%gcc@9.4.0~cuda~graphblas~openmp+pic build_system=generic arch=linux-ubuntu20.04-ppc64le
+

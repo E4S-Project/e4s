@@ -1,0 +1,389 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  compilers:
+  - compiler:
+      spec: gcc@=11.4.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu22.04
+      target: x86_64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
+  packages:
+    python:
+      prefer:
+      - "@3.10.12"
+      externals:
+      - spec: python@3.10.12+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /usr
+    all:
+      target: [x86_64]
+      require: '%gcc@11.4.0 target=x86_64'
+      providers:
+        blas: [openblas]
+      variants: +mpi
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    mpi:
+      require: mpich
+    mpich:
+      require: '@4.2.3 ~wrapperrpath ~hwloc target=x86_64'
+      buildable: false
+      externals:
+      - spec: mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem
+          build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default
+        prefix: /usr/local/mpich/install/mpich
+    tbb:
+      require: intel-tbb
+    boost:
+      version: [1.79.0]
+      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
+        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
+        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
+        cxxstd=17 visibility=global
+    vtk-m:
+      require: +examples target=x86_64
+    raja:
+      variants: +plugins
+    paraview:
+      variants: +qt +examples
+    # ROCm
+    comgr:
+      buildable: false
+      externals:
+      - spec: comgr@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hip-rocclr:
+      buildable: false
+      externals:
+      - spec: hip-rocclr@6.2.1
+        prefix: /opt/rocm-6.2.1/hip
+    hipblas:
+      buildable: false
+      externals:
+      - spec: hipblas@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hipcub:
+      buildable: false
+      externals:
+      - spec: hipcub@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hipfft:
+      buildable: false
+      externals:
+      - spec: hipfft@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hiprand:
+      buildable: false
+      externals:
+      - spec: hiprand@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hipsparse:
+      buildable: false
+      externals:
+      - spec: hipsparse@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    miopen-hip:
+      buildable: false
+      externals:
+      - spec: miopen-hip@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    miopengemm:
+      buildable: false
+      externals:
+      - spec: miopengemm@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rccl:
+      buildable: false
+      externals:
+      - spec: rccl@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocblas:
+      buildable: false
+      externals:
+      - spec: rocblas@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocfft:
+      buildable: false
+      externals:
+      - spec: rocfft@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-clang-ocl:
+      buildable: false
+      externals:
+      - spec: rocm-clang-ocl@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-cmake:
+      buildable: false
+      externals:
+      - spec: rocm-cmake@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-dbgapi:
+      buildable: false
+      externals:
+      - spec: rocm-dbgapi@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-debug-agent:
+      buildable: false
+      externals:
+      - spec: rocm-debug-agent@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-device-libs:
+      buildable: false
+      externals:
+      - spec: rocm-device-libs@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-gdb:
+      buildable: false
+      externals:
+      - spec: rocm-gdb@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    rocm-opencl:
+      buildable: false
+      externals:
+      - spec: rocm-opencl@6.2.1
+        prefix: /opt/rocm-6.2.1/opencl
+    rocm-smi-lib:
+      buildable: false
+      externals:
+      - spec: rocm-smi-lib@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hip:
+      buildable: false
+      externals:
+      - spec: hip@6.2.1
+        prefix: /opt/rocm-6.2.1
+        extra_attributes:
+          compilers:
+            c: /opt/rocm-6.2.1/llvm/bin/clang++
+            c++: /opt/rocm-6.2.1/llvm/bin/clang++
+            hip: /opt/rocm-6.2.1/hip/bin/hipcc
+    hipify-clang:
+      buildable: false
+      externals:
+      - spec: hipify-clang@6.2.1
+        prefix: /opt/rocm-6.2.1
+    llvm-amdgpu:
+      buildable: false
+      externals:
+      - spec: llvm-amdgpu@6.2.1
+        prefix: /opt/rocm-6.2.1/llvm
+        extra_attributes:
+          compilers:
+            c: /opt/rocm-6.2.1/llvm/bin/clang++
+            cxx: /opt/rocm-6.2.1/llvm/bin/clang++
+    hsakmt-roct:
+      buildable: false
+      externals:
+      - spec: hsakmt-roct@6.2.1
+        prefix: /opt/rocm-6.2.1/
+    hsa-rocr-dev:
+      buildable: false
+      externals:
+      - spec: hsa-rocr-dev@6.2.1
+        prefix: /opt/rocm-6.2.1/
+        extra_atributes:
+          compilers:
+            c: /opt/rocm-6.2.1/llvm/bin/clang++
+            cxx: /opt/rocm-6.2.1/llvm/bin/clang++
+    roctracer-dev-api:
+      buildable: false
+      externals:
+      - spec: roctracer-dev-api@6.2.1
+        prefix: /opt/rocm-6.2.1
+    roctracer-dev:
+      buildable: false
+      externals:
+      - spec: roctracer-dev@4.5.3
+        prefix: /opt/rocm-6.2.1
+    rocprim:
+      buildable: false
+      externals:
+      - spec: rocprim@6.2.1
+        prefix: /opt/rocm-6.2.1
+    rocrand:
+      buildable: false
+      externals:
+      - spec: rocrand@6.2.1
+        prefix: /opt/rocm-6.2.1
+    hipsolver:
+      buildable: false
+      externals:
+      - spec: hipsolver@6.2.1
+        prefix: /opt/rocm-6.2.1
+    rocsolver:
+      buildable: false
+      externals:
+      - spec: rocsolver@6.2.1
+        prefix: /opt/rocm-6.2.1
+    rocsparse:
+      buildable: false
+      externals:
+      - spec: rocsparse@6.2.1
+        prefix: /opt/rocm-6.2.1
+    rocthrust:
+      buildable: false
+      externals:
+      - spec: rocthrust@6.2.1
+        prefix: /opt/rocm-6.2.1
+    rocprofiler-dev:
+      buildable: false
+      externals:
+      - spec: rocprofiler-dev@6.2.1
+        prefix: /opt/rocm-6.2.1
+    rocm-core:
+      buildable: false
+      externals:
+      - spec: rocm-core@6.2.1
+        prefix: /opt/rocm-6.2.1
+
+  specs:
+  # ROCM NOARCH
+  - hpctoolkit +rocm
+  - tau +mpi +rocm +syscall +rocprofiler # tau: has issue with `spack env depfile` build
+
+  # ROCM 942
+  - amrex +rocm amdgpu_target=gfx942
+  - arborx +rocm amdgpu_target=gfx942
+  - cabana +rocm amdgpu_target=gfx942 ^kokkos +rocm amdgpu_target=gfx942
+  - caliper +rocm amdgpu_target=gfx942
+  - chai tests=none +rocm amdgpu_target=gfx942
+  - fftx +rocm amdgpu_target=gfx942
+  - gasnet +rocm amdgpu_target=gfx942
+  - ginkgo +rocm amdgpu_target=gfx942
+  - heffte +rocm amdgpu_target=gfx942
+  - hpx +rocm amdgpu_target=gfx942
+  - hypre +rocm amdgpu_target=gfx942
+  - kokkos +rocm amdgpu_target=gfx942
+  - legion +rocm amdgpu_target=gfx942
+  - magma ~cuda +rocm amdgpu_target=gfx942
+  - mfem +rocm amdgpu_target=gfx942
+  - petsc +rocm amdgpu_target=gfx942
+  - raja ~openmp +rocm amdgpu_target=gfx942
+  - slate +rocm amdgpu_target=gfx942
+  - slepc +rocm amdgpu_target=gfx942 ^petsc +rocm amdgpu_target=gfx942
+  - strumpack ~slate +rocm amdgpu_target=gfx942
+  - sundials +rocm amdgpu_target=gfx942
+  - superlu-dist +rocm amdgpu_target=gfx942
+  - tasmanian ~openmp +rocm amdgpu_target=gfx942
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx942
+  - umpire +rocm amdgpu_target=gfx942
+  - upcxx +rocm amdgpu_target=gfx942
+  # INCLUDED IN ECP DAV ROCM
+  - vtk-m ~openmp +rocm amdgpu_target=gfx942
+  # --
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx942 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # kokkos-3.7.01: CMake Error at cmake/kokkos_arch.cmake:582 (MESSAGE): HIP enabled but no AMD GPU architecture currently enabled.  Please enable one AMD GPU architecture via -DKokkos_ARCH_{..}=ON'.
+  # --
+  # - chapel +rocm amdgpu_target=gfx942         # lld: error: undefined symbol: llvm.amdgcn.readfirstlane.i32
+  # - cp2k +mpi +rocm amdgpu_target=gfx942      # cp2k: make[4]: D__HIP: No such file or directory
+  # - ecp-data-vis-sdk +paraview +vtkm +rocm amdgpu_target=gfx942 ^paraview~qt~examples ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # kokkos-3.7.01: CMake Error at cmake/kokkos_arch.cmake:582 (MESSAGE): HIP enabled but no AMD GPU architecture currently enabled.  Please enable one AMD GPU architecture via -DKokkos_ARCH_{..}=ON'.
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx942 ~ipopt cxxflags="-Wno-error=non-pod-varargs" ^hiop@1.0.0 ~sparse +mpi +raja +rocm amdgpu_target=gfx942 # hiop-1.0.0: hiopVectorHip.hpp:68:10: fatal error: 'hipblas.h' file not found
+  # - lbann ~cuda +rocm amdgpu_target=gfx942    # aluminum-1.4.1: Could not find a configuration file for package "hip" that is compatible with requested version "5.0".
+  # - papi +rocm amdgpu_target=gfx942           # rocm-openmp-extras-6.2.1: Error: FileExistsError: [Errno 17] File exists: 
+
+  # ROCM 90a
+  - amrex +rocm amdgpu_target=gfx90a
+  - arborx +rocm amdgpu_target=gfx90a
+  - cabana +rocm amdgpu_target=gfx90a ^kokkos +rocm amdgpu_target=gfx90a
+  - caliper +rocm amdgpu_target=gfx90a
+  - chai tests=none +rocm amdgpu_target=gfx90a
+  - ecp-data-vis-sdk +paraview +vtkm +rocm amdgpu_target=gfx90a ^paraview~qt~examples ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none
+  - fftx +rocm amdgpu_target=gfx90a
+  - gasnet +rocm amdgpu_target=gfx90a
+  - ginkgo +rocm amdgpu_target=gfx90a
+  - heffte +rocm amdgpu_target=gfx90a
+  - hpx +rocm amdgpu_target=gfx90a
+  - hypre +rocm amdgpu_target=gfx90a
+  - kokkos +rocm amdgpu_target=gfx90a
+  - legion +rocm amdgpu_target=gfx90a
+  - magma ~cuda +rocm amdgpu_target=gfx90a
+  - mfem +rocm amdgpu_target=gfx90a
+  - petsc +rocm amdgpu_target=gfx90a
+  - raja ~openmp +rocm amdgpu_target=gfx90a
+  - slate +rocm amdgpu_target=gfx90a
+  - slepc +rocm amdgpu_target=gfx90a ^petsc +rocm amdgpu_target=gfx90a
+  - strumpack ~slate +rocm amdgpu_target=gfx90a
+  - sundials +rocm amdgpu_target=gfx90a
+  - superlu-dist +rocm amdgpu_target=gfx90a
+  - tasmanian ~openmp +rocm amdgpu_target=gfx90a
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx90a
+  - umpire +rocm amdgpu_target=gfx90a
+  - upcxx +rocm amdgpu_target=gfx90a
+  # INCLUDED IN ECP DAV ROCM
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx90a ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # builds ok, installed w/ ecp-dav
+  # - vtk-m ~openmp +rocm amdgpu_target=gfx90a  # builds ok, installed w/ ecp-dav
+  # --
+  # --
+  # - chapel +rocm amdgpu_target=gfx90a       # lld: error: undefined symbol: llvm.amdgcn.readfirstlane.i32
+  # - cp2k +mpi +rocm amdgpu_target=gfx90a    # cp2k: make[4]: D__HIP: No such file or directory
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx90a ~ipopt cxxflags="-Wno-error=non-pod-varargs" ^hiop@1.0.0 ~sparse +mpi +raja +rocm amdgpu_target=gfx90a # hiop-1.0.0: hiopVectorHip.hpp:68:10: fatal error: 'hipblas.h' file not found
+  # - lbann ~cuda +rocm amdgpu_target=gfx90a  # aluminum-1.4.1: Could not find a configuration file for package "hip" that is compatible with requested version "5.0".
+  # - papi +rocm amdgpu_target=gfx90a         # rocm-openmp-extras-6.2.1: Error: FileExistsError: [Errno 17] File exists: 
+
+  # ROCM 908
+  - amrex +rocm amdgpu_target=gfx908
+  - arborx +rocm amdgpu_target=gfx908
+  - cabana +rocm amdgpu_target=gfx908 ^kokkos +rocm amdgpu_target=gfx908
+  - caliper +rocm amdgpu_target=gfx908
+  - chai tests=none +rocm amdgpu_target=gfx908
+  - ecp-data-vis-sdk +paraview +vtkm +rocm amdgpu_target=gfx908 ^paraview~qt~examples ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none
+  - fftx +rocm amdgpu_target=gfx908
+  - gasnet +rocm amdgpu_target=gfx908
+  - ginkgo +rocm amdgpu_target=gfx908
+  - heffte +rocm amdgpu_target=gfx908
+  - hpx +rocm amdgpu_target=gfx908
+  - hypre +rocm amdgpu_target=gfx908
+  - kokkos +rocm amdgpu_target=gfx908
+  - legion +rocm amdgpu_target=gfx908
+  - magma ~cuda +rocm amdgpu_target=gfx908
+  - mfem +rocm amdgpu_target=gfx908
+  - petsc +rocm amdgpu_target=gfx908
+  - raja ~openmp +rocm amdgpu_target=gfx908
+  - slate +rocm amdgpu_target=gfx908
+  - slepc +rocm amdgpu_target=gfx908 ^petsc +rocm amdgpu_target=gfx908
+  - strumpack ~slate +rocm amdgpu_target=gfx908
+  - sundials +rocm amdgpu_target=gfx908
+  - superlu-dist +rocm amdgpu_target=gfx908
+  - tasmanian ~openmp +rocm amdgpu_target=gfx908
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx908
+  - umpire +rocm amdgpu_target=gfx908
+  - upcxx +rocm amdgpu_target=gfx908
+  # INCLUDED IN ECP DAV ROCM
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx908 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # builds ok, installed w/ ecp-dav
+  # - vtk-m ~openmp +rocm amdgpu_target=gfx908 # builds ok, installed w/ ecp-dav
+  # -- 
+  # --
+  # - chapel +rocm amdgpu_target=gfx908       # lld: error: undefined symbol: llvm.amdgcn.readfirstlane.i32
+  # - cp2k +mpi +rocm amdgpu_target=gfx908    # cp2k: make[4]: D__HIP: No such file or directory
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx908 ~ipopt cxxflags="-Wno-error=non-pod-varargs" ^hiop@1.0.0 ~sparse +mpi +raja +rocm amdgpu_target=gfx908  # hiop-1.0.0: hiopVectorHip.hpp:68:10: fatal error: 'hipblas.h' file not found  
+  # - lbann ~cuda +rocm amdgpu_target=gfx908  # aluminum-1.4.1: Could not find a configuration file for package "hip" that is compatible with requested version "5.0".
+  # - papi +rocm amdgpu_target=gfx908         # rocm-openmp-extras-6.2.1: Error: FileExistsError: [Errno 17] File exists: 
+
