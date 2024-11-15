@@ -1,0 +1,861 @@
+==> Starting concretization pool with 92 processes
+==> Environment concretized in 70.04 seconds
+==> Concretized 128 specs:
+[+]  w35fn5k  adios@1.13.1%gcc@13.2.0+blosc~bzip2~fortran~hdf5~infiniband+lz4+mpi~netcdf+shared+sz~szip+zfp+zlib build_system=autotools patches=8ae17f6,aea47e5,d24b79b staging=none arch=linux-ubuntu24.04-aarch64
+[+]  2jczdd2      ^autoconf@2.72%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  k5ttveq      ^automake@1.16.5%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  q6rutoq      ^c-blosc@1.21.5%gcc@13.2.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  5udmqqj          ^snappy@1.2.1%gcc@13.2.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  7urro2t      ^gcc-runtime@13.2.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[e]  wbol7i6      ^glibc@2.39%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  gytoeql      ^gmake@4.4.1%gcc@13.2.0~guile build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  hynenhl      ^gnuconfig@2024-07-27%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  ygvcc35      ^libtool@2.4.7%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  6uu322y          ^findutils@4.9.0%gcc@13.2.0 build_system=autotools patches=440b954 arch=linux-ubuntu24.04-aarch64
+[+]  ez5ypcv      ^lz4@1.10.0%gcc@13.2.0+pic build_system=makefile libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  5m4wl24      ^m4@1.4.19%gcc@13.2.0+sigsegv build_system=autotools patches=9dc5fbd,bfdffa7 arch=linux-ubuntu24.04-aarch64
+[+]  vq6leih          ^libsigsegv@2.14%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[e]  zao22e5      ^mpich@4.2.3%gcc@13.2.0~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default arch=linux-ubuntu24.04-aarch64
+[e]  blvv5pt      ^python@3.10.15%gcc@13.2.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma+nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,7d40923,ebdca64,f2fd060 arch=linux-ubuntu24.04-aarch64
+[+]  36xcvoq      ^sz@1.4.12.3%gcc@13.2.0~examples~fortran~hdf5~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  67kp3dj      ^zfp@0.5.5%gcc@13.2.0~aligned~c~cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  bm32y26      ^zlib-ng@2.2.1%gcc@13.2.0+compat+new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  h6dzjeq  adios2@2.10.1%gcc@13.2.0~aws+blosc2+bzip2~campaign~cuda~dataspaces+fortran~hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi~pic+png~python~rocm+sst~sycl+sz+zfp build_system=cmake build_type=Release generator=make patches=4247a85 arch=linux-ubuntu24.04-aarch64
+[+]  xoudsfl      ^bzip2@1.0.8%gcc@13.2.0~debug~pic+shared build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  sovmauk      ^c-blosc2@2.15.1%gcc@13.2.0+avx2~ipo+lizard+lz4+snappy+zlib+zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  wl5poua          ^lizard@2.0%gcc@13.2.0 build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  e544as7      ^cmake@3.30.5%gcc@13.2.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu24.04-aarch64
+[+]  vjlfate      ^libfabric@1.22.0%gcc@13.2.0~cuda~debug~kdreg~uring build_system=autotools fabrics=rxm,sockets,tcp,udp arch=linux-ubuntu24.04-aarch64
+[+]  vkmaaow      ^libffi@3.4.6%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  i435re4      ^libpng@1.6.39%gcc@13.2.0~ipo~pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  bnyqrgs      ^mgard@2023-12-09%gcc@13.2.0~cuda~ipo+openmp+serial~timing~unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  qs42tdb      ^pkgconf@2.2.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  24s63jo  alquimia@1.1.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  azw2uki      ^pflotran@5.0.0%gcc@13.2.0~rxn build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  xfx5sq4          ^petsc@3.21.6%gcc@13.2.0~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu24.04-aarch64
+[+]  vatn7j5  aml@0.2.1%gcc@13.2.0~cuda~hip+hwloc~opencl~ze build_system=autotools hip-platform=none arch=linux-ubuntu24.04-aarch64
+[+]  ms2gdqx      ^hwloc@2.11.1%gcc@13.2.0~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  a6zdoyz      ^numactl@2.0.18%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  z5djtua  amrex@24.10%gcc@13.2.0~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp~particles~petsc~pic~plotfile_tools~rocm~shared~sundials~sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu24.04-aarch64
+[+]  zlmei3u  arborx@1.7%gcc@13.2.0~cuda~ipo+mpi~openmp~rocm+serial~sycl~trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  uxmy2h4      ^kokkos@4.4.01%gcc@13.2.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu24.04-aarch64
+[+]  iebz4da  argobots@1.2%gcc@13.2.0~affinity~debug+perf~stackunwind~tool~valgrind build_system=autotools stackguard=none arch=linux-ubuntu24.04-aarch64
+[+]  x4is6fc  ascent@0.9.3%gcc@13.2.0~adios2~babelflow+blt_find_mpi~caliper~cuda~doc~dray~fides+fortran~ipo~mfem+mpi~occa+openmp~python+raja+serial+shared+test+umpire+vtkh build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  dxwgtxp      ^cmake@3.30.5%gcc@13.2.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu24.04-aarch64
+[+]  5xm4kwy          ^curl@8.10.1%gcc@13.2.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu24.04-aarch64
+[+]  yj5jput              ^openssl@3.3.1%gcc@13.2.0~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu24.04-aarch64
+[+]  lqjnee3                  ^perl@5.40.0%gcc@13.2.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  65n4a3f      ^raja@2024.02.1%gcc@13.2.0~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  65thy2r          ^camp@2024.02.1%gcc@13.2.0~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  7gwyxgv      ^umpire@2024.02.1%gcc@13.2.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu24.04-aarch64
+[+]  fdhejtv          ^fmt@11.0.2%gcc@13.2.0~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  fvullup      ^vtk-m@2.2.0%gcc@13.2.0~64bitids~cuda+doubleprecision+examples+fpic~ipo~kokkos~logging+mpi+openmp+rendering~rocm~shared~sycl~tbb~testlib build_system=cmake build_type=Release generator=make patches=2111608,34704cc,34f203b arch=linux-ubuntu24.04-aarch64
+[+]  7raql6b  axom@0.9.0%gcc@13.2.0+cpp14~cuda~devtools+examples+fortran+hdf5~ipo+lua~mfem+mpi+openmp~python+raja~rocm~scr+shared+tools+umpire build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  s52tvyw      ^blt@0.6.2%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  go3syug      ^hdf5@1.8.23%gcc@13.2.0~cxx+fortran+hl~ipo+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu24.04-aarch64
+[+]  ld4j33m      ^lua@5.4.6%gcc@13.2.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu24.04-aarch64
+[+]  klzwr34          ^readline@8.2%gcc@13.2.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu24.04-aarch64
+[+]  mv3yjvb          ^unzip@6.0%gcc@13.2.0 build_system=makefile patches=881d2ed,f6f6236 arch=linux-ubuntu24.04-aarch64
+[+]  wnnmlfs      ^raja@2024.07.0%gcc@13.2.0~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  wpnnzo5          ^camp@2024.07.0%gcc@13.2.0~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  fqd7flr      ^umpire@2024.07.0%gcc@13.2.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget+openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu24.04-aarch64
+[+]  2accdib  boost@1.79.0%gcc@13.2.0+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu24.04-aarch64
+[+]  srvw4np      ^xz@5.4.6%gcc@13.2.0+pic build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  t5f54rs      ^zstd@1.5.6%gcc@13.2.0~programs build_system=makefile libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  dfmptp5  butterflypack@2.4.0%gcc@13.2.0~ipo+openmp+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  y2umkga      ^arpack-ng@3.9.0%gcc@13.2.0~icb~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ikmb4qj      ^openblas@0.3.28%gcc@13.2.0~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic+shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu24.04-aarch64
+[+]  cfbf5ho      ^sed@4.9%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  mr65pjo  cabana@0.7.0%gcc@13.2.0~all~arborx~cajita~cuda~examples~grid~hdf5~heffte~hypre~ipo+mpi~openmp~openmptarget~performance_testing~rocm+serial+shared~silo~sycl~testing~threads build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  tcrr7um      ^cmake@3.25.3%gcc@13.2.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu24.04-aarch64
+[+]  cd7ap5z      ^kokkos@4.4.01%gcc@13.2.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu24.04-aarch64
+[+]  srepth6  caliper@2.11.0%gcc@13.2.0+adiak~cuda~fortran+gotcha~ipo+kokkos+libdw~libpfm+libunwind+mpi+papi~rocm+sampler+shared~sosflow~tests~variorum~vtune build_system=cmake build_type=Release generator=make patches=0492fa6 arch=linux-ubuntu24.04-aarch64
+[+]  mj6zdis      ^adiak@0.4.0%gcc@13.2.0~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  xbgnkdl      ^elfutils@0.191%gcc@13.2.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ozykv6g          ^libiconv@1.17%gcc@13.2.0 build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  tog2scc  chai@2024.07.0%gcc@13.2.0~cuda~enable_pick+examples~ipo+mpi~openmp~raja~rocm+separable_compilation+shared build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu24.04-aarch64
+[+]  jg4mzmj      ^blt@0.6.2%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  o4xsgrm  chapel@2.2.0%gcc@13.2.0~chpldoc~cuda+curl~developer+hdf5+libevent+protobuf~rocm+ssl+yaml+zmq atomics=unset build_system=autotools comm=none gmp=spack gpu_mem_strategy=array_on_device host_arch=unset host_jemalloc=unset host_mem=jemalloc host_platform=unset hwloc=bundled launcher=unset lib_pic=none llvm=spack patches=8b4f06c re2=bundled target_arch=unset target_cpu=unset target_platform=unset tasks=qthreads timers=unset unwind=none arch=linux-ubuntu24.04-aarch64
+[+]  25wuqnl      ^curl@8.10.1%gcc@13.2.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu24.04-aarch64
+[+]  n4otm6o          ^nghttp2@1.63.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4mniitf      ^hdf5@1.14.5%gcc@13.2.0~cxx+fortran+hl~ipo~java~map~mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  bhpwpeh      ^libevent@2.1.12%gcc@13.2.0+openssl build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ktoc3ub      ^libyaml@0.1.7%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  i6h2cnr      ^libzmq@4.3.5%gcc@13.2.0~docs~drafts+libbsd+libsodium~libunwind build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  46jy3qw          ^libbsd@0.12.2%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  m57anow              ^libmd@1.0.4%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  qxo36s3          ^libsodium@1.0.20%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ujbnx4z      ^llvm@18.1.8%gcc@13.2.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu24.04-aarch64
+[+]  dnqsh4d          ^libedit@3.1-20240808%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  qpunuv4          ^perl-data-dumper@2.173%gcc@13.2.0 build_system=perl arch=linux-ubuntu24.04-aarch64
+[+]  cvotixz      ^openssl@3.3.1%gcc@13.2.0~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu24.04-aarch64
+[+]  6rikenb          ^ca-certificates-mozilla@2023-05-30%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  4c27vbr      ^py-protobuf@5.28.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vsr2fzr  charliecloud@0.38%gcc@13.2.0~docs+squashfuse build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  d2yck7y      ^bats@1.10.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  kdcm2d3      ^git@2.45.2%gcc@13.2.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  cvdjw3p          ^gettext@0.22.5%gcc@13.2.0+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4l3bkts              ^tar@1.34%gcc@13.2.0 build_system=autotools zip=pigz arch=linux-ubuntu24.04-aarch64
+[+]  cxee66q                  ^pigz@2.8%gcc@13.2.0 build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  hfni774          ^libidn2@2.3.7%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  3jugv6u              ^libunistring@1.2%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  atq6wbg          ^pcre2@10.44%gcc@13.2.0~jit+multibyte build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  wh6fkw2      ^libfuse@3.16.2%gcc@13.2.0~strip~system_install~useroot+utils build_system=meson buildtype=release default_library=shared patches=3ad6719 arch=linux-ubuntu24.04-aarch64
+[+]  zmmqucr          ^meson@1.5.1%gcc@13.2.0 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu24.04-aarch64
+[+]  xifup5u      ^py-requests@2.32.3%gcc@13.2.0~socks build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xfou3ig          ^py-certifi@2023.7.22%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vr4hxoz          ^py-charset-normalizer@3.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  iqsfe42          ^py-idna@3.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  hi5taox          ^py-urllib3@2.1.0%gcc@13.2.0~brotli~socks build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vqkzhbf      ^squashfuse@0.5.2%gcc@13.2.0+lz4+lzo~min_size+shared+static+xz+zlib+zstd build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  n4ashxw          ^lzo@2.10%gcc@13.2.0 build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  6z7r3so          ^zstd@1.5.6%gcc@13.2.0+programs build_system=makefile compression=none libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  zyyluor  conduit@0.9.2%gcc@13.2.0~adios+blt_find_mpi~caliper~doc~doxygen+examples+fortran+hdf5+hdf5_compat~ipo+mpi+parmetis~python+shared~silo+test+utilities~zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ufdod2n      ^metis@5.1.0%gcc@13.2.0~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903,b1225da arch=linux-ubuntu24.04-aarch64
+[+]  kzu2xbb      ^parmetis@4.0.3%gcc@13.2.0~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu24.04-aarch64
+[+]  3yu7bet  darshan-runtime@3.4.5%gcc@13.2.0~apmpi~apmpi_sync~apxc~group_readable_logs~hdf5~lustre~mmap_logs+mpi~parallel-netcdf build_system=autotools log_path=none scheduler=NONE arch=linux-ubuntu24.04-aarch64
+[+]  s3l2xab  darshan-util@3.4.5%gcc@13.2.0~apmpi~apxc~bzip2 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  47zlliw  datatransferkit@3.1.1%gcc@13.2.0~external-arborx~ipo~openmp+serial+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  4v7thkp  dealii@9.5.1%gcc@13.2.0+adol-c+arborx+arpack+assimp+cgal~cuda~doc+examples+ginkgo~gmsh+gsl+hdf5~int64~ipo+kokkos+metis+mpi+muparser~nanoflann~netcdf~oce~optflags+p4est+petsc+platform-introspection~python+scalapack+simplex+slepc+sundials+symengine+threads+trilinos build_system=cmake build_type=DebugRelease cxxstd=17 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  kw7ddeb      ^adol-c@2.7.2%gcc@13.2.0~advanced_branching+atrig_erf~boost+doc+examples~openmp~sparse+stdczero+traceless_refcounting build_system=autotools patches=715b878 arch=linux-ubuntu24.04-aarch64
+[+]  6jgjp6m      ^arborx@1.3%gcc@13.2.0~cuda~ipo+mpi~openmp~rocm+serial~sycl+trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  fidu6q5      ^assimp@5.4.3%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  3pgccx2      ^boost@1.79.0%gcc@13.2.0+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu24.04-aarch64
+[+]  y6vpexf      ^cgal@5.6%gcc@13.2.0~core~demos+eigen~header_only~imageio~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  nyrvrt2          ^mpfr@4.2.1%gcc@13.2.0 build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  fhfw25k              ^autoconf-archive@2023.02.20%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  vxqabfm              ^texinfo@7.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  dsh5633      ^gsl@2.7.1%gcc@13.2.0~external-cblas+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  p7mqz3j      ^intel-tbb@2021.12.0%gcc@13.2.0~ipo+shared+tm build_system=cmake build_type=Release cxxstd=default generator=make arch=linux-ubuntu24.04-aarch64
+[+]  4ticstk      ^metis@5.1.0%gcc@13.2.0~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903,b1225da arch=linux-ubuntu24.04-aarch64
+[+]  eilwvb6      ^muparser@2.3.4%gcc@13.2.0~ipo+openmp+samples+shared~wide_char build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  wojih2h      ^p4est@2.8%gcc@13.2.0+mpi~openmp build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  h2gc3kq      ^suite-sparse@7.7.0%gcc@13.2.0~cuda~graphblas~openmp+pic build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  nzckxou      ^sundials@6.7.0%gcc@13.2.0+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix+generic-math~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=14 generator=make logging-level=2 logging-mpi=OFF precision=double arch=linux-ubuntu24.04-aarch64
+[+]  vgil4at      ^symengine@0.9.0%gcc@13.2.0~boostmp~flint~ipo~llvm+mpc+mpfr~openmp~piranha+shared+thread_safe build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  vbbwyx6          ^cereal@1.3.2%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make patches=2dfa0bf arch=linux-ubuntu24.04-aarch64
+[+]  hpewuhd          ^mpc@1.3.1%gcc@13.2.0 build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  lpk5mx7      ^trilinos@13.4.1%gcc@13.2.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=016a979,bcd552d arch=linux-ubuntu24.04-aarch64
+[+]  vdumbea  dyninst@13.0.0%gcc@13.2.0~ipo+openmp~stat_dysect~static build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  f6y75fx      ^libiberty@2.41%gcc@13.2.0+pic build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  avzom6k  e4s-alc@1.0.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  j5ivg7p      ^py-pip@23.1.2%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  xlbvwxj      ^py-pyyaml@6.0.2%gcc@13.2.0+libyaml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wnazd4x          ^libyaml@0.2.5%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  mf56ji5      ^py-setuptools@69.2.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  vy2iuya      ^py-wheel@0.41.2%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  ctcfduo      ^python-venv@1.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  yacccy2  e4s-cl@1.0.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zbbuwua      ^py-pyelftools@0.27%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  oaohaah      ^py-python-ptrace@0.9.8%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  f7rly7l      ^py-python-sotools@0.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  pue2be5      ^py-termcolor@1.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  s4axsif      ^py-texttable@1.6.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mq6rpvu      ^py-tinydb@4.5.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  v7jnbsb          ^py-poetry-core@1.8.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qpo52m4  exago@1.6.0%gcc@13.2.0~cuda+hiop~ipo~ipopt+logging+mpi~python+raja~rocm build_system=cmake build_type=Release generator=make patches=7f74f3c arch=linux-ubuntu24.04-aarch64
+[+]  nf2lau7      ^camp@0.2.3%gcc@13.2.0~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make patches=cb9e25b arch=linux-ubuntu24.04-aarch64
+[+]  yhr64eg          ^blt@0.4.1%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  kkt2qeo      ^hiop@1.0.0%gcc@13.2.0~cuda~deepchecking~ginkgo~ipo~jsrun~kron+mpi+raja~rocm~shared~sparse build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  gjie7yp      ^raja@0.14.0%gcc@13.2.0~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests+shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  qjbfx23      ^umpire@6.0.0%gcc@13.2.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu24.04-aarch64
+[+]  7cgmpf3  exaworks@0.1.0%gcc@13.2.0 build_system=bundle arch=linux-ubuntu24.04-aarch64
+[+]  j4gyewk      ^flux-core@0.66.0%gcc@13.2.0~cuda~docs~security build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  bor3oyn          ^libarchive@3.7.6%gcc@13.2.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu24.04-aarch64
+[+]  w4l5346      ^flux-sched@0.38.0%gcc@13.2.0~cuda~docs~ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu24.04-aarch64
+[+]  dvzgss5          ^boost@1.79.0%gcc@13.2.0+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu24.04-aarch64
+[+]  fb5dnis          ^py-jsonschema@4.22.0%gcc@13.2.0~format-nongpl build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zhne2yl              ^py-attrs@23.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  iz7lc6p              ^py-hatch-fancy-pypi-readme@23.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zoqfesp              ^py-hatch-vcs@0.4.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jnghzz4              ^py-jsonschema-specifications@2023.12.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  24i25he              ^py-referencing@0.35.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3jc3tzh              ^py-rpds-py@0.20.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  s3ql6l4                  ^py-maturin@1.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vhklkb7                  ^rust@1.81.0%gcc@13.2.0~dev~docs+src build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  6lucctg                      ^libgit2@1.8.0%gcc@13.2.0~curl~ipo+mmap+ssh build_system=cmake build_type=Release generator=make https=system arch=linux-ubuntu24.04-aarch64
+[+]  kin664e                      ^libssh2@1.11.0%gcc@13.2.0+shared build_system=autotools crypto=openssl patches=011d926 arch=linux-ubuntu24.04-aarch64
+[+]  2s5but5                      ^rust-bootstrap@1.81.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  e7cbvy5          ^yaml-cpp@0.6.3%gcc@13.2.0~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  nn2pqnu      ^py-parsl@2023.08.21%gcc@13.2.0~monitoring build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ctprezh          ^py-dill@0.3.6%gcc@13.2.0 build_system=python_pip patches=daf79b1 arch=linux-ubuntu24.04-aarch64
+[+]  6mwj5dh          ^py-globus-sdk@3.42.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rdh7yfh              ^py-cryptography@42.0.8%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tuofb5n                  ^py-setuptools-rust@1.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ajykmbs                      ^py-semantic-version@2.10.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7nvjcuc              ^py-pyjwt@2.4.0%gcc@13.2.0+crypto build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fyyde6p          ^py-paramiko@3.4.0%gcc@13.2.0~invoke build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3chcbql              ^py-bcrypt@3.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5ekq6lj              ^py-pynacl@1.5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  phdgrql          ^py-pyzmq@25.0.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  oygrcm6          ^py-setproctitle@1.1.10%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  npi355y          ^py-tblib@1.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cif5adq          ^py-typeguard@2.13.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  uztqq4w          ^py-typing-extensions@4.12.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ms5hurt      ^py-psij-python@0.1.0.post2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  old7byf          ^py-filelock@3.12.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6flusmq          ^py-pystache@0.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mhgu4jc      ^py-radical-entk@1.47.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2okjr67      ^py-radical-gtod@1.47.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2t572wc      ^py-radical-pilot@1.47.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rpycb2z      ^py-radical-saga@1.47.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vrmmopw          ^py-apache-libcloud@1.2.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cei4uwf          ^py-parse@1.18.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  26byc62      ^py-radical-utils@1.47.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jqkuhhu          ^py-colorama@0.4.6%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mskxbih          ^py-msgpack@1.0.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  j332dv6          ^py-netifaces@0.10.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rgs532s          ^py-ntplib@0.4.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gwho3kc          ^py-regex@2022.8.17%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  skiymhq  faodel@1.2108.1%gcc@13.2.0~hdf5~ipo+mpi+shared+tcmalloc build_system=cmake build_type=Release generator=make logging=stdout network=nnti serializer=xdr arch=linux-ubuntu24.04-aarch64
+[+]  kipvvhm  fftx@1.2.0%gcc@13.2.0~cuda~ipo~rocm build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  k4dmhki      ^spiral-software@8.5.1%gcc@13.2.0+fftx~hcol~ipo+jit+mpi+simt build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  v74ra6x          ^spiral-package-fftx@1.3.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  iqkm6is          ^spiral-package-jit@1.1.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  hdtupwo          ^spiral-package-mpi@1.1.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  w6ricdz          ^spiral-package-simt@1.1.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  uar22un  flecsi@2.3.0%gcc@13.2.0~cuda~doc~flog~graphviz+hdf5~ipo~kokkos~openmp~rocm+shared backend=mpi build_system=cmake build_type=Release caliper_detail=none generator=make arch=linux-ubuntu24.04-aarch64
+[+]  znjebgb      ^parmetis@4.0.3%gcc@13.2.0~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu24.04-aarch64
+[+]  hzym42h  flit@2.1.0%gcc@13.2.0 build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  aqxm4mh      ^py-pyelftools@0.29%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tkt7csa      ^py-toml@0.10.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bjyceng      ^sqlite@3.46.0%gcc@13.2.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  puxbpmr  flux-core@0.66.0%gcc@13.2.0~cuda~docs~security build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  nrxcdzl      ^jansson@2.14%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  n66ser3      ^libarchive@3.7.6%gcc@13.2.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu24.04-aarch64
+[+]  grt6ycd      ^lua@5.3.6%gcc@13.2.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu24.04-aarch64
+[+]  qkjfelj      ^lua-luaposix@36.1%gcc@13.2.0 build_system=lua arch=linux-ubuntu24.04-aarch64
+[+]  uw74mqo      ^ncurses@6.5%gcc@13.2.0~symlinks+termlib abi=none build_system=autotools patches=7a351bc arch=linux-ubuntu24.04-aarch64
+[+]  jo5neyz      ^py-cffi@1.17.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  57rf7os          ^py-pycparser@2.21%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rxevjfs      ^py-ply@3.11%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  g3j2oqf      ^util-linux-uuid@2.40.2%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  s6vsdon  fpm@0.10.0%gcc@13.2.0+openmp build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  imijnv7  gasnet@2024.5.0%gcc@13.2.0~cuda~debug~level_zero~rocm build_system=generic conduits=smp arch=linux-ubuntu24.04-aarch64
+[+]  42gp4mq  ginkgo@1.8.0%gcc@13.2.0~cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  juubbub  globalarrays@5.8.2%gcc@13.2.0~scalapack armci=mpi-ts build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  6tgdrhb  glvis@4.2%gcc@13.2.0+fonts build_system=makefile screenshots=png arch=linux-ubuntu24.04-aarch64
+[+]  emzyjxw      ^fontconfig@2.15.0%gcc@13.2.0~pic build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  fqfnfqh          ^font-util@1.4.1%gcc@13.2.0 build_system=autotools fonts=encodings,font-adobe-100dpi,font-adobe-75dpi,font-adobe-utopia-100dpi,font-adobe-utopia-75dpi,font-adobe-utopia-type1,font-alias,font-arabic-misc,font-bh-100dpi,font-bh-75dpi,font-bh-lucidatypewriter-100dpi,font-bh-lucidatypewriter-75dpi,font-bh-type1,font-bitstream-100dpi,font-bitstream-75dpi,font-bitstream-speedo,font-bitstream-type1,font-cronyx-cyrillic,font-cursor-misc,font-daewoo-misc,font-dec-misc,font-ibm-type1,font-isas-misc,font-jis-misc,font-micro-misc,font-misc-cyrillic,font-misc-ethiopic,font-misc-meltho,font-misc-misc,font-mutt-misc,font-schumacher-misc,font-screen-cyrillic,font-sun-misc,font-winitzki-cyrillic,font-xfree86-type1 arch=linux-ubuntu24.04-aarch64
+[+]  jpmsrey              ^bdftopcf@1.1.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4ghq6wt                  ^fontsproto@2.1.3%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  5sqlu32                  ^libxfont@1.5.4%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  2cqng4e              ^mkfontdir@1.0.7%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  zd7fsvt              ^mkfontscale@1.2.3%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  5i5zexj                  ^libfontenc@1.1.8%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  wotw6m3          ^gperf@3.1%gcc@13.2.0 build_system=autotools patches=3dd36db arch=linux-ubuntu24.04-aarch64
+[+]  2zmi55u      ^freetype@2.13.2%gcc@13.2.0+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  3rvtc3n      ^glew@2.2.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu24.04-aarch64
+[+]  my5z6on          ^libx11@1.8.10%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  7nk3t5e              ^inputproto@2.3.2%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ler6buv              ^xextproto@7.3.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  rnt5u6q              ^xtrans@1.5.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  nkniqqu          ^xproto@7.0.31%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  hsgbylr      ^glm@1.0.1%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  i3uigga      ^glx@1.4%gcc@13.2.0 build_system=bundle arch=linux-ubuntu24.04-aarch64
+[+]  d7b23n6          ^mesa@23.2.1%gcc@13.2.0+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu24.04-aarch64
+[+]  5oa6eho              ^glproto@1.4.17%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  nknk7yz              ^llvm@17.0.6%gcc@13.2.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu24.04-aarch64
+[+]  wuo45av                  ^binutils@2.43.1%gcc@13.2.0~gas+gold~gprofng+headers~interwork+ld+libiberty~lto~nls~pgo+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  rov6nw7              ^xrandr@1.5.2%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  6zjsjlp                  ^libxrandr@1.5.4%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  2uzhmne                  ^randrproto@1.5.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  br77rkv      ^sdl2@2.30.3%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  oldbqlu          ^libxext@1.3.6%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  vxjscjk      ^xxd-standalone@8.2.1201%gcc@13.2.0 build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  g6viniz  gmp@6.3.0%gcc@13.2.0+cxx build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  yvgfxup  gotcha@1.0.7%gcc@13.2.0~ipo~test build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  n7mabd2  gptune@4.0.0%gcc@13.2.0~hypre~ipo~mpispawn~superlu build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ntvoe6o      ^jq@1.7.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  huwl73v          ^oniguruma@6.9.9%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ujk5l2g      ^openturns@1.20%gcc@13.2.0~ipo~libxml2+python build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  3bsazxj          ^py-cloudpickle@3.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gd6y4xh          ^py-urllib3@2.1.0%gcc@13.2.0~brotli~socks build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yu4qc2u      ^py-filelock@3.12.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  l5ci56i          ^py-hatch-vcs@0.4.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  x2eg7wj          ^py-hatchling@1.25.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  lupmvff              ^py-editables@0.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bp2sety              ^py-pathspec@0.11.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  d3n5jai              ^py-pluggy@1.5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  k4ii7tw              ^py-trove-classifiers@2023.8.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  oz47wol                  ^py-calver@2022.6.26%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4bfu5da      ^py-gpy@1.10.0%gcc@13.2.0~plotting build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  pvwhezi          ^py-paramz@0.9.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ra6gx2l          ^py-scipy@1.14.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fh2pn7d              ^py-pythran@0.16.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  eixg5vy      ^py-hpbandster@0.7.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  a7vzbyv          ^py-configspace@1.1.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bpjqyr2              ^py-more-itertools@9.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ntugevv          ^py-pyro4@4.81%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ca3vv6f          ^py-serpent@1.40%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  isjioy6      ^py-ipyparallel@8.4.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  u7ycr3h          ^py-decorator@5.1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vqypctx          ^py-ipykernel@6.29.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dhknyvq              ^py-comm@0.1.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  q2e6c63              ^py-debugpy@1.6.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ox7nptg              ^py-matplotlib-inline@0.1.6%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dlflbjg              ^py-nest-asyncio@1.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  uf4gwnd          ^py-ipython@8.28.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7doypbx              ^py-exceptiongroup@1.1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  e4yo2no                  ^py-flit-scm@1.7.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5eh52l3              ^py-jedi@0.18.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yq2mlbr                  ^py-parso@0.8.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xpviac5              ^py-pexpect@4.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jdr2gsu              ^py-prompt-toolkit@3.0.43%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  53gisu3                  ^py-wcwidth@0.2.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ooysetw              ^py-pygments@2.18.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  q6gxdt4              ^py-stack-data@0.6.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tlut77l                  ^py-asttokens@2.4.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wromwu6                  ^py-executing@1.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  d7jtwes                  ^py-pure-eval@0.2.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  k2bvkyb          ^py-jupyter-client@8.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yjmvgee          ^py-jupyterlab@3.4.8%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  uoj5675              ^py-jupyter-server@1.21.0%gcc@13.2.0~typescript build_system=python_pip patches=0430f63 arch=linux-ubuntu24.04-aarch64
+[+]  cj32exa                  ^py-anyio@3.6.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  hsujklb                  ^py-nbconvert@7.14.1%gcc@13.2.0+serve build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bor47va                      ^py-nbclient@0.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  whtiqrk                  ^py-nbformat@5.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  v7j4bb6                  ^py-pre-commit@3.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vw2nitm                      ^py-cfgv@3.4.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6fur2kj                      ^py-identify@2.5.24%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  a6s2zpo                      ^py-nodeenv@1.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5635xx2                      ^py-virtualenv@20.26.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5lqmv65                          ^py-distlib@0.3.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mufp4i5              ^py-jupyterlab-server@2.22.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  r4qxx35                  ^py-jsonschema@4.22.0%gcc@13.2.0~format-nongpl build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ogasenp              ^py-nbclassic@1.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rct2vij                  ^py-notebook-shim@0.2.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dpvpiz3              ^py-notebook@6.5.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bygikoy          ^py-python-dateutil@2.8.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  j5tlke2          ^py-pyzmq@25.0.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xps7kj7              ^py-gevent@23.7.0%gcc@13.2.0 build_system=python_pip patches=2d19534 arch=linux-ubuntu24.04-aarch64
+[+]  pogso77                  ^py-zope-event@5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  b5vn2wu                  ^py-zope-interface@7.0.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ecbkbur          ^py-tqdm@4.66.3%gcc@13.2.0~notebook~telegram build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  pjvouxl          ^py-traitlets@5.14.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wrpkugc      ^py-joblib@1.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  pgt4zbo          ^py-setuptools@63.4.3%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  efuwnom      ^py-lhsmdu@1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4oq2dbs      ^py-matplotlib@3.9.2%gcc@13.2.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cdciifr          ^py-contourpy@1.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mpr7gi6          ^py-cycler@0.11.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rgwd2gs          ^py-fonttools@4.39.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  n3sf2he          ^py-kiwisolver@1.4.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xtihihi              ^py-cppy@1.2.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  h6p6l2f          ^py-meson-python@0.16.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  i35gkvq              ^py-pyproject-metadata@0.7.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rbvokjb          ^py-packaging@24.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gigxep2          ^py-pyparsing@3.1.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gws6yan          ^py-setuptools-scm@8.0.4%gcc@13.2.0+toml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3s6base          ^qhull@2020.2%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  folsshq      ^py-mpi4py@4.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xmwskbq      ^py-numpy@1.24.4%gcc@13.2.0 build_system=python_pip patches=873745d arch=linux-ubuntu24.04-aarch64
+[+]  mi3zvya          ^py-cython@0.29.36%gcc@13.2.0 build_system=python_pip patches=c4369ad arch=linux-ubuntu24.04-aarch64
+[+]  3clk5an      ^py-opentuner@0.8.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6mlnqwd          ^py-fn-py@0.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  r3csmdw          ^py-future@1.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xm6l4ij      ^py-pandas@1.5.3%gcc@13.2.0~excel+performance build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zrmtlja          ^py-bottleneck@1.3.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  l367j2g              ^py-versioneer@0.29%gcc@13.2.0+toml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  swsglgv          ^py-numexpr@2.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sh3ixo3          ^py-pytz@2023.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vvvl7mt      ^py-pyaml@21.8.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sc2beyr      ^py-pymoo@0.5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  x5mthmq          ^py-autograd@1.6.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  s6tzgao      ^py-requests@2.32.3%gcc@13.2.0~socks build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sydvsro      ^py-scikit-learn@1.5.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4hlwdi6          ^py-threadpoolctl@3.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tnxnf46      ^py-scikit-optimize@0.9.0%gcc@13.2.0+plots build_system=python_pip patches=21f43c9 arch=linux-ubuntu24.04-aarch64
+[+]  lwlm6ee      ^py-statsmodels@0.13.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zpsc6nm          ^py-patsy@0.5.3%gcc@13.2.0~splines build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rcxr3jw      ^py-ytopt-autotune@1.1.0%gcc@13.2.0 build_system=python_pip patches=60375df arch=linux-ubuntu24.04-aarch64
+[+]  oiumbou      ^pygmo@2.18.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  56v24v7          ^pagmo2@2.18.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  jezamfm  gromacs@2024.3%gcc@13.2.0~cp2k~cuda~cycle_subcounters~double+gmxapi+hwloc~intel_provided_gcc~ipo~mdrun_only+mpi+nblib~nosuffix~opencl+openmp~relaxed_double_precision+shared~sycl build_system=cmake build_type=Release generator=make openmp_max_threads=none arch=linux-ubuntu24.04-aarch64
+[+]  iuoc4eq      ^fftw@3.3.10%gcc@13.2.0+mpi~openmp~pfft_patches+shared build_system=autotools patches=872cff9 precision=double,float arch=linux-ubuntu24.04-aarch64
+[+]  pk4gzol  h5bench@1.4%gcc@13.2.0~all~amrex~async~e3sm~exerciser~ipo~metadata~openpmd build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  lcldatk  hdf5@1.14.5%gcc@13.2.0~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  sksycdh  hdf5-vol-async@1.7%gcc@13.2.0~ipo~memcpy build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  y4o537d      ^hdf5@1.14.5%gcc@13.2.0~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip+threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  vrrebjd  hdf5-vol-cache@v1.1%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  jhbv2mh  hdf5-vol-log@1.4.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  pxld2a6  heffte@2.4.0%gcc@13.2.0~cuda+fftw~fortran~ipo~magma~mkl~python~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  7xzk2l5  hpctoolkit@2024.01.1%gcc@13.2.0~cray~cuda~debug~level_zero+mpi~opencl+papi~python~rocm+viewer build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  qoqyhlo      ^dyninst@13.0.0%gcc@13.2.0~ipo+openmp~stat_dysect~static build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  cqz5b25      ^elfutils@0.190%gcc@13.2.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  kpumo2x      ^hpcviewer@2024.09%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  majfmgu      ^libmonitor@2023.03.15%gcc@13.2.0~commrank~dlopen+hpctoolkit build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  lwesvro      ^xerces-c@3.2.5%gcc@13.2.0 build_system=autotools cxxstd=default netaccessor=curl transcoder=iconv arch=linux-ubuntu24.04-aarch64
+[+]  3b7ajxq      ^yaml-cpp@0.8.0%gcc@13.2.0~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  jhh62hm  hpx@1.10.0%gcc@13.2.0~async_cuda~async_mpi~cuda~examples+generic_coroutines~ipo~rocm~tools build_system=cmake build_type=Release cxxstd=17 generator=ninja instrumentation=none malloc=tcmalloc max_cpu_count=auto networking=mpi arch=linux-ubuntu24.04-aarch64
+[+]  4uaglq7      ^asio@1.30.2%gcc@13.2.0~boost_coroutine~boost_regex~separate_compilation build_system=autotools cxxstd=17 arch=linux-ubuntu24.04-aarch64
+[+]  u22guu5      ^boost@1.79.0%gcc@13.2.0+atomic+chrono~clanglibcpp+container+context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic context-impl=fcontext cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu24.04-aarch64
+[+]  lx6vqoy      ^gperftools@2.15%gcc@13.2.0+debugalloc~dynamic_sized_delete_support~ipo+libunwind~sized_delete build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  gxm2cru      ^ninja@1.12.1%gcc@13.2.0+re2c build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  bocpsl5          ^re2c@3.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  na3pnhr  hypre@2.32.0%gcc@13.2.0~caliper~complex~cublas~cuda~debug+fortran~gptune~gpu-aware-mpi~int64~internal-superlu~magma~mixedint+mpi~openmp~rocblas~rocm+shared~superlu-dist~sycl~umpire~unified-memory build_system=autotools precision=double arch=linux-ubuntu24.04-aarch64
+[+]  l4k7bnl  kokkos@4.4.01%gcc@13.2.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl+openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu24.04-aarch64
+[+]  ejfmtkj  kokkos-kernels@4.4.01%gcc@13.2.0~blas~cblas~cublas~cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl+openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu24.04-aarch64
+[+]  quke7bb  laghos@3.1%gcc@13.2.0+metis~ofast build_system=makefile patches=e783a71 arch=linux-ubuntu24.04-aarch64
+[+]  rg43zyl  lammps@20240829%gcc@13.2.0~adios+amoeba+asphere~atc~awpmd+bocs+body+bpm+brownian+cg-dna+cg-spica+class2+colloid+colvars+compress+coreshell~cuda~cuda_mps~curl+dielectric+diffraction+dipole+dpd-basic+dpd-meso+dpd-react+dpd-smooth+drude+eff+electrode+extra-compute+extra-dump+extra-fix+extra-molecule+extra-pair+fep~ffmpeg+granular~h5md~intel+interlayer~ipo~jpeg~kim~kokkos+kspace~latboltz+lepton+lib+machdyn~manifold+manybody+mc+meam+mesont~mgpt+misc~ml-hdnnp+ml-iap+ml-pod~ml-rann+ml-snap~ml-uf3+mofff+molecule~molfile+mpi~netcdf~opencl+openmp+openmp-package+opt+orient+peri+phonon+plugin~plumed~png+poems~ptm~python+qeq~qtb+reaction+reaxff+replica~rheo+rigid~rocm+shock~smtbq+sph+spin+srd+tally~tools+uef+voronoi~vtk+yaff build_system=cmake build_type=Release fft=fftw3 fftw_precision=double generator=make gpu_precision=mixed lammps_sizes=smallbig arch=linux-ubuntu24.04-aarch64
+[+]  wz2nk3r      ^eigen@3.4.0%gcc@13.2.0~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu24.04-aarch64
+[+]  l2ba7pi      ^voropp@0.4.6%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make patches=b12e401 arch=linux-ubuntu24.04-aarch64
+[+]  m7mmym7  lbann@0.104%gcc@13.2.0~asan~boost~caliper~cuda~deterministic~distconv~fft~gold~half~ipo~lld~numpy~nvprof~onednn~onnx+pfe+python~rocm+shared~unit_tests~vision~vtune build_system=cmake build_type=Release dtype=float generator=ninja patches=222052b arch=linux-ubuntu24.04-aarch64
+[+]  inmevxk      ^aluminum@1.4.1%gcc@13.2.0~benchmarks~cuda~hang_check~ht~ipo~mpi_serialize~nccl~rocm+shared~stream_mem_ops~tests~thread_multiple~trace build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  3uhxkw3      ^cereal@1.3.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make patches=27c9b59,2dfa0bf,7202653,91f968e arch=linux-ubuntu24.04-aarch64
+[+]  2bveqw7      ^clara@1.1.5%gcc@13.2.0+single_header build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  665gwju      ^dihydrogen@0.3.0%gcc@13.2.0~ci~coverage~cuda~dace~developer~distconv~ipo~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ul4virb      ^hwloc@2.11.1%gcc@13.2.0~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  fka4q6q          ^libxml2@2.10.3%gcc@13.2.0+pic~python+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4ct3lkl      ^hydrogen@1.5.3%gcc@13.2.0+al~cuda~half+int64~int64_blas~ipo~omp_taskloops+openmp~rocm+shared~test blas=any build_system=cmake build_type=Release generator=make patches=9266350 arch=linux-ubuntu24.04-aarch64
+[+]  ucq4rgc      ^protobuf@3.21.12%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make patches=9b6dcfa arch=linux-ubuntu24.04-aarch64
+[+]  nn5b663      ^py-protobuf@4.21.9%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  byrel4a      ^spdlog@1.12.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  m43kkgq      ^zlib-ng@2.2.1%gcc@13.2.0+compat~new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  tkhjzst      ^zstr@1.0.7%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  ikpbjrk  legion@24.09.0%gcc@13.2.0~bindings~bounds_checks~cuda~cuda_hijack~cuda_unsupported_compiler~fortran~gc~hdf5~hwloc~ipo~kokkos+libdl~openmp~papi~privilege_checks~prof~python~redop_complex~redop_half~rocm~shared~spy~sysomp+zlib build_system=cmake build_type=Release cuda_arch=70 cxxstd=17 generator=make max_dims=3 max_fields=512 max_num_nodes=1024 network=none output_level=warning arch=linux-ubuntu24.04-aarch64
+[+]  rxcc2qz  libcatalyst@2.0.0%gcc@13.2.0~conduit~fortran~ipo+mpi~python build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  jountna  libnrm@0.1.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4m6smwl  libpressio@0.99.4%gcc@13.2.0~arc+bitgrooming~blosc~blosc2~boost+bzip2~clang+core~cuda~cusz~digitrounding~docs+fpzip~ftk+hdf5~ipo~json+libdistributed+lua~magick~matio~mgard~mgardx+mpi~ndzip~netcdf+openmp~openssl~petsc~pybind+python~qoz~remote+sz+sz3~szauto~szx+unix+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  nn4gl3h      ^bitgroomingz@2022-10-14%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  cedsrip      ^fpzip@1.3.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  qm6mczy      ^libdistributed@0.4.3%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  rwoftm2      ^libstdcompat@0.0.21%gcc@13.2.0~boost+cpp_unstable~ipo build_system=cmake build_type=Release cpp_compat=auto generator=make arch=linux-ubuntu24.04-aarch64
+[+]  nz6wx47      ^lua-sol2@3.3.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  5e77mmm          ^lua@5.4.6%gcc@13.2.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu24.04-aarch64
+[+]  gg5a3or      ^py-numcodecs@0.13.0%gcc@13.2.0~msgpack build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  goyk2wf          ^py-py-cpuinfo@9.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  eradumh          ^py-setuptools-scm@8.0.4%gcc@13.2.0+toml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  khigb5r      ^py-numpy@2.1.2%gcc@13.2.0 build_system=python_pip patches=873745d arch=linux-ubuntu24.04-aarch64
+[+]  fryz5s4      ^swig@4.1.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  r36l4up      ^sz@2.1.12.5%gcc@13.2.0~examples~fortran~hdf5~ipo~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  jnv4cvo      ^sz3@3.2.0%gcc@13.2.0~hdf5~ipo+mdz build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  pxxknwg  libquo@1.4%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  eq43xmf  libunwind@1.6.2%gcc@13.2.0~block_signals~conservative_checks~cxx_exceptions~debug~debug_frame+docs+pic+tests+weak_backtrace+xz~zlib build_system=autotools components=none libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  yquemaz  loki@0.1.7%gcc@13.2.0+shared build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  rotzw4h  mercury@2.3.1%gcc@13.2.0~bmi+boostsys+checksum~debug~hwloc~ipo+mpi+ofi~psm~psm2+shared+sm~ucx~udreg build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  7ncszgh  metall@0.28%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ngi2qih      ^boost@1.79.0%gcc@13.2.0+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu24.04-aarch64
+[+]  icrhbru  mfem@4.7.0%gcc@13.2.0~amgx~conduit~cuda~debug~examples~exceptions~fms~ginkgo~gnutls~gslib~hiop~lapack~libceed~libunwind+metis~miniapps~mpfr+mpi~mumps~netcdf~occa~openmp~petsc~pumi~raja~rocm~shared~slepc+static~strumpack~suite-sparse~sundials~superlu-dist~threadsafe~umpire+zlib build_system=generic cxxstd=auto patches=71ce9ee precision=double timer=auto arch=linux-ubuntu24.04-aarch64
+[+]  x7t3qav  mgard@2023-12-09%gcc@13.2.0~cuda~ipo+openmp+serial+timing+unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ch62saw      ^protobuf@3.28.2%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  non3ewz          ^abseil-cpp@20240722.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release cxxstd=14 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  b4ettcx              ^googletest@1.12.1%gcc@13.2.0+gmock~ipo+pthreads+shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  q7rhw4n  mpark-variant@1.4.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make patches=21a4f8d,4e173fe,b3501f7 arch=linux-ubuntu24.04-aarch64
+[+]  ac3hvo6  mpifileutils@0.11.1%gcc@13.2.0~daos~experimental~gpfs~ipo~lustre~xattr build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  hzvn65q      ^dtcmp@1.1.4%gcc@13.2.0+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ziilgup          ^lwgrp@1.0.5%gcc@13.2.0+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ngxas6a      ^libcap@2.69%gcc@13.2.0 build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  copyqwk      ^libcircle@0.3.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  fout3he  nccmp@1.9.1.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  dydvjia      ^netcdf-c@4.9.2%gcc@13.2.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu24.04-aarch64
+[+]  mtqlii4          ^libaec@1.0.6%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  aqdnxhb  nco@5.2.4%gcc@13.2.0~doc build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  cilejo4      ^antlr@2.7.7%gcc@13.2.0+cxx~java~pic~python build_system=autotools patches=33897ad arch=linux-ubuntu24.04-aarch64
+[+]  vgjtmhc      ^bison@3.8.2%gcc@13.2.0~color build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  c2kh4q5      ^flex@2.6.3%gcc@13.2.0+lex~nls build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  iewtg74      ^udunits@2.2.28%gcc@13.2.0+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  fe6yqol  nek5000@19.0%gcc@13.2.0+mpi+profiling~visit build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  bvukc2h  nekbone@17.0%gcc@13.2.0+mpi build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  kpxrpdo  netcdf-fortran@4.6.1%gcc@13.2.0~doc+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  nw7hho6  netlib-scalapack@2.2.0%gcc@13.2.0~ipo~pic+shared build_system=cmake build_type=Release generator=make patches=072b006,1c9ce5f,244a9aa arch=linux-ubuntu24.04-aarch64
+[+]  unxk5bc  nrm@0.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xenpeqk      ^py-jsonschema@2.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bpi454r          ^py-vcversioner@2.16.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bk4bam3      ^py-pip@23.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  cvqqluc      ^py-pyzmq@17.1.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  by3arls          ^py-gevent@23.7.0%gcc@13.2.0 build_system=python_pip patches=2d19534 arch=linux-ubuntu24.04-aarch64
+[+]  6di5xhu              ^py-zope-event@5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3wvdvxp              ^py-zope-interface@7.0.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4bcpuk7          ^py-py@1.11.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qk6shj3          ^py-setuptools@59.4.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  p5uc6vr      ^py-scipy@1.14.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6yzzg3l          ^py-pythran@0.16.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ao2gid4              ^py-beniget@0.4.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  o4hec3x              ^py-gast@0.5.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4n66w7s      ^py-six@1.16.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fb5o7gb      ^py-tornado@5.1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7q767xl      ^py-warlock@1.3.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dzec5at          ^py-jsonpatch@1.23%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fbglofa              ^py-jsonpointer@1.9%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fyv5qey  nwchem@7.2.3%gcc@13.2.0~elpa~extratce~fftw3~libxc~openmp armci=mpi-ts build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  6cbbyl4  omega-h@9.34.13%gcc@13.2.0~cuda~examples~gmsh~ipo~kokkos+mpi+optimize+shared+symbols~throw+trilinos~warnings+zlib build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  j5oq4mt      ^trilinos@13.4.1%gcc@13.2.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=016a979,bcd552d arch=linux-ubuntu24.04-aarch64
+[+]  ye34vs2  openfoam@2312%gcc@13.2.0~int64~kahip~knl~metis~mgridgen~paraview+scotch+source~vtk~zoltan build_system=generic precision=dp arch=linux-ubuntu24.04-aarch64
+[+]  c45fq3z      ^adios2@2.10.1%gcc@13.2.0~aws+blosc2+bzip2~campaign~cuda~dataspaces~fortran~hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi~pic+png~python~rocm+sst~sycl+sz+zfp build_system=cmake build_type=Release generator=make patches=4247a85 arch=linux-ubuntu24.04-aarch64
+[+]  4huzhvy          ^c-blosc2@2.15.1%gcc@13.2.0+avx2~ipo+lizard+lz4+snappy+zlib+zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ryaqg2p          ^mgard@2023-12-09%gcc@13.2.0~cuda~ipo+openmp+serial~timing~unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  iafb663      ^flex@2.6.4%gcc@13.2.0+lex~nls build_system=autotools patches=f8b85a0 arch=linux-ubuntu24.04-aarch64
+[+]  m6wwjnr          ^help2man@1.49.3%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ncc26x6      ^scotch@7.0.4%gcc@13.2.0+compression~esmumps~int64~ipo~metis+mpi~mpi_thread~noarch+shared+threads build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  cvmwqdo  openmpi@5.0.5%gcc@13.2.0+atomics~cuda~debug~gpfs~internal-hwloc~internal-libevent~internal-pmix~java~lustre~memchecker~openshmem~romio+rsh~static+vt+wrapper-rpath build_system=autotools fabrics=none romio-filesystem=none schedulers=none arch=linux-ubuntu24.04-aarch64
+[+]  5xxmpce      ^openssh@9.8p1%gcc@13.2.0+gssapi build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  d52zprc          ^krb5@1.21.3%gcc@13.2.0+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  zykf2do          ^libxcrypt@4.4.35%gcc@13.2.0~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu24.04-aarch64
+[+]  llpg2vm      ^perl@5.40.0%gcc@13.2.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  mnk23fa          ^berkeley-db@18.1.40%gcc@13.2.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu24.04-aarch64
+[+]  rejnw5p          ^gdbm@1.23%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4wsrfuf      ^pmix@5.0.3%gcc@13.2.0~munge~python~restful build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  zlvbqqo  openpmd-api@0.16.0%gcc@13.2.0+adios2+hdf5~ipo+mpi~python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu24.04-aarch64
+[+]  nr7bhgz      ^nlohmann-json@3.11.3%gcc@13.2.0~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  dfjjs75      ^toml11@4.0.2%gcc@13.2.0~ipo build_system=cmake build_type=Release cxx_std=11 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  nsre64j  papi@7.1.0%gcc@13.2.0~cuda~debug+example~infiniband~lmsensors~nvml~powercap~rapl+rdpmc~rocm~rocm_smi~sde+shared~static_tools build_system=autotools patches=48cb202 arch=linux-ubuntu24.04-aarch64
+[+]  xy6ft4q  papyrus@1.0.2%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  5cib6tb  parallel-netcdf@1.12.3%gcc@13.2.0~burstbuffer+cxx+fortran+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  lgcutv5  paraview@5.13.1%gcc@13.2.0~adios2~advanced_debug~catalyst~cdi~cuda+development_files+examples~eyedomelighting~fortran~hdf5~ipo+kits~libcatalyst+mpi~nvindex+opengl2~pagosa~python+qt~raytracing~rocm+shared~tbb~visitbridge build_edition=canonical build_system=cmake build_type=Release generator=ninja patches=02253c7 use_vtkm=default arch=linux-ubuntu24.04-aarch64
+[+]  yo4xbrt      ^cli11@1.9.1%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  zdbkvkv      ^double-conversion@3.3.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  xfwokrn      ^expat@2.6.3%gcc@13.2.0+libbsd build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  n2fi223      ^glew@2.2.0%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu24.04-aarch64
+[+]  255m2yi      ^glx@1.4%gcc@13.2.0 build_system=bundle arch=linux-ubuntu24.04-aarch64
+[+]  nr7aiv6          ^mesa@23.3.6%gcc@13.2.0+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu24.04-aarch64
+[+]  k4lqyg6      ^jsoncpp@1.9.5%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  nrgc2gt      ^libjpeg-turbo@3.0.3%gcc@13.2.0~ipo~jpeg8~partial_decoder+pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  imyveeg          ^nasm@2.16.03%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  zr7o76i      ^libogg@1.3.5%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ec2lr4v      ^libtheora@1.1.1%gcc@13.2.0~doc build_system=autotools patches=d9bb5a9,e01511a,e01ef71,ff8478d arch=linux-ubuntu24.04-aarch64
+[+]  sae2nt7      ^libtiff@4.7.0%gcc@13.2.0+ccitt~ipo~jbig+jpeg~jpeg12~lerc~libdeflate+logluv~lzma+lzw+next~old-jpeg~opengl+packbits~pic~pixarlog+shared+thunder~webp+zlib~zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  qgdo3ko      ^libxml2@2.10.3%gcc@13.2.0+pic~python+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  jflrwkz      ^libxt@1.3.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  u5b75w4          ^kbproto@1.0.7%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  nc3avaa          ^libice@1.1.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  lmuxrza          ^libsm@1.2.4%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  xiwlvoz          ^util-macros@1.20.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  jr2qau2      ^netcdf-c@4.9.2%gcc@13.2.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu24.04-aarch64
+[+]  ascoj4q          ^c-blosc@1.21.5%gcc@13.2.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  mffbyzf      ^pegtl@2.8.3%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  zm34x4m      ^proj@8.1.0%gcc@13.2.0+curl~ipo~pic+shared+tiff build_system=cmake build_type=Release generator=make patches=8d85a64,dc620ff arch=linux-ubuntu24.04-aarch64
+[+]  neabvzi      ^protobuf@3.21.12%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make patches=9b6dcfa arch=linux-ubuntu24.04-aarch64
+[+]  dttzs44      ^pugixml@1.14%gcc@13.2.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  opuncvl      ^qt@5.15.15%gcc@13.2.0~dbus~debug~doc~examples~framework~gtk+gui~location+opengl~phonon+shared+sql+ssl+tools~webkit build_system=generic patches=2081e9c,51aeba5,75bcb42,78c70fb,7f34d48,84b0991,8cd4be9,9378afd arch=linux-ubuntu24.04-aarch64
+[+]  3cu3moh          ^glib@2.78.3%gcc@13.2.0~libmount~strip build_system=meson buildtype=release default_library=shared tracing=none arch=linux-ubuntu24.04-aarch64
+[+]  u7rjrup              ^elfutils@0.191%gcc@13.2.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  3puv6ps          ^harfbuzz@10.0.1%gcc@13.2.0~graphite2~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu24.04-aarch64
+[+]  c4z5rrh              ^cairo@1.16.0%gcc@13.2.0~X~fc+ft+gobject+pdf+pic~png+shared~svg build_system=autotools patches=7097196,7c4da77 arch=linux-ubuntu24.04-aarch64
+[+]  b2uk452                  ^pixman@0.42.2%gcc@13.2.0+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4brgr2t                  ^which@2.21%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  4h6zyhn              ^gobject-introspection@1.78.1%gcc@13.2.0~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu24.04-aarch64
+[+]  amdkgtl          ^icu4c@74.2%gcc@13.2.0 build_system=autotools cxxstd=11 arch=linux-ubuntu24.04-aarch64
+[+]  d74zjfi          ^libmng@2.0.3%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  estedqv              ^lcms@2.16%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  wpqa7h6          ^libxcb@1.17.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  jbbof6p              ^libxau@1.0.11%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  w7qf6ko              ^libxdmcp@1.1.5%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  pvmlkff              ^xcb-proto@1.17.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ep3lfus          ^libxkbcommon@1.7.0%gcc@13.2.0~strip~wayland build_system=meson buildtype=release default_library=shared arch=linux-ubuntu24.04-aarch64
+[+]  ovnb5c5              ^xkbdata@1.0.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  5taghmn                  ^xkbcomp@1.4.7%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  wqvgmt6                      ^libxkbfile@1.1.3%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  qee5tvz          ^libxrender@0.9.11%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  w7x2lvq              ^renderproto@0.11.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  fpve7db          ^xcb-util-image@0.4.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ijq2hdg              ^xcb-util@0.4.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  gzhbjvw          ^xcb-util-keysyms@0.4.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  dg2mvqn          ^xcb-util-renderutil@0.3.10%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  2ceoye2          ^xcb-util-wm@0.4.2%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  humoym7  parsec@3.0.2209%gcc@13.2.0~cuda~debug_verbose~ipo~profile+shared build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu24.04-aarch64
+[+]  koinydd  pdt@3.25.2%gcc@13.2.0~pic build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  vezs6k5  petsc@3.22.0%gcc@13.2.0~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu24.04-aarch64
+[+]  g2rnmwr      ^diffutils@3.10%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  46h26zp  phist@1.12.1%gcc@13.2.0+fortran+host+int64~ipo+mpi+openmp~parmetis+scamac+shared~trilinos build_system=cmake build_type=Release generator=make kernel_lib=builtin outlev=2 patches=1fc9ac6 arch=linux-ubuntu24.04-aarch64
+[+]  wevzkzq  plasma@24.8.7%gcc@13.2.0~ipo~lua+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  yl4tngo  plumed@2.9.2%gcc@13.2.0+gsl+mpi+shared arrayfire=none build_system=autotools optional_modules=all arch=linux-ubuntu24.04-aarch64
+[+]  qiqx7hu      ^py-cython@3.0.11%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  olxj43a  precice@3.1.2%gcc@13.2.0~ipo+mpi+petsc~python+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  odhusld  pruners-ninja@1.0.1%gcc@13.2.0 build_system=autotools patches=66619be arch=linux-ubuntu24.04-aarch64
+[+]  klt7xv6  pumi@2.2.8%gcc@13.2.0~fortran~int64~ipo~shared+simmodsuite_version_check~testing~zoltan build_system=cmake build_type=Release generator=make simmodsuite=none arch=linux-ubuntu24.04-aarch64
+[+]  rz3ntno  py-cinemasci@1.7.0%gcc@13.2.0+mpi build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  etwmwyf      ^py-h5py@3.11.0%gcc@13.2.0+mpi build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  aq6wgcx          ^py-numpy@1.25.2%gcc@13.2.0 build_system=python_pip patches=873745d arch=linux-ubuntu24.04-aarch64
+[+]  5snzpiz      ^py-ipywidgets@8.0.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6pqvrz5          ^py-ipykernel@6.29.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  c732duj              ^py-matplotlib-inline@0.1.6%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  veu4tkw          ^py-ipython@8.28.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5sp6hbu          ^py-jupyterlab-widgets@3.0.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  26rb5aw          ^py-widgetsnbextension@4.0.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  s6j7m5l      ^py-jupyterlab@4.0.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  p2jzzq5          ^py-async-lru@1.0.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  pyqxfli          ^py-hatch-jupyter-builder@0.8.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zjhexys          ^py-jupyter-core@5.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  i4rzqlx              ^py-platformdirs@3.10.0%gcc@13.2.0~wheel build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3jc2sgv          ^py-jupyter-lsp@2.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gaktb73          ^py-jupyter-server@2.14.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rjqunjy              ^py-anyio@4.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5qmd2ws                  ^py-sniffio@1.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4vvyeza              ^py-argon2-cffi@21.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zypkcq6                  ^py-argon2-cffi-bindings@21.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  e5wclhc              ^py-jupyter-events@0.10.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qnmrm7k                  ^py-referencing@0.35.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  m6yrajd                  ^py-rfc3986-validator@0.1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wjncwny                      ^py-pytest-runner@6.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zqv5id7              ^py-jupyter-server-terminals@0.4.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  t5mtnan              ^py-nbconvert@7.14.1%gcc@13.2.0+serve build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  lkp6xtk                  ^py-beautifulsoup4@4.12.3%gcc@13.2.0~html5lib~lxml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vq3tfou                      ^py-soupsieve@2.4.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  43rtj3l                  ^py-bleach@6.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  kojwgf2                  ^py-jupyterlab-pygments@0.2.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qyzled7                  ^py-nbclient@0.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  pulavev              ^py-nbformat@5.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  auvynsc                  ^py-hatch-nodejs-version@0.3.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ebi6niw              ^py-overrides@7.3.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2f4oanf              ^py-terminado@0.17.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wo62ep2              ^py-websocket-client@1.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  badmnke          ^py-jupyterlab-server@2.22.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qfpjaqc              ^py-babel@2.15.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  muxgd5r              ^py-json5@0.9.14%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  iy34ibq              ^py-jsonschema@4.22.0%gcc@13.2.0+format-nongpl build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mzyomkx                  ^py-attrs@23.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dmu23th                  ^py-hatch-fancy-pypi-readme@23.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  e26jch3                  ^py-isoduration@20.11.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sy3ngko                      ^py-arrow@1.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  vk7ghsz                  ^py-jsonschema-specifications@2023.12.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ly7kwoa                  ^py-rpds-py@0.20.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wgqe7lx                      ^py-maturin@1.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rjjx7j5                          ^py-setuptools-rust@1.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fbutgy3          ^py-notebook-shim@0.2.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cu6apx6      ^py-matplotlib@3.9.2%gcc@13.2.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jhevv6k          ^py-contourpy@1.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ronfg75      ^py-pandas@1.5.3%gcc@13.2.0~excel+performance build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mpvbziv          ^py-bottleneck@1.3.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tluxkic          ^py-numexpr@2.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yr6e52e      ^py-pillow@11.0.0%gcc@13.2.0~freetype~imagequant+jpeg~jpeg2000~lcms~tiff~webp~xcb+zlib build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5uzrlh2      ^py-scikit-image@0.24.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yat2525          ^py-imageio@2.35.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4mfcvlq              ^ffmpeg@7.0.2%gcc@13.2.0~X+bzlib~doc~drawtext+gpl~libaom~libmp3lame~libopenjpeg~libopus~libsnappy~libspeex~libssh~libvorbis~libvpx~libwebp~libx264~libxml2~libzmq~lzma~nonfree~openssl~sdl2+shared+version3 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  gv7l2di                  ^alsa-lib@1.2.3.2%gcc@13.2.0~python build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  dqr5ci3                  ^yasm@1.3.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  wa7cqqg          ^py-lazy-loader@0.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  xn6xm6i          ^py-networkx@3.1%gcc@13.2.0+default~extra build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  q6wswfj          ^py-pythran@0.16.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ohoe7jc          ^py-tifffile@2024.8.30%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cuzbygn      ^py-scipy@1.14.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rccdeme  py-deephyper@0.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ydoznwf      ^py-configspace@1.1.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7bu5bhy          ^py-more-itertools@9.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5l7dqle          ^py-pyparsing@3.1.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4qjn7a3          ^py-setuptools@63.4.3%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  i4c557q          ^py-typing-extensions@4.12.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  lwpqbyq      ^py-cython@3.0.11%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  k45q6je      ^py-dm-tree@0.1.8%gcc@13.2.0 build_system=python_pip patches=77dbd89 arch=linux-ubuntu24.04-aarch64
+[+]  c75lajd          ^py-pybind11@2.13.5%gcc@13.2.0+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu24.04-aarch64
+[+]  eiy7xma              ^ninja@1.12.1%gcc@13.2.0+re2c build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  gf2rmcr                  ^re2c@3.1%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  de3647q      ^py-jinja2@3.1.4%gcc@13.2.0~i18n build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3bfgfva          ^py-flit-core@3.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4jm4nqm          ^py-markupsafe@2.1.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2fynaax      ^py-numpy@1.25.2%gcc@13.2.0 build_system=python_pip patches=873745d arch=linux-ubuntu24.04-aarch64
+[+]  muql4lz          ^py-cython@0.29.36%gcc@13.2.0 build_system=python_pip patches=c4369ad arch=linux-ubuntu24.04-aarch64
+[+]  lsqnf3y      ^py-packaging@24.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yld4g5o      ^py-pandas@1.5.3%gcc@13.2.0~excel+performance build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ifhko5r          ^py-bottleneck@1.3.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  io6ep3m              ^py-versioneer@0.29%gcc@13.2.0+toml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  nb4uoyf          ^py-numexpr@2.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  nz7jevn          ^py-python-dateutil@2.8.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bpuu3dv              ^py-six@1.16.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  szc7nq7          ^py-pytz@2023.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  42hghci      ^py-pip@23.1.2%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  d3gubum      ^py-pyyaml@6.0.2%gcc@13.2.0+libyaml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  g45zd2k      ^py-scikit-learn@1.5.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  kv2liqf          ^py-joblib@1.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tnlztqq          ^py-meson-python@0.16.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  msukj57              ^meson@1.5.1%gcc@13.2.0 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu24.04-aarch64
+[+]  b3wvhlv              ^py-pyproject-metadata@0.7.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2jf5l5b              ^py-tomli@2.0.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wlqo55v          ^py-threadpoolctl@3.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fv2budu      ^py-scipy@1.13.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  54t2aiu          ^py-pythran@0.16.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  hbqtxot              ^py-beniget@0.4.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cgiqrxf              ^py-gast@0.5.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  l5zs3cw              ^py-ply@3.11%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jzvo57i      ^py-setuptools@46.1.3%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  iuagutv      ^py-tqdm@4.66.3%gcc@13.2.0~notebook~telegram build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6xt4yct          ^py-setuptools-scm@8.0.4%gcc@13.2.0+toml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dnrmpkg      ^py-wheel@0.36.2%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  z7tsfu5      ^python@3.9.19%gcc@13.2.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,4c24573,ebdca64,f2fd060 arch=linux-ubuntu24.04-aarch64
+[+]  o6qel6d      ^python-venv@1.0%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  rpmrqvk  py-h5py@3.11.0%gcc@13.2.0+mpi build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qysnden      ^py-pkgconfig@1.5.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  znymkdt  py-jupyterhub@1.4.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jr44ctr      ^py-alembic@1.5.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  otj5pgz          ^py-python-editor@1.0.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  eltdlto      ^py-async-generator@1.10%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ijbhqen      ^py-certipy@0.1.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wnftb4g          ^py-pyopenssl@23.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  d3e3y2g              ^py-cryptography@41.0.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  brebmyx      ^py-entrypoints@0.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ekqybyn          ^py-flit-core@3.9.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3h522rj      ^py-jinja2@3.1.4%gcc@13.2.0~i18n build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  s4nn5lf          ^py-markupsafe@2.1.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6b2vdk6      ^py-jupyter-telemetry@0.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tfscsqj          ^py-jsonschema@4.22.0%gcc@13.2.0+format-nongpl build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dn4elpn              ^py-fqdn@1.5.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5lfihif              ^py-isoduration@20.11.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bbaldnv                  ^py-arrow@1.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fhwfhrp                      ^py-types-python-dateutil@2.8.19.14%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7dxhj3y              ^py-jsonpointer@2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jit6ijg              ^py-rfc3339-validator@0.1.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gvju3ro              ^py-rfc3986-validator@0.1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  hq55pwb                  ^py-pytest-runner@6.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5paukvw              ^py-uri-template@1.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dw3nm3q              ^py-webcolors@24.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tzo2yft          ^py-python-json-logger@2.0.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bxgbkbk          ^py-ruamel-yaml@0.17.32%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gyfxtn4              ^py-ruamel-yaml-clib@0.2.7%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  e7oiseq      ^py-mako@1.2.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  awfiqjd      ^py-notebook@6.5.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fl5pxlb          ^py-argon2-cffi@21.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gnbb43q              ^py-argon2-cffi-bindings@21.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  l2cfl6a          ^py-ipykernel@6.29.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sfibcza              ^py-comm@0.1.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4t7vjfb              ^py-ipython@8.28.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  otp4rcy                  ^py-exceptiongroup@1.1.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  tsxmk7q                      ^py-flit-scm@1.7.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2nwkmq2                  ^py-jedi@0.18.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  iquzpby                  ^py-stack-data@0.6.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  qn5akd7                      ^py-asttokens@2.4.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yri6wrt                      ^py-executing@1.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rwbbb62                      ^py-pure-eval@0.2.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bqmdk6t              ^py-matplotlib-inline@0.1.6%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  k6657xr                  ^py-matplotlib@3.9.2%gcc@13.2.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5wbzmvs                      ^py-contourpy@1.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sy4j5lx                      ^py-kiwisolver@1.4.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zui2t73                          ^py-cppy@1.2.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  sl45qex          ^py-ipython-genutils@0.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  f3orl55          ^py-jupyter-client@8.2.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  q77lvp4          ^py-jupyter-core@5.3.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  fvvg3o6              ^py-platformdirs@3.10.0%gcc@13.2.0~wheel build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3mbbrfj          ^py-jupyter-packaging@0.12.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4dbmhjx              ^py-deprecation@2.1.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  v6ff4tg              ^py-tomlkit@0.12.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5vwiuhy          ^py-nbclassic@1.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ezan2ph              ^py-babel@2.15.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dqollyn              ^py-jupyter-server@2.14.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  54g4g2j                  ^py-anyio@4.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  njphltb                  ^py-hatch-jupyter-builder@0.8.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mszwuqj                  ^py-jupyter-events@0.10.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  lyaq6no                  ^py-jupyter-server-terminals@0.4.4%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4akv4ku              ^py-notebook-shim@0.2.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  zv2axtf          ^py-nbconvert@7.14.1%gcc@13.2.0+serve build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  p22vfcv              ^py-beautifulsoup4@4.12.3%gcc@13.2.0~html5lib~lxml build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rqrnx3j                  ^py-soupsieve@2.4.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wvxxgma              ^py-bleach@6.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4xzpiez                  ^py-webencodings@0.5.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mimj5mf              ^py-defusedxml@0.7.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7h6kt2j              ^py-jupyterlab-pygments@0.2.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  mqb3pv6              ^py-mistune@2.0.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  u5scgpx              ^py-nbclient@0.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  jbyyi3m              ^py-pandocfilters@1.5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  7k2e3nb              ^py-pygments@2.18.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3gh2xdg              ^py-tinycss2@1.2.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  nceaf4q          ^py-nbformat@5.8.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  dm5ues3              ^py-fastjsonschema@2.16.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  k6l3feh              ^py-hatch-nodejs-version@0.3.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bnmu2x4          ^py-nest-asyncio@1.6.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  4ut22dg          ^py-send2trash@1.8.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  bnkv5n5          ^py-terminado@0.17.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  2gpcsu4              ^py-ptyprocess@0.7.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  gzkai56      ^py-oauthlib@3.2.2%gcc@13.2.0~rsa~signals~signedtoken build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  rchhzyj      ^py-pamela@1.0.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  wbc2vph      ^py-prometheus-client@0.17.0%gcc@13.2.0~twisted build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yznnnja      ^py-python-dateutil@2.8.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  lv3zh4u      ^py-sqlalchemy@1.4.49%gcc@13.2.0 backend=none build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  oq2pufm          ^py-greenlet@2.0.2%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  yd3guwv      ^py-tornado@6.3.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  f4ndhuk      ^py-traitlets@5.14.3%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  cf74upx          ^py-hatchling@1.25.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  akcf4ty              ^py-pluggy@1.5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  aitbbqj  py-libensemble@1.4.2%gcc@13.2.0~deap+mpi~mpmath~nlopt~petsc4py~scipy~tasmanian build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  n34lkrk      ^py-psutil@5.9.5%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  6wykz3p      ^py-pydantic@1.10.9%gcc@13.2.0~dotenv build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  3hhmpl6      ^py-tomli@2.0.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  ynphsji  py-petsc4py@3.22.0%gcc@13.2.0+mpi build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  s7yetoa  qthreads@1.18%gcc@13.2.0+hwloc~spawn_cache+static build_system=autotools scheduler=distrib stack_size=4096 arch=linux-ubuntu24.04-aarch64
+[+]  ld4zep6  quantum-espresso@7.3.1%gcc@13.2.0~clock~elpa+epw~fox~gipaw~ipo~libxc+mpi~nvtx+openmp+patch~qmcpack+scalapack build_system=cmake build_type=Release generator=make hdf5=none patches=f43b741 arch=linux-ubuntu24.04-aarch64
+[+]  l2z3sv4      ^fftw@3.3.10%gcc@13.2.0+mpi+openmp~pfft_patches+shared build_system=autotools patches=872cff9 precision=double,float arch=linux-ubuntu24.04-aarch64
+[+]  zj5upr7  raja@2024.07.0%gcc@13.2.0~cuda~desul+examples+exercises~ipo~omptarget~omptask~openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  3ssjxuj      ^camp@2024.07.0%gcc@13.2.0~cuda~ipo~omptarget~openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  f7fkild  rempi@1.1.0%gcc@13.2.0 build_system=autotools patches=2296f83 arch=linux-ubuntu24.04-aarch64
+[+]  7vhmeow      ^libpciaccess@0.17%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  wvzhobq  scr@3.0.1%gcc@13.2.0+bbapi~bbapi_fallback~dw+examples+fortran~ipo+libyogrt+pdsh+shared+tests build_system=cmake build_type=Release cache_base=/dev/shm cntl_base=/dev/shm copy_config=none file_lock=FLOCK generator=make resource_manager=SLURM scr_config=scr.conf arch=linux-ubuntu24.04-aarch64
+[+]  s6pdz55      ^axl@0.7.1%gcc@13.2.0+bbapi~bbapi_fallback~dw~ipo+pthreads+shared async_api=daemon build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  xrqyshz      ^er@0.2.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  golongj      ^kvtree@1.3.0%gcc@13.2.0~ipo+mpi+shared build_system=cmake build_type=Release file_lock=FLOCK generator=make arch=linux-ubuntu24.04-aarch64
+[+]  5mecg75      ^libyogrt@1.35%gcc@13.2.0~static build_system=autotools scheduler=slurm arch=linux-ubuntu24.04-aarch64
+[+]  fheoj2c          ^slurm@23-11-1-1%gcc@13.2.0~cgroup~gtk~hdf5~hwloc~mariadb~nvml~pam~pmix+readline~restd~rsmi build_system=autotools sysconfdir=PREFIX/etc arch=linux-ubuntu24.04-aarch64
+[+]  nb2bsv2              ^json-c@0.16%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  aoluh55              ^munge@0.5.15%gcc@13.2.0 build_system=autotools localstatedir=PREFIX/var arch=linux-ubuntu24.04-aarch64
+[+]  5buvv3t                  ^libgcrypt@1.11.0%gcc@13.2.0 build_system=autotools patches=4e308ba arch=linux-ubuntu24.04-aarch64
+[+]  3yjet6a                      ^libgpg-error@1.50%gcc@13.2.0 build_system=autotools patches=0b2a0ff arch=linux-ubuntu24.04-aarch64
+[+]  4j5zk5z                          ^gawk@5.3.1%gcc@13.2.0~nls build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  rbcxjq4      ^pdsh@2.31%gcc@13.2.0+ssh+static_modules build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  w5vm5di      ^rankstr@0.1.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  eadydhb      ^redset@0.2.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  qv2jf5i      ^shuffile@0.2.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  7nhibd7      ^spath@0.2.0%gcc@13.2.0~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  55vdlvi  slate@2024.05.31%gcc@13.2.0~cuda~ipo+mpi+openmp~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  n2ne4ym      ^blaspp@2024.05.31%gcc@13.2.0~cuda~ipo+openmp~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  t3xevll      ^lapackpp@2024.05.31%gcc@13.2.0~cuda~ipo~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  berxpmj  slepc@3.22.0%gcc@13.2.0+arpack~blopex~cuda~hpddm~rocm build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  llrbtru  stc@0.9.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  nx22tsn      ^ant@1.10.14%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  cqnvyof      ^openjdk@11.0.23_9%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  yk6aam4      ^zsh@5.9%gcc@13.2.0~etcdir~lmod+skip-tcsetpgrp-test build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  zebxqik  strumpack@7.2.0%gcc@13.2.0+butterflypack+c_interface~count_flops~cuda~ipo~magma+mpi+openmp+parmetis~rocm~scotch+shared~slate~task_timers+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ksaxkks  sundials@7.1.1%gcc@13.2.0+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=14 generator=make logging-level=2 precision=double arch=linux-ubuntu24.04-aarch64
+[+]  una43sl  superlu@5.3.0%gcc@13.2.0~ipo+pic build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  khtmci6  superlu-dist@8.2.1%gcc@13.2.0~cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  fmujmfo  swig@4.0.2-fortran%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  hppopkt      ^pcre@8.45%gcc@13.2.0~jit+multibyte+pic+shared+static+utf build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  ag546sl  sz@2.1.12.5%gcc@13.2.0~examples~fortran~hdf5~ipo~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  gw5kyym  sz3@3.2.0%gcc@13.2.0~hdf5~ipo+mdz build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  hwboe73  tasmanian@8.0%gcc@13.2.0~blas~cuda~fortran~ipo~magma+mpi~openmp~python~rocm~xsdkflags build_system=cmake build_type=Release generator=make patches=8b8d74c arch=linux-ubuntu24.04-aarch64
+[+]  qobym76  tau@2.34%gcc@13.2.0~adios2+binutils~comm~craycnl~cuda~disable-no-pie+dyninst+elf+fortran~gasnet+io~level_zero+libdwarf+libunwind+mpi~ompt~opari~opencl~openmp+otf2+papi+pdt~phase~ppc64le~profileparam+pthreads+python~rocm~rocprofiler~rocprofv2~roctracer~scorep~shmem~sqlite+syscall~x86_64 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  yxxts4y      ^binutils@2.43.1%gcc@13.2.0~gas+gold~gprofng+headers~interwork+ld+libiberty~lto~nls~pgo+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu24.04-aarch64
+[+]  2jfxhai      ^libdwarf@0.11.0%gcc@13.2.0+decompression+dwarfdump~dwarfgen~examples~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  7cn7mar      ^openjdk@17.0.11_9%gcc@13.2.0 build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  lxi7stw      ^otf2@3.0.3%gcc@13.2.0 build_system=autotools patches=7e56d93 arch=linux-ubuntu24.04-aarch64
+[+]  lnwwu5g  trilinos@16.0.0%gcc@13.2.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu24.04-aarch64
+[+]  23num3x      ^kokkos@4.3.01%gcc@13.2.0~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu24.04-aarch64
+[+]  zy2cdkt  turbine@1.3.0%gcc@13.2.0~hdf5~python~r build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  tcjvwnl      ^adlbx@1.0.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  36pbazy          ^exmcutils@0.6.0%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  l74lslw      ^tcl@8.6.12%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  fm6vlkx  umap@2.1.1%gcc@13.2.0~ipo~logging~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  pc7bf6g  umpire@2024.07.0%gcc@13.2.0~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu24.04-aarch64
+[+]  blkz4zi      ^fmt@11.0.2%gcc@13.2.0~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu24.04-aarch64
+[+]  bfq7tbz  upcxx@2023.9.0%gcc@13.2.0~cuda+gasnet~level_zero+mpi~rocm build_system=generic cross=none patches=89a2eeb arch=linux-ubuntu24.04-aarch64
+[+]  24jg36z      ^gasnet@2024.5.0%gcc@13.2.0~cuda~debug~level_zero~rocm build_system=generic conduits=none arch=linux-ubuntu24.04-aarch64
+[+]  3ze3qua  veloc@1.7%gcc@13.2.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  tipfq6e      ^axl@0.8.0%gcc@13.2.0+bbapi~bbapi_fallback~dw~ipo+pthreads+shared async_api=daemon build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  27exrsc          ^kvtree@1.4.0%gcc@13.2.0~ipo+mpi+shared build_system=cmake build_type=Release file_lock=FLOCK generator=make arch=linux-ubuntu24.04-aarch64
+[+]  jzncgnm      ^er@0.4.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  ztjp7ki          ^rankstr@0.3.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  qg7ijua          ^redset@0.3.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  dkktjhe          ^shuffile@0.3.0%gcc@13.2.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  wfvpywu      ^libpthread-stubs@0.5%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  vq3kdlr  vtk-m@2.2.0%gcc@13.2.0~64bitids~cuda+doubleprecision+examples~fpic~ipo~kokkos~logging+mpi+openmp+rendering~rocm~shared~sycl~tbb~testlib build_system=cmake build_type=Release generator=make patches=2111608,34704cc,34f203b arch=linux-ubuntu24.04-aarch64
+[+]  sji77j4  wannier90@3.1.0%gcc@13.2.0+shared build_system=makefile arch=linux-ubuntu24.04-aarch64
+[+]  pmo4aof  warpx@24.10%gcc@13.2.0+app~ascent~catalyst+eb+fft~ipo+lib+mpi+mpithreadmultiple+openpmd+python+python_ipo+qed~qedtablegen~sensei+shared+tprof build_system=cmake build_type=Release compute=omp dims=1,2,3,rz generator=make precision=double arch=linux-ubuntu24.04-aarch64
+[+]  l4h3ncb      ^amrex@24.10%gcc@13.2.0~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi+openmp+particles~petsc+pic~plotfile_tools~rocm+shared~sundials~sycl+tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu24.04-aarch64
+[+]  mm4oi7a      ^py-amrex@24.10%gcc@13.2.0~cuda+ipo+mpi+openmp~rocm~sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu24.04-aarch64
+[+]  jx6dnog      ^py-numpy@1.26.4%gcc@13.2.0 build_system=python_pip patches=873745d arch=linux-ubuntu24.04-aarch64
+[+]  iy7ir5c      ^py-periodictable@1.5.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  5gsqb5q      ^py-picmistandard@0.30.0%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  afhgeb4          ^py-scipy@1.14.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  melvf3k              ^py-pythran@0.16.1%gcc@13.2.0 build_system=python_pip arch=linux-ubuntu24.04-aarch64
+[+]  t55q5jn      ^py-pybind11@2.13.5%gcc@13.2.0+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu24.04-aarch64
+[+]  4tb2cpn  wps@4.5%gcc@13.2.0 build_system=generic build_type=serial patches=62c1bcc,92c2511,d9637ac,e86d029 arch=linux-ubuntu24.04-aarch64
+[+]  5svuzjf      ^jasper@2.0.32%gcc@13.2.0~ipo+jpeg~opengl+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  kw3frdm      ^netcdf-fortran@4.6.1%gcc@13.2.0~doc+pic+shared build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  o33oizp      ^tcsh@6.24.00%gcc@13.2.0 build_system=autotools patches=3a4e60f arch=linux-ubuntu24.04-aarch64
+[+]  ttjelnj      ^time@1.9%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  piy4bzw      ^wrf@4.5.2%gcc@13.2.0~adios2~chem~netcdf_classic+pnetcdf build_system=generic build_type=dmpar compile_type=em_real nesting=basic patches=68548f6,908c718,f3dd50d arch=linux-ubuntu24.04-aarch64
+[+]  c6jh6s3  wrf@4.5.2%gcc@13.2.0~adios2~chem~netcdf_classic+pnetcdf build_system=generic build_type=dmpar compile_type=em_real nesting=basic patches=68548f6,908c718,f3dd50d arch=linux-ubuntu24.04-aarch64
+[+]  mwn75u3      ^jasper@4.2.4%gcc@13.2.0~ipo+jpeg~opengl+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu24.04-aarch64
+[+]  orbn2qb      ^libtirpc@1.3.3%gcc@13.2.0 build_system=autotools arch=linux-ubuntu24.04-aarch64
+[+]  u4e4fks  xyce@7.8.0%gcc@13.2.0~ipo+mpi~plugin+pymi+pymi_static_tpls+shared build_system=cmake build_type=Release cxxstd=11 generator=make patches=4d47cd1 arch=linux-ubuntu24.04-aarch64
+[+]  l6sos7s      ^openblas@0.3.28%gcc@13.2.0~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic~shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu24.04-aarch64
+[+]  ln2sy44      ^trilinos@16.0.0%gcc@13.2.0~adelus~adios2+amesos+amesos2~anasazi+aztec+basker+belos+boost~chaco+complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext+epetraextbtf+epetraextexperimental+epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack~ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor~ml+mpi~muelu~mumps+nox~openmp~pamgen~panzer+phalanx~piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack+suite-sparse~superlu~superlu-dist~teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan~zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu24.04-aarch64
+[+]  ptbm6gz          ^suite-sparse@7.3.1%gcc@13.2.0~cuda~graphblas~openmp+pic build_system=generic arch=linux-ubuntu24.04-aarch64
+[+]  elvm6oh  zfp@1.0.0%gcc@13.2.0~aligned~c~cuda~daz~fasthash~fortran~ipo~openmp~profile~python+shared~strided~tight-error~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make round=never arch=linux-ubuntu24.04-aarch64
+
