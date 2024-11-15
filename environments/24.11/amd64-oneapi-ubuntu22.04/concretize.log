@@ -1,0 +1,848 @@
+==> Starting concretization pool with 72 processes
+==> Environment concretized in 92.62 seconds
+==> Concretized 118 specs:
+[+]  572o7yt  adios@1.13.1%oneapi@2024.2.1+blosc~bzip2~fortran~hdf5~infiniband+lz4+mpi~netcdf+shared+sz~szip+zfp+zlib build_system=autotools patches=8ae17f6,aea47e5,d24b79b staging=none arch=linux-ubuntu22.04-x86_64
+[+]  n7koial      ^autoconf@2.72%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  vosd56x      ^automake@1.16.5%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  qurwfs3      ^c-blosc@1.21.5%oneapi@2024.2.1+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  bi2xdtq          ^snappy@1.2.1%oneapi@2024.2.1~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[e]  yyo2lhg      ^glibc@2.35%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6ducv27      ^gmake@4.4.1%oneapi@2024.2.1~guile build_system=generic arch=linux-ubuntu22.04-x86_64
+[e]  4rnwxwm      ^intel-oneapi-mpi@2021.13.1%oneapi@2024.2.1~classic-names+envmods~external-libfabric~generic-names~ilp64 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  huznav2      ^intel-oneapi-runtime@2024.2.1%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  4rd2yxz      ^libtool@2.4.7%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  kiq7zxr          ^findutils@4.9.0%oneapi@2024.2.1 build_system=autotools patches=440b954 arch=linux-ubuntu22.04-x86_64
+[+]  meqgjot      ^lz4@1.10.0%oneapi@2024.2.1+pic build_system=makefile libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  2pxjgbn      ^m4@1.4.19%oneapi@2024.2.1+sigsegv build_system=autotools patches=9dc5fbd,bfdffa7 arch=linux-ubuntu22.04-x86_64
+[+]  vr2pduj          ^libsigsegv@2.14%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[e]  23xmpbe      ^python@3.10.12%oneapi@2024.2.1+bz2+crypt+ctypes+dbm~debug+libxml2+lzma+nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,7d40923,ebdca64,f2fd060 arch=linux-ubuntu22.04-x86_64
+[+]  qcwacp5      ^sz@1.4.12.3%oneapi@2024.2.1~examples~fortran~hdf5~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ulbwzv6      ^zfp@0.5.5%oneapi@2024.2.1~aligned~c~cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fxinqb2      ^zlib-ng@2.2.1%oneapi@2024.2.1+compat+new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  i2t3ksv  aml@0.2.1%oneapi@2024.2.1~cuda~hip+hwloc~opencl~ze build_system=autotools hip-platform=none arch=linux-ubuntu22.04-x86_64
+[+]  zidp776      ^hwloc@2.11.1%oneapi@2024.2.1~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  hqri2jp      ^numactl@2.0.18%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  z2xre3x      ^pkgconf@2.2.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jkrut3z  aml@0.2.1%oneapi@2024.2.1~cuda~hip+hwloc~opencl+ze build_system=autotools hip-platform=none arch=linux-ubuntu22.04-x86_64
+[+]  qlq2wd4      ^oneapi-level-zero@1.17.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  en5qmlw  amrex@24.10%oneapi@2024.2.1~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp~particles~petsc~pic~plotfile_tools~rocm~shared~sundials~sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[+]  hqtw4rg      ^cmake@3.30.5%oneapi@2024.2.1~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu22.04-x86_64
+[+]  oc76dql          ^curl@8.10.1%oneapi@2024.2.1~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu22.04-x86_64
+[+]  kd2d6sa              ^nghttp2@1.63.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  wxdkcec  amrex@24.10%oneapi@2024.2.1~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp~particles~petsc~pic~plotfile_tools~rocm~shared~sundials+sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[e]  mbify66      ^intel-oneapi-mkl@2024.2.1%oneapi@2024.2.1~cluster+envmods~gfortran~ilp64+shared build_system=generic mpi_family=none threads=none arch=linux-ubuntu22.04-x86_64
+[+]  avnmthj  arborx@1.7%oneapi@2024.2.1~cuda~ipo+mpi~openmp~rocm+serial~sycl~trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nxaxgh2      ^kokkos@4.4.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  4eu4czw  arborx@1.7%oneapi@2024.2.1~cuda~ipo+mpi~openmp~rocm+serial+sycl~trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nk5tbkp  argobots@1.2%oneapi@2024.2.1~affinity~debug+perf~stackunwind~tool~valgrind build_system=autotools stackguard=none arch=linux-ubuntu22.04-x86_64
+[+]  qwewkgj  axom@0.9.0%oneapi@2024.2.1+cpp14~cuda~devtools+examples+fortran+hdf5~ipo+lua~mfem+mpi+openmp~python+raja~rocm~scr+shared+tools+umpire build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  sdqlgwf      ^blt@0.6.2%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  w4e6kb7      ^cmake@3.30.5%oneapi@2024.2.1~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu22.04-x86_64
+[+]  vtj6pt6          ^curl@8.10.1%oneapi@2024.2.1~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu22.04-x86_64
+[+]  3bccoua          ^zlib-ng@2.2.1%oneapi@2024.2.1+compat~new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ebvbpj5      ^hdf5@1.8.23%oneapi@2024.2.1~cxx+fortran+hl~ipo+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu22.04-x86_64
+[+]  f62wqze      ^lua@5.4.6%oneapi@2024.2.1~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu22.04-x86_64
+[+]  ktlnsdu          ^readline@8.2%oneapi@2024.2.1 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-x86_64
+[+]  6u4fwy5          ^unzip@6.0%gcc@11.4.0 build_system=makefile patches=881d2ed,f6f6236 arch=linux-ubuntu22.04-x86_64
+[+]  qxdmbui      ^raja@2024.07.0%oneapi@2024.2.1~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  bkbchs3          ^camp@2024.07.0%oneapi@2024.2.1~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qprs257      ^umpire@2024.07.0%oneapi@2024.2.1~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget+openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  i6rtu2m          ^fmt@11.0.2%oneapi@2024.2.1~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cqe2osm  bolt@2.0%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nithugy  boost@1.86.0%oneapi@2024.2.1~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex~serialization+shared~signals~singlethreaded~stacktrace~system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  5jmmlch  bricks@2023.08.25%oneapi@2024.2.1~cuda~ipo build_system=cmake build_type=Release generator=make patches=7fe8d1d arch=linux-ubuntu22.04-x86_64
+[+]  4ipq3jk  butterflypack@2.4.0%oneapi@2024.2.1~ipo+openmp+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  are7jzc      ^arpack-ng@3.9.0%oneapi@2024.2.1~icb~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  wa6mslo      ^openblas@0.3.28%oneapi@2024.2.1~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic+shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu22.04-x86_64
+[+]  hx4c5i2      ^sed@4.9%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  p6m2jgh  cabana@0.7.0%oneapi@2024.2.1~all~arborx~cajita~cuda~examples~grid~hdf5~heffte~hypre~ipo+mpi~openmp~openmptarget~performance_testing~rocm+serial+shared~silo~sycl~testing~threads build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  k3tpfeb      ^cmake@3.25.3%oneapi@2024.2.1~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu22.04-x86_64
+[+]  ebic736      ^kokkos@4.4.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  ns52ksj  cabana@0.7.0%oneapi@2024.2.1~all~arborx~cajita~cuda~examples~grid~hdf5~heffte~hypre~ipo+mpi~openmp~openmptarget~performance_testing~rocm+serial+shared~silo+sycl~testing~threads build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  7w4k4it      ^kokkos@4.4.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code+examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl+openmp~openmptarget~pic~rocm+serial+shared+sycl+tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  h3m5t5q  caliper@2.11.0%oneapi@2024.2.1+adiak~cuda~fortran+gotcha~ipo+kokkos+libdw~libpfm+libunwind+mpi~papi~rocm+sampler+shared~sosflow~tests~variorum~vtune build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  khwg33l      ^adiak@0.4.0%oneapi@2024.2.1~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  zog4u7c      ^elfutils@0.191%oneapi@2024.2.1~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  qd3kp7f          ^libiconv@1.17%oneapi@2024.2.1 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  uhlzm6f  chai@2024.07.0%oneapi@2024.2.1~cuda~enable_pick+examples~ipo+mpi~openmp~raja~rocm+separable_compilation+shared build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  zoidev6      ^blt@0.6.2%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  lejbsm4  charliecloud@0.38%oneapi@2024.2.1~docs+squashfuse build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5ekz4vc      ^bats@1.10.0%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  7ekyhba      ^git@2.45.2%oneapi@2024.2.1+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6vum4v2          ^expat@2.6.3%oneapi@2024.2.1+libbsd build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  y32ytai          ^gettext@0.22.5%oneapi@2024.2.1+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  wm4mqdl              ^tar@1.34%oneapi@2024.2.1 build_system=autotools zip=pigz arch=linux-ubuntu22.04-x86_64
+[+]  lmw54po                  ^pigz@2.8%oneapi@2024.2.1 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  n74ymvx          ^libidn2@2.3.7%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  twbypfv              ^libunistring@1.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ucx7qh5          ^pcre2@10.44%oneapi@2024.2.1~jit+multibyte build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zesbase      ^libfuse@3.16.2%oneapi@2024.2.1~strip~system_install~useroot+utils build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  47esyzq          ^meson@1.5.1%oneapi@2024.2.1 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu22.04-x86_64
+[+]  kehomfn      ^py-requests@2.32.3%oneapi@2024.2.1~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3zegrqr          ^py-certifi@2023.7.22%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ot6ogy3          ^py-charset-normalizer@3.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ume5y4h          ^py-idna@3.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sogmvfl          ^py-urllib3@2.1.0%oneapi@2024.2.1~brotli~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  kz2ci56      ^squashfuse@0.5.2%oneapi@2024.2.1+lz4+lzo~min_size+shared+static+xz+zlib+zstd build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4boq74r          ^lzo@2.10%oneapi@2024.2.1 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  hpyf32g          ^zstd@1.5.6%oneapi@2024.2.1+programs build_system=makefile compression=none libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  epjep7j  conduit@0.9.2%oneapi@2024.2.1~adios+blt_find_mpi~caliper~doc~doxygen+examples+fortran+hdf5+hdf5_compat~ipo+mpi+parmetis~python+shared~silo+test+utilities~zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  brcoe5w      ^metis@5.1.0%oneapi@2024.2.1~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903 arch=linux-ubuntu22.04-x86_64
+[+]  pfgdvjw      ^parmetis@4.0.3%oneapi@2024.2.1~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu22.04-x86_64
+[+]  ywyi3w3  datatransferkit@3.1.1%oneapi@2024.2.1~external-arborx~ipo~openmp+serial+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  akntvyx      ^boost@1.86.0%oneapi@2024.2.1~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug+exception~fiber~filesystem+graph~graph_parallel~icu~iostreams~json~locale~log+math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex~serialization+shared~signals~singlethreaded+stacktrace~system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  t5csisp  dealii@9.5.1%oneapi@2024.2.1+adol-c+arborx+arpack+assimp+cgal~cuda~doc+examples+ginkgo~gmsh+gsl+hdf5~int64~ipo+kokkos+metis+mpi+muparser~nanoflann~netcdf~oce~optflags+p4est+petsc+platform-introspection~python+scalapack+simplex+slepc+sundials+symengine+threads+trilinos build_system=cmake build_type=DebugRelease cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qkpssuu      ^adol-c@2.7.2%oneapi@2024.2.1~advanced_branching+atrig_erf~boost+doc+examples~openmp~sparse+stdczero+traceless_refcounting build_system=autotools patches=715b878 arch=linux-ubuntu22.04-x86_64
+[+]  el633is      ^arborx@1.3%oneapi@2024.2.1~cuda~ipo+mpi~openmp~rocm+serial~sycl+trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ijvnagr      ^assimp@5.4.3%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  iq6cfao      ^boost@1.79.0%oneapi@2024.2.1+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=17 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  jmvx7qf      ^cgal@5.6%oneapi@2024.2.1~core~demos+eigen~header_only~imageio~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  rdfcvx5          ^mpfr@4.2.1%oneapi@2024.2.1 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  5jwmmr6              ^autoconf-archive@2023.02.20%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  w5at5tg      ^gsl@2.7.1%oneapi@2024.2.1~external-cblas+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  d3pipst      ^hdf5@1.14.5%oneapi@2024.2.1~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  hb6rj5q      ^intel-tbb@2021.12.0%oneapi@2024.2.1~ipo+shared+tm build_system=cmake build_type=Release cxxstd=default generator=make arch=linux-ubuntu22.04-x86_64
+[+]  n5xlged      ^metis@5.1.0%oneapi@2024.2.1~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903 arch=linux-ubuntu22.04-x86_64
+[+]  lq3a2wx      ^muparser@2.3.4%oneapi@2024.2.1~ipo+openmp+samples+shared~wide_char build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  yuelwgg      ^p4est@2.8%oneapi@2024.2.1+mpi~openmp build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  llgoh24      ^suite-sparse@7.7.0%oneapi@2024.2.1~cuda~graphblas~openmp+pic build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  phiwfqm      ^sundials@6.7.0%oneapi@2024.2.1+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix+generic-math~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=14 generator=make logging-level=2 logging-mpi=OFF precision=double arch=linux-ubuntu22.04-x86_64
+[+]  dlmp3be      ^symengine@0.9.0%oneapi@2024.2.1~boostmp~flint~ipo~llvm+mpc+mpfr~openmp~piranha+shared+thread_safe build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  szvpys3          ^cereal@1.3.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make patches=2dfa0bf arch=linux-ubuntu22.04-x86_64
+[+]  vva6r7p          ^mpc@1.3.1%oneapi@2024.2.1 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  225gyow      ^trilinos@13.4.1%oneapi@2024.2.1~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu22.04-x86_64
+[+]  xffh2rb  e4s-alc@1.0.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fpvr64b      ^py-pip@23.1.2%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  2y2o6bs      ^py-pyyaml@6.0.2%oneapi@2024.2.1+libyaml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  hel6txq          ^libyaml@0.2.5%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ypq63gj      ^py-setuptools@69.2.0%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  rlhqawm      ^py-wheel@0.41.2%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  k3ltn5j      ^python-venv@1.0%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  mgz4faa  e4s-cl@1.0.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3bwhkvp      ^py-pyelftools@0.27%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gwhe2np      ^py-python-ptrace@0.9.8%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dmwehrw      ^py-python-sotools@0.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ojson2i      ^py-requests@2.32.3%oneapi@2024.2.1~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  y4nb2sk          ^py-urllib3@1.26.20%oneapi@2024.2.1~brotli~secure~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  blmvyio      ^py-termcolor@1.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dwxznut      ^py-texttable@1.6.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  g5pgzq3      ^py-tinydb@4.5.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3bzl7ya          ^py-poetry-core@1.8.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wx6dq5u  ecp-data-vis-sdk@1.0%oneapi@2024.2.1+adios2+ascent+cinema~cuda+darshan+faodel+fortran+hdf5+paraview+pnetcdf~rocm~sensei+sz+unifyfs+veloc~visit+vtkm+zfp build_system=bundle arch=linux-ubuntu22.04-x86_64
+[+]  26v6am4      ^adios2@2.8.3%oneapi@2024.2.1+blosc+bzip2~cuda+dataman~dataspaces+fortran+hdf5~ipo~libpressio+mgard+mpi+pic+png+python~rocm+shared+sst+sz+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  xzfshx4          ^c-blosc@1.21.5%oneapi@2024.2.1+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ba3mury              ^snappy@1.2.1%oneapi@2024.2.1~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  yjoc2xr          ^libffi@3.4.6%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  g3axe6d          ^libpng@1.6.39%oneapi@2024.2.1~ipo~pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  zjklejf          ^mgard@2023-12-09%oneapi@2024.2.1~cuda~ipo+openmp+serial~timing~unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  t6mbf5f              ^libarchive@3.7.6%oneapi@2024.2.1+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-x86_64
+[+]  uglfti7              ^yaml-cpp@0.8.0%oneapi@2024.2.1~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ajp34g6          ^py-numpy@1.25.2%oneapi@2024.2.1 build_system=python_pip patches=873745d arch=linux-ubuntu22.04-x86_64
+[+]  7ktp6ja      ^ascent@0.9.3%oneapi@2024.2.1+adios2~babelflow+blt_find_mpi~caliper~cuda~doc+dray+fides~fortran~ipo~mfem+mpi~occa+openmp+python+raja+serial+shared~test+umpire+vtkh build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  kwtjc2l          ^fides@1.2.0%oneapi@2024.2.1~ipo+mpi build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  p55ufas          ^raja@2024.02.1%oneapi@2024.2.1~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  r2imfsr              ^camp@2024.02.1%oneapi@2024.2.1~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  427jcvs          ^umpire@2024.02.1%oneapi@2024.2.1~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  sm6ozyd      ^conduit@0.9.2%oneapi@2024.2.1~adios+blt_find_mpi~caliper~doc~doxygen+examples+fortran+hdf5~hdf5_compat~ipo+mpi+parmetis+python+shared~silo+test+utilities~zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  sso5wpd      ^darshan-runtime@3.4.5%oneapi@2024.2.1~apmpi~apmpi_sync~apxc~group_readable_logs~hdf5~lustre~mmap_logs+mpi~parallel-netcdf build_system=autotools log_path=none scheduler=NONE arch=linux-ubuntu22.04-x86_64
+[+]  anbd46w          ^autoconf@2.72%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jd3gq4w          ^automake@1.16.5%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3i6a6b6      ^darshan-util@3.4.5%oneapi@2024.2.1~apmpi~apxc~bzip2 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ejsituo      ^faodel@1.2108.1%oneapi@2024.2.1+hdf5~ipo+mpi+shared+tcmalloc build_system=cmake build_type=Release generator=make logging=stdout network=libfabric serializer=xdr arch=linux-ubuntu22.04-x86_64
+[+]  fznkkws          ^boost@1.86.0%oneapi@2024.2.1+atomic~charconv+chrono~clanglibcpp~cobalt+container~context~contract~coroutine+date_time~debug+exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json+locale+log~math+mpi+multithreaded~nowide~numpy~pic+program_options~python~random+regex+serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test+thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  6hijfhq      ^hdf5@1.12.3%oneapi@2024.2.1~cxx+fortran+hl~ipo~java+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu22.04-x86_64
+[+]  j4lgvh7      ^libcatalyst@2.0.0%oneapi@2024.2.1~conduit~fortran~ipo+mpi~python build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  tyzbcaz      ^parallel-netcdf@1.12.3%oneapi@2024.2.1~burstbuffer+cxx+fortran+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5zukhc3          ^perl@5.40.0%oneapi@2024.2.1+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  cdvh25w      ^paraview@5.13.1%oneapi@2024.2.1+adios2~advanced_debug+catalyst~cdi~cuda+development_files+examples~eyedomelighting~fortran+hdf5~ipo+kits+libcatalyst+mpi~nvindex+opengl2+openpmd~pagosa+python+qt~raytracing~rocm+shared~tbb~visitbridge build_edition=canonical build_system=cmake build_type=Release generator=ninja patches=02253c7 use_vtkm=on arch=linux-ubuntu22.04-x86_64
+[+]  ir4gg4g          ^cli11@1.9.1%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  axka7pr          ^double-conversion@3.3.0%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  njscuc2          ^eigen@3.4.0%oneapi@2024.2.1~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu22.04-x86_64
+[+]  vq3wpt2          ^freetype@2.13.2%oneapi@2024.2.1+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  cu3qz5i          ^glew@2.2.0%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu22.04-x86_64
+[+]  4rrh3kj              ^libx11@1.8.10%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5jldiy7          ^glx@1.4%oneapi@2024.2.1 build_system=bundle arch=linux-ubuntu22.04-x86_64
+[+]  caqdqd7              ^mesa@23.3.6%oneapi@2024.2.1+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  5u7taqm                  ^gettext@0.22.5%oneapi@2024.2.1+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  xpirb4g                      ^tar@1.34%oneapi@2024.2.1 build_system=autotools zip=pigz arch=linux-ubuntu22.04-x86_64
+[+]  onql4yo                          ^pigz@2.8%oneapi@2024.2.1 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  g5a3gmn                  ^llvm@17.0.6%gcc@11.4.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu22.04-x86_64
+[+]  c77mtak                      ^binutils@2.33.1%gcc@11.4.0~gas+gold+headers~interwork+ld+libiberty~lto~nls+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  xl7jlmv                      ^hwloc@2.11.1%oneapi@2024.2.1~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  pssln3x                      ^lua@5.3.6%oneapi@2024.2.1~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu22.04-x86_64
+[+]  lscztio                      ^perl-data-dumper@2.173%oneapi@2024.2.1 build_system=perl arch=linux-ubuntu22.04-x86_64
+[+]  zy6ty2n                      ^swig@4.1.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  agng2h6                  ^xrandr@1.5.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  67iqoye                      ^libxrandr@1.5.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ixcbj3x          ^jsoncpp@1.9.5%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qsowclv          ^libjpeg-turbo@3.0.3%oneapi@2024.2.1~ipo~jpeg8~partial_decoder+pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  w4zbpsa              ^nasm@2.16.03%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  2pud6nm          ^libogg@1.3.5%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  pxugg4k          ^libtheora@1.1.1%oneapi@2024.2.1~doc build_system=autotools patches=d9bb5a9,e01511a,e01ef71,ff8478d arch=linux-ubuntu22.04-x86_64
+[+]  evhppne          ^libtiff@4.7.0%oneapi@2024.2.1+ccitt~ipo~jbig+jpeg~jpeg12~lerc~libdeflate+logluv~lzma+lzw+next~old-jpeg~opengl+packbits~pic~pixarlog+shared+thunder~webp+zlib~zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qhdfjac          ^libxml2@2.10.3%oneapi@2024.2.1+pic~python+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5fanyip          ^libxt@1.3.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  c4h5rpa              ^kbproto@1.0.7%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  mvgqaqf              ^libice@1.1.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  hxlubpn              ^libsm@1.2.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  apni63f          ^netcdf-c@4.9.2%oneapi@2024.2.1+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu22.04-x86_64
+[+]  ta6lpr7              ^libaec@1.0.6%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  zrvpc74          ^nlohmann-json@3.11.3%oneapi@2024.2.1~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  sc5luee          ^openpmd-api@0.16.0%oneapi@2024.2.1+adios2+hdf5~ipo+mpi+python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu22.04-x86_64
+[+]  eqdkk2d              ^py-pybind11@2.13.5%oneapi@2024.2.1+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu22.04-x86_64
+[+]  usozjxk              ^toml11@4.0.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release cxx_std=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  5xuazjq          ^pegtl@2.8.3%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  y2ybua4          ^proj@8.1.0%oneapi@2024.2.1+curl~ipo~pic+shared+tiff build_system=cmake build_type=Release generator=make patches=8d85a64,dc620ff arch=linux-ubuntu22.04-x86_64
+[+]  2jonkza              ^sqlite@3.46.0%oneapi@2024.2.1+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  codtmjt          ^protobuf@3.21.12%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make patches=9b6dcfa arch=linux-ubuntu22.04-x86_64
+[+]  blzucif          ^pugixml@1.14%oneapi@2024.2.1~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  3wynnkl          ^py-matplotlib@3.9.2%oneapi@2024.2.1~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7hx5p4i              ^py-contourpy@1.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jbvgmiu              ^py-kiwisolver@1.4.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yr25oxj                  ^py-cppy@1.2.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bvlxoac              ^py-python-dateutil@2.8.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  r4qq77r              ^py-setuptools-scm@8.0.4%oneapi@2024.2.1+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  g6rfbrt                  ^git@2.45.2%oneapi@2024.2.1+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  mveij2n                      ^openssh@9.8p1%gcc@11.4.0+gssapi build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  xoedu5z                          ^krb5@1.21.3%gcc@11.4.0+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4fz3u6r                          ^libxcrypt@4.4.35%oneapi@2024.2.1~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu22.04-x86_64
+[+]  o6h7ugf              ^qhull@2020.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  lzc2v3o          ^py-pandas@1.5.3%oneapi@2024.2.1~excel+performance build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qkki65q              ^py-bottleneck@1.3.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zuzzm43              ^py-numexpr@2.9.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jbczv52          ^qt@5.15.15%oneapi@2024.2.1~dbus~debug~doc~examples~framework~gtk+gui~location+opengl~phonon+shared+sql+ssl+tools~webkit build_system=generic patches=51aeba5,7f34d48,8cd4be9,cb7dbc8 arch=linux-ubuntu22.04-x86_64
+[+]  quakdjl              ^assimp@5.4.3%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  zhe444j              ^fontconfig@2.15.0%oneapi@2024.2.1~pic build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  77binkr                  ^font-util@1.4.1%oneapi@2024.2.1 build_system=autotools fonts=encodings,font-adobe-100dpi,font-adobe-75dpi,font-adobe-utopia-100dpi,font-adobe-utopia-75dpi,font-adobe-utopia-type1,font-alias,font-arabic-misc,font-bh-100dpi,font-bh-75dpi,font-bh-lucidatypewriter-100dpi,font-bh-lucidatypewriter-75dpi,font-bh-type1,font-bitstream-100dpi,font-bitstream-75dpi,font-bitstream-speedo,font-bitstream-type1,font-cronyx-cyrillic,font-cursor-misc,font-daewoo-misc,font-dec-misc,font-ibm-type1,font-isas-misc,font-jis-misc,font-micro-misc,font-misc-cyrillic,font-misc-ethiopic,font-misc-meltho,font-misc-misc,font-mutt-misc,font-schumacher-misc,font-screen-cyrillic,font-sun-misc,font-winitzki-cyrillic,font-xfree86-type1 arch=linux-ubuntu22.04-x86_64
+[+]  mvwvui2                      ^bdftopcf@1.1.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  u57i2js                          ^libxfont@1.5.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  nnpss7d                      ^mkfontdir@1.0.7%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  gyzkh3z                      ^mkfontscale@1.2.3%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  omwo4ab                          ^libfontenc@1.1.8%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  7qyl6jf              ^glib@2.78.3%oneapi@2024.2.1~libmount~strip build_system=meson buildtype=release default_library=shared tracing=none arch=linux-ubuntu22.04-x86_64
+[+]  34u2h2p                  ^elfutils@0.191%oneapi@2024.2.1~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  sfzbgrc              ^harfbuzz@10.0.1%oneapi@2024.2.1~graphite2~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  onsfh5p                  ^cairo@1.16.0%oneapi@2024.2.1~X~fc+ft+gobject+pdf+pic~png+shared~svg build_system=autotools patches=7097196,7c4da77 arch=linux-ubuntu22.04-x86_64
+[+]  k6nq6ur                      ^pixman@0.42.2%oneapi@2024.2.1+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  l5znidk                      ^which@2.21%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6ticv5i                  ^gobject-introspection@1.78.1%oneapi@2024.2.1~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  vvy7v2z              ^icu4c@74.2%oneapi@2024.2.1 build_system=autotools cxxstd=11 arch=linux-ubuntu22.04-x86_64
+[+]  ox5bqyl              ^libmng@2.0.3%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  e5q35ov                  ^lcms@2.16%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  medscvd              ^libxcb@1.17.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  js2ggzx                  ^libxau@1.0.11%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  mael6tm                  ^libxdmcp@1.1.5%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  fo2vzrk                  ^xcb-proto@1.17.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  yhihipp              ^libxext@1.3.6%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lc2nyq7              ^libxkbcommon@1.7.0%oneapi@2024.2.1~strip~wayland build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  dhc3nfv                  ^xkbdata@1.0.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  qwo4aag                      ^xkbcomp@1.4.7%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  sknh34i                          ^libxkbfile@1.1.3%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  qtwnger              ^libxrender@0.9.11%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  l5wv3cq                  ^renderproto@0.11.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jqo2wuk              ^xcb-util-image@0.4.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  vcsta6g                  ^xcb-util@0.4.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  iicdyxi              ^xcb-util-keysyms@0.4.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zdnv44m              ^xcb-util-renderutil@0.3.10%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  hxbzd6c              ^xcb-util-wm@0.4.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  kbptpfn      ^py-cinemasci@1.7.0%oneapi@2024.2.1+mpi build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7dqevzq          ^py-h5py@3.11.0%oneapi@2024.2.1+mpi build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  64pixlr          ^py-ipywidgets@8.0.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  s4kbznv              ^py-ipykernel@6.29.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yrduji5                  ^py-comm@0.1.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  behfijh                  ^py-jupyter-client@8.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ht5s6nu                  ^py-matplotlib-inline@0.1.6%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  u4oh2um                  ^py-nest-asyncio@1.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  rqby225              ^py-ipython@8.28.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  x4rh3mn                  ^py-exceptiongroup@1.1.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bb74tvv                      ^py-flit-scm@1.7.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5afcz4i                  ^py-pygments@2.18.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  kztkzak                  ^py-stack-data@0.6.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  aewx2qi                      ^py-asttokens@2.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  r3dwdj7                      ^py-executing@1.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  viyfpor                      ^py-pure-eval@0.2.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jbh62rz              ^py-jupyterlab-widgets@3.0.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  df3bsdf              ^py-traitlets@5.14.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tag7yim              ^py-widgetsnbextension@4.0.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qyjotql          ^py-jupyterlab@4.0.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jpiuya2              ^py-async-lru@1.0.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3s4kffs              ^py-hatch-jupyter-builder@0.8.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qb2jkcj              ^py-hatchling@1.25.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tkyvypb                  ^py-pluggy@1.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gm7slwa              ^py-jupyter-core@5.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  24z3gaf                  ^py-platformdirs@3.10.0%oneapi@2024.2.1~wheel build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  kxfiz42                      ^py-hatch-vcs@0.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vsyeuow              ^py-jupyter-lsp@2.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2ipi53h              ^py-jupyter-server@2.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ofvtrlh                  ^py-anyio@4.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zaxbsyb                      ^py-sniffio@1.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  agg4c2b                  ^py-argon2-cffi@21.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  chesbao                      ^py-argon2-cffi-bindings@21.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  epseimx                  ^py-jupyter-events@0.6.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5dacpu6                      ^py-rfc3339-validator@0.1.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ryj5tor                      ^py-rfc3986-validator@0.1.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sjz5bsi                          ^py-pytest-runner@6.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6e3dw6o                  ^py-jupyter-server-terminals@0.4.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yuhpoif                  ^py-nbconvert@7.14.1%oneapi@2024.2.1+serve build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wgilel7                      ^py-beautifulsoup4@4.12.3%oneapi@2024.2.1~html5lib~lxml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  nuyoabt                          ^py-soupsieve@2.4.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  snm5cib                      ^py-bleach@6.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dwjputz                      ^py-jupyterlab-pygments@0.2.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  64sb3v7                      ^py-nbclient@0.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gulyolr                  ^py-nbformat@5.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4us23ye                      ^py-hatch-nodejs-version@0.3.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7azcafa                  ^py-overrides@7.3.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bvgnuul                  ^py-terminado@0.17.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  uwlfixh                  ^py-websocket-client@1.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vu6zcdf              ^py-jupyterlab-server@2.22.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  h7uxod2                  ^py-babel@2.15.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  l23gxiu                  ^py-json5@0.9.14%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  34ns652                  ^py-jsonschema@4.17.3%oneapi@2024.2.1+format-nongpl build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5nrs6hm                      ^py-attrs@23.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4eranoi                      ^py-fqdn@1.5.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7tmixy3                      ^py-hatch-fancy-pypi-readme@23.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xhxoexc                      ^py-isoduration@20.11.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jcozwmo                          ^py-arrow@1.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  46u5jex                              ^py-types-python-dateutil@2.8.19.14%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  anyeiqx                      ^py-jsonpointer@2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  eltxotc                      ^py-uri-template@1.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3d3xdzf                      ^py-webcolors@24.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2thxgn2                  ^py-requests@2.32.3%oneapi@2024.2.1~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  a2vjeo2                      ^py-urllib3@2.1.0%oneapi@2024.2.1~brotli~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  z5qbky3              ^py-notebook-shim@0.2.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  v2m2r6h          ^py-pillow@11.0.0%oneapi@2024.2.1~freetype~imagequant+jpeg~jpeg2000~lcms~tiff~webp~xcb+zlib build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qhuy4b2          ^py-scikit-image@0.24.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  a5tq5vk              ^py-imageio@2.35.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  s33dyqt                  ^ffmpeg@7.0.2%oneapi@2024.2.1~X+bzlib~doc~drawtext+gpl~libaom~libmp3lame~libopenjpeg~libopus~libsnappy~libspeex~libssh~libvorbis~libvpx~libwebp~libx264~libxml2~libzmq~lzma~nonfree~openssl~sdl2+shared+version3 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  mn7mrav                      ^alsa-lib@1.2.3.2%oneapi@2024.2.1~python build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  v5ans3t                      ^yasm@1.3.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  cumzbll              ^py-lazy-loader@0.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  aju2ke2              ^py-networkx@3.1%oneapi@2024.2.1+default~extra build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5wev2pa              ^py-pythran@0.16.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ukogf6i              ^py-tifffile@2024.8.30%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  pbxriqs          ^py-scipy@1.14.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gn5ojqx      ^sz@2.1.12.5%oneapi@2024.2.1~examples+fortran+hdf5~ipo~netcdf~openmp~pastri~python+random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  uw6nwux      ^unifyfs@2.0%oneapi@2024.2.1+auto-mount~boostsys+fortran~pmi~pmix~preload+spath build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  syu432m          ^gotcha@1.0.7%oneapi@2024.2.1~ipo~test build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  puo2dc2          ^mercury@2.3.1%oneapi@2024.2.1~bmi~boostsys+checksum~debug~hwloc~ipo+mpi+ofi~psm~psm2+shared+sm~ucx~udreg build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  e6wews5          ^mochi-margo@0.17.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  s353gnu              ^json-c@0.16%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  noglz6n          ^openssl@3.3.1%oneapi@2024.2.1~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu22.04-x86_64
+[+]  rdjk3hv          ^spath@0.3.0%oneapi@2024.2.1~ipo~mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  asbmhhj      ^veloc@1.7%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  xbmsqps          ^axl@0.8.0%oneapi@2024.2.1+bbapi~bbapi_fallback~dw~ipo+pthreads+shared async_api=daemon build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  jmbfq3c              ^kvtree@1.4.0%oneapi@2024.2.1~ipo+mpi+shared build_system=cmake build_type=Release file_lock=FLOCK generator=make arch=linux-ubuntu22.04-x86_64
+[+]  htlvdmj          ^er@0.4.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cf673cw              ^rankstr@0.3.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  slu7nfu              ^redset@0.3.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  a6emvbm              ^shuffile@0.3.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  xkv457o          ^libpthread-stubs@0.5%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  iloq4m5      ^vtk-m@2.2.0%oneapi@2024.2.1~64bitids~cuda+doubleprecision+examples+fpic~ipo~kokkos~logging+mpi+openmp+rendering~rocm+shared~sycl~tbb~testlib build_system=cmake build_type=Release generator=make patches=2111608,34704cc,34f203b arch=linux-ubuntu22.04-x86_64
+[+]  xjqa5ko      ^zfp@0.5.5%oneapi@2024.2.1~aligned~c~cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  mqsuv5c  exago@1.6.0%oneapi@2024.2.1~cuda+hiop~ipo~ipopt+logging+mpi~python+raja~rocm build_system=cmake build_type=Release generator=make patches=7f74f3c arch=linux-ubuntu22.04-x86_64
+[+]  2ago2bf      ^camp@0.2.3%oneapi@2024.2.1~cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make patches=cb9e25b arch=linux-ubuntu22.04-x86_64
+[+]  ucvpsdp          ^blt@0.4.1%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  nviiwal      ^hiop@1.0.0%oneapi@2024.2.1~cuda~deepchecking~ginkgo~ipo~jsrun~kron+mpi+raja~rocm~shared~sparse build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fq44jda      ^raja@0.14.0%oneapi@2024.2.1~cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests+shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  jj2wmza      ^umpire@6.0.0%oneapi@2024.2.1~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  2bw5gs3  exaworks@0.1.0%oneapi@2024.2.1 build_system=bundle arch=linux-ubuntu22.04-x86_64
+[+]  4zzqtwx      ^flux-core@0.66.0%oneapi@2024.2.1~cuda~docs~security build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6p6sqs6          ^libarchive@3.7.6%oneapi@2024.2.1+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-x86_64
+[+]  dersbdk      ^flux-sched@0.38.0%oneapi@2024.2.1~cuda~docs~ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu22.04-x86_64
+[+]  566jnjz          ^boost@1.86.0%oneapi@2024.2.1~atomic~charconv~chrono~clanglibcpp~cobalt+container~context~contract~coroutine~date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random+regex+serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  7ojxerj          ^libedit@3.1-20240808%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zanibpj          ^py-jsonschema@4.17.3%oneapi@2024.2.1~format-nongpl build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ok5ycwz              ^py-attrs@23.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  pizf2qy              ^py-hatch-fancy-pypi-readme@23.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tbxo3hr              ^py-hatch-vcs@0.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4eaikxl              ^py-pyrsistent@0.19.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  edlhamf          ^yaml-cpp@0.6.3%oneapi@2024.2.1~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  czt7feg      ^py-parsl@2023.08.21%oneapi@2024.2.1~monitoring build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  csvzb44          ^py-dill@0.3.6%oneapi@2024.2.1 build_system=python_pip patches=daf79b1 arch=linux-ubuntu22.04-x86_64
+[+]  tw434ij          ^py-globus-sdk@3.42.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ytf2ka6              ^py-cryptography@42.0.8%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3pjb4vi                  ^py-setuptools-rust@1.9.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  74mwiaj                      ^py-semantic-version@2.10.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  cmfx4mu                  ^rust@1.81.0%gcc@11.4.0~dev~docs+src build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  h6quksa                      ^libgit2@1.8.0%oneapi@2024.2.1~curl~ipo+mmap+ssh build_system=cmake build_type=Release generator=make https=system arch=linux-ubuntu22.04-x86_64
+[+]  gbyjpv2                      ^libssh2@1.11.0%oneapi@2024.2.1+shared build_system=autotools crypto=openssl patches=011d926 arch=linux-ubuntu22.04-x86_64
+[+]  4jh7t3f                      ^rust-bootstrap@1.81.0%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  xyibxwc              ^py-pyjwt@2.4.0%oneapi@2024.2.1+crypto build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6hqlaec          ^py-paramiko@3.4.0%oneapi@2024.2.1~invoke build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  nwfzzjh              ^py-bcrypt@3.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7zwtb7g              ^py-pynacl@1.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  stztcxf          ^py-pyzmq@25.0.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  r4jqtc2          ^py-setproctitle@1.1.10%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sjijyby          ^py-tblib@1.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yo7jigz          ^py-typeguard@2.13.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zz5deex          ^py-typing-extensions@4.12.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wne5lz6      ^py-psij-python@0.1.0.post2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  m2gkgph          ^py-filelock@3.12.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6zmxbay          ^py-pystache@0.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wndnj4p      ^py-radical-entk@1.47.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mqmbdwl      ^py-radical-gtod@1.47.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ixgd2oa      ^py-radical-pilot@1.47.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  v7zuoll      ^py-radical-saga@1.47.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qc3p7fl          ^py-apache-libcloud@1.2.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  imodpfb          ^py-parse@1.18.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mav52tc      ^py-radical-utils@1.47.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  uavlt7c          ^py-colorama@0.4.6%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ncqcctl          ^py-msgpack@1.0.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ltxqqlj          ^py-netifaces@0.10.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  h256usu          ^py-ntplib@0.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  iurkb5y          ^py-regex@2022.8.17%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  hxha2f2  flecsi@2.3.0%oneapi@2024.2.1~cuda~doc~flog~graphviz+hdf5~ipo~kokkos~openmp~rocm+shared backend=mpi build_system=cmake build_type=Release caliper_detail=none generator=make arch=linux-ubuntu22.04-x86_64
+[+]  icbgmzf      ^boost@1.86.0%oneapi@2024.2.1~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic+program_options~python~random~regex~serialization+shared~signals~singlethreaded+stacktrace~system~taggedlayout~test~thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=17 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  qhslrnm      ^parmetis@4.0.3%oneapi@2024.2.1~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu22.04-x86_64
+[+]  zlfnel3  flit@2.1.0%oneapi@2024.2.1 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  hjczg2e      ^py-pyelftools@0.29%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ufv37q4      ^py-toml@0.10.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tjf2ija      ^sqlite@3.46.0%oneapi@2024.2.1+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  icvlpkg  flux-core@0.66.0%oneapi@2024.2.1~cuda~docs~security build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tom32ka      ^jansson@2.14%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  iorgbip      ^libarchive@3.7.6%oneapi@2024.2.1+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-x86_64
+[+]  vqoxmlx      ^libzmq@4.3.5%oneapi@2024.2.1~docs~drafts+libbsd+libsodium~libunwind build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  f2n7egw          ^libbsd@0.12.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  znpfg7s              ^libmd@1.0.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5zgj2yi          ^libsodium@1.0.20%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  d4slx2r      ^lua@5.3.6%oneapi@2024.2.1~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu22.04-x86_64
+[+]  2uqpses      ^lua-luaposix@36.1%oneapi@2024.2.1 build_system=lua arch=linux-ubuntu22.04-x86_64
+[+]  ki4aqx3      ^ncurses@6.5%oneapi@2024.2.1~symlinks+termlib abi=none build_system=autotools patches=7a351bc arch=linux-ubuntu22.04-x86_64
+[+]  vfym2si      ^py-cffi@1.17.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  b3pljro          ^py-pycparser@2.21%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ekewkga      ^py-ply@3.11%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  n2gfbtb      ^util-linux-uuid@2.40.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  shkmdyz  fortrilinos@2.3.0%oneapi@2024.2.1+hl~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  w4prqsi      ^trilinos@14.0.0%oneapi@2024.2.1~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu22.04-x86_64
+[+]  l2rlzzf  gasnet@2024.5.0%oneapi@2024.2.1~cuda~debug~level_zero~rocm build_system=generic conduits=smp arch=linux-ubuntu22.04-x86_64
+[+]  qe6wxjq  ginkgo@1.8.0%oneapi@2024.2.1~cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  syrl7qr  ginkgo@1.8.0%oneapi@2024.2.1~cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared+sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[e]  uugnr73      ^intel-oneapi-dpl@2022.6.0%oneapi@2024.2.1+envmods build_system=generic arch=linux-ubuntu22.04-x86_64
+[e]  i7ghf2v      ^intel-oneapi-tbb@2021.13.1%oneapi@2024.2.1+envmods build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  vtchdcx  globalarrays@5.8.2%oneapi@2024.2.1~scalapack armci=mpi-ts build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4lecl3h  glvis@4.2%oneapi@2024.2.1+fonts build_system=makefile screenshots=png arch=linux-ubuntu22.04-x86_64
+[+]  3vshcxx      ^fontconfig@2.15.0%oneapi@2024.2.1~pic build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ajinius          ^font-util@1.4.1%oneapi@2024.2.1 build_system=autotools fonts=encodings,font-adobe-100dpi,font-adobe-75dpi,font-adobe-utopia-100dpi,font-adobe-utopia-75dpi,font-adobe-utopia-type1,font-alias,font-arabic-misc,font-bh-100dpi,font-bh-75dpi,font-bh-lucidatypewriter-100dpi,font-bh-lucidatypewriter-75dpi,font-bh-type1,font-bitstream-100dpi,font-bitstream-75dpi,font-bitstream-speedo,font-bitstream-type1,font-cronyx-cyrillic,font-cursor-misc,font-daewoo-misc,font-dec-misc,font-ibm-type1,font-isas-misc,font-jis-misc,font-micro-misc,font-misc-cyrillic,font-misc-ethiopic,font-misc-meltho,font-misc-misc,font-mutt-misc,font-schumacher-misc,font-screen-cyrillic,font-sun-misc,font-winitzki-cyrillic,font-xfree86-type1 arch=linux-ubuntu22.04-x86_64
+[+]  dofqpkj              ^bdftopcf@1.1.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  md66hm6                  ^fontsproto@2.1.3%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  pedwtwi                  ^libxfont@1.5.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  wal4zyy              ^mkfontdir@1.0.7%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  wr5otme              ^mkfontscale@1.2.3%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  pd73jex                  ^libfontenc@1.1.8%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  luu3fe6          ^gperf@3.1%oneapi@2024.2.1 build_system=autotools patches=3dd36db arch=linux-ubuntu22.04-x86_64
+[+]  hee3lvz      ^freetype@2.13.2%oneapi@2024.2.1+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zj4oyge      ^glew@2.2.0%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu22.04-x86_64
+[+]  7wiea6s          ^libx11@1.8.10%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  urqkmhv              ^inputproto@2.3.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  2yg4r4w              ^xextproto@7.3.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  due7kea              ^xtrans@1.5.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zaz6uhy          ^xproto@7.0.31%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  7g3n24v      ^glm@1.0.1%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ben7gd7      ^glx@1.4%oneapi@2024.2.1 build_system=bundle arch=linux-ubuntu22.04-x86_64
+[+]  fqfowls          ^mesa@23.2.1%oneapi@2024.2.1+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  ajzpnbs              ^glproto@1.4.17%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5fgsyro              ^libxt@1.3.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  khplksv              ^llvm@17.0.6%gcc@11.4.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu22.04-x86_64
+[+]  7xo6ht6                  ^perl-data-dumper@2.173%oneapi@2024.2.1 build_system=perl arch=linux-ubuntu22.04-x86_64
+[+]  ewesqz2              ^xrandr@1.5.2%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4r5zf7r                  ^libxrandr@1.5.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5xrihqr                  ^libxrender@0.9.11%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  vn5cqjn                  ^randrproto@1.5.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  wq3etce      ^libpng@1.6.39%oneapi@2024.2.1~ipo~pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  ec6u7cu      ^sdl2@2.30.3%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qrniwvc          ^libxext@1.3.6%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  osw5m5o      ^xxd-standalone@8.2.1201%oneapi@2024.2.1 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  e7u7b5a  gmp@6.3.0%oneapi@2024.2.1+cxx build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  6lyhfgz  gotcha@1.0.7%oneapi@2024.2.1~ipo~test build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  baykpee  gptune@4.0.0%oneapi@2024.2.1~hypre~ipo~mpispawn~superlu build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  shaxbct      ^jq@1.7.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tcswqqu          ^oniguruma@6.9.9%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  an6bnds      ^openturns@1.20%oneapi@2024.2.1~ipo~libxml2+python build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ohpdimv          ^boost@1.86.0%oneapi@2024.2.1~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale~log~math+mpi+multithreaded~nowide~numpy~pic~program_options~python~random~regex+serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout~test+thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  uivqjvs          ^py-cloudpickle@3.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tnvi2ox          ^py-urllib3@2.1.0%oneapi@2024.2.1~brotli~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fsbx4eh      ^py-filelock@3.12.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vqyelim          ^py-hatch-vcs@0.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4qr7icn          ^py-hatchling@1.25.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  kbgcwbp              ^py-editables@0.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  n2xafgm              ^py-pathspec@0.11.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vraggdc              ^py-pluggy@1.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xj6qdxq              ^py-trove-classifiers@2023.8.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  y5lk757                  ^py-calver@2022.6.26%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  nhdfky4      ^py-gpy@1.10.0%oneapi@2024.2.1~plotting build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jm7tfsm          ^py-paramz@0.9.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  b7utwbg          ^py-scipy@1.14.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  c5rpupv              ^py-pythran@0.16.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gzjivbw      ^py-hpbandster@0.7.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ctmdipf          ^py-configspace@1.1.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fdqkens              ^py-more-itertools@9.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  d3bx367          ^py-pyro4@4.81%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  45ybcpo          ^py-serpent@1.40%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  rofbkgr      ^py-ipyparallel@8.4.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xw462hc          ^py-decorator@5.1.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wewpxub          ^py-ipykernel@6.29.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sfbqfnv              ^py-comm@0.1.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  lnxhjp5              ^py-debugpy@1.6.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xeclj2d              ^py-jupyter-core@5.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6ppqx7v                  ^py-platformdirs@3.10.0%oneapi@2024.2.1~wheel build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  orfto2k              ^py-matplotlib-inline@0.1.6%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3mrujzq              ^py-nest-asyncio@1.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  kzbn6aw          ^py-ipython@8.28.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yuqpfw2              ^py-exceptiongroup@1.1.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zuqnjro                  ^py-flit-scm@1.7.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  d6v2yjf              ^py-jedi@0.18.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3cxam3z                  ^py-parso@0.8.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xqj77jc              ^py-pexpect@4.9.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sdcwykm              ^py-prompt-toolkit@3.0.43%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  27iajnq                  ^py-wcwidth@0.2.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  boaib7z              ^py-pygments@2.18.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zujpxb7              ^py-stack-data@0.6.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4pmb5sg                  ^py-asttokens@2.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3cbiskh                  ^py-executing@1.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dkwmxk5                  ^py-pure-eval@0.2.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  lniyltl          ^py-jupyter-client@8.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fori2xl          ^py-jupyterlab@3.4.8%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zdhlr5r              ^py-jupyter-server@1.21.0%oneapi@2024.2.1~typescript build_system=python_pip patches=0430f63 arch=linux-ubuntu22.04-x86_64
+[+]  ytrl6jl                  ^py-anyio@3.6.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dbar7gv                  ^py-argon2-cffi@21.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ujd7uxx                      ^py-argon2-cffi-bindings@21.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  eg5xtoy                  ^py-nbconvert@7.14.1%oneapi@2024.2.1+serve build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  nw577ss                      ^py-beautifulsoup4@4.12.3%oneapi@2024.2.1~html5lib~lxml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gjnviej                          ^py-soupsieve@2.4.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  cdt52nd                      ^py-jupyterlab-pygments@0.2.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  lev43jj                      ^py-nbclient@0.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  y2cszw3                  ^py-nbformat@5.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  y2zx6kh                      ^py-hatch-nodejs-version@0.3.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  orkxc3m                  ^py-pre-commit@3.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  iaibnhn                      ^py-cfgv@3.4.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yxgc463                      ^py-identify@2.5.24%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  iwllkco                      ^py-nodeenv@1.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xuhodv7                      ^py-virtualenv@20.26.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  k5cmoit                          ^py-distlib@0.3.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sgswl2g                  ^py-terminado@0.17.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  rz6vrz2              ^py-jupyterlab-server@2.22.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6v3ajwk                  ^py-jsonschema@4.17.3%oneapi@2024.2.1~format-nongpl build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  t2xo4v7                      ^py-attrs@23.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  32mjduu                      ^py-hatch-fancy-pypi-readme@23.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ue5ammm              ^py-nbclassic@1.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2h57coh                  ^py-notebook-shim@0.2.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wevt36g              ^py-notebook@6.5.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ikkpoij          ^py-python-dateutil@2.8.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7k63uei          ^py-pyzmq@25.0.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2j5hvml              ^py-gevent@23.7.0%oneapi@2024.2.1 build_system=python_pip patches=2d19534 arch=linux-ubuntu22.04-x86_64
+[+]  lutbwx6                  ^py-zope-event@5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  blnpiqc                  ^py-zope-interface@7.0.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5pei2q7          ^py-tqdm@4.66.3%oneapi@2024.2.1~notebook~telegram build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  akpn3xg          ^py-traitlets@5.14.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  heb2tpj      ^py-joblib@1.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bupbvlh          ^py-setuptools@63.4.3%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  3hl7ygs      ^py-lhsmdu@1.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3ee7z4h      ^py-matplotlib@3.9.2%oneapi@2024.2.1~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ibm4fj5          ^py-contourpy@1.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2xtefhk          ^py-cycler@0.11.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4malt3v          ^py-fonttools@4.39.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  cmvaaoz          ^py-kiwisolver@1.4.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  rhaw2bs              ^py-cppy@1.2.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fwpey2l          ^py-meson-python@0.16.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2pu2hmm              ^py-pyproject-metadata@0.7.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  apcajjv          ^py-packaging@24.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5tf4ukp          ^py-pillow@11.0.0%oneapi@2024.2.1~freetype~imagequant+jpeg~jpeg2000~lcms~tiff~webp~xcb+zlib build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  r5wsntl          ^py-pyparsing@3.1.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2ih44ex          ^py-setuptools-scm@8.0.4%oneapi@2024.2.1+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ybboyya          ^qhull@2020.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  iigfa7s      ^py-mpi4py@4.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jy22b57      ^py-numpy@1.24.4%oneapi@2024.2.1 build_system=python_pip patches=873745d arch=linux-ubuntu22.04-x86_64
+[+]  toxyd2y          ^py-cython@0.29.36%oneapi@2024.2.1 build_system=python_pip patches=c4369ad arch=linux-ubuntu22.04-x86_64
+[+]  xn5m25c      ^py-opentuner@0.8.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  czt5grp          ^py-fn-py@0.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  765ozql          ^py-future@1.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vdl46ot      ^py-pandas@1.5.3%oneapi@2024.2.1~excel+performance build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  35sw7yv          ^py-bottleneck@1.3.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ot7rgzx              ^py-versioneer@0.29%oneapi@2024.2.1+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zwb7ugz          ^py-numexpr@2.9.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mm3dw4s          ^py-pytz@2023.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ccflldc      ^py-pyaml@21.8.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4zs3g4g      ^py-pymoo@0.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  htirnac          ^py-autograd@1.6.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  j555lrs      ^py-requests@2.32.3%oneapi@2024.2.1~socks build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vlm45sa      ^py-scikit-learn@1.5.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  v2td35p          ^py-threadpoolctl@3.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dru74cv      ^py-scikit-optimize@0.9.0%oneapi@2024.2.1+plots build_system=python_pip patches=21f43c9 arch=linux-ubuntu22.04-x86_64
+[+]  xxx3hxf      ^py-statsmodels@0.13.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  pjq3h64          ^py-patsy@0.5.3%oneapi@2024.2.1~splines build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zamz2s7      ^py-ytopt-autotune@1.1.0%oneapi@2024.2.1 build_system=python_pip patches=60375df arch=linux-ubuntu22.04-x86_64
+[+]  m6ghmxt      ^pygmo@2.18.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  tfmjrpm          ^pagmo2@2.18.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  iwglfay  gromacs@2024.3%oneapi@2024.2.1~cp2k~cuda~cycle_subcounters~double+gmxapi+hwloc~intel_provided_gcc~ipo~mdrun_only+mpi+nblib~nosuffix~opencl+openmp~relaxed_double_precision+shared~sycl build_system=cmake build_type=Release generator=make openmp_max_threads=none arch=linux-ubuntu22.04-x86_64
+[+]  gvafw5c      ^fftw@3.3.10%oneapi@2024.2.1+mpi~openmp~pfft_patches+shared build_system=autotools patches=872cff9 precision=double,float arch=linux-ubuntu22.04-x86_64
+[+]  xq2hrla      ^gcc@14.2.0%oneapi@2024.2.1~binutils+bootstrap~graphite~mold~nvptx~piclibs~strip build_system=autotools build_type=RelWithDebInfo languages='c,c++,fortran' arch=linux-ubuntu22.04-x86_64
+[+]  kmjk5bx          ^gawk@5.3.1%oneapi@2024.2.1~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  a23vdea          ^texinfo@7.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  z5laiux  h5bench@1.4%oneapi@2024.2.1~all~amrex~async~e3sm~exerciser~ipo~metadata~openpmd build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  e3jfrd3  hdf5-vol-async@1.7%oneapi@2024.2.1~ipo~memcpy build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  esq3mkz      ^hdf5@1.14.5%oneapi@2024.2.1~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip+threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  wx5o5gl  hdf5-vol-cache@v1.1%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  zjd74a3  hdf5-vol-log@1.4.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  bgzjzfi  heffte@2.4.0%oneapi@2024.2.1~cuda~fftw~fortran~ipo~magma~mkl~python~rocm+shared+sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  5bdolpl  heffte@2.4.0%oneapi@2024.2.1~cuda+fftw~fortran~ipo~magma~mkl~python~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  2aohey6  hpx@1.10.0%oneapi@2024.2.1~async_cuda~async_mpi~cuda~examples~generic_coroutines~ipo~rocm~tools build_system=cmake build_type=Release cxxstd=17 generator=ninja instrumentation=none malloc=tcmalloc max_cpu_count=auto networking=mpi arch=linux-ubuntu22.04-x86_64
+[+]  tqqanir      ^asio@1.30.2%oneapi@2024.2.1~boost_coroutine~boost_regex~separate_compilation build_system=autotools cxxstd=17 arch=linux-ubuntu22.04-x86_64
+[+]  ogwb2u4      ^boost@1.86.0%oneapi@2024.2.1+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded~stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=17 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  77euivb      ^gperftools@2.15%oneapi@2024.2.1+debugalloc~dynamic_sized_delete_support~ipo+libunwind~sized_delete build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  p67voho      ^ninja@1.12.1%oneapi@2024.2.1+re2c build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  v2geg2r          ^re2c@3.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tfusbns  hypre@2.32.0%oneapi@2024.2.1~caliper~complex~cublas~cuda~debug+fortran~gptune~gpu-aware-mpi~int64~internal-superlu~magma~mixedint+mpi~openmp~rocblas~rocm+shared~superlu-dist~sycl~umpire~unified-memory build_system=autotools precision=double arch=linux-ubuntu22.04-x86_64
+[+]  byasz66  kokkos@4.4.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl+openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  yr6pegi  kokkos@4.4.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code+examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl+openmp~openmptarget~pic~rocm+serial+shared+sycl+tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  ohiuvav  kokkos-kernels@4.4.01%oneapi@2024.2.1~blas~cblas~cublas~cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl~openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu22.04-x86_64
+[+]  dego3a6  kokkos-kernels@4.4.01%oneapi@2024.2.1~blas~cblas~cublas~cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl+openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu22.04-x86_64
+[+]  xxq674c  laghos@3.1%oneapi@2024.2.1+metis~ofast build_system=makefile patches=e783a71 arch=linux-ubuntu22.04-x86_64
+[+]  pxpbs3p  lammps@20240829%oneapi@2024.2.1~adios+amoeba+asphere~atc~awpmd+bocs+body+bpm+brownian+cg-dna+cg-spica+class2+colloid+colvars+compress+coreshell~cuda~cuda_mps~curl+dielectric+diffraction+dipole+dpd-basic+dpd-meso+dpd-react+dpd-smooth+drude+eff+electrode+extra-compute+extra-dump+extra-fix+extra-molecule+extra-pair+fep~ffmpeg+granular~h5md~intel+interlayer~ipo~jpeg~kim~kokkos+kspace~latboltz+lepton+lib+machdyn~manifold+manybody+mc+meam+mesont~mgpt+misc~ml-hdnnp+ml-iap+ml-pod~ml-rann+ml-snap~ml-uf3+mofff+molecule~molfile+mpi~netcdf~opencl+openmp+openmp-package+opt+orient+peri+phonon+plugin~plumed~png+poems~ptm~python+qeq~qtb+reaction+reaxff+replica~rheo+rigid~rocm+shock~smtbq+sph+spin+srd+tally~tools+uef+voronoi~vtk+yaff build_system=cmake build_type=Release fft=fftw3 fftw_precision=double generator=make gpu_precision=mixed lammps_sizes=smallbig arch=linux-ubuntu22.04-x86_64
+[+]  3uwfbsx      ^eigen@3.4.0%oneapi@2024.2.1~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6k5x5gs      ^voropp@0.4.6%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make patches=b12e401 arch=linux-ubuntu22.04-x86_64
+[+]  ic5vqu7  legion@24.09.0%oneapi@2024.2.1~bindings~bounds_checks~cuda~cuda_hijack~cuda_unsupported_compiler~fortran~gc~hdf5~hwloc~ipo~kokkos+libdl~openmp~papi~privilege_checks~prof~python~redop_complex~redop_half~rocm~shared~spy~sysomp+zlib build_system=cmake build_type=Release cuda_arch=70 cxxstd=17 generator=make max_dims=3 max_fields=512 max_num_nodes=1024 network=none output_level=warning arch=linux-ubuntu22.04-x86_64
+[+]  rdqoy7f  libnrm@0.1.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  her7o5d  libquo@1.4%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lyo6pm3  libunwind@1.6.2%oneapi@2024.2.1~block_signals~conservative_checks~cxx_exceptions~debug~debug_frame+docs+pic+tests+weak_backtrace+xz~zlib build_system=autotools components=none libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  xouihrr      ^xz@5.4.6%oneapi@2024.2.1+pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  4rmukwr  loki@0.1.7%oneapi@2024.2.1+shared build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  fwp3x2s  mercury@2.3.1%oneapi@2024.2.1~bmi+boostsys+checksum~debug~hwloc~ipo+mpi+ofi~psm~psm2+shared+sm~ucx~udreg build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fhlfnjn      ^libfabric@1.22.0%oneapi@2024.2.1~cuda~debug~kdreg~uring build_system=autotools fabrics=rxm,sockets,tcp,udp arch=linux-ubuntu22.04-x86_64
+[+]  pvylki6  metall@0.28%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  mbk7s6p      ^boost@1.86.0%oneapi@2024.2.1+atomic~charconv+chrono~clanglibcpp~cobalt~container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded~stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  qvpiwec  mfem@4.7.0%oneapi@2024.2.1~amgx~conduit~cuda~debug~examples~exceptions~fms~ginkgo~gnutls~gslib~hiop~lapack~libceed~libunwind+metis~miniapps~mpfr+mpi~mumps~netcdf~occa~openmp~petsc~pumi~raja~rocm~shared~slepc+static~strumpack~suite-sparse~sundials~superlu-dist~threadsafe~umpire+zlib build_system=generic cxxstd=auto patches=71ce9ee precision=double timer=auto arch=linux-ubuntu22.04-x86_64
+[+]  lyqftou  mgard@2023-12-09%oneapi@2024.2.1~cuda~ipo+openmp+serial+timing+unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6pmvedk      ^protobuf@3.28.2%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  67ixbt3          ^abseil-cpp@20240722.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release cxxstd=14 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6oks26h              ^googletest@1.12.1%oneapi@2024.2.1+gmock~ipo+pthreads+shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  eborzk7      ^yaml-cpp@0.8.0%oneapi@2024.2.1~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  e5ap4ec      ^zstd@1.5.6%oneapi@2024.2.1~programs build_system=makefile libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  syitwwd  mpark-variant@1.4.0%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make patches=21a4f8d,4e173fe,b3501f7 arch=linux-ubuntu22.04-x86_64
+[+]  zwro6eg  mpifileutils@0.11.1%oneapi@2024.2.1~daos~experimental~gpfs~ipo~lustre~xattr build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  oetqqtm      ^bzip2@1.0.8%oneapi@2024.2.1~debug~pic+shared build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  ozewqvv      ^dtcmp@1.1.4%oneapi@2024.2.1+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  t6waehn          ^lwgrp@1.0.5%oneapi@2024.2.1+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ymuyuo5      ^libcap@2.69%oneapi@2024.2.1 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  j3c3fmp      ^libcircle@0.3.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3o4lhcu      ^openssl@3.3.1%oneapi@2024.2.1~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu22.04-x86_64
+[+]  dvytffa          ^ca-certificates-mozilla@2023-05-30%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  lwyhiwm  nccmp@1.9.1.0%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  kwfeqtw      ^netcdf-c@4.9.2%oneapi@2024.2.1+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu22.04-x86_64
+[+]  dujj2nf          ^libaec@1.0.6%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cpc2wuu  nco@5.2.4%oneapi@2024.2.1~doc build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  vgdyyfu      ^antlr@2.7.7%oneapi@2024.2.1+cxx~java~pic~python build_system=autotools patches=33897ad arch=linux-ubuntu22.04-x86_64
+[+]  mj2ruci      ^bison@3.8.2%gcc@11.4.0~color build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  7gcveih      ^flex@2.6.3%oneapi@2024.2.1+lex~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5pbll73      ^udunits@2.2.28%oneapi@2024.2.1+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  26ajc6x  nekbone@17.0%oneapi@2024.2.1+mpi build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  tddfvxm  netcdf-fortran@4.6.1%oneapi@2024.2.1~doc+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  k2sxjde  netlib-scalapack@2.2.0%oneapi@2024.2.1~ipo~pic+shared build_system=cmake build_type=Release generator=make patches=072b006,1c9ce5f,244a9aa arch=linux-ubuntu22.04-x86_64
+[+]  jahjfd7  nrm@0.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zzo5dca      ^py-jsonschema@2.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  lsyyzhx          ^py-vcversioner@2.16.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  cdf57mc      ^py-numpy@1.26.4%oneapi@2024.2.1 build_system=python_pip patches=873745d arch=linux-ubuntu22.04-x86_64
+[+]  m7m4mgk      ^py-pip@23.0%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  5jjpyfm      ^py-pyzmq@17.1.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jeafxou          ^py-gevent@23.7.0%oneapi@2024.2.1 build_system=python_pip patches=2d19534 arch=linux-ubuntu22.04-x86_64
+[+]  axslime              ^py-zope-event@5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  a4m2bpt              ^py-zope-interface@7.0.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4pxtqhv          ^py-py@1.11.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wkhpzud          ^py-setuptools@59.4.0%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  2mqnp7s      ^py-scipy@1.14.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  smb2y5j          ^py-pythran@0.16.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ovngbxs              ^py-beniget@0.4.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4altdwv              ^py-gast@0.5.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wdb3evr      ^py-six@1.16.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xnof42o      ^py-tornado@5.1.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2i77zzd      ^py-warlock@1.3.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  hxifzwf          ^py-jsonpatch@1.23%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  nsc5p4a              ^py-jsonpointer@1.9%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  kgpfh2w  nwchem@7.2.3%oneapi@2024.2.1~elpa~extratce~fftw3~libxc~openmp armci=mpi-ts build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  5a5mxnp  omega-h@9.34.13%oneapi@2024.2.1~cuda~examples~gmsh~ipo~kokkos+mpi+optimize+shared+symbols~throw+trilinos~warnings+zlib build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  akcy5ed      ^trilinos@13.4.1%oneapi@2024.2.1~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu22.04-x86_64
+[+]  j57hj3z  openmpi@5.0.5%oneapi@2024.2.1+atomics~cuda~debug~gpfs~internal-hwloc~internal-libevent~internal-pmix~java~lustre~memchecker~openshmem~romio+rsh~static+vt+wrapper-rpath build_system=autotools fabrics=none romio-filesystem=none schedulers=none arch=linux-ubuntu22.04-x86_64
+[+]  uqdg47m      ^libevent@2.1.12%oneapi@2024.2.1+openssl build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  reasq3o      ^openssh@9.8p1%gcc@11.4.0+gssapi build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  qlnur4o          ^krb5@1.21.3%gcc@11.4.0+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  nlbsine          ^libxcrypt@4.4.35%oneapi@2024.2.1~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu22.04-x86_64
+[+]  r2azcny      ^perl@5.40.0%oneapi@2024.2.1+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  to7g4ls          ^berkeley-db@18.1.40%oneapi@2024.2.1+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-x86_64
+[+]  pzkmhkl          ^gdbm@1.23%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  2btthmb      ^pmix@5.0.3%oneapi@2024.2.1~munge~python~restful build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  xavywrs  openpmd-api@0.16.0%oneapi@2024.2.1+adios2+hdf5~ipo+mpi~python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu22.04-x86_64
+[+]  o3v6vm6      ^adios2@2.8.3%oneapi@2024.2.1+blosc+bzip2~cuda~dataspaces+fortran~hdf5~ipo~libpressio+mgard+mpi~pic+png~python~rocm+sst+sz+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  uecrlqx          ^mgard@2023-12-09%oneapi@2024.2.1~cuda~ipo+openmp+serial~timing~unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  5sx7ct4          ^sz@2.1.12.5%oneapi@2024.2.1~examples~fortran~hdf5~ipo~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4ulchnm      ^nlohmann-json@3.11.3%oneapi@2024.2.1~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  43wzl3c      ^toml11@4.0.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release cxx_std=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  athyta3  papi@7.1.0%gcc@11.4.0~cuda~debug+example~infiniband~lmsensors~nvml~powercap~rapl+rdpmc~rocm~rocm_smi~sde+shared~static_tools build_system=autotools patches=48cb202 arch=linux-ubuntu22.04-x86_64
+[+]  d2rzyjn      ^gcc-runtime@11.4.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  sbhjetw  papyrus@1.0.2%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nf5sv5h  parsec@3.0.2209%oneapi@2024.2.1~cuda~debug_verbose~ipo~profile+shared build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu22.04-x86_64
+[+]  axrjfoc  pdt@3.25.2%oneapi@2024.2.1~pic build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  n2vokro  petsc@3.22.0%oneapi@2024.2.1~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu22.04-x86_64
+[+]  rp7hivc      ^diffutils@3.10%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  rjk3szn  petsc@3.22.0%oneapi@2024.2.1~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl+kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist+sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu22.04-x86_64
+[+]  5fec7e2      ^kokkos@4.4.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared+sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  m6tho5i      ^kokkos-kernels@4.4.01%oneapi@2024.2.1~blas~cblas~cublas~cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl~openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu22.04-x86_64
+[+]  stbrgip  phist@1.12.1%oneapi@2024.2.1+fortran+host+int64~ipo+mpi+openmp~parmetis+scamac+shared~trilinos build_system=cmake build_type=Release generator=make kernel_lib=builtin outlev=2 patches=1fc9ac6 arch=linux-ubuntu22.04-x86_64
+[+]  moce5bj  plumed@2.9.2%oneapi@2024.2.1+gsl+mpi+shared arrayfire=none build_system=autotools optional_modules=all arch=linux-ubuntu22.04-x86_64
+[+]  epg564k      ^py-cython@3.0.11%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7s3ub6y  precice@3.1.2%oneapi@2024.2.1~ipo+mpi+petsc~python+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4rwlzdc      ^boost@1.86.0%oneapi@2024.2.1~atomic~charconv~chrono~clanglibcpp~cobalt~container~context~contract~coroutine~date_time~debug~exception~fiber~filesystem~graph~graph_parallel~icu~iostreams~json~locale+log~math+mpi+multithreaded~nowide~numpy~pic+program_options~python~random~regex~serialization+shared~signals~singlethreaded~stacktrace+system~taggedlayout+test+thread~timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=11 patches=8e3faa2,a440f96 visibility=hidden arch=linux-ubuntu22.04-x86_64
+[+]  oor2tqj      ^libxml2@2.10.3%oneapi@2024.2.1+pic~python+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zkoy4pq  pruners-ninja@1.0.1%oneapi@2024.2.1 build_system=autotools patches=66619be arch=linux-ubuntu22.04-x86_64
+[+]  ujaqmun  pumi@2.2.8%oneapi@2024.2.1~fortran~int64~ipo~shared+simmodsuite_version_check~testing~zoltan build_system=cmake build_type=Release generator=make simmodsuite=none arch=linux-ubuntu22.04-x86_64
+[+]  s56karm  py-h5py@3.11.0%oneapi@2024.2.1+mpi build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vjemxql      ^py-pkgconfig@1.5.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  n2mwcug  py-jupyterhub@1.4.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mf4ilaq      ^py-alembic@1.5.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  l24yz74          ^py-python-editor@1.0.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  g4hbdkx      ^py-async-generator@1.10%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tznhqej      ^py-certipy@0.1.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ohqemqy          ^py-pyopenssl@23.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  scfofyj              ^py-cryptography@41.0.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sff73jt      ^py-entrypoints@0.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  n45mw2f          ^py-flit-core@3.9.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zh4jrhx      ^py-jinja2@3.1.4%oneapi@2024.2.1~i18n build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bqsx7jf          ^py-markupsafe@2.1.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  lr6zeie      ^py-jupyter-telemetry@0.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  aylnie4          ^py-python-json-logger@2.0.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bh3vtmi          ^py-ruamel-yaml@0.17.32%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  hxto7rh              ^py-ruamel-yaml-clib@0.2.7%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ayszpwy      ^py-mako@1.2.4%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4tvkcc5      ^py-notebook@6.4.12%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  jpmkk5o          ^py-argon2-cffi@21.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  c64gcrs              ^py-argon2-cffi-bindings@21.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3mlr7ip          ^py-ipykernel@5.5.6%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ciwtago              ^py-ipython@7.21.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  hohtxmk                  ^py-backcall@0.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zzzv24i                  ^py-jedi@0.18.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fm7gcqv                  ^py-pickleshare@0.7.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mo65u6t          ^py-ipython-genutils@0.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6oskc2d          ^py-jupyter-client@8.2.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  i4ueivb          ^py-jupyter-core@5.3.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  leavvo7              ^py-platformdirs@3.10.0%oneapi@2024.2.1~wheel build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  md5nlmo          ^py-jupyter-packaging@0.12.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7iaaf2f              ^py-deprecation@2.1.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ij5ard2              ^py-tomlkit@0.12.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5ijvcp6          ^py-nbconvert@7.14.1%oneapi@2024.2.1+serve build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ehqghn2              ^py-beautifulsoup4@4.12.3%oneapi@2024.2.1~html5lib~lxml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  v7rqstr                  ^py-soupsieve@2.4.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  pzkl634              ^py-bleach@6.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  32ksas7                  ^py-webencodings@0.5.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xqpxekc              ^py-defusedxml@0.7.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qw3rmuf              ^py-jupyterlab-pygments@0.2.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  d7biiba              ^py-mistune@2.0.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  qyupdsb              ^py-nbclient@0.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fbd6sjy              ^py-pandocfilters@1.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tw7cwvp              ^py-pygments@2.18.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mr3rygs              ^py-tinycss2@1.2.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  b6eeekg          ^py-nbformat@5.8.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yanwk6s              ^py-fastjsonschema@2.16.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vp6blyw              ^py-hatch-nodejs-version@0.3.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wdgdcow          ^py-nest-asyncio@1.6.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  elomqhg          ^py-send2trash@1.8.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zoflwzn          ^py-terminado@0.17.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6liatwh              ^py-ptyprocess@0.7.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vyxc7no      ^py-oauthlib@3.2.2%oneapi@2024.2.1~rsa~signals~signedtoken build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  zbumx2y      ^py-pamela@1.0.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xxfa2gs      ^py-prometheus-client@0.17.0%oneapi@2024.2.1~twisted build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  4yzqiuj      ^py-python-dateutil@2.8.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6cgjhvo          ^py-setuptools-scm@8.0.4%oneapi@2024.2.1+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  o226tts      ^py-sqlalchemy@1.4.49%oneapi@2024.2.1 backend=none build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  h26qdkd          ^py-greenlet@2.0.2%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  xfzziis      ^py-tornado@6.3.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  eju5hk5      ^py-traitlets@5.14.3%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ddmv3ax          ^py-hatchling@1.25.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5xmm5ud              ^py-pluggy@1.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2jvxhch  py-libensemble@1.4.2%oneapi@2024.2.1~deap+mpi~mpmath~nlopt~petsc4py~scipy~tasmanian build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  bh5j6qh      ^py-psutil@5.9.5%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  vyvs2pa      ^py-pydantic@1.10.9%oneapi@2024.2.1~dotenv build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  fpjvn5n      ^py-tomli@2.0.1%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  f5sw2v4  py-petsc4py@3.22.0%oneapi@2024.2.1+mpi build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  messydw  qthreads@1.18%oneapi@2024.2.1+hwloc~spawn_cache+static build_system=autotools scheduler=distrib stack_size=4096 arch=linux-ubuntu22.04-x86_64
+[+]  g5igjkh  raja@2024.07.0%oneapi@2024.2.1~cuda~desul+examples+exercises~ipo~omptarget~omptask~openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  phek465      ^camp@2024.07.0%oneapi@2024.2.1~cuda~ipo~omptarget~openmp~rocm~sycl~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6rihajs  rempi@1.1.0%oneapi@2024.2.1 build_system=autotools patches=2296f83 arch=linux-ubuntu22.04-x86_64
+[+]  vwcf3vw      ^libpciaccess@0.17%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lfg32t7          ^util-macros@1.20.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  biur4hy  scr@3.0.1%oneapi@2024.2.1+bbapi~bbapi_fallback~dw+examples+fortran~ipo+libyogrt+pdsh+shared+tests build_system=cmake build_type=Release cache_base=/dev/shm cntl_base=/dev/shm copy_config=none file_lock=FLOCK generator=make resource_manager=SLURM scr_config=scr.conf arch=linux-ubuntu22.04-x86_64
+[+]  mp3mdbl      ^axl@0.7.1%oneapi@2024.2.1+bbapi~bbapi_fallback~dw~ipo+pthreads+shared async_api=daemon build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  z5j2jjo      ^er@0.2.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  g7cmyol      ^kvtree@1.3.0%oneapi@2024.2.1~ipo+mpi+shared build_system=cmake build_type=Release file_lock=FLOCK generator=make arch=linux-ubuntu22.04-x86_64
+[+]  42uedwv      ^libyogrt@1.35%oneapi@2024.2.1~static build_system=autotools scheduler=slurm arch=linux-ubuntu22.04-x86_64
+[+]  ye7g7gs          ^slurm@23-11-1-1%oneapi@2024.2.1~cgroup~gtk~hdf5~hwloc~mariadb~nvml~pam~pmix+readline~restd~rsmi build_system=autotools sysconfdir=PREFIX/etc arch=linux-ubuntu22.04-x86_64
+[+]  tdld4sy              ^glib@2.78.3%oneapi@2024.2.1~libmount~strip build_system=meson buildtype=release default_library=shared tracing=none arch=linux-ubuntu22.04-x86_64
+[+]  hwy52tg                  ^elfutils@0.191%oneapi@2024.2.1~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jlqwcut              ^json-c@0.16%oneapi@2024.2.1~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  smydpav              ^munge@0.5.15%oneapi@2024.2.1 build_system=autotools localstatedir=PREFIX/var arch=linux-ubuntu22.04-x86_64
+[+]  uznz6uq                  ^libgcrypt@1.11.0%oneapi@2024.2.1 build_system=autotools patches=4e308ba arch=linux-ubuntu22.04-x86_64
+[+]  5arvzla                      ^libgpg-error@1.50%oneapi@2024.2.1 build_system=autotools patches=0b2a0ff arch=linux-ubuntu22.04-x86_64
+[+]  lcbradp      ^pdsh@2.31%oneapi@2024.2.1+ssh+static_modules build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6jcswox      ^rankstr@0.1.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fphr762      ^redset@0.2.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  7xn45np      ^shuffile@0.2.0%oneapi@2024.2.1~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  oi5obvt      ^spath@0.2.0%oneapi@2024.2.1~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fcgj2ix  slate@2024.05.31%oneapi@2024.2.1~cuda~ipo+mpi+openmp~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  uf2fqwj      ^blaspp@2024.05.31%oneapi@2024.2.1~cuda~ipo+openmp~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  eq3jlwg      ^lapackpp@2024.05.31%oneapi@2024.2.1~cuda~ipo~rocm+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  gnspx3t  slepc@3.22.0%oneapi@2024.2.1+arpack~blopex~cuda~hpddm~rocm build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  gafbxup  stc@0.9.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  t2uqubr      ^ant@1.10.14%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  qeaildt      ^openjdk@11.0.23_9%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  n5xt2kq      ^zsh@5.9%oneapi@2024.2.1~etcdir~lmod+skip-tcsetpgrp-test build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  b2iqe25  strumpack@7.2.0%oneapi@2024.2.1+butterflypack+c_interface~count_flops~cuda~ipo~magma+mpi+openmp+parmetis~rocm~scotch+shared~slate~task_timers+zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  jywnair      ^zfp@1.0.0%oneapi@2024.2.1~aligned~c~cuda~daz~fasthash~fortran~ipo~openmp~profile~python+shared~strided~tight-error~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make round=never arch=linux-ubuntu22.04-x86_64
+[+]  f2vnkuq  sundials@7.1.1%oneapi@2024.2.1+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=14 generator=make logging-level=2 precision=double arch=linux-ubuntu22.04-x86_64
+[+]  vdgd7mj  sundials@7.1.1%oneapi@2024.2.1+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt+sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=17 generator=make logging-level=2 precision=double arch=linux-ubuntu22.04-x86_64
+[+]  iz4wy5n  superlu@5.3.0%oneapi@2024.2.1~ipo+pic build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  w3ag4gq  superlu-dist@8.2.1%oneapi@2024.2.1~cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  74gtcjq  swig@4.0.2-fortran%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  smvzgcl      ^pcre@8.45%oneapi@2024.2.1~jit+multibyte+pic+shared+static+utf build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  pzmaz7m  sz3@3.2.0%oneapi@2024.2.1~hdf5~ipo+mdz build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  56r7pft  tasmanian@8.0%oneapi@2024.2.1~blas~cuda~fortran~ipo~magma+mpi~openmp~python~rocm~xsdkflags build_system=cmake build_type=Release generator=make patches=8b8d74c arch=linux-ubuntu22.04-x86_64
+[+]  fqsiq4a  tau@2.34%oneapi@2024.2.1~adios2+binutils~comm~craycnl~cuda~disable-no-pie~dyninst+elf+fortran~gasnet+io~level_zero+libdwarf+libunwind+mpi~ompt~opari~opencl~openmp+otf2~papi+pdt~phase~ppc64le~profileparam+pthreads+python~rocm~rocprofiler~rocprofv2~roctracer~scorep~shmem~sqlite+syscall~x86_64 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  j6zf2nc      ^binutils@2.33.1%gcc@11.4.0~gas+gold+headers~interwork+ld+libiberty~lto~nls+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  dtkksd5      ^libdwarf@0.11.0%oneapi@2024.2.1+decompression+dwarfdump~dwarfgen~examples~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4tox3l6      ^openjdk@17.0.11_9%oneapi@2024.2.1 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  yi74bnk      ^otf2@3.0.3%oneapi@2024.2.1 build_system=autotools patches=7e56d93 arch=linux-ubuntu22.04-x86_64
+[+]  ja6bnix  tau@2.34%oneapi@2024.2.1~adios2+binutils~comm~craycnl~cuda~disable-no-pie~dyninst+elf+fortran~gasnet+io+level_zero+libdwarf+libunwind+mpi~ompt~opari+opencl~openmp+otf2~papi+pdt~phase~ppc64le~profileparam+pthreads~python~rocm~rocprofiler~rocprofv2~roctracer~scorep~shmem~sqlite+syscall~x86_64 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  n2ss76s  trilinos@13.0.1%oneapi@2024.2.1~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=14 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu22.04-x86_64
+[+]  d347hvb      ^superlu-dist@7.2.0%oneapi@2024.2.1~cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release generator=make patches=8da9e21 arch=linux-ubuntu22.04-x86_64
+[+]  ubo2uh2  trilinos@16.0.0%oneapi@2024.2.1~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu22.04-x86_64
+[+]  l4i5rx2      ^kokkos@4.3.01%oneapi@2024.2.1~aggressive_vectorization~compiler_warnings~cuda~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning~wrapper build_system=cmake build_type=Release cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  y624qua  turbine@1.3.0%oneapi@2024.2.1~hdf5~python~r build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  i2baf74      ^adlbx@1.0.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  t4kjuco          ^exmcutils@0.6.0%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  cy5fhc6      ^swig@4.1.1%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jrattws      ^tcl@8.6.12%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lljog6x  umap@2.1.1%oneapi@2024.2.1~ipo~logging~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  mdbllyc  umpire@2024.07.0%oneapi@2024.2.1~asan~backtrace+c~cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests+shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  loskl5c      ^fmt@11.0.2%oneapi@2024.2.1~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  mxh6ulf  upcxx@2023.9.0%oneapi@2024.2.1~cuda+gasnet~level_zero+mpi~rocm build_system=generic cross=none patches=89a2eeb arch=linux-ubuntu22.04-x86_64
+[+]  tgedemr      ^gasnet@2024.5.0%oneapi@2024.2.1~cuda~debug~level_zero~rocm build_system=generic conduits=none arch=linux-ubuntu22.04-x86_64
+[+]  apbrd5d  upcxx@2023.9.0%oneapi@2024.2.1~cuda+gasnet+level_zero+mpi~rocm build_system=generic cross=none patches=89a2eeb arch=linux-ubuntu22.04-x86_64
+[+]  ff5htgz  variorum@0.8.0%oneapi@2024.2.1~docs~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  yh27gof  wannier90@3.1.0%oneapi@2024.2.1+shared build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  bvujc3u  warpx@24.10%oneapi@2024.2.1+app~ascent~catalyst+eb~fft~ipo+lib+mpi+mpithreadmultiple+openpmd+python~python_ipo~qed~qedtablegen~sensei+shared+tprof build_system=cmake build_type=Release compute=sycl dims=1,2,3,rz generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[+]  4tnwmjb      ^amrex@24.10%oneapi@2024.2.1~amrdata~ascent~catalyst~conduit~cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp+particles~petsc+pic~plotfile_tools~rocm+shared~sundials~sycl+tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[+]  dsx4nyz      ^py-amrex@24.10%oneapi@2024.2.1~cuda~ipo+mpi~openmp~rocm~sycl~tiny_profile build_system=cmake build_type=Release dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[+]  4qvjprm      ^py-periodictable@1.5.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  myh6ayl      ^py-picmistandard@0.30.0%oneapi@2024.2.1 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gd6xkop      ^py-pybind11@2.13.5%oneapi@2024.2.1+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu22.04-x86_64
+[+]  v77tqpd  wrf@4.5.2%oneapi@2024.2.1~adios2~chem~netcdf_classic+pnetcdf build_system=generic build_type=dmpar compile_type=em_real nesting=basic patches=68548f6,908c718,d2f296e,f3dd50d arch=linux-ubuntu22.04-x86_64
+[+]  iqvjobd      ^jasper@4.2.4%oneapi@2024.2.1~ipo+jpeg~opengl+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  lww7v44          ^libjpeg-turbo@3.0.3%oneapi@2024.2.1~ipo~jpeg8~partial_decoder+pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  iuom6p6      ^libtirpc@1.3.3%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  btj3usw      ^netcdf-c@4.9.2%oneapi@2024.2.1+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu22.04-x86_64
+[+]  rd2v7ej          ^c-blosc@1.21.5%oneapi@2024.2.1+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  wtjdl5p      ^netcdf-fortran@4.6.1%oneapi@2024.2.1~doc+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  2x6lgxm      ^parallel-netcdf@1.12.3%oneapi@2024.2.1~burstbuffer+cxx+fortran+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  xoqqgch      ^tcsh@6.24.00%oneapi@2024.2.1 build_system=autotools patches=3a4e60f arch=linux-ubuntu22.04-x86_64
+[+]  ewtmoqv      ^time@1.9%oneapi@2024.2.1 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ususkhc  xyce@7.8.0%oneapi@2024.2.1~ipo+mpi~plugin+pymi+pymi_static_tpls+shared build_system=cmake build_type=Release cxxstd=11 generator=make patches=4d47cd1 arch=linux-ubuntu22.04-x86_64
+[+]  p45ywre      ^openblas@0.3.28%oneapi@2024.2.1~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic~shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu22.04-x86_64
+[+]  eridunq      ^trilinos@16.0.0%oneapi@2024.2.1~adelus~adios2+amesos+amesos2~anasazi+aztec+basker+belos+boost~chaco+complex~cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext+epetraextbtf+epetraextexperimental+epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack~ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor~ml+mpi~muelu~mumps+nox~openmp~pamgen~panzer+phalanx~piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk+stokhos+stratimikos~strumpack+suite-sparse~superlu~superlu-dist~teko+tempus~test+thyra+tpetra+trilinoscouplings~wrapper~x11+zoltan~zoltan2 build_system=cmake build_type=Release cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu22.04-x86_64
+[+]  mv6wgxq          ^suite-sparse@7.3.1%oneapi@2024.2.1~cuda~graphblas~openmp+pic build_system=generic arch=linux-ubuntu22.04-x86_64
+
