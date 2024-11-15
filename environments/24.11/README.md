@@ -59,7 +59,7 @@ $> spack buildcache list -al
     * `ecpe4s/e4s-release-base-cuda-ppc64:24.11`
 
 * Model environment for NVIDIA GPUs on arm64 is:
-  * `arm64-gcc-cuda-ubuntu24.04/spack.yaml
+  * `arm64-gcc-cuda-ubuntu24.04/spack.yaml`
   * For `cuda_arch=75`, `cuda_arch=80`, `cuda_arch=90`
   * Built and tested using:
     * `Ubuntu 24.04, GCC 13.2.0`
