@@ -1,0 +1,416 @@
+==> Starting concretization pool with 79 processes
+==> Environment concretized in 85.65 seconds
+==> Concretized 79 specs:
+[+]  5t57lyy  amrex@24.10%gcc@11.4.0~amrdata~ascent~catalyst~conduit+cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp~particles~petsc~pic~plotfile_tools~rocm~shared~sundials~sycl~tiny_profile build_system=cmake build_type=Release cuda_arch=80 dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[+]  tqdtzdz      ^cmake@3.30.5%gcc@11.4.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu22.04-x86_64
+[e]  vuyabj4      ^cuda@12.2.0%gcc@11.4.0~allow-unsupported-compilers~dev build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  rk4sa2m      ^gcc-runtime@11.4.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[e]  kpqgx3w      ^glibc@2.35%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  d4dx55l      ^gmake@4.4.1%gcc@11.4.0~guile build_system=generic arch=linux-ubuntu22.04-x86_64
+[e]  5o2ypwn      ^mpich@4.2.3%gcc@11.4.0~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default arch=linux-ubuntu22.04-x86_64
+[+]  qj6rcrn  amrex@24.10%gcc@11.4.0~amrdata~ascent~catalyst~conduit+cuda+eb~fortran~hdf5~hypre~ipo+linear_solvers+mpi~openmp~particles~petsc~pic~plotfile_tools~rocm~shared~sundials~sycl~tiny_profile build_system=cmake build_type=Release cuda_arch=90 dimensions=1,2,3 generator=make precision=double arch=linux-ubuntu22.04-x86_64
+[+]  pdhmuvz  arborx@1.7%gcc@11.4.0+cuda~ipo+mpi~openmp~rocm+serial~sycl~trilinos build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  g5k2v5w      ^kokkos@4.4.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr+cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  niomjhe  arborx@1.7%gcc@11.4.0+cuda~ipo+mpi~openmp~rocm+serial~sycl~trilinos build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  c3n77su      ^kokkos@4.4.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr+cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  wouspqe  axom@0.9.0%gcc@11.4.0+cpp14+cuda~devtools+examples+fortran+hdf5~ipo+lua~mfem+mpi+openmp~python+raja~rocm~scr+shared+tools+umpire build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  gg6o4xv      ^blt@0.6.2%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  kc2bmnx      ^cmake@3.30.5%gcc@11.4.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu22.04-x86_64
+[+]  tzwmh27          ^curl@8.10.1%gcc@11.4.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu22.04-x86_64
+[+]  537d6qi              ^openssl@3.3.1%gcc@11.4.0~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu22.04-x86_64
+[+]  bpguf76                  ^perl@5.40.0%gcc@11.4.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  z5qhouy          ^zlib-ng@2.2.1%gcc@11.4.0+compat~new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4lop2wk      ^conduit@0.9.2%gcc@11.4.0~adios+blt_find_mpi~caliper~doc~doxygen+examples+fortran+hdf5+hdf5_compat~ipo+mpi+parmetis~python+shared~silo+test+utilities~zfp build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  3ttwkul          ^metis@5.1.0%gcc@11.4.0~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903,b1225da arch=linux-ubuntu22.04-x86_64
+[+]  r6szheb          ^parmetis@4.0.3%gcc@11.4.0~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu22.04-x86_64
+[+]  lcypnsg      ^hdf5@1.8.23%gcc@11.4.0~cxx+fortran+hl~ipo+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu22.04-x86_64
+[+]  ws3jzfy      ^lua@5.4.6%gcc@11.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu22.04-x86_64
+[+]  cczhlvy          ^readline@8.2%gcc@11.4.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-x86_64
+[+]  cpslsol          ^unzip@6.0%gcc@11.4.0 build_system=makefile patches=881d2ed,f6f6236 arch=linux-ubuntu22.04-x86_64
+[+]  um2lzuo      ^raja@2024.07.0%gcc@11.4.0+cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qsk3cxr          ^camp@2024.07.0%gcc@11.4.0+cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  bmmcdxz      ^umpire@2024.07.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget+openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=80 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  5uw2e5d          ^fmt@11.0.2%gcc@11.4.0~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ksr6mvk  axom@0.9.0%gcc@11.4.0+cpp14+cuda~devtools+examples+fortran+hdf5~ipo+lua~mfem+mpi+openmp~python+raja~rocm~scr+shared+tools+umpire build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  x5umeq7      ^raja@2024.07.0%gcc@11.4.0+cuda~desul+examples+exercises~ipo~omptarget~omptask+openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  igtbsjm          ^camp@2024.07.0%gcc@11.4.0+cuda~ipo~omptarget+openmp~rocm~sycl~tests build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  76aq7ph      ^umpire@2024.07.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget+openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=90 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  xaeozuh  bricks@2023.08.25%gcc@11.4.0+cuda~ipo build_system=cmake build_type=Release generator=make patches=7fe8d1d arch=linux-ubuntu22.04-x86_64
+[+]  nkhzyv4      ^autoconf@2.72%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zep5z3l          ^m4@1.4.19%gcc@11.4.0+sigsegv build_system=autotools patches=9dc5fbd,bfdffa7 arch=linux-ubuntu22.04-x86_64
+[+]  wnv7pv7              ^libsigsegv@2.14%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3fzlttv          ^perl@5.40.0%gcc@11.4.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  l7nkk7g              ^berkeley-db@18.1.40%gcc@11.4.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-x86_64
+[+]  rgnga3c              ^gdbm@1.23%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4nfrxfb      ^automake@1.16.5%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ph674jg      ^libtool@2.4.7%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tqs5zm2          ^findutils@4.9.0%gcc@11.4.0 build_system=autotools patches=440b954 arch=linux-ubuntu22.04-x86_64
+[+]  hgxv6nc      ^opencl-clhpp@2.0.16%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  bagzhga  cabana@0.7.0%gcc@11.4.0~all~arborx~cajita+cuda~examples~grid~hdf5~heffte~hypre~ipo+mpi~openmp~openmptarget~performance_testing~rocm+serial+shared~silo~sycl~testing~threads build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  5fpmxow      ^cmake@3.25.3%gcc@11.4.0~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release patches=dbc3892 arch=linux-ubuntu22.04-x86_64
+[+]  ltdrpxl      ^kokkos@4.4.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr+cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  3tmy6mn  cabana@0.7.0%gcc@11.4.0~all~arborx~cajita+cuda~examples~grid~hdf5~heffte~hypre~ipo+mpi~openmp~openmptarget~performance_testing~rocm+serial+shared~silo~sycl~testing~threads build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  hlnyufn      ^kokkos@4.4.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr+cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  4pgvxas  caliper@2.11.0%gcc@11.4.0+adiak+cuda~fortran+gotcha~ipo+kokkos+libdw~libpfm+libunwind+mpi+papi~rocm+sampler+shared~sosflow~tests~variorum~vtune build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  xzlne7r      ^adiak@0.4.0%gcc@11.4.0~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  wapon4e      ^elfutils@0.191%gcc@11.4.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jwkvrjb          ^libiconv@1.17%gcc@11.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  cyimm3g      ^libunwind@1.6.2%gcc@11.4.0~block_signals~conservative_checks~cxx_exceptions~debug~debug_frame+docs+pic+tests+weak_backtrace+xz~zlib build_system=autotools components=none libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  m3o34tn      ^papi@7.1.0%gcc@11.4.0~cuda~debug+example~infiniband~lmsensors~nvml~powercap~rapl+rdpmc~rocm~rocm_smi~sde+shared~static_tools build_system=autotools patches=48cb202 arch=linux-ubuntu22.04-x86_64
+[e]  ylu7xaz      ^python@3.10.12%gcc@11.4.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma+nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tkinter+uuid+zlib build_system=generic patches=0d98e93,7d40923,ebdca64,f2fd060 arch=linux-ubuntu22.04-x86_64
+[+]  w3e26s2  caliper@2.11.0%gcc@11.4.0+adiak+cuda~fortran+gotcha~ipo+kokkos+libdw~libpfm+libunwind+mpi+papi~rocm+sampler+shared~sosflow~tests~variorum~vtune build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  hflabgp  chai@2024.07.0%gcc@11.4.0+cuda~enable_pick+examples~ipo+mpi~openmp~raja~rocm+separable_compilation+shared build_system=cmake build_type=Release cuda_arch=80 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  r766kbj      ^blt@0.6.2%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  onxs3yk      ^umpire@2024.07.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples~fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=80 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  7i44tof  chai@2024.07.0%gcc@11.4.0+cuda~enable_pick+examples~ipo+mpi~openmp~raja~rocm+separable_compilation+shared build_system=cmake build_type=Release cuda_arch=90 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  4ya5apj      ^umpire@2024.07.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples~fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=90 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  ltyu7am  chapel@2.2.0%gcc@11.4.0~chpldoc+cuda+curl~developer+hdf5+libevent+protobuf~rocm+ssl+yaml+zmq atomics=unset build_system=autotools comm=none cuda_arch=80 gmp=spack gpu_mem_strategy=array_on_device host_arch=unset host_jemalloc=unset host_mem=jemalloc host_platform=unset hwloc=bundled launcher=unset lib_pic=none llvm=spack patches=8b4f06c re2=bundled target_arch=unset target_cpu=unset target_platform=unset tasks=qthreads timers=unset unwind=none arch=linux-ubuntu22.04-x86_64
+[+]  rd675ko      ^curl@8.10.1%gcc@11.4.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-ubuntu22.04-x86_64
+[+]  jcklzqn          ^nghttp2@1.63.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  fnwzo4u      ^gmp@6.3.0%gcc@11.4.0+cxx build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  cxhyknt      ^hdf5@1.14.5%gcc@11.4.0~cxx+fortran+hl~ipo~java~map~mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ivh6vpn      ^libevent@2.1.12%gcc@11.4.0+openssl build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  jy6fshh      ^libyaml@0.1.7%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4ezfled      ^libzmq@4.3.5%gcc@11.4.0~docs~drafts+libbsd+libsodium~libunwind build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  mv6f4tt          ^libbsd@0.12.2%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  hq354ti              ^libmd@1.0.4%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ltz7dof          ^libsodium@1.0.20%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ytwxwqw      ^llvm@18.1.8%gcc@11.4.0+clang~cuda~flang+gold~ipo+libomptarget~libomptarget_debug~link_llvm_dylib+lld+lldb+llvm_dylib+lua~mlir+polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=runtime generator=ninja libcxx=runtime libunwind=runtime openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu22.04-x86_64
+[+]  m5vrkrf          ^libedit@3.1-20240808%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  dfmnqnv          ^libffi@3.4.6%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3qypeqg          ^libxml2@2.10.3%gcc@11.4.0+pic~python+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  v46ebph          ^perl-data-dumper@2.173%gcc@11.4.0 build_system=perl arch=linux-ubuntu22.04-x86_64
+[+]  jj6jo36      ^openssl@3.3.1%gcc@11.4.0~docs+shared build_system=generic certs=mozilla arch=linux-ubuntu22.04-x86_64
+[+]  izb4xkb          ^ca-certificates-mozilla@2023-05-30%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  zavuzza      ^py-protobuf@5.28.2%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  urrpqt6          ^py-pip@23.1.2%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  mhsxupa          ^py-setuptools@69.2.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  b3xcklw          ^py-wheel@0.41.2%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  4r2cezc  chapel@2.2.0%gcc@11.4.0~chpldoc+cuda+curl~developer+hdf5+libevent+protobuf~rocm+ssl+yaml+zmq atomics=unset build_system=autotools comm=none cuda_arch=90 gmp=spack gpu_mem_strategy=array_on_device host_arch=unset host_jemalloc=unset host_mem=jemalloc host_platform=unset hwloc=bundled launcher=unset lib_pic=none llvm=spack patches=8b4f06c re2=bundled target_arch=unset target_cpu=unset target_platform=unset tasks=qthreads timers=unset unwind=none arch=linux-ubuntu22.04-x86_64
+[+]  jae4x2i  cusz@0.6.0%gcc@11.4.0+cuda~ipo build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ua6535c  cusz@0.6.0%gcc@11.4.0+cuda~ipo build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4auxtmj  dealii@9.5.1%gcc@11.4.0+adol-c+arborx+arpack+assimp+cuda~doc+examples+ginkgo~gmsh+gsl+hdf5~int64~ipo+kokkos+metis+mpi+muparser~nanoflann~netcdf~oce~optflags+p4est+petsc+platform-introspection~python+scalapack+simplex+slepc+sundials+symengine+threads+trilinos build_system=cmake build_type=DebugRelease cuda_arch=80 cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  acrvziq      ^adol-c@2.7.2%gcc@11.4.0~advanced_branching+atrig_erf~boost+doc+examples~openmp~sparse+stdczero+traceless_refcounting build_system=autotools patches=715b878 arch=linux-ubuntu22.04-x86_64
+[+]  l7ct4ao      ^arborx@1.3%gcc@11.4.0~cuda~ipo+mpi~openmp~rocm+serial~sycl+trilinos build_system=cmake build_type=Release cxxstd=17 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cu3xyp2      ^arpack-ng@3.9.0%gcc@11.4.0~icb~ipo+mpi+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  v5r4ara      ^assimp@5.4.3%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  vlr44st      ^boost@1.79.0%gcc@11.4.0+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout+wave build_system=generic cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu22.04-x86_64
+[+]  qzhhj7y          ^zstd@1.5.6%gcc@11.4.0+programs build_system=makefile compression=none libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  boi24bk      ^cuda@11.8.0%gcc@11.4.0~allow-unsupported-compilers~dev build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  xdp44me      ^ginkgo@1.8.0%gcc@11.4.0~cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared~sycl build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  rnjs2oi      ^gsl@2.7.1%gcc@11.4.0~external-cblas+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6hqiqdn      ^hdf5@1.14.5%gcc@11.4.0~cxx+fortran+hl~ipo~java~map+mpi+shared~subfiling~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4ithglk      ^intel-tbb@2021.12.0%gcc@11.4.0~ipo+shared+tm build_system=cmake build_type=Release cxxstd=default generator=make arch=linux-ubuntu22.04-x86_64
+[+]  bljoqyb          ^hwloc@2.11.1%gcc@11.4.0~cairo+cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools cuda_arch=none libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  iubhr4d      ^metis@5.1.0%gcc@11.4.0~gdb~int64~ipo~real64+shared build_system=cmake build_type=Release generator=make patches=4991da9,93a7903,b1225da arch=linux-ubuntu22.04-x86_64
+[+]  6srgkzu      ^muparser@2.3.4%gcc@11.4.0~ipo+openmp+samples+shared~wide_char build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  zdskhgr      ^netlib-scalapack@2.2.0%gcc@11.4.0~ipo~pic+shared build_system=cmake build_type=Release generator=make patches=072b006,1c9ce5f,244a9aa arch=linux-ubuntu22.04-x86_64
+[+]  nity5dj      ^openblas@0.3.28%gcc@11.4.0~bignuma~consistent_fpcsr+dynamic_dispatch+fortran~ilp64+locking+pic+shared build_system=makefile patches=d0b9276 symbol_suffix=none threads=openmp arch=linux-ubuntu22.04-x86_64
+[+]  nuqi6xy      ^p4est@2.8%gcc@11.4.0+mpi~openmp build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3fogro2      ^petsc@3.22.0%gcc@11.4.0~X~batch~cgns~complex~cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C memalign=none arch=linux-ubuntu22.04-x86_64
+[+]  tw56szb      ^slepc@3.22.0%gcc@11.4.0+arpack~blopex~cuda~hpddm~rocm build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  g2v2uow      ^suite-sparse@7.7.0%gcc@11.4.0~cuda~graphblas~openmp+pic build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  rg72eaj          ^mpfr@4.2.1%gcc@11.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  xhtcnsj              ^autoconf-archive@2023.02.20%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  du2hpc5              ^texinfo@7.1%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  gcfuzir      ^sundials@6.7.0%gcc@11.4.0+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL~cuda+examples+examples-install~f2003~fcmix+generic-math~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cxxstd=14 generator=make logging-level=2 logging-mpi=OFF precision=double arch=linux-ubuntu22.04-x86_64
+[+]  i6dlewq      ^symengine@0.9.0%gcc@11.4.0~boostmp~flint~ipo~llvm+mpc+mpfr~openmp~piranha+shared+thread_safe build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  62w4nm5          ^cereal@1.3.2%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make patches=2dfa0bf arch=linux-ubuntu22.04-x86_64
+[+]  5fkcl7t          ^mpc@1.3.1%gcc@11.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  ycfpjrd      ^trilinos@13.4.1%gcc@11.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex+cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk~stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~uvm+wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cuda_arch=80 cxxstd=14 generator=make gotype=long_long patches=bcd552d arch=linux-ubuntu22.04-x86_64
+[+]  shrmwc2          ^kokkos-nvcc-wrapper@4.4.01%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  6s7cgpm      ^zlib-ng@2.2.1%gcc@11.4.0+compat+new_strategies+opt+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  2rrz6u4  ecp-data-vis-sdk@1.0%gcc@11.4.0+adios2~ascent~cinema+cuda~darshan~faodel+fortran+hdf5+paraview~pnetcdf~rocm~sensei~sz~unifyfs~veloc~visit+vtkm+zfp build_system=bundle cuda_arch=80 arch=linux-ubuntu22.04-x86_64
+[+]  eg3ueyf      ^adios2@2.10.1%gcc@11.4.0~aws+blosc2+bzip2~campaign+cuda+dataman~dataspaces+fortran+hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi+pic+png+python~rocm+shared+sst~sycl~sz+zfp build_system=cmake build_type=Release cuda_arch=80 generator=make patches=4247a85 arch=linux-ubuntu22.04-x86_64
+[+]  qqkaig5          ^c-blosc2@2.15.1%gcc@11.4.0+avx2~ipo+lizard+lz4+snappy+zlib+zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6xkpnbg              ^lizard@2.0%gcc@11.4.0 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  wyvnpje              ^snappy@1.2.1%gcc@11.4.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  gdydsq5          ^libfabric@1.22.0%gcc@11.4.0~cuda~debug~kdreg~uring build_system=autotools fabrics=rxm,sockets,tcp,udp arch=linux-ubuntu22.04-x86_64
+[+]  hk2ihki          ^libpng@1.6.39%gcc@11.4.0~ipo~pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  loe3mqv          ^mgard@2023-12-09%gcc@11.4.0~cuda~ipo+openmp+serial~timing~unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4z5qpjj              ^libarchive@3.7.6%gcc@11.4.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-x86_64
+[+]  eyn6h5o              ^yaml-cpp@0.8.0%gcc@11.4.0~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  kcgysil          ^py-numpy@1.25.2%gcc@11.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu22.04-x86_64
+[+]  kkas7su              ^py-cython@0.29.36%gcc@11.4.0 build_system=python_pip patches=c4369ad arch=linux-ubuntu22.04-x86_64
+[+]  h5mhe4w              ^py-setuptools@63.4.3%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  6ovakba      ^hdf5@1.12.3%gcc@11.4.0~cxx+fortran+hl~ipo~java+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make patches=f42732a arch=linux-ubuntu22.04-x86_64
+[+]  wmryn2x      ^libcatalyst@2.0.0%gcc@11.4.0~conduit~fortran~ipo+mpi~python build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  7ahfi4h      ^paraview@5.13.1%gcc@11.4.0+adios2~advanced_debug+catalyst~cdi+cuda+development_files~examples~eyedomelighting~fortran+hdf5~ipo+kits+libcatalyst+mpi~nvindex+opengl2+openpmd~pagosa+python~qt~raytracing~rocm+shared~tbb~visitbridge build_edition=canonical build_system=cmake build_type=Release cuda_arch=80 generator=ninja patches=02253c7 use_vtkm=on arch=linux-ubuntu22.04-x86_64
+[+]  kljiwgu          ^cli11@1.9.1%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  k4mmxrp          ^double-conversion@3.3.0%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  omi67jm          ^eigen@3.4.0%gcc@11.4.0~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu22.04-x86_64
+[+]  vuhqyaw          ^expat@2.6.3%gcc@11.4.0+libbsd build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  f4uvkib          ^freetype@2.13.2%gcc@11.4.0+pic+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tibn4vi          ^glew@2.2.0%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make patches=7992e52 arch=linux-ubuntu22.04-x86_64
+[+]  26hciww              ^libx11@1.8.10%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3dzt5cy                  ^inputproto@2.3.2%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6u77pxg                  ^libxcb@1.17.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  y5rfwu5                      ^libpthread-stubs@0.5%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  g2cvcch                      ^libxau@1.0.11%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  s5fx7fv                      ^libxdmcp@1.1.5%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  q7fthnb                      ^xcb-proto@1.17.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  kna5bfl                  ^xextproto@7.3.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  rdlawss                  ^xtrans@1.5.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  wrtrhib              ^xproto@7.0.31%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6cbb5ph          ^glx@1.4%gcc@11.4.0 build_system=bundle arch=linux-ubuntu22.04-x86_64
+[+]  o5stjdl              ^mesa@23.3.6%gcc@11.4.0+glx+llvm+opengl~opengles+osmesa~strip build_system=meson buildtype=release default_library=shared arch=linux-ubuntu22.04-x86_64
+[+]  ngyqg57                  ^gettext@0.22.5%gcc@11.4.0+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  sxslvqj                      ^tar@1.34%gcc@11.4.0 build_system=autotools zip=pigz arch=linux-ubuntu22.04-x86_64
+[+]  n3h2cql                          ^pigz@2.8%gcc@11.4.0 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  soo4hby                  ^glproto@1.4.17%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  h7et4nf                  ^libxext@1.3.6%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  53h6ahd                  ^llvm@17.0.6%gcc@11.4.0+clang~cuda~flang~gold~ipo~libomptarget~libomptarget_debug~link_llvm_dylib~lld~lldb+llvm_dylib~lua~mlir~polly~python~split_dwarf~z3~zstd build_system=cmake build_type=Release compiler-rt=none generator=ninja libcxx=runtime libunwind=none openmp=runtime shlib_symbol_version=none targets=all version_suffix=none arch=linux-ubuntu22.04-x86_64
+[+]  4z5qyzt                      ^hwloc@2.11.1%gcc@11.4.0~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  ydetfwz                      ^perl-data-dumper@2.173%gcc@11.4.0 build_system=perl arch=linux-ubuntu22.04-x86_64
+[+]  ed5tmpv                  ^py-mako@1.2.4%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  tzhym2w                      ^py-markupsafe@2.1.3%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ekbisnd                  ^xrandr@1.5.2%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  vvq7st5                      ^libxrandr@1.5.4%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  huw77e3                          ^renderproto@0.11.1%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lvmdeqn                      ^libxrender@0.9.11%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  l7pj2eb                      ^randrproto@1.5.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  3gbezeb          ^jsoncpp@1.9.5%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  i7yolzu          ^libjpeg-turbo@3.0.3%gcc@11.4.0~ipo~jpeg8~partial_decoder+pic build_system=cmake build_type=Release generator=make libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  gdp4rgb              ^nasm@2.16.03%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5yjgkck          ^libogg@1.3.5%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  si65v46          ^libtheora@1.1.1%gcc@11.4.0~doc build_system=autotools patches=d9bb5a9,e01511a,e01ef71,ff8478d arch=linux-ubuntu22.04-x86_64
+[+]  af5lko7              ^autoconf@2.72%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  u7ity2e              ^automake@1.16.5%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  32kjh2k          ^libtiff@4.7.0%gcc@11.4.0+ccitt~ipo~jbig+jpeg~jpeg12~lerc~libdeflate+logluv~lzma+lzw+next~old-jpeg~opengl+packbits~pic~pixarlog+shared+thunder~webp+zlib~zstd build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  x3qpkwp          ^libxml2@2.10.3%gcc@11.4.0+pic~python+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  5yls2f4          ^libxt@1.3.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  si7e6oi              ^kbproto@1.0.7%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tqhhwgp              ^libice@1.1.1%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  gnxswra              ^libsm@1.2.4%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  m6hxu3k              ^util-macros@1.20.1%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  tinh7t5          ^netcdf-c@4.9.2%gcc@11.4.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu22.04-x86_64
+[+]  zcnoibn              ^c-blosc@1.21.5%gcc@11.4.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  vt5taf6              ^libaec@1.0.6%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  gpvs2i5          ^nlohmann-json@3.11.3%gcc@11.4.0~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  jzalawv          ^openpmd-api@0.16.0%gcc@11.4.0+adios2+hdf5~ipo+mpi+python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu22.04-x86_64
+[+]  6mbi4ig              ^py-pybind11@2.13.5%gcc@11.4.0+ipo build_system=cmake build_type=Release generator=ninja arch=linux-ubuntu22.04-x86_64
+[+]  uxe2j2b              ^toml11@4.0.2%gcc@11.4.0~ipo build_system=cmake build_type=Release cxx_std=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cfxhiux          ^pegtl@2.8.3%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  npxfdql          ^proj@8.1.0%gcc@11.4.0+curl~ipo~pic+shared+tiff build_system=cmake build_type=Release generator=make patches=8d85a64,dc620ff arch=linux-ubuntu22.04-x86_64
+[+]  mjvviec              ^sqlite@3.46.0%gcc@11.4.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4hgj7nx          ^protobuf@3.21.12%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make patches=9b6dcfa arch=linux-ubuntu22.04-x86_64
+[+]  su2ugsh          ^pugixml@1.14%gcc@11.4.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  rwfomaj          ^py-matplotlib@3.9.2%gcc@11.4.0~animation~fonts~latex~movies backend=agg build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sieaetm              ^py-contourpy@1.3.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ee7xwv5              ^py-cycler@0.11.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  42x2ze4              ^py-fonttools@4.39.4%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  r4xmjh6              ^py-kiwisolver@1.4.5%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  sy6d6rf                  ^py-cppy@1.2.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  amozm5d              ^py-pillow@11.0.0%gcc@11.4.0~freetype~imagequant+jpeg~jpeg2000~lcms~tiff~webp~xcb+zlib build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  e2byxmw              ^py-pyparsing@3.1.2%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  j4tt7m5              ^py-python-dateutil@2.8.2%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  r4yxwol                  ^py-six@1.16.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  2x6ybrr              ^py-setuptools-scm@8.0.4%gcc@11.4.0+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  o5eotpu                  ^git@2.45.2%gcc@11.4.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  scr7vid                      ^openssh@9.8p1%gcc@11.4.0+gssapi build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  giqrwsy                          ^krb5@1.21.3%gcc@11.4.0+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  4gpgqgn                          ^libxcrypt@4.4.35%gcc@11.4.0~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu22.04-x86_64
+[+]  nmtrjdy              ^qhull@2020.2%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cetprdl          ^py-pandas@1.5.3%gcc@11.4.0~excel+performance build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  n42hg4x              ^py-bottleneck@1.3.7%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dzrkeft                  ^py-versioneer@0.29%gcc@11.4.0+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  i4rwuqo              ^py-numexpr@2.9.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  f6hf7gx              ^py-pytz@2023.3%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3r6jvjh      ^vtk-m@2.2.0%gcc@11.4.0~64bitids+cuda+cuda_native+doubleprecision+examples~fpic~ipo~kokkos~logging+mpi+openmp+rendering~rocm+shared~sycl~tbb~testlib build_system=cmake build_type=Release cuda_arch=80 generator=make patches=2111608,34704cc,34f203b arch=linux-ubuntu22.04-x86_64
+[+]  niyc2r4      ^zfp@0.5.5%gcc@11.4.0~aligned~c+cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  wfwpbhx  ecp-data-vis-sdk@1.0%gcc@11.4.0+adios2~ascent~cinema+cuda~darshan~faodel+fortran+hdf5+paraview~pnetcdf~rocm~sensei~sz~unifyfs~veloc~visit+vtkm+zfp build_system=bundle cuda_arch=90 arch=linux-ubuntu22.04-x86_64
+[+]  rp2yih6      ^adios2@2.10.1%gcc@11.4.0~aws+blosc2+bzip2~campaign+cuda+dataman~dataspaces+fortran+hdf5~ipo~kokkos+libcatalyst~libpressio+mgard+mpi+pic+png+python~rocm+shared+sst~sycl~sz+zfp build_system=cmake build_type=Release cuda_arch=90 generator=make patches=4247a85 arch=linux-ubuntu22.04-x86_64
+[+]  57dbd2b      ^paraview@5.13.1%gcc@11.4.0+adios2~advanced_debug+catalyst~cdi+cuda+development_files~examples~eyedomelighting~fortran+hdf5~ipo+kits+libcatalyst+mpi~nvindex+opengl2+openpmd~pagosa+python~qt~raytracing~rocm+shared~tbb~visitbridge build_edition=canonical build_system=cmake build_type=Release cuda_arch=90 generator=ninja patches=02253c7 use_vtkm=on arch=linux-ubuntu22.04-x86_64
+[+]  4g4lc3s          ^openpmd-api@0.16.0%gcc@11.4.0+adios2+hdf5~ipo+mpi+python+shared build_system=cmake build_type=Release generator=make patches=e49fe79 arch=linux-ubuntu22.04-x86_64
+[+]  z4p7ayh      ^vtk-m@2.2.0%gcc@11.4.0~64bitids+cuda+cuda_native+doubleprecision+examples~fpic~ipo~kokkos~logging+mpi+openmp+rendering~rocm+shared~sycl~tbb~testlib build_system=cmake build_type=Release cuda_arch=90 generator=make patches=2111608,34704cc,34f203b arch=linux-ubuntu22.04-x86_64
+[+]  gcaetla      ^zfp@0.5.5%gcc@11.4.0~aligned~c+cuda~fasthash~fortran~ipo~openmp~profile~python+shared~strided~twoway+utilities bsws=64 build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ed4r6b3  exago@1.6.0%gcc@11.4.0+cuda+hiop~ipo~ipopt+logging+mpi+python+raja~rocm build_system=cmake build_type=Release cuda_arch=80 generator=make patches=7f74f3c arch=linux-ubuntu22.04-x86_64
+[+]  66puekb      ^camp@0.2.3%gcc@11.4.0+cuda~ipo~omptarget~openmp~rocm~sycl~tests build_system=cmake build_type=Release cuda_arch=80 generator=make patches=cb9e25b arch=linux-ubuntu22.04-x86_64
+[+]  7jqlhkv          ^blt@0.4.1%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  jeuemk5          ^cub@2.1.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  bizwgim      ^hiop@1.0.0%gcc@11.4.0+cuda~cusolver_lu~deepchecking~ginkgo~ipo~jsrun~kron+mpi+raja~rocm~shared~sparse build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nkdisxq      ^magma@2.8.0%gcc@11.4.0+cuda+fortran~ipo~rocm+shared build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  lhcvmyo      ^pkgconf@2.2.0%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ori6rmq      ^py-mpi4py@4.0.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  he5c5mu          ^py-cython@3.0.11%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wp63tu3      ^py-pytest@8.2.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gt7yzc5          ^py-exceptiongroup@1.1.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  euthovz              ^py-flit-scm@1.7.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  apffxon          ^py-iniconfig@2.0.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  3h3tknl              ^py-hatch-vcs@0.4.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ekfq3ro              ^py-hatchling@1.25.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  utd5q3i                  ^py-editables@0.5%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  dqhidnb                  ^py-pathspec@0.11.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6wuoqt7                  ^py-trove-classifiers@2023.8.7%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mhtx3mb                      ^py-calver@2022.6.26%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  6ootcr4          ^py-packaging@24.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7iniujm              ^py-flit-core@3.9.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  wkp2mb4          ^py-pluggy@1.5.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7gbxcqk          ^py-setuptools-scm@8.0.4%gcc@11.4.0+toml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  yrf6c6h              ^py-typing-extensions@4.12.2%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  ou7kxpc          ^py-tomli@2.0.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  j4pnmo5      ^python-venv@1.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  touxj6k      ^raja@0.14.0%gcc@11.4.0+cuda~desul+examples+exercises~ipo~omptarget~omptask~openmp+plugins~rocm~run-all-tests+shared~sycl~tests~vectorization build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  o4dcj54      ^umpire@6.0.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=80 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  vm2zuwq  fftx@1.2.0%gcc@11.4.0+cuda~ipo~rocm build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6zgjpxx      ^spiral-software@8.5.1%gcc@11.4.0+fftx~hcol~ipo+jit+mpi+simt build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  tq4bfi2          ^spiral-package-fftx@1.3.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  v2zpskq          ^spiral-package-jit@1.1.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  i2buceu          ^spiral-package-mpi@1.1.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  jzjw6gm          ^spiral-package-simt@1.1.0%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  dav33uy  fftx@1.2.0%gcc@11.4.0+cuda~ipo~rocm build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  35g4ono  flecsi@2.3.0%gcc@11.4.0+cuda~doc~flog~graphviz+hdf5~ipo~kokkos~openmp~rocm+shared backend=mpi build_system=cmake build_type=Release caliper_detail=none cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  y5aos6t      ^boost@1.79.0%gcc@11.4.0+atomic+chrono~clanglibcpp+container~context~contract~coroutine+date_time~debug+exception~fiber+filesystem+graph~graph_parallel~icu+iostreams~json+locale+log+math+mpi+multithreaded~nowide~numpy~pic+program_options~python+random+regex+serialization+shared+signals~singlethreaded+stacktrace+system~taggedlayout+test+thread+timer~type_erasure~url~versionedlayout~wave build_system=generic cxxstd=17 patches=a440f96 visibility=global arch=linux-ubuntu22.04-x86_64
+[+]  fxilu3b      ^parmetis@4.0.3%gcc@11.4.0~gdb~int64~ipo+shared build_system=cmake build_type=Release generator=make patches=4f89253,50ed208,704b84f arch=linux-ubuntu22.04-x86_64
+[+]  p5wlwxz  flecsi@2.3.0%gcc@11.4.0+cuda~doc~flog~graphviz+hdf5~ipo~kokkos~openmp~rocm+shared backend=mpi build_system=cmake build_type=Release caliper_detail=none cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  a73mo2p  flux-core@0.66.0%gcc@11.4.0+cuda~docs~security build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  j7y4svj      ^hwloc@2.11.1%gcc@11.4.0~cairo+cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools cuda_arch=none libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  s3avzkb          ^libpciaccess@0.17%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lavqlts      ^jansson@2.14%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  klbykry      ^libarchive@3.7.6%gcc@11.4.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-x86_64
+[+]  6xlpl4q          ^lzo@2.10%gcc@11.4.0 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  nwjxli3      ^lua@5.3.6%gcc@11.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu22.04-x86_64
+[+]  lv2qrtf      ^lua-luaposix@36.1%gcc@11.4.0 build_system=lua arch=linux-ubuntu22.04-x86_64
+[+]  5n2k6wh      ^lz4@1.10.0%gcc@11.4.0+pic build_system=makefile libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  kiki6qs      ^ncurses@6.5%gcc@11.4.0~symlinks+termlib abi=none build_system=autotools patches=7a351bc arch=linux-ubuntu22.04-x86_64
+[+]  n3vtdsx      ^py-cffi@1.17.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  mlryh46          ^py-pycparser@2.21%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  twzkjsj      ^py-ply@3.11%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  oc2vgo2      ^py-pyyaml@6.0.2%gcc@11.4.0+libyaml build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5iqdm4n          ^libyaml@0.2.5%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  ke5wggk      ^sqlite@3.46.0%gcc@11.4.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  26m2ypi      ^util-linux-uuid@2.40.2%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  qj5xlon  ginkgo@1.8.0%gcc@11.4.0+cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared~sycl build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  qpn6kl7  ginkgo@1.8.0%gcc@11.4.0+cuda~develtools~full_optimizations~hwloc~ipo+mpi+openmp~rocm~sde+shared~sycl build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ltvppqm  gromacs@2024.3%gcc@11.4.0~cp2k+cuda~cufftmp~cycle_subcounters~double+gmxapi+hwloc~intel_provided_gcc~ipo~mdrun_only+mpi+nblib~nosuffix~nvshmem~opencl+openmp~relaxed_double_precision+shared~sycl build_system=cmake build_type=Release cuda_arch=80 generator=make openmp_max_threads=none arch=linux-ubuntu22.04-x86_64
+[+]  cmfzby3      ^fftw@3.3.10%gcc@11.4.0+mpi~openmp~pfft_patches+shared build_system=autotools patches=872cff9 precision=double,float arch=linux-ubuntu22.04-x86_64
+[+]  mvso3gn      ^hwloc@2.11.1%gcc@11.4.0~cairo~cuda~gl~libudev+libxml2~nvml~oneapi-level-zero~opencl+pci~rocm build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  bvmfbqk  gromacs@2024.3%gcc@11.4.0~cp2k+cuda~cufftmp~cycle_subcounters~double+gmxapi+hwloc~intel_provided_gcc~ipo~mdrun_only+mpi+nblib~nosuffix~nvshmem~opencl+openmp~relaxed_double_precision+shared~sycl build_system=cmake build_type=Release cuda_arch=90 generator=make openmp_max_threads=none arch=linux-ubuntu22.04-x86_64
+[+]  6wrrdwh  heffte@2.4.0%gcc@11.4.0+cuda~fftw~fortran~ipo~magma~mkl~python~rocm+shared build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  n4cczmu  heffte@2.4.0%gcc@11.4.0+cuda~fftw~fortran~ipo~magma~mkl~python~rocm+shared build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  frwgnvq  hpctoolkit@2024.01.1%gcc@11.4.0~cray+cuda~debug~level_zero+mpi~opencl+papi~python~rocm+viewer build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  z3theld      ^bzip2@1.0.8%gcc@11.4.0~debug~pic+shared build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  dhrv3i7      ^dyninst@13.0.0%gcc@11.4.0~ipo+openmp~stat_dysect~static build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  gxefqu2      ^elfutils@0.190%gcc@11.4.0~debuginfod+exeprefix~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  b4oniq3      ^hpcviewer@2024.09%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  z47fwji      ^intel-tbb@2021.12.0%gcc@11.4.0~ipo+shared+tm build_system=cmake build_type=Release cxxstd=default generator=make arch=linux-ubuntu22.04-x86_64
+[+]  dquafn4      ^intel-xed@2024.05.20%gcc@11.4.0~debug+deprecated-includes~examples+optimize+pic build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  fhehdjt      ^libiberty@2.41%gcc@11.4.0+pic build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6aveqvy      ^libmonitor@2023.03.15%gcc@11.4.0~commrank~dlopen+hpctoolkit build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  s3ci77i      ^xerces-c@3.2.5%gcc@11.4.0 build_system=autotools cxxstd=default netaccessor=curl transcoder=iconv arch=linux-ubuntu22.04-x86_64
+[+]  lpgu4yg      ^xz@5.4.6%gcc@11.4.0+pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  otd4mh3      ^yaml-cpp@0.8.0%gcc@11.4.0~ipo+pic+shared~tests build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  6ekqpka  hpx@1.10.0%gcc@11.4.0~async_cuda~async_mpi+cuda~examples~generic_coroutines~ipo~rocm~tools build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=ninja instrumentation=none malloc=tcmalloc max_cpu_count=auto networking=tcp arch=linux-ubuntu22.04-x86_64
+[+]  qpngk2f      ^asio@1.30.2%gcc@11.4.0~boost_coroutine~boost_regex~separate_compilation build_system=autotools cxxstd=17 arch=linux-ubuntu22.04-x86_64
+[+]  ffa4c5o      ^git@2.45.2%gcc@11.4.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  7ieo6zx          ^gettext@0.22.5%gcc@11.4.0+bzip2+curses+git~libunistring+libxml2+pic+shared+tar+xz build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  l4w65sq              ^tar@1.34%gcc@11.4.0 build_system=autotools zip=pigz arch=linux-ubuntu22.04-x86_64
+[+]  swpsr4f                  ^pigz@2.8%gcc@11.4.0 build_system=makefile arch=linux-ubuntu22.04-x86_64
+[+]  jzel4ac          ^libidn2@2.3.7%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  yo7or2c              ^libunistring@1.2%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  h43wqeo          ^openssh@9.8p1%gcc@11.4.0+gssapi build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  smfjp44              ^krb5@1.21.3%gcc@11.4.0+shared build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  dub6jma              ^libxcrypt@4.4.35%gcc@11.4.0~obsolete_api build_system=autotools patches=4885da3 arch=linux-ubuntu22.04-x86_64
+[+]  fewtvcx          ^pcre2@10.44%gcc@11.4.0~jit+multibyte build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  6yowe5q      ^gperftools@2.15%gcc@11.4.0+debugalloc~dynamic_sized_delete_support~ipo+libunwind~sized_delete build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  5inuwwz      ^ninja@1.12.1%gcc@11.4.0+re2c build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  rxfxl6f          ^re2c@3.1%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  pam2qt2  hpx@1.10.0%gcc@11.4.0~async_cuda~async_mpi+cuda~examples~generic_coroutines~ipo~rocm~tools build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=ninja instrumentation=none malloc=tcmalloc max_cpu_count=auto networking=tcp arch=linux-ubuntu22.04-x86_64
+[+]  7z6652z  hypre@2.32.0%gcc@11.4.0~caliper~complex~cublas+cuda~debug+fortran~gptune~gpu-aware-mpi~int64~internal-superlu~magma~mixedint+mpi~openmp~rocblas~rocm+shared~superlu-dist~sycl~umpire~unified-memory build_system=autotools cuda_arch=80 precision=double arch=linux-ubuntu22.04-x86_64
+[+]  zkijq2m  hypre@2.32.0%gcc@11.4.0~caliper~complex~cublas+cuda~debug+fortran~gptune~gpu-aware-mpi~int64~internal-superlu~magma~mixedint+mpi~openmp~rocblas~rocm+shared~superlu-dist~sycl~umpire~unified-memory build_system=autotools cuda_arch=90 precision=double arch=linux-ubuntu22.04-x86_64
+[+]  5quqqmx  kokkos@4.4.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr~cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  6mniuzt      ^kokkos-nvcc-wrapper@4.4.01%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  ipnocrm  kokkos@4.4.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr~cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  dduqhrc  kokkos-kernels@4.4.01%gcc@11.4.0~blas~cblas~cublas+cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl~openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release cuda_arch=80 execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu22.04-x86_64
+[+]  4poyng2  kokkos-kernels@4.4.01%gcc@11.4.0~blas~cblas~cublas+cuda~cusolver~cusparse~ipo~lapack~lapacke~mkl~openmp~rocblas~rocsolver~rocsparse~serial+shared~superlu~threads build_system=cmake build_type=Release cuda_arch=90 execspace_cuda=auto execspace_openmp=auto execspace_serial=auto execspace_threads=auto generator=make layouts=left memspace_cudaspace=auto memspace_cudauvmspace=auto offsets=int,size_t ordinals=int scalars=double arch=linux-ubuntu22.04-x86_64
+[+]  lslpikv  lammps@20240829%gcc@11.4.0~adios+amoeba+asphere~atc~awpmd+bocs+body+bpm+brownian+cg-dna+cg-spica+class2+colloid+colvars+compress+coreshell+cuda~cuda_mps~curl+dielectric+diffraction+dipole+dpd-basic+dpd-meso+dpd-react+dpd-smooth+drude+eff+electrode+extra-compute+extra-dump+extra-fix+extra-molecule+extra-pair+fep~ffmpeg+granular~h5md~intel+interlayer~ipo~jpeg~kim~kokkos+kspace~latboltz+lepton+lib+machdyn~manifold+manybody+mc+meam+mesont~mgpt+misc~ml-hdnnp+ml-iap+ml-pod~ml-rann+ml-snap~ml-uf3+mofff+molecule~molfile+mpi~netcdf~opencl+openmp+openmp-package+opt+orient+peri+phonon+plugin~plumed~png+poems~ptm~python+qeq~qtb+reaction+reaxff+replica~rheo+rigid~rocm+shock~smtbq+sph+spin+srd+tally~tools+uef+voronoi~vtk+yaff build_system=cmake build_type=Release cuda_arch=80 fft=fftw3 fftw_precision=double generator=make gpu_precision=mixed lammps_sizes=smallbig arch=linux-ubuntu22.04-x86_64
+[+]  lb7digr      ^eigen@3.4.0%gcc@11.4.0~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-ubuntu22.04-x86_64
+[+]  j5fv7tx      ^voropp@0.4.6%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make patches=b12e401 arch=linux-ubuntu22.04-x86_64
+[+]  ls3cyel  lammps@20240829%gcc@11.4.0~adios+amoeba+asphere~atc~awpmd+bocs+body+bpm+brownian+cg-dna+cg-spica+class2+colloid+colvars+compress+coreshell+cuda~cuda_mps~curl+dielectric+diffraction+dipole+dpd-basic+dpd-meso+dpd-react+dpd-smooth+drude+eff+electrode+extra-compute+extra-dump+extra-fix+extra-molecule+extra-pair+fep~ffmpeg+granular~h5md~intel+interlayer~ipo~jpeg~kim~kokkos+kspace~latboltz+lepton+lib+machdyn~manifold+manybody+mc+meam+mesont~mgpt+misc~ml-hdnnp+ml-iap+ml-pod~ml-rann+ml-snap~ml-uf3+mofff+molecule~molfile+mpi~netcdf~opencl+openmp+openmp-package+opt+orient+peri+phonon+plugin~plumed~png+poems~ptm~python+qeq~qtb+reaction+reaxff+replica~rheo+rigid~rocm+shock~smtbq+sph+spin+srd+tally~tools+uef+voronoi~vtk+yaff build_system=cmake build_type=Release cuda_arch=90 fft=fftw3 fftw_precision=double generator=make gpu_precision=mixed lammps_sizes=smallbig arch=linux-ubuntu22.04-x86_64
+[+]  t6bxt7a  legion@24.09.0%gcc@11.4.0~bindings~bounds_checks+cuda~cuda_hijack~cuda_unsupported_compiler~fortran~gc~hdf5~hwloc~ipo~kokkos+libdl~openmp~papi~privilege_checks~prof~python~redop_complex~redop_half~rocm~shared~spy~sysomp+zlib build_system=cmake build_type=Release cuda_arch=70 cxxstd=17 generator=make max_dims=3 max_fields=512 max_num_nodes=1024 network=none output_level=warning arch=linux-ubuntu22.04-x86_64
+[+]  nbnkjwo  libpressio@0.99.4%gcc@11.4.0~arc+bitgrooming~blosc~blosc2~boost+bzip2~clang+core+cuda+cusz~digitrounding~docs+fpzip~ftk+hdf5~ipo+json+libdistributed+lua~magick~matio+mgard~mgardx+mpi~ndzip+netcdf+openmp~openssl~petsc~pybind+python~qoz+remote+sz+sz3~szauto~szx+unix+zfp build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  f4howgy      ^bitgroomingz@2022-10-14%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nti5leh      ^fpzip@1.3.0%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  vqcwzsv      ^libdistributed@0.4.3%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  nnddir2      ^libstdcompat@0.0.21%gcc@11.4.0~boost+cpp_unstable~ipo build_system=cmake build_type=Release cpp_compat=auto generator=make arch=linux-ubuntu22.04-x86_64
+[+]  xumhifh      ^lua-sol2@3.3.0%gcc@11.4.0~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  imwkxed          ^lua@5.4.6%gcc@11.4.0~pcfile+shared build_system=makefile fetcher=curl arch=linux-ubuntu22.04-x86_64
+[+]  4uh5uwv      ^mgard@2023-12-09%gcc@11.4.0~cuda~ipo+openmp+serial~timing~unstructured build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  h3f37wx          ^libarchive@3.7.6%gcc@11.4.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=openssl libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-x86_64
+[+]  n3smaoq      ^netcdf-c@4.9.2%gcc@11.4.0+blosc~byterange~dap~fsync~hdf4~jna~logging+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared+szip+zstd build_system=autotools patches=0161eb8 arch=linux-ubuntu22.04-x86_64
+[+]  fxpy6fo          ^c-blosc@1.21.5%gcc@11.4.0+avx2~ipo build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  labjkur              ^snappy@1.2.1%gcc@11.4.0~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  z6spfho          ^libaec@1.0.6%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  33nc636      ^nlohmann-json@3.11.3%gcc@11.4.0~ipo+multiple_headers build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  chwcypf      ^py-numcodecs@0.13.0%gcc@11.4.0~msgpack build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  5y5nrvr          ^py-py-cpuinfo@9.0.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  a2swiwp      ^py-numpy@2.1.2%gcc@11.4.0 build_system=python_pip patches=873745d arch=linux-ubuntu22.04-x86_64
+[+]  y766h4x          ^py-meson-python@0.16.0%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  7rwq5s7              ^meson@1.5.1%gcc@11.4.0 build_system=python_pip patches=0f0b1bd arch=linux-ubuntu22.04-x86_64
+[+]  d4pbk6k              ^py-pyproject-metadata@0.7.1%gcc@11.4.0 build_system=python_pip arch=linux-ubuntu22.04-x86_64
+[+]  gnw7j6q      ^swig@4.1.1%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  hhwyct3      ^sz@2.1.12.5%gcc@11.4.0~examples~fortran~hdf5~ipo~netcdf~openmp~pastri~python~random_access+shared~stats~time_compression build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  cbn7esh      ^sz3@3.2.0%gcc@11.4.0~hdf5~ipo+mdz build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  vgp33ou      ^zfp@1.0.0%gcc@11.4.0~aligned~c~cuda~daz~fasthash~fortran~ipo~openmp~profile~python+shared~strided~tight-error~twoway+utilities bsws=64 build_system=cmake build_type=Release generator=make round=never arch=linux-ubuntu22.04-x86_64
+[+]  hnscoph  libpressio@0.99.4%gcc@11.4.0~arc+bitgrooming~blosc~blosc2~boost+bzip2~clang+core+cuda+cusz~digitrounding~docs+fpzip~ftk+hdf5~ipo+json+libdistributed+lua~magick~matio+mgard~mgardx+mpi~ndzip+netcdf+openmp~openssl~petsc~pybind+python~qoz+remote+sz+sz3~szauto~szx+unix+zfp build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  r4fyyfs  magma@2.8.0%gcc@11.4.0+cuda+fortran~ipo~rocm+shared build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  hcbbkvi  magma@2.8.0%gcc@11.4.0+cuda+fortran~ipo~rocm+shared build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4k5bspp  mfem@4.7.0%gcc@11.4.0~amgx~conduit+cuda~debug~examples~exceptions~fms~ginkgo~gnutls~gslib~hiop~lapack~libceed~libunwind+metis~miniapps~mpfr+mpi~mumps~netcdf~occa~openmp~petsc~pumi~raja~rocm~shared~slepc+static~strumpack~suite-sparse~sundials~superlu-dist~threadsafe~umpire+zlib build_system=generic cuda_arch=80 cxxstd=auto patches=71ce9ee precision=double timer=auto arch=linux-ubuntu22.04-x86_64
+[+]  sew4h3f      ^hypre@2.32.0%gcc@11.4.0~caliper~complex~cublas~cuda~debug+fortran~gptune~gpu-aware-mpi~int64~internal-superlu~magma~mixedint+mpi~openmp~rocblas~rocm+shared~superlu-dist~sycl~umpire~unified-memory build_system=autotools precision=double arch=linux-ubuntu22.04-x86_64
+[+]  x7zpyre  mfem@4.7.0%gcc@11.4.0~amgx~conduit+cuda~debug~examples~exceptions~fms~ginkgo~gnutls~gslib~hiop~lapack~libceed~libunwind+metis~miniapps~mpfr+mpi~mumps~netcdf~occa~openmp~petsc~pumi~raja~rocm~shared~slepc+static~strumpack~suite-sparse~sundials~superlu-dist~threadsafe~umpire+zlib build_system=generic cuda_arch=90 cxxstd=auto patches=71ce9ee precision=double timer=auto arch=linux-ubuntu22.04-x86_64
+[+]  rl56whi  mgard@2023-12-09%gcc@11.4.0+cuda~ipo+openmp+serial+timing+unstructured build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  h3sua7w      ^nvcomp@2.2.0%gcc@11.4.0+cuda~ipo build_system=cmake build_type=Release cuda_arch=none generator=make arch=linux-ubuntu22.04-x86_64
+[+]  utayaai      ^protobuf@3.28.2%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  rjlekea          ^abseil-cpp@20240722.0%gcc@11.4.0~ipo+shared build_system=cmake build_type=Release cxxstd=14 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  rbreys2              ^googletest@1.12.1%gcc@11.4.0+gmock~ipo+pthreads+shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  il6qveb      ^sed@4.9%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  divttak      ^zstd@1.5.6%gcc@11.4.0~programs build_system=makefile libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  fxzwqez  mgard@2023-12-09%gcc@11.4.0+cuda~ipo+openmp+serial+timing+unstructured build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  y2r2j4w  papi@7.1.0%gcc@11.4.0+cuda~debug+example~infiniband~lmsensors~nvml~powercap~rapl+rdpmc~rocm~rocm_smi~sde+shared~static_tools build_system=autotools patches=48cb202 arch=linux-ubuntu22.04-x86_64
+[+]  upher22  parsec@3.0.2209%gcc@11.4.0+cuda~debug_verbose~ipo~profile+shared build_system=cmake build_type=RelWithDebInfo cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ku6iqqr      ^bison@3.8.2%gcc@11.4.0~color build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  zykzpev      ^flex@2.6.3%gcc@11.4.0+lex~nls build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  hkyu7ea  parsec@3.0.2209%gcc@11.4.0+cuda~debug_verbose~ipo~profile+shared build_system=cmake build_type=RelWithDebInfo cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fiii4wq  petsc@3.22.0%gcc@11.4.0~X~batch~cgns~complex+cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C cuda_arch=80 memalign=none arch=linux-ubuntu22.04-x86_64
+[+]  x2csam3      ^diffutils@3.10%gcc@11.4.0 build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  lulhi7h      ^superlu-dist@8.2.1%gcc@11.4.0~cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  4r6fjtm  petsc@3.22.0%gcc@11.4.0~X~batch~cgns~complex+cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C cuda_arch=90 memalign=none arch=linux-ubuntu22.04-x86_64
+[+]  uhlrpqc  raja@2024.07.0%gcc@11.4.0+cuda~desul+examples+exercises~ipo~omptarget~omptask~openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  65sbdor      ^camp@2024.07.0%gcc@11.4.0+cuda~ipo~omptarget~openmp~rocm~sycl~tests build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fn6cwwx  raja@2024.07.0%gcc@11.4.0+cuda~desul+examples+exercises~ipo~omptarget~omptask~openmp+plugins~rocm~run-all-tests~shared~sycl~tests~vectorization build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  z34hrn5      ^camp@2024.07.0%gcc@11.4.0+cuda~ipo~omptarget~openmp~rocm~sycl~tests build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  culphm3  slate@2024.05.31%gcc@11.4.0+cuda~ipo+mpi+openmp~rocm+shared~sycl build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  ld6gwo4      ^blaspp@2024.05.31%gcc@11.4.0+cuda~ipo+openmp~rocm+shared~sycl build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  t5e3r6w      ^lapackpp@2024.05.31%gcc@11.4.0+cuda~ipo~rocm+shared~sycl build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  2ecdyrk  slate@2024.05.31%gcc@11.4.0+cuda~ipo+mpi+openmp~rocm+shared~sycl build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  lighi4e      ^blaspp@2024.05.31%gcc@11.4.0+cuda~ipo+openmp~rocm+shared~sycl build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  3xzdtn7      ^lapackpp@2024.05.31%gcc@11.4.0+cuda~ipo~rocm+shared~sycl build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  bwsjita  slepc@3.22.0%gcc@11.4.0+arpack~blopex+cuda~hpddm~rocm build_system=generic cuda_arch=80 arch=linux-ubuntu22.04-x86_64
+[+]  xqaokru      ^petsc@3.22.0%gcc@11.4.0~X~batch~cgns~complex+cuda~debug+double~exodusii~fftw+fortran~giflib+hdf5~hpddm~hwloc+hypre~int64~jpeg~knl~kokkos~libpng~libyaml~memkind+metis~mkl-pardiso~mmg~moab~mpfr+mpi~mumps~openmp~p4est~parmmg~ptscotch~random123~rocm~saws~scalapack+shared~strumpack~suite-sparse+superlu-dist~sycl~tetgen~trilinos~valgrind~zoltan build_system=generic clanguage=C cuda_arch=none memalign=none arch=linux-ubuntu22.04-x86_64
+[+]  czym6tt  slepc@3.22.0%gcc@11.4.0+arpack~blopex+cuda~hpddm~rocm build_system=generic cuda_arch=90 arch=linux-ubuntu22.04-x86_64
+[+]  7ddxmba  strumpack@7.2.0%gcc@11.4.0+butterflypack+c_interface~count_flops+cuda~ipo~magma+mpi+openmp+parmetis~rocm~scotch+shared~slate~task_timers+zfp build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fxwv7xe      ^butterflypack@2.4.0%gcc@11.4.0~ipo+openmp+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  fsg63go  strumpack@7.2.0%gcc@11.4.0+butterflypack+c_interface~count_flops+cuda~ipo~magma+mpi+openmp+parmetis~rocm~scotch+shared~slate~task_timers+zfp build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  57lw5tt  sundials@7.1.1%gcc@11.4.0+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL+cuda+examples+examples-install~f2003~fcmix~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cuda_arch=80 cxxstd=14 generator=make logging-level=2 precision=double arch=linux-ubuntu22.04-x86_64
+[+]  vyp5hzc  sundials@7.1.1%gcc@11.4.0+ARKODE+CVODE+CVODES+IDA+IDAS+KINSOL+cuda+examples+examples-install~f2003~fcmix~ginkgo~hypre~int64~ipo~klu~kokkos~kokkos-kernels~lapack~magma~monitoring+mpi~openmp~petsc~profiling~pthread~raja~rocm+shared+static~superlu-dist~superlu-mt~sycl~trilinos build_system=cmake build_type=Release cstd=99 cuda_arch=90 cxxstd=14 generator=make logging-level=2 precision=double arch=linux-ubuntu22.04-x86_64
+[+]  ofrpnse  superlu-dist@8.2.1%gcc@11.4.0+cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release cuda_arch=80 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  jcccuen  superlu-dist@8.2.1%gcc@11.4.0+cuda~int64~ipo~openmp+parmetis~rocm+shared build_system=cmake build_type=Release cuda_arch=90 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  57fuh4b  tasmanian@8.0%gcc@11.4.0~blas+cuda~fortran~ipo~magma+mpi~openmp~python~rocm~xsdkflags build_system=cmake build_type=Release cuda_arch=80 generator=make patches=8b8d74c arch=linux-ubuntu22.04-x86_64
+[+]  g7c3luj  tasmanian@8.0%gcc@11.4.0~blas+cuda~fortran~ipo~magma+mpi~openmp~python~rocm~xsdkflags build_system=cmake build_type=Release cuda_arch=90 generator=make patches=8b8d74c arch=linux-ubuntu22.04-x86_64
+[+]  77jqzzv  tau@2.34%gcc@11.4.0~adios2+binutils~comm~craycnl+cuda~disable-no-pie~dyninst+elf+fortran~gasnet+io~level_zero+libdwarf+libunwind+mpi~ompt~opari~opencl~openmp+otf2+papi+pdt~phase~ppc64le~profileparam+pthreads~python~rocm~rocprofiler~rocprofv2~roctracer~scorep~shmem~sqlite+syscall~x86_64 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  4yy5lrm      ^binutils@2.43.1%gcc@11.4.0~gas+gold~gprofng+headers~interwork+ld+libiberty~lto~nls~pgo+plugins build_system=autotools compress_debug_sections=zlib libs=shared,static arch=linux-ubuntu22.04-x86_64
+[+]  pzabzmf      ^libdwarf@0.11.0%gcc@11.4.0+decompression+dwarfdump~dwarfgen~examples~ipo+pic+shared build_system=cmake build_type=Release generator=make arch=linux-ubuntu22.04-x86_64
+[+]  kyqo677      ^openjdk@17.0.11_9%gcc@11.4.0 build_system=generic arch=linux-ubuntu22.04-x86_64
+[+]  5jpmhnw      ^otf2@3.0.3%gcc@11.4.0 build_system=autotools patches=7e56d93 arch=linux-ubuntu22.04-x86_64
+[+]  njatamq      ^pdt@3.25.2%gcc@11.4.0~pic build_system=autotools arch=linux-ubuntu22.04-x86_64
+[+]  cfgssxj  trilinos@16.0.0%gcc@11.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex+cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk~stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~uvm+wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu22.04-x86_64
+[+]  e7avdi3      ^kokkos@4.3.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr~cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=80 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  pi4g4hl  trilinos@16.0.0%gcc@11.4.0~adelus~adios2+amesos+amesos2+anasazi+aztec~basker+belos+boost~chaco~complex+cuda~cuda_constexpr~cuda_rdc~debug~dtk+epetra+epetraext~epetraextbtf~epetraextexperimental~epetraextgraphreorderings~exodus+explicit_template_instantiation~float+fortran~gtest~hdf5~hypre+ifpack+ifpack2+intrepid+intrepid2~ipo+isorropia+kokkos~mesquite+minitensor+ml+mpi+muelu~mumps+nox~openmp~pamgen~panzer+phalanx+piro~python~rocm~rocm_rdc+rol+rythmos+sacado~scorec+shards+shared+shylu+stk~stokhos+stratimikos~strumpack~suite-sparse~superlu+superlu-dist+teko+tempus~test+thyra+tpetra+trilinoscouplings~uvm+wrapper~x11+zoltan+zoltan2 build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=make gotype=long_long arch=linux-ubuntu22.04-x86_64
+[+]  elick4b      ^kokkos@4.3.01%gcc@11.4.0~aggressive_vectorization~compiler_warnings+cuda~cuda_constexpr~cuda_lambda~cuda_ldg_intrinsic~cuda_relocatable_device_code~cuda_uvm~debug~debug_bounds_check~debug_dualview_modify_check~deprecated_code~examples~hpx~hpx_async_dispatch~hwloc~ipo~memkind~numactl~openmp~openmptarget~pic~rocm+serial+shared~sycl~tests~threads~tuning+wrapper build_system=cmake build_type=Release cuda_arch=90 cxxstd=17 generator=make intel_gpu_arch=none arch=linux-ubuntu22.04-x86_64
+[+]  ptjb457  umpire@2024.07.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=80 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  4unujxv      ^fmt@11.0.2%gcc@11.4.0~ipo+pic~shared build_system=cmake build_type=Release cxxstd=11 generator=make arch=linux-ubuntu22.04-x86_64
+[+]  r5bpeeo  umpire@2024.07.0%gcc@11.4.0~asan~backtrace+c+cuda~dev_benchmarks~device_alloc~deviceconst~examples+fmt_header_only~fortran~ipc_shmem~ipo+mpi~numa~omptarget~openmp~rocm~sanitizer_tests~shared~sqlite_experimental~tools~werror build_system=cmake build_type=Release cuda_arch=90 generator=make tests=none arch=linux-ubuntu22.04-x86_64
+[+]  q7qlait  upcxx@2023.9.0%gcc@11.4.0+cuda+gasnet~level_zero+mpi~rocm build_system=generic cross=none cuda_arch=80 patches=89a2eeb arch=linux-ubuntu22.04-x86_64
+[+]  gwwe3qb      ^gasnet@2024.5.0%gcc@11.4.0~cuda~debug~level_zero~rocm build_system=generic conduits=none arch=linux-ubuntu22.04-x86_64
+[+]  6ujtk32  upcxx@2023.9.0%gcc@11.4.0+cuda+gasnet~level_zero+mpi~rocm build_system=generic cross=none cuda_arch=90 patches=89a2eeb arch=linux-ubuntu22.04-x86_64
+
