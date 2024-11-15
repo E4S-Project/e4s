@@ -48,34 +48,34 @@ $> spack buildcache list -al
   * `amd64-gcc-cuda-ubuntu22.04/spack.yaml`
   * For `cuda_arch=80` and `cuda_arch=90`
   * Built and tested using:
-    * `Ubuntu 22.04, GCC 11.4.0`
+    * `Ubuntu 22.04, GCC 11.4.0, CUDA 12.2.0, 11.8.0`
     * `ecpe4s/e4s-release-base-cuda-amd64:24.11`
 
 * Model environment for NVIDIA GPUs on ppc64le is:
   * `ppc64le-gcc-cuda-ubuntu20.04/spack.yaml`
   * For `cuda_arch=70`
   * Built and tested using:
-    * `Ubuntu 20.04, GCC 9.4.0`
+    * `Ubuntu 20.04, GCC 9.4.0, CUDA 11.4.4`
     * `ecpe4s/e4s-release-base-cuda-ppc64:24.11`
 
 * Model environment for NVIDIA GPUs on arm64 is:
   * `arm64-gcc-cuda-ubuntu24.04/spack.yaml`
   * For `cuda_arch=75`, `cuda_arch=80`, `cuda_arch=90`
   * Built and tested using:
-    * `Ubuntu 24.04, GCC 13.2.0`
+    * `Ubuntu 24.04, GCC 13.2.0, CUDA 12.6.2`
     * `ecpe4s/e4s-release-base-cuda-arm64:24.11`
 
 * Model environment for AMD GPUs on x86_64 is:
   * `amd64-gcc-rocm-ubuntu22.04/spack.yaml`
   * For `amdgpu_target=gfx908` and `amdgpu_target=gfx90a`
   * Built and tested using:
-    * `Ubuntu 22.04, GCC 11.4.0`
+    * `Ubuntu 22.04, GCC 11.4.0, ROCm 6.2.1`
     * `ecpe4s/e4s-release-base-rocm-amd64:24.11`
 
 * Model environment for Intel GPUs on x86_64 is:
   * `amd64-oneapi-ubuntu22.04/spack.yaml`
   * Built and tested using:
-    * `Ubuntu 22.04, OneAPI 2024.0.1`
+    * `Ubuntu 22.04, OneAPI 2024.2.1`
     * `ecpe4s/e4s-release-base-oneapi-amd64:24.11`
     * Derived from Intel's official `intel/hpckit:2024.2.1-devel-ubuntu22.04` image
 
