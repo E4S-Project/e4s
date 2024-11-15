@@ -51,13 +51,6 @@ $> spack buildcache list -al
     * `Ubuntu 22.04, GCC 11.4.0, CUDA 12.2.0, 11.8.0`
     * `ecpe4s/e4s-release-base-cuda-amd64:24.11`
 
-* Model environment for NVIDIA GPUs on ppc64le is:
-  * `ppc64le-gcc-cuda-ubuntu20.04/spack.yaml`
-  * For `cuda_arch=70`
-  * Built and tested using:
-    * `Ubuntu 20.04, GCC 9.4.0, CUDA 11.4.4`
-    * `ecpe4s/e4s-release-base-cuda-ppc64:24.11`
-
 * Model environment for NVIDIA GPUs on arm64 is:
   * `arm64-gcc-cuda-ubuntu24.04/spack.yaml`
   * For `cuda_arch=75`, `cuda_arch=80`, `cuda_arch=90`
@@ -78,6 +71,13 @@ $> spack buildcache list -al
     * `Ubuntu 22.04, OneAPI 2024.2.1`
     * `ecpe4s/e4s-release-base-oneapi-amd64:24.11`
     * Derived from Intel's official `intel/hpckit:2024.2.1-devel-ubuntu22.04` image
+
+* Model environment for NVIDIA GPUs on ppc64le is:
+  * `ppc64le-gcc-cuda-ubuntu20.04/spack.yaml`
+  * For `cuda_arch=70`
+  * Built and tested using:
+    * `Ubuntu 20.04, GCC 9.4.0, CUDA 11.4.4`
+    * `ecpe4s/e4s-release-base-cuda-ppc64:24.11`
 
 ## Example output of `spack find`
 
