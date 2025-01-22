@@ -7,9 +7,10 @@ sphinx:
     configuration: docs/conf.py
 
 build:
-  image: latest
+  os: latest
+  tools:
+    python: "3.12"
 
 python:
-  version: 3.7
   install:
     - requirements: docs/requirements.txt
