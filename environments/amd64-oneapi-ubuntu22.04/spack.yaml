@@ -175,6 +175,7 @@ spack:
     +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid
     +shock +sph +spin +srd +tally +uef +voronoi +yaff
   - legion
+  - libceed
   - libnrm
   - libquo
   - libunwind

@@ -284,6 +284,7 @@ spack:
   - hypre +rocm amdgpu_target=gfx942
   - kokkos +rocm amdgpu_target=gfx942
   - legion +rocm amdgpu_target=gfx942
+  - libceed +rocm amdgpu_target=gfx942
   - magma ~cuda +rocm amdgpu_target=gfx942
   - mfem +rocm amdgpu_target=gfx942
   - petsc +rocm amdgpu_target=gfx942
@@ -324,6 +325,7 @@ spack:
   - hypre +rocm amdgpu_target=gfx90a
   - kokkos +rocm amdgpu_target=gfx90a
   - legion +rocm amdgpu_target=gfx90a
+  - libceed +rocm amdgpu_target=gfx90a
   - magma ~cuda +rocm amdgpu_target=gfx90a
   - mfem +rocm amdgpu_target=gfx90a
   - petsc +rocm amdgpu_target=gfx90a
@@ -363,6 +365,7 @@ spack:
   - hypre +rocm amdgpu_target=gfx908
   - kokkos +rocm amdgpu_target=gfx908
   - legion +rocm amdgpu_target=gfx908
+  - libceed +rocm amdgpu_target=gfx908
   - magma ~cuda +rocm amdgpu_target=gfx908
   - mfem +rocm amdgpu_target=gfx908
   - petsc +rocm amdgpu_target=gfx908

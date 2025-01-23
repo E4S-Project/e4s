@@ -111,6 +111,7 @@ spack:
   - hypre +cuda cuda_arch=90
   - kokkos +wrapper +cuda cuda_arch=90
   - kokkos-kernels +cuda cuda_arch=90 ^kokkos +wrapper +cuda cuda_arch=90
+  - libceed +cuda cuda_arch=90
   - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf ~cusz +mgard +cuda cuda_arch=90 # libpressio: CMake Error at CMakeLists.txt:498 (find_library): Could not find CUFile_LIBRARY using the following names: cufile
   - mfem +cuda cuda_arch=90
   - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=90
@@ -160,6 +161,7 @@ spack:
   - hypre +cuda cuda_arch=80
   - kokkos +wrapper +cuda cuda_arch=80
   - kokkos-kernels +cuda cuda_arch=80 ^kokkos +wrapper +cuda cuda_arch=80
+  - libceed +cuda cuda_arch=80
   - mfem +cuda cuda_arch=80
   - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=80
   - parsec +cuda cuda_arch=80
@@ -210,6 +212,7 @@ spack:
   - hypre +cuda cuda_arch=75
   - kokkos +wrapper +cuda cuda_arch=75
   - kokkos-kernels +cuda cuda_arch=75 ^kokkos +wrapper +cuda cuda_arch=75
+  - libceed +cuda cuda_arch=75
   - mfem +cuda cuda_arch=75
   - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=75
   - parsec +cuda cuda_arch=75
