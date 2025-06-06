@@ -1,6 +1,21 @@
 spack:
   view: false
 
+  compilers:
+  - compiler:
+      spec: gcc@=13.3.0
+      paths:
+        cc: /usr/bin/gcc
+        cxx: /usr/bin/g++
+        f77: /usr/bin/gfortran
+        fc: /usr/bin/gfortran
+      flags: {}
+      operating_system: ubuntu24.04
+      target: aarch64
+      modules: []
+      environment: {}
+      extra_rpaths: []
+
   concretizer:
     reuse: false
     unify: false
@@ -8,66 +23,72 @@ spack:
   packages:
     all:
       target: [aarch64]
-      require: '%gcc@13.2.0 target=aarch64'
+      require:
+      - '@:99999999'
+      - 'target=aarch64 %gcc@13.3.0'
       providers:
         blas: [openblas]
+        lapack: [openblas]
+        tbb: [intel-tbb]
       variants: +mpi
     binutils:
       variants: +ld +gold +headers +libiberty ~nls
-    elfutils:
-      variants: +bzip2 ~nls +xz
+    blas:
+      require: openblas
+    cmake:
+      require:
+      - '~qtgui'
+      - 'target=aarch64 %gcc@13.3.0'
+    gmake:
+      require:
+      - '~guile'
+      - 'target=aarch64 %gcc@13.3.0'
     hdf5:
       variants: +fortran +hl +shared
+    lapack:
+      require: openblas
     libfabric:
       variants: fabrics=sockets,tcp,udp,rxm
     libunwind:
       variants: +pic +xz
     openblas:
       variants: threads=openmp
+    paraview:
+      variants: +qt +examples
+    qt:
+      prefer:
+      - '@5.15.16'
+      - 'target=aarch64 %gcc@13.3.0'
+    raja:
+      variants: +plugins
+    tbb:
+      require: intel-tbb
     trilinos:
       variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
         +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
         +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
         +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
-    xz:
-      variants: +pic
+    vtk-m:
+      require:
+      - '+examples'
+      - 'target=aarch64 %gcc@13.3.0'
+
+    # externals
+    python:
+      prefer:
+      - "@3.10.16"
+      externals:
+      - spec: python@3.10.16+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /py3.10
     mpi:
       require: mpich
     mpich:
-      require: '@4.2.3 ~wrapperrpath ~hwloc target=aarch64'
       buildable: false
       externals:
-      - spec: mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem
-          build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default
+      - spec: 'mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default target=aarch64'
         prefix: /usr/local/mpich/install/mpich
-    tbb:
-      require: intel-tbb
-    boost:
-      version: [1.79.0]
-      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
-        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
-        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
-        cxxstd=17 visibility=global
-    vtk-m:
-      require: +examples target=aarch64
-    cuda:
-      require: '@12.6.2 target=aarch64'
-      externals:
-      - spec: cuda@12.6.2
-        prefix: /usr/local/cuda-12.6
-    raja:
-      variants: +plugins
-    paraview:
-      variants: +qt +examples
-    python:
-      prefer:
-      - "@3.10.15"
-      externals:
-      - spec: python@3.10.15+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
-        prefix: /py3.10
 
   specs:
-  # CPU
   - adios
   - alquimia
   - aml
@@ -75,6 +96,7 @@ spack:
   - arborx
   - argobots
   - axom
+  - bolt
   - boost
   - butterflypack
   - cabana
@@ -83,9 +105,12 @@ spack:
   - chapel ~cuda ~rocm
   - charliecloud
   - conduit
+  - cp2k +mpi
   - datatransferkit
   - dealii
   - dyninst
+  - e4s-alc
+  - e4s-cl
   - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
   - exaworks
   - fftx
@@ -93,9 +118,6 @@ spack:
   - flit
   - flux-core
   - fpm
-  - e4s-cl
-  - e4s-alc
-  - netcdf-fortran
   - gasnet
   - ginkgo
   - globalarrays
@@ -120,7 +142,6 @@ spack:
   - legion
   - libceed
   - libnrm
-  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
   - libquo
   - libunwind
   - loki
@@ -134,9 +155,9 @@ spack:
   - nco
   - nek5000 +mpi ~visit
   - nekbone +mpi
+  - netcdf-fortran
   - netlib-scalapack
   - nrm
-  # - nvhpc # cannot redistribute
   - nwchem
   - omega-h
   - openfoam
@@ -153,7 +174,6 @@ spack:
   - precice
   - pruners-ninja
   - pumi
-  - py-deephyper
   - py-h5py
   - py-jupyterhub
   - py-libensemble
@@ -173,12 +193,13 @@ spack:
   - swig@4.0.2-fortran
   - sz3
   - tasmanian
-  - tau +mpi +python +syscall +dyninst
+  - tau@2.34.1 +mpi +python +syscall +dyninst +ompt
   - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
   - turbine
   - umap
   - umpire
   - upcxx
+  - variorum cpu=arm gpu=none
   - wannier90
   - warpx +python
   - wps
@@ -186,46 +207,25 @@ spack:
   - xyce +mpi +shared +pymi +pymi_static_tpls
   # INCLUDED IN ECP DAV CPU
   - adios2
-  - ascent # ecp dav
+  - ascent
   - darshan-runtime
   - darshan-util
   - faodel
   - hdf5
   - libcatalyst
   - parallel-netcdf
-  - paraview
+  - paraview +qt ^qt@5.15.16
   - py-cinemasci
   - sz
   - veloc
+  - visit ~gui                      # +gui: qt-5.14.2: g++: error: unrecognized command-line option '-mrdrnd'
   - vtk-m
   - zfp
   # --
-  # - unifyfs                       # examples/src/testutil.c:20:12: error: static declaration of 'asprintf' follows non-static declaration
-  # - visit                         # qt-5.14.2: g++: error: unrecognized command-line option '-mrdrnd'
-  # --
-  # - bolt                          # nvcc fatal   : Unsupported gpu architecture 'compute_35'
-  # - bricks ~cuda                  # VSBrick-cond.py-SVE512-8x8x8-8:639:21: error: expected ';' before '_cg_vectmp0'
-  # - cp2k +mpi                     # libint-2.9.0: make[2]: *** [CMakeFiles/libint_f.dir/build.make:114: CMakeFiles/libint_f.dir/depend] Error 137
-  # - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp ^paraview+qt ^visit ~gui # unifyfs-2.0: examples/src/testutil.c:20:12: error: static declaration of 'asprintf' follows non-static declaration; adios2-2.7.1: thirdparty/pybind11/pybind11/include/pybind11/attr.h:199:10: error: 'uint16_t' in namespace 'std' does not name a type; did you mean 'wint_t'?
-  # - fortrilinos                   # trilinos-14.0.0: teuchos/core/src/Teuchos_BigUIntDecl.hpp:67:8: error: 'uint32_t' in namespace 'std' does not name a type; did you mean 'wint_t'?
-  # - geopm-runtime                 # gtkplus-3.24.29: ModuleNotFoundError: No module named 'distutils.msvccompiler'
-  # - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long # teuchos/core/src/Teuchos_BigUIntDecl.hpp:67:8: error: 'uint32_t' in namespace 'std' does not name a type; did you mean 'wint_t'?
-  # - variorum                      # https://github.com/spack/spack/issues/38786
-
-
-  compilers:
-  - compiler:
-      spec: gcc@=13.2.0
-      paths:
-        cc: /usr/bin/gcc
-        cxx: /usr/bin/g++
-        f77: /usr/bin/gfortran
-        fc: /usr/bin/gfortran
-      flags: {}
-      operating_system: ubuntu24.04
-      target: aarch64
-      modules: []
-      environment:
-        set:
-          NVCC_APPEND_FLAGS: -allow-unsupported-compiler 
-      extra_rpaths: []
+  # - bricks ~cuda                  # bricks-2023.08.25: stencils/cpuvfold.h:27:2: error: #error "This is for SVE512"
+  # - fortrilinos                   # trilinos-14.0.0: packages/teuchos/core/src/Teuchos_BigUIntDecl.hpp:67:8: error: 'uint32_t' in namespace 'std' does not name a type; did you mean 'wint_t'?
+  # - geopm-runtime                 # llvm-14.0.6: openmp/runtime/src/kmp.h:69:10: fatal error: 'limits' file not found
+  # - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp # py-numcodecs-0.15.0: ??
+  # - nvhpc                         # skipped, cannot redistribute
+  # - py-deephyper ^py-tqdm@4.66.3  # concretization complicated; try adding new versions v9.3?
+  # - unifyfs                       # unifyfs-2.0: examples/src/testutil.c:20:12: error: static declaration of 'asprintf' follows non-static declaration

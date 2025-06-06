@@ -1,10 +1,6 @@
 spack:
   view: false
 
-  concretizer:
-    reuse: false
-    unify: false
-
   compilers:
   - compiler:
       spec: gcc@=11.4.0
@@ -20,64 +16,84 @@ spack:
       environment: {}
       extra_rpaths: []
 
+  concretizer:
+    reuse: false
+    unify: false
+
   packages:
-    python:
-      prefer:
-      - "@3.10.12"
-      externals:
-      - spec: python@3.10.12+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
-        prefix: /usr
     all:
-      target: [x86_64]
-      require: '%gcc@11.4.0 target=x86_64'
+      target: [x86_64_v3]
+      require:
+      - '@:99999999'
+      - 'target=x86_64_v3'
+      - '%gcc@11.4.0'
       providers:
         blas: [openblas]
+        lapack: [openblas]
+        tbb: [intel-tbb]
       variants: +mpi
     binutils:
       variants: +ld +gold +headers +libiberty ~nls
-    elfutils:
-      variants: +bzip2 ~nls +xz
+    blas:
+      require: openblas
+    cmake:
+      require:
+      - '~qtgui'
+      - 'target=x86_64_v3'
+      - '%gcc@11.4.0'
+    gmake:
+      require:
+      - '~guile'
+      - 'target=x86_64_v3'
+      - '%gcc@11.4.0'
     hdf5:
       variants: +fortran +hl +shared
+    lapack:
+      require: openblas
     libfabric:
       variants: fabrics=sockets,tcp,udp,rxm
     libunwind:
       variants: +pic +xz
     openblas:
       variants: threads=openmp
+    paraview:
+      variants: +qt +examples
+    qt:
+      require: 
+      - '@5.15.16'
+      - 'target=x86_64_v3'
+      - '%gcc@11.4.0'
+    raja:
+      variants: +plugins
+    tbb:
+      require: intel-tbb
     trilinos:
       variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
         +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
         +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
         +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
-    xz:
-      variants: +pic
+    vtk-m:
+      require:
+      - '+examples'
+      - 'target=x86_64_v3'
+      - '%gcc@11.4.0'
+
+    # externals
+    python:
+      prefer:
+      - "@3.10.12"
+      externals:
+      - spec: python@3.10.12+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /usr
     mpi:
       require: mpich
     mpich:
-      require: '@4.2.3 ~wrapperrpath ~hwloc target=x86_64'
       buildable: false
       externals:
-      - spec: mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem
-          build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default
+      - spec: 'mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default target=x86_64_v3'
         prefix: /usr/local/mpich/install/mpich
-    tbb:
-      require: intel-tbb
-    boost:
-      version: [1.79.0]
-      variants: +atomic +chrono +container +date_time +exception +filesystem +graph
-        +iostreams +locale +log +math +mpi +multithreaded +program_options +random
-        +regex +serialization +shared +signals +stacktrace +system +test +thread +timer
-        cxxstd=17 visibility=global
-    vtk-m:
-      require: +examples target=x86_64
-    raja:
-      variants: +plugins
-    paraview:
-      variants: +qt +examples
 
   specs:
-  # CPU
   - adios
   - alquimia
   - aml
@@ -101,7 +117,6 @@ spack:
   - dyninst
   - e4s-alc
   - e4s-cl
-  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp ^paraview+qt+examples ^visit +gui ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none
   - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
   - exaworks
   - fftx
@@ -113,7 +128,7 @@ spack:
   - gasnet
   - ginkgo
   - globalarrays
-  - glvis ^mesa@23.2.1
+  - glvis
   - gmp
   - gotcha
   - gptune ~mpispawn
@@ -134,7 +149,6 @@ spack:
   - legion
   - libceed
   - libnrm
-  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
   - libquo
   - libunwind
   - loki
@@ -151,7 +165,6 @@ spack:
   - netcdf-fortran
   - netlib-scalapack
   - nrm
-  # - nvhpc # cannot redistribute
   - nwchem
   - omega-h
   - openfoam
@@ -168,7 +181,6 @@ spack:
   - precice
   - pruners-ninja
   - pumi
-  - py-deephyper
   - py-h5py
   - py-jupyterhub
   - py-libensemble
@@ -188,18 +200,19 @@ spack:
   - swig@4.0.2-fortran
   - sz3
   - tasmanian
-  - tau +mpi +python +syscall +dyninst ^dyninst@13.0.0
+  - tau@2.34.1 +mpi +python +syscall +dyninst +ompt
   - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
-  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
   - turbine
   - umap
   - umpire
   - upcxx
   - variorum
   - wannier90
+  - warpx
   - wps
   - wrf
   - xyce +mpi +shared +pymi +pymi_static_tpls
+
   # INCLUDED IN ECP DAV CPU
   # - adios2
   # - ascent
@@ -218,6 +231,7 @@ spack:
   # - vtk-m
   # - zfp
   # --
-  # --
   # - geopm-runtime                   # gtkplus-3.24.29: ModuleNotFoundError: No module named 'distutils.msvccompiler'  
-  # - warpx                           # make: *** No rule to make target 'pip_wheel'.  Stop.
+  # - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp # py-numcodecs-0.15.0: ??
+  # - nvhpc                           # skipped, cannot redistribute
+  # - py-deephyper ^py-tqdm@4.66.3    # concretization complicated; try adding new versions v9.3?

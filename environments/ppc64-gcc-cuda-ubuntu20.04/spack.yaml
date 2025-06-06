@@ -1,13 +1,9 @@
 spack:
   view: false
 
-  concretizer:
-    reuse: false
-    unify: false
-
   compilers:
   - compiler:
-      spec: gcc@9.4.0
+      spec: gcc@=9.4.0
       paths:
         cc: /usr/bin/gcc
         cxx: /usr/bin/g++
@@ -20,22 +16,31 @@ spack:
       environment: {}
       extra_rpaths: []
 
+  concretizer:
+    reuse: false
+    unify: false
+  
   packages:
     all:
       target: [ppc64le]
-      require: '%gcc@9.4.0 target=ppc64le'
+      require:
+      - '@:99999999'
+      - 'target=ppc64le %gcc@9.4.0'
       providers:
         blas: [openblas]
+        lapack: [openblas]
         mpi: [mpich]
       variants: +mpi
     binutils:
       variants: +ld +gold +headers +libiberty ~nls
+    cuda:
+      require: '@11.4.4 target=ppc64le'
     elfutils:
       variants: +bzip2 ~nls +xz
     hdf5:
       variants: +fortran +hl +shared
     libfabric:
-      require: '@1.22.0 target=ppc64le'
+      require: '@1.22.0 target=ppc64le %gcc@9.4.0'
       variants: fabrics=sockets,tcp,udp,rxm
     libunwind:
       variants: +pic +xz
@@ -48,23 +53,12 @@ spack:
         +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
     xz:
       variants: +pic
-    mpi:
-      require: mpich
-    mpich:
-      require: '@4.2.3 ~wrapperrpath ~hwloc target=ppc64le'
-      buildable: false
-      externals:
-      - spec: mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem
-          build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default
-        prefix: /usr/local/mpich/install/mpich
     faodel:
-      require: ~tcmalloc target=ppc64le
+      require: '~tcmalloc target=ppc64le %gcc@9.4.0'
     tbb:
       require: intel-tbb
     vtk-m:
-      require: +examples target=ppc64le
-    cuda:
-      require: '@11.4.4 target=ppc64le'
+      require: '+examples target=ppc64le %gcc@9.4.0'
     raja:
       variants: +plugins
     paraview:
@@ -73,27 +67,35 @@ spack:
       prefer:
       - '@3.10.14'
 
+    # externals
+    mpi:
+      require: mpich
+    mpich:
+      buildable: false
+      externals:
+      - spec: 'mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default target=ppc64le'
+        prefix: /usr/local/mpich/install/mpich
+
   specs:
-  # CUDA NOARCH
   - bricks +cuda
   - flux-core +cuda
   - hpctoolkit +cuda
   - papi +cuda
-  - tau +mpi +cuda            # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
-  - legion +cuda              # legion: needs NVIDIA driver
+  - tau@2.34.1 +mpi +cuda            # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
 
-  # CUDA 70
+  ## FRESHLY EVALUATED
+  # - legion +cuda            # legion-24.12.0: runtime/realm/cuda/cuda_internal.h:1482:10: error: 'cuptiActivityRegisterTimestampCallback' was not declared in this scope; did you mean 'cuptiActivityRegisterCallbacks'?
+
+
   - amrex +cuda cuda_arch=70
   - arborx +cuda cuda_arch=70 ^kokkos +wrapper
   - axom +cuda cuda_arch=70
   - cabana +cuda cuda_arch=70 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=70
   - caliper +cuda cuda_arch=70
   - chai tests=none +cuda cuda_arch=70 ^umpire ~shared
-  - cusz +cuda cuda_arch=70
-  - ecp-data-vis-sdk ~rocm +adios2 ~ascent +hdf5 +vtkm +zfp +paraview +cuda cuda_arch=70 # +ascent: vtk-m: CMake Error at CMake/VTKmWrappers.cmake:413 (message): vtkm_cont needs to be built STATIC as CUDA doesn't support virtual methods across dynamic library boundaries.  You need to set the CMake option BUILD_SHARED_LIBS to `OFF` or (better) turn VTKm_NO_DEPRECATED_VIRTUAL to `ON`.
+  - cp2k smm=blas +mpi +cuda cuda_arch=70
   - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=70 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=70
   - fftx +cuda cuda_arch=70
-  - flecsi +cuda cuda_arch=70
   - ginkgo +cuda cuda_arch=70
   - gromacs +cuda cuda_arch=70
   - heffte +cuda cuda_arch=70
@@ -116,7 +118,7 @@ spack:
   - superlu-dist +cuda cuda_arch=70
   - tasmanian +cuda cuda_arch=70
   - umpire ~shared +cuda cuda_arch=70
-  - upcxx +cuda cuda_arch=70            # upcxx: needs NVIDIA driver
+  - upcxx +cuda cuda_arch=70
   # INCLUDED IN ECP DAV CUDA
   # - adios2 +cuda cuda_arch=70           # builds ok, included in ecp-dav
   # - paraview +cuda cuda_arch=70         # builds ok, included in ecp-dav
@@ -125,9 +127,10 @@ spack:
   # --
   # - ascent +cuda cuda_arch=70           # https://github.com/spack/spack/issues/38045
   # --
-  # - chapel +cuda cuda_arch=70           # radix_rank_sort_operations.cuh:124:20: error: explicit qualification required to use member 'ProcessFloatMinusZero' from dependent base class 
-  # - cp2k +mpi +cuda cuda_arch=70        # KeyError: 'Point environment variable LIBSMM_PATH to the absolute path of the libsmm.a file'
-  # - dealii +cuda cuda_arch=70           # boost/math/tools/promotion.hpp:134:27: error: static assertion failed: Sorry, but this platform does not have sufficient long double support for the special functions to be reliably implemented.
-  # - lbann +cuda cuda_arch=70            # FAILED: CMakeFiles/lbann.dir/src/layers/transform/cereal_registration/permute.cpp.o: layers/transform/cereal_registration/../permute/cutensor_support.hpp:95:18: error: 'cutensorInit' was not declared in this scope; did you mean 'cutensorPlan_t'? 
+  # - chapel +cuda cuda_arch=70           # chapel-2.3.0: Error: Chapel requires a CUDA version between 11.7 and 13
+  # - cusz +cuda cuda_arch=70             # cusz-0.14.0: psz/src/kernel/detail/l23_c.cuhip.inl(316): error: no instance of function template "psz::KERNEL_CUHIP_c_lorenzo_1d1l" matches the argument list
+  # - dealii +cuda cuda_arch=70           # dealii-9.6.2: boost-1.86.0-mqayd7gt3lkdwyintrvg5nluskvip2zz/include/boost/pending/property.hpp(24): error: Internal Compiler Error (codegen): "internal error during structure layout!
+  # - flecsi +cuda cuda_arch=70           # flecsi-2.3.1: flecsi/exec/buffers.hh:98:43: internal compiler error: trying to capture 'aa#0' in instantiation of generic lambda
+  # - lbann +cuda cuda_arch=70            # lbann-0.104: layers/transform/cereal_registration/../permute/cutensor_support.hpp:95:18: error: 'cutensorInit' was not declared in this scope; did you mean 'cutensorPlan_t'?
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=70 ^cusz +cuda cuda_arch=70 # depends_on("cuda@11.7.1:", when="+cuda")
-  # - trilinos +cuda cuda_arch=70         # include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed 
+  # - trilinos +cuda cuda_arch=70         # trilinos-16.0.0:boost-1.86.0-6oovzr5iovslvkxsykbmxr47ey6szhmm/include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed

@@ -1,13 +1,9 @@
 spack:
   view: false
 
-  concretizer:
-    reuse: false
-    unify: false
-
   compilers:
   - compiler:
-      spec: gcc@9.4.0
+      spec: gcc@=9.4.0
       paths:
         cc: /usr/bin/gcc
         cxx: /usr/bin/g++
@@ -20,14 +16,22 @@ spack:
       environment: {}
       extra_rpaths: []
 
+  concretizer:
+    reuse: false
+    unify: false
+
   packages:
     all:
       target: [ppc64le]
-      require: '%gcc@9.4.0 target=ppc64le'
+      require:
+      - '@:99999999'
+      - 'target=ppc64le %gcc@9.4.0'
       providers:
         blas: [openblas]
+        lapack: [openblas]
         mpi: [mpich]
       variants: +mpi
+
     binutils:
       variants: +ld +gold +headers +libiberty ~nls
     elfutils:
@@ -35,7 +39,7 @@ spack:
     hdf5:
       variants: +fortran +hl +shared
     libfabric:
-      require: '@1.22.0 target=ppc64le'
+      require: '@1.22.0 target=ppc64le %gcc@9.4.0'
       variants: fabrics=sockets,tcp,udp,rxm
     libunwind:
       variants: +pic +xz
@@ -48,23 +52,12 @@ spack:
         +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
     xz:
       variants: +pic
-    mpi:
-      require: mpich
-    mpich:
-      require: '@4.2.3 ~wrapperrpath ~hwloc target=ppc64le'
-      buildable: false
-      externals:
-      - spec: mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem
-          build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default
-        prefix: /usr/local/mpich/install/mpich
     faodel:
-      require: ~tcmalloc target=ppc64le
+      require: '~tcmalloc target=ppc64le %gcc@9.4.0'
     tbb:
       require: intel-tbb
     vtk-m:
-      require: +examples target=ppc64le
-    cuda:
-      require: '@11.4.4 target=ppc64le'
+      require: '+examples target=ppc64le %gcc@9.4.0'
     raja:
       variants: +plugins
     paraview:
@@ -73,6 +66,15 @@ spack:
       prefer:
       - '@3.10.14'
 
+    # externals
+    mpi:
+      require: mpich
+    mpich:
+      buildable: false
+      externals:
+      - spec: 'mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default target=ppc64le'
+        prefix: /usr/local/mpich/install/mpich
+  
   specs:
   # CPU
   - adios
@@ -97,17 +99,14 @@ spack:
   - dyninst
   - e4s-alc
   - e4s-cl
-  - ecp-data-vis-sdk ~cuda ~rocm +adios2 +ascent +cinema +darshan +faodel +hdf5 +paraview +pnetcdf +sz +unifyfs +veloc +visit +vtkm +zfp ^paraview+qt  ^visit +gui
   - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
   - exaworks
   - fftx
-  - flecsi
   - flit
   - flux-core
   - fortrilinos
   - fpm
   - gasnet
-  - geopm-runtime
   - ginkgo
   - globalarrays
   - glvis ^mesa@23.2.1
@@ -147,7 +146,6 @@ spack:
   - netcdf-fortran
   - netlib-scalapack
   - nrm
-    #- nvhpc # builds ok, cannot redistribute
   - nwchem
   - omega-h
   - openfoam
@@ -158,12 +156,12 @@ spack:
   - parsec ~cuda
   - pdt
   - petsc
+  - phist +mpi
   - plasma
   - plumed
   - precice
   - pruners-ninja
   - pumi
-  - py-deephyper
   - py-h5py
   - py-jupyterhub
   - py-libensemble
@@ -183,37 +181,38 @@ spack:
   - swig@4.0.2-fortran
   - sz3
   - tasmanian
-  - tau +mpi +python +dyninst ^dyninst@13.0.0 # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
+  - tau@2.34.1 +mpi +python +dyninst +ompt # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
   - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
-  - trilinos@13.0.1 +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
   - turbine
   - umap
   - umpire
   - upcxx
+  - variorum cpu=ibm gpu=none
   - wannier90
-  - warpx +python
   - wps
   - wrf
   - xyce +mpi +shared +pymi +pymi_static_tpls
   # INCLUDED IN ECP DAV CPU
-  # - adios2
-  # - ascent
-  # - darshan-runtime
-  # - darshan-util
-  # - faodel
-  # - hdf5
-  # - libcatalyst
-  # - parallel-netcdf
-  # - paraview
-  # - paraview ~cuda ~rocm
-  # - py-cinemasci
-  # - sz
-  # - unifyfs
-  # - veloc
-  # - visit +gui
-  # - vtk-m
-  # - zfp
+  - adios2
+  - ascent
+  - darshan-runtime
+  - darshan-util
+  - faodel
+  - hdf5
+  - libcatalyst
+  - parallel-netcdf
+  - paraview +qt ~cuda ~rocm ^qt@5.15.16
+  - py-cinemasci
+  - sz
+  - unifyfs
+  - veloc
+  - visit +gui
+  - vtk-m
+  - zfp
   # -- 
-  # - dealii                  # boost/math/tools/promotion.hpp:134:27: error: static assertion failed: Sorry, but this platform does not have sufficient long double support for the special functions to be reliably implemented.
-  # - phist +mpi              # src/tools/phist_gen_d.h:42:20: error: conflicting declaration of C function 'void phist_Dmvec_create(phist_Dmvec**, phist_const_map_ptr, phist_lidx, int*)'
-  # - variorum                # https://github.com/spack/spack/issues/38786
+  # - dealii                        # dealii-9.6.2: eal.II/matrix_free/fe_point_evaluation.h:294:23: error: 'const vectorized_value_type'
+  # - flecsi                        # flecsi-2.3.1: flecsi/exec/buffers.hh:98:43: internal compiler error: trying to capture 'aa#0' in instantiation of generic lambda
+  # - geopm-runtime                 # geopm-service-3.1.0: configure fails ??  
+  # - nvhpc                         # skipped, cannot redistribute
+  # - py-deephyper ^py-tqdm@4.66.3  # concretization complicated; try adding new versions v9.3?
+  # - warpx +python                 # warpx-25.03: ChecksumError: sha256 checksum failed for
