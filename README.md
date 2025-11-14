@@ -20,7 +20,7 @@ E4S is available to download in the following formats:
   
   - [AWS EC2 image](http://aws.amazon.com/) with image name `ami-0db9d49091db1c25f` in **US-West-2 (Oregon)**
  
-  - [E4S Build Cache](https://oaciss.uoregon.edu/e4s/inventory.html)
+  - E4S Build Cache for use with Spack
 
 
 Please see [E4S Product Dictionary](https://github.com/E4S-Project/e4s/blob/master/E4S_Products.md) for complete list of E4S products. 
