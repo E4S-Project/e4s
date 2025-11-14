@@ -1,46 +1,46 @@
 spack:
   view: false
 
-  compilers:
-  - compiler:
-      spec: gcc@=9.4.0
-      paths:
-        cc: /usr/bin/gcc
-        cxx: /usr/bin/g++
-        f77: /usr/bin/gfortran
-        fc: /usr/bin/gfortran
-      flags: {}
-      operating_system: ubuntu20.04
-      target: ppc64le
-      modules: []
-      environment: {}
-      extra_rpaths: []
-
   concretizer:
     reuse: false
     unify: false
-  
+
   packages:
     all:
       target: [ppc64le]
       require:
       - '@:99999999'
-      - 'target=ppc64le %gcc@9.4.0'
+      - 'target=ppc64le'
       providers:
         blas: [openblas]
         lapack: [openblas]
-        mpi: [mpich]
+        tbb: [intel-tbb]
       variants: +mpi
+    c:
+      require: [gcc@9.4.0]
+    cxx:
+      require: [gcc@9.4.0]
+    fortran:
+      require: [gcc@9.4.0]
+    gcc:
+      externals:
+      - spec: gcc@9.4.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fortran: /usr/bin/gfortran
     binutils:
       variants: +ld +gold +headers +libiberty ~nls
-    cuda:
-      require: '@11.4.4 target=ppc64le'
     elfutils:
       variants: +bzip2 ~nls +xz
     hdf5:
       variants: +fortran +hl +shared
     libfabric:
-      require: '@1.22.0 target=ppc64le %gcc@9.4.0'
+      require:
+      - '@1.22.0'
+      - target=ppc64le
       variants: fabrics=sockets,tcp,udp,rxm
     libunwind:
       variants: +pic +xz
@@ -54,11 +54,15 @@ spack:
     xz:
       variants: +pic
     faodel:
-      require: '~tcmalloc target=ppc64le %gcc@9.4.0'
+      require:
+      - ~tcmalloc
+      - target=ppc64le
     tbb:
       require: intel-tbb
     vtk-m:
-      require: '+examples target=ppc64le %gcc@9.4.0'
+      require: 
+      - +examples
+      - target=ppc64le
     raja:
       variants: +plugins
     paraview:
@@ -67,37 +71,37 @@ spack:
       prefer:
       - '@3.10.14'
 
-    # externals
+    # EXTERNALS
     mpi:
       require: mpich
     mpich:
       buildable: false
       externals:
-      - spec: 'mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default target=ppc64le'
-        prefix: /usr/local/mpich/install/mpich
+      - spec: mpich@4.3.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+        prefix: /opt/mpi/pkgs/mpich-4.3.1
+    cuda:
+      require:
+      - '@11.4.4'
+      - 'target=ppc64le'
 
   specs:
+  ## CUDA NOARCH
   - bricks +cuda
   - flux-core +cuda
   - hpctoolkit +cuda
-  - papi +cuda
-  - tau@2.34.1 +mpi +cuda            # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
-
-  ## FRESHLY EVALUATED
+  - tau +mpi +cuda            # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
   # - legion +cuda            # legion-24.12.0: runtime/realm/cuda/cuda_internal.h:1482:10: error: 'cuptiActivityRegisterTimestampCallback' was not declared in this scope; did you mean 'cuptiActivityRegisterCallbacks'?
 
-
+  ## CUDA 70
   - amrex +cuda cuda_arch=70
-  - arborx +cuda cuda_arch=70 ^kokkos +wrapper
   - axom +cuda cuda_arch=70
   - cabana +cuda cuda_arch=70 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=70
   - caliper +cuda cuda_arch=70
   - chai tests=none +cuda cuda_arch=70 ^umpire ~shared
-  - cp2k smm=blas +mpi +cuda cuda_arch=70
   - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=70 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=70
   - fftx +cuda cuda_arch=70
+  - flecsi +cuda cuda_arch=70
   - ginkgo +cuda cuda_arch=70
-  - gromacs +cuda cuda_arch=70
   - heffte +cuda cuda_arch=70
   - hpx +cuda cuda_arch=70
   - hypre +cuda cuda_arch=70
@@ -108,6 +112,7 @@ spack:
   - mfem +cuda cuda_arch=70
   - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=70
   - omega-h +cuda cuda_arch=70
+  - paraview +cuda cuda_arch=70
   - parsec +cuda cuda_arch=70
   - petsc +cuda cuda_arch=70
   - raja +cuda cuda_arch=70
@@ -119,18 +124,17 @@ spack:
   - tasmanian +cuda cuda_arch=70
   - umpire ~shared +cuda cuda_arch=70
   - upcxx +cuda cuda_arch=70
-  # INCLUDED IN ECP DAV CUDA
-  # - adios2 +cuda cuda_arch=70           # builds ok, included in ecp-dav
-  # - paraview +cuda cuda_arch=70         # builds ok, included in ecp-dav
-  # - vtk-m +cuda cuda_arch=70            # builds ok, included in ecp-dav
-  # - zfp +cuda cuda_arch=70              # builds ok, included in ecp-dav
-  # --
-  # - ascent +cuda cuda_arch=70           # https://github.com/spack/spack/issues/38045
-  # --
-  # - chapel +cuda cuda_arch=70           # chapel-2.3.0: Error: Chapel requires a CUDA version between 11.7 and 13
-  # - cusz +cuda cuda_arch=70             # cusz-0.14.0: psz/src/kernel/detail/l23_c.cuhip.inl(316): error: no instance of function template "psz::KERNEL_CUHIP_c_lorenzo_1d1l" matches the argument list
-  # - dealii +cuda cuda_arch=70           # dealii-9.6.2: boost-1.86.0-mqayd7gt3lkdwyintrvg5nluskvip2zz/include/boost/pending/property.hpp(24): error: Internal Compiler Error (codegen): "internal error during structure layout!
-  # - flecsi +cuda cuda_arch=70           # flecsi-2.3.1: flecsi/exec/buffers.hh:98:43: internal compiler error: trying to capture 'aa#0' in instantiation of generic lambda
-  # - lbann +cuda cuda_arch=70            # lbann-0.104: layers/transform/cereal_registration/../permute/cutensor_support.hpp:95:18: error: 'cutensorInit' was not declared in this scope; did you mean 'cutensorPlan_t'?
+  - vtk-m +cuda cuda_arch=70
+  - zfp +cuda cuda_arch=70
+  # - adios2 +cuda cuda_arch=70                           # adios2-2.10.2: Could NOT find MPI (missing: MPI_C_FOUND MPI_CXX_FOUND MPI_Fortran_FOUND C Fortran)
+  # - arborx +cuda cuda_arch=70 ^kokkos +wrapper          # trilinos-14.2.0: include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed
+  # - ascent +cuda cuda_arch=70                           # https://github.com/spack/spack/issues/38045
+  # - chapel +cuda cuda_arch=70                           # chapel-2.6.0: llvm-config: unknown component name: windowsdriver
+  # - cp2k smm=blas +mpi +cuda cuda_arch=70               # cp2k-2025.2: grpp/grpp_specfunc_dawson.c:444:29: error: initializer element is not constant
+  # - cusz +cuda cuda_arch=70                             # cusz-0.14.0: kernel/detail/l23_c.cuhip.inl(316): error: no instance of function template "psz::KERNEL_CUHIP_c_lorenzo_1d1l" matches the argument lis
+  # - dealii +cuda cuda_arch=70                           # trilinos-14.2.0: include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed
+  # - gromacs +cuda cuda_arch=70                          # gromacs-2025.3: CMake Error at cmake/gmxTestCompilerProblems.cmake:76 (message): GCC version 11 or later required.  Earlier versions may not have full C++17 support.
+  # - lbann +cuda cuda_arch=70                            # nccl-2.28.3: include/cudawrap.h:73:56: error: 'PFN_cuStreamWaitValue32_v11070' does not name a type; did you mean 'PFN_cuStreamWaitValue32_v8000'
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=70 ^cusz +cuda cuda_arch=70 # depends_on("cuda@11.7.1:", when="+cuda")
-  # - trilinos +cuda cuda_arch=70         # trilinos-16.0.0:boost-1.86.0-6oovzr5iovslvkxsykbmxr47ey6szhmm/include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed
+  # - papi +cuda                                          # papi-7.2.0: components/cuda/cupti_profiler.c:2878:36: error: 'NVPW_MetricsEvaluator_GetMetricRawDependencies_Params' {aka 'struct NVPW_MetricsEvaluator_GetMetricRawDependencies_Params'} has no member named 'ppOptionalRawDependencies'; did you mean 'ppRawDependencies'?
+  # - trilinos +cuda cuda_arch=70                         # ??

@@ -1,38 +1,41 @@
 spack:
   view: false
 
-  compilers:
-  - compiler:
-      spec: gcc@=11.4.0
-      paths:
-        cc: /usr/bin/gcc
-        cxx: /usr/bin/g++
-        f77: /usr/bin/gfortran
-        fc: /usr/bin/gfortran
-      flags: {}
-      operating_system: ubuntu22.04
-      target: x86_64
-      modules: []
-      environment: {}
-      extra_rpaths: []
-
   concretizer:
     reuse: false
     unify: false
-  
+
+  mirrors:
+    remote:
+      url: s3://cache.e4s.io/25.11
+      autopush: true
+
   packages:
-    ## from: e4s-spack-environments/environments/amd64/gnu/_config/packages.yaml
     all:
       target: [x86_64_v3]
       require:
       - '@:99999999'
       - 'target=x86_64_v3'
-      - '%gcc@11.4.0'
       providers:
         blas: [openblas]
         lapack: [openblas]
         tbb: [intel-tbb]
       variants: +mpi
+    c:
+      require: [gcc@13.3.0]
+    cxx:
+      require: [gcc@13.3.0]
+    fortran:
+      require: [gcc@13.3.0]
+    gcc:
+      externals:
+      - spec: gcc@13.3.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fortran: /usr/bin/gfortran
     binutils:
       variants: +ld +gold +headers +libiberty ~nls
     blas:
@@ -41,12 +44,10 @@ spack:
       require:
       - '~qtgui'
       - 'target=x86_64_v3'
-      - '%gcc@11.4.0'
     gmake:
       require:
       - '~guile'
       - 'target=x86_64_v3'
-      - '%gcc@11.4.0'
     hdf5:
       variants: +fortran +hl +shared
     lapack:
@@ -63,7 +64,6 @@ spack:
       require: 
       - '@5.15.16'
       - 'target=x86_64_v3'
-      - '%gcc@11.4.0'
     raja:
       variants: +plugins
     tbb:
@@ -77,56 +77,53 @@ spack:
       require:
       - '+examples'
       - 'target=x86_64_v3'
-      - '%gcc@11.4.0'
-
-    # externals
-    python:
-      prefer:
-      - "@3.10.12"
-      externals:
-      - spec: python@3.10.12+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
-        prefix: /usr
-    mpi:
-      require: mpich
-    mpich:
-      buildable: false
-      externals:
-      - spec: 'mpich@4.2.3 ~argobots~cuda+fortran~hwloc+hydra+libxml2+pci~rocm+romio~slurm~vci~verbs~wrapperrpath~xpmem build_system=autotools datatype-engine=auto device=ch4 netmod=ofi pmi=default target=x86_64_v3'
-        prefix: /usr/local/mpich/install/mpich
-    ##
-
-    ## from: e4s-spack-environments/environments/amd64/gnu/cuda/_config/packages.yaml
-    cuda:
-      prefer:
-      - '@12.8.0'
-      - '@11.8.0'
-      buildable: false
-      externals:
-      - spec: cuda@12.8.0
-        prefix: /usr/local/cuda-12.8
-      - spec: cuda@11.8.0
-        prefix: /usr/local/cuda-11.8
     llvm:
       prefer:
       - '~lldb~lld~libomptarget~polly~gold'
       require:
       - 'build_type=MinSizeRel'
       - 'target=x86_64_v3'
-      - '%gcc@11.4.0'
     libglx:
       require: mesa
     libllvm:
       require: llvm
-    ##
+
+    # EXTERNALS
+    python:
+      prefer:
+      - "@3.12.11"
+      externals:
+      - spec: python@3.12.11+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /opt/python/pkgs/python-3.12.11
+    mpi:
+      require: mpich
+    mpich:
+      buildable: false
+      externals:
+      - spec: mpich@4.3.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+        prefix: /opt/mpi/pkgs/mpich-4.3.1
+    cuda:
+      buildable: false
+      prefer:
+      - '@12.9.0'
+      - '@12.8.1'
+      externals:
+      - spec: cuda@12.9.0
+        prefix: /usr/local/cuda-12.9
+      - spec: cuda@12.8.1
+        prefix: /usr/local/cuda-12.8
 
   specs:
+  ## CUDA NO-ARCH
   - bricks +cuda
-  - flux-core +cuda
   - hpctoolkit +cuda
   - legion +cuda
   - papi +cuda
-  - tau@2.34.1 +mpi +cuda +syscall
+  - tau +mpi +cuda +syscall +python +ittnotify
+  # - flux-core +cuda       # flux-core-0.73.0: configure: ERROR! You probably have to install the development version of the Python package
 
+  ## CUDA 80
+  - adios2 +cuda cuda_arch=80
   - amrex +cuda cuda_arch=80
   - arborx +cuda cuda_arch=80 ^kokkos +wrapper
   - axom +cuda cuda_arch=80
@@ -136,8 +133,6 @@ spack:
   - chapel +cuda cuda_arch=80 ^llvm targets=x86,nvptx
   - cp2k smm=blas +mpi +cuda cuda_arch=80
   - cusz +cuda cuda_arch=80
-  - dealii +cuda cuda_arch=80
-  - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=80 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=80
   - fftx +cuda cuda_arch=80
   - flecsi +cuda cuda_arch=80
   - ginkgo +cuda cuda_arch=80
@@ -164,22 +159,19 @@ spack:
   - trilinos +cuda cuda_arch=80
   - umpire ~shared +cuda cuda_arch=80
   - upcxx +cuda cuda_arch=80          # upcxx: needs NVIDIA driver
-  # INCLUDED IN ECP DAV CUDA
-  - adios2 +cuda cuda_arch=80
-  - paraview ~qt ~examples +cuda cuda_arch=80 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none
   - vtk-m +cuda cuda_arch=80
   - zfp +cuda cuda_arch=80
-  # --
   # - ascent +cuda cuda_arch=80       # ascent: https://github.com/spack/spack/issues/38045
-  # --
+  # - dealii +cuda cuda_arch=80
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=80 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=80
   # - lbann +cuda cuda_arch=80 ^cuda@11.8.0 # layers/transform/cereal_registration/permute.cpp.o: layers/transform/cereal_registration/../permute/cutensor_support.hpp:95:18: error: 'cutensorInit' was not declared in this scope; did you mean 'cutensorPlan_t'  
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # py-numcodecs-0.15.0: ?? 
   # - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=80 # abseil-cpp-20230802.1-tc22dfo2lp5ixtrxjiajsrsbrhemxf4z/include/absl/crc/crc32c.h:184:34: error: no matching function for call to 'StreamFormat(const char [5], uint32_t)'
   # - omega-h +cuda cuda_arch=80      # Omega_h_reduce.hpp(84): error: namespace "thrust" has no member "device"
-  # - py-torch +cuda cuda_arch=80     # skipped, installed outside of spack
+  # - paraview ~qt ~examples +cuda cuda_arch=80 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none
 
-  ## FRESHLY EVALUATED
-  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=80 ^cusz +cuda cuda_arch=80 # py-numcodecs-0.15.0: ?? 
-
+  ## CUDA 90
+  - adios2 +cuda cuda_arch=90
   - amrex +cuda cuda_arch=90
   - arborx +cuda cuda_arch=90 ^kokkos +wrapper
   - axom +cuda cuda_arch=90
@@ -215,22 +207,18 @@ spack:
   - trilinos +cuda cuda_arch=90
   - umpire ~shared +cuda cuda_arch=90
   - upcxx +cuda cuda_arch=90          # upcxx: needs NVIDIA driver
-  # INCLUDED IN ECP DAV CUDA
-  - adios2 +cuda cuda_arch=90
   - vtk-m +cuda cuda_arch=90
   - zfp +cuda cuda_arch=90
-  # --
   # - ascent +cuda cuda_arch=90       # ascent: https://github.com/spack/spack/issues/38045
-  # - paraview ~qt ~examples +cuda cuda_arch=90 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # concretize fails due to cuda unsat
-  # --
   # - dealii +cuda cuda_arch=90       # dealii: conflicts with '+cuda ^cuda@12:' 
   # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=90 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=90 # hiop conflicts with cuda@12: required for cuda_arch=90
-  # - lbann +cuda cuda_arch=90        # dihydrogen: gpu/memory_utils.cpp:112:34: error: 'MemoryPool' is not a member of 'hydrogen::cub'
+  # - lbann +cuda cuda_arch=90        # 
   # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=90 ^cusz +cuda cuda_arch=90 # py-numcodecs-0.15.0: ?? 
   # - omega-h +cuda cuda_arch=90      # omega-h: https://github.com/spack/spack/issues/39535
-  # - py-torch +cuda cuda_arch=90     # skipped, installed outside of spack
+  # - paraview ~qt ~examples +cuda cuda_arch=90 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # concretize fails due to cuda unsat
 
-
+  ## CUDA 120
+  - adios2 +cuda cuda_arch=120
   - arborx +cuda cuda_arch=120 ^kokkos +wrapper
   - cabana +cuda cuda_arch=120 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=120
   - caliper +cuda cuda_arch=120
@@ -257,14 +245,10 @@ spack:
   - superlu-dist +cuda cuda_arch=120
   - tasmanian +cuda cuda_arch=120
   - umpire ~shared +cuda cuda_arch=120
-  # INCLUDED IN ECP DAV CUDA
-  - adios2 +cuda cuda_arch=120
   - vtk-m +cuda cuda_arch=120
   - zfp +cuda cuda_arch=120
-  # --
-  # - ascent +cuda cuda_arch=120                  # ascent: https://github.com/spack/spack/issues/38045
-  # --
   # - amrex +cuda cuda_arch=120                   # amrex-25.03: Unknown CUDA Architecture Name 12.0 in CUDA_SELECT_NVCC_ARCH_FLAGS
+  # - ascent +cuda cuda_arch=120                  # ascent: https://github.com/spack/spack/issues/38045
   # - axom +cuda cuda_arch=120                    # raja-2024.07.0: RAJA requires minimum CUDA compute architecture of 35
   # - cp2k smm=blas +mpi +cuda cuda_arch=120      # cp2k only supports cuda_arch ('35', '37', '60', '70', '80', '90')
   # - dealii +cuda cuda_arch=120                  # dealii: conflicts with '+cuda ^cuda@12:' 

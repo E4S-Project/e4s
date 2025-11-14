@@ -1,0 +1,226 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      target: [aarch64]
+      require:
+      - '@:99999999'
+      - 'target=aarch64'
+      providers:
+        blas: [openblas]
+        lapack: [openblas]
+        tbb: [intel-tbb]
+      variants: +mpi
+    c:
+      require: [gcc@13.3.1]
+    cxx:
+      require: [gcc@13.3.1]
+    fortran:
+      require: [gcc@13.3.1]
+    gcc:
+      externals:
+      - spec: gcc@13.3.1 languages:='c,c++,fortran'
+        prefix: /opt/rh/gcc-toolset-13/root/usr
+        extra_attributes:
+          compilers:
+            c: /opt/rh/gcc-toolset-13/root/usr/bin/gcc
+            cxx: /opt/rh/gcc-toolset-13/root/usr/bin/g++
+            fortran: /opt/rh/gcc-toolset-13/root/usr/bin/gfortran
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    blas:
+      require: openblas
+    cmake:
+      require:
+      - ~qtgui
+      - 'target=aarch64'
+    gmake:
+      require:
+      - ~guile
+      - 'target=aarch64'
+    hdf5:
+      variants: +fortran +hl +shared
+    lapack:
+      require: openblas
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    paraview:
+      variants: +qt +examples
+    qt:
+      prefer:
+      - '@5.15.16'
+      - 'target=aarch64'
+    raja:
+      variants: +plugins
+    tbb:
+      require: intel-tbb
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    vtk-m:
+      require:
+      - +examples
+      - 'target=aarch64'
+
+    # EXTERNALS
+    python:
+      prefer:
+      - "@3.12.11"
+      externals:
+      - spec: python@3.12.11+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /opt/python/pkgs/python-3.12.11
+    mpi:
+      require: mpich
+    mpich:
+      buildable: false
+      externals:
+      - spec: mpich@4.3.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+        prefix: /opt/mpi/pkgs/mpich-4.3.1
+
+  specs:
+  - adios
+  - adios2
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - ascent
+  - axom
+  - boost
+  - butterflypack 
+  - cabana
+  - caliper
+  - chai tests=none
+  - chapel ~cuda ~rocm
+  - charliecloud
+  - conduit
+  - darshan-runtime
+  - darshan-util
+  - datatransferkit
+  - dyninst
+  - e4s-alc
+  - e4s-cl
+  - exago +mpi ~ipopt +hiop ~python +raja ^hiop+raja~sparse
+  - faodel
+  - fftx
+  - flecsi
+  - flit
+  - fpm
+  - gasnet
+  - ginkgo
+  - globalarrays
+  - glvis ^mesa@23.2.1
+  - gmp
+  - gotcha
+  - gptune ~mpispawn
+  - gromacs
+  - h5bench
+  - hdf5
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  - hpctoolkit
+  - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - laghos ^mfem~cuda
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff
+  - lbann
+  - legion
+  - libcatalyst
+  - libceed
+  - libnrm
+  - libquo
+  - libunwind
+  - loki
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - nek5000 +mpi ~visit
+  - nekbone +mpi
+  - netcdf-fortran
+  - netlib-scalapack
+  - nrm
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parallel-netcdf
+  - paraview +qt ^qt@5.15.16 # needs: apt install libsqlite3-dev
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-cinemasci
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz
+  - sz3
+  - tasmanian
+  - tau +mpi +python +syscall +dyninst +ompt +ittnotify
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - veloc
+  - vtk-m
+  - wannier90
+  - warpx +python
+  - wps
+  - wrf
+  - xyce +mpi +shared +pymi +pymi_static_tpls
+  - zfp
+  # - bolt                            # bolt-2.0: CMake Error at bolt-omptarget-nvptx_generated_target_impl.cu.o.Release.cmake: nvcc fatal   : Unsupported gpu architecture 'compute_35'
+  # - bricks ~cuda                    # bricks-2023.08.25: VSBrick-cond.py-SVE512-8x8x8-8:674:35: error: 'svld1_u32' was not declared in this scope; did you mean 'vld1_u32'?
+  # - cp2k +mpi                       # libint-2.11.1: make[2]: *** [CMakeFiles/libint_f.dir/build.make:117: CMakeFiles/libint_f.dir/depend] Error 137
+  # - dealii                          # dealii-9.7.1: collect2: error: ld returned 1 exit status; make[2]: *** [source/CMakeFiles/dealii_debug.dir/build.make:1279: lib/libdeal_II.g.so.9.7.1] Error 1
+  # - exaworks                        # flux-core-0.73.0: configure: ERROR! You probably have to install the development version of the Python package
+  # - flux-core                       # flux-core-0.73.0: configure: ERROR! You probably have to install the development version of the Python package
+  # - fortrilinos                     # trilinos-14.0.0: error: 'uint32_t' in namespace 'std' does not name a type; did you mean 'wint_t'?
+  # - geopm-runtime                   # ??
+  # - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp # ??
+  # - mercury                         # mercury-2.4.0: Could NOT find MPI (missing: MPI_C_FOUND)
+  # - nvhpc                           # skipped, cannot redistribute
+  # - nwchem                          # nwchem-7.2.3: /usr/bin/ld: cannot find -lintl: No such file or directory
+  # - py-deephyper ^py-tqdm@4.66.3    # concretization complicated; try adding new versions v9.3?
+  # - unifyfs                         # mercury-2.4.0: Could NOT find MPI (missing: MPI_C_FOUND)
+  # - variorum cpu=arm gpu=none       # need spack/spack-packages/pull/148
+  # - visit +gui                      # vtk: '%gcc@13' conflicts with '@9.2' 
