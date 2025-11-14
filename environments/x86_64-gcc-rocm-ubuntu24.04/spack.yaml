@@ -1,0 +1,402 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  mirrors:
+    remote:
+      url: s3://cache.e4s.io/25.11
+      autopush: true
+
+  packages:
+    all:
+      target: [x86_64_v3]
+      require:
+      - '@:99999999'
+      - 'target=x86_64_v3'
+      providers:
+        blas: [openblas]
+        lapack: [openblas]
+        tbb: [intel-tbb]
+      variants: +mpi
+    c:
+      require: [gcc@13.3.0]
+    cxx:
+      require: [gcc@13.3.0]
+    fortran:
+      require: [gcc@13.3.0]
+    gcc:
+      externals:
+      - spec: gcc@13.3.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fortran: /usr/bin/gfortran
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    blas:
+      require: openblas
+    cmake:
+      require:
+      - '~qtgui'
+      - 'target=x86_64_v3'
+    gmake:
+      require:
+      - '~guile'
+      - 'target=x86_64_v3'
+    hdf5:
+      variants: +fortran +hl +shared
+    lapack:
+      require: openblas
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    paraview:
+      variants: +qt +examples
+    qt:
+      require: 
+      - '@5.15.16'
+      - 'target=x86_64_v3'
+    raja:
+      variants: +plugins
+    tbb:
+      require: intel-tbb
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    vtk-m:
+      require:
+      - '+examples'
+      - 'target=x86_64_v3'
+  
+    # EXTERNALS 
+    python:
+      prefer:
+      - "@3.12.11"
+      externals:
+      - spec: python@3.12.11+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /opt/python/pkgs/python-3.12.11
+    mpi:
+      require: mpich
+    mpich:
+      buildable: false
+      externals:
+      - spec: mpich@4.3.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+        prefix: /opt/mpi/pkgs/mpich-4.3.1
+    
+    ## ROCM STACK
+    comgr:
+      buildable: false
+      externals:
+      - spec: comgr@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    hip-rocclr:
+      buildable: false
+      externals:
+      - spec: hip-rocclr@6.4.3
+        prefix: /opt/rocm-6.4.3/hip
+    hipblas:
+      buildable: false
+      externals:
+      - spec: hipblas@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    hipcub:
+      buildable: false
+      externals:
+      - spec: hipcub@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    hipfft:
+      buildable: false
+      externals:
+      - spec: hipfft@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    hipsparse:
+      buildable: false
+      externals:
+      - spec: hipsparse@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    miopen-hip:
+      buildable: false
+      externals:
+      - spec: miopen-hip@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    miopengemm:
+      buildable: false
+      externals:
+      - spec: miopengemm@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rccl:
+      buildable: false
+      externals:
+      - spec: rccl@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocblas:
+      buildable: false
+      externals:
+      - spec: rocblas@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocfft:
+      buildable: false
+      externals:
+      - spec: rocfft@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-clang-ocl:
+      buildable: false
+      externals:
+      - spec: rocm-clang-ocl@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-cmake:
+      buildable: false
+      externals:
+      - spec: rocm-cmake@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-dbgapi:
+      buildable: false
+      externals:
+      - spec: rocm-dbgapi@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-debug-agent:
+      buildable: false
+      externals:
+      - spec: rocm-debug-agent@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-device-libs:
+      buildable: false
+      externals:
+      - spec: rocm-device-libs@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-gdb:
+      buildable: false
+      externals:
+      - spec: rocm-gdb@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    rocm-opencl:
+      buildable: false
+      externals:
+      - spec: rocm-opencl@6.4.3
+        prefix: /opt/rocm-6.4.3/opencl
+    rocm-smi-lib:
+      buildable: false
+      externals:
+      - spec: rocm-smi-lib@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    hip:
+      buildable: false
+      externals:
+      - spec: hip@6.4.3
+        prefix: /opt/rocm-6.4.3
+        extra_attributes:
+          compilers:
+            c: /opt/rocm-6.4.3/llvm/bin/clang++
+            c++: /opt/rocm-6.4.3/llvm/bin/clang++
+            hip: /opt/rocm-6.4.3/hip/bin/hipcc
+    hipify-clang:
+      buildable: false
+      externals:
+      - spec: hipify-clang@6.4.3
+        prefix: /opt/rocm-6.4.3
+    llvm-amdgpu:
+      buildable: false
+      externals:
+      - spec: llvm-amdgpu@6.4.3
+        prefix: /opt/rocm-6.4.3/llvm
+        extra_attributes:
+          compilers:
+            c: /opt/rocm-6.4.3/llvm/bin/clang++
+            cxx: /opt/rocm-6.4.3/llvm/bin/clang++
+    hsakmt-roct:
+      buildable: false
+      externals:
+      - spec: hsakmt-roct@6.4.3
+        prefix: /opt/rocm-6.4.3/
+    hsa-rocr-dev:
+      buildable: false
+      externals:
+      - spec: hsa-rocr-dev@6.4.3
+        prefix: /opt/rocm-6.4.3/
+        extra_atributes:
+          compilers:
+            c: /opt/rocm-6.4.3/llvm/bin/clang++
+            cxx: /opt/rocm-6.4.3/llvm/bin/clang++
+    roctracer-dev-api:
+      buildable: false
+      externals:
+      - spec: roctracer-dev-api@6.4.3
+        prefix: /opt/rocm-6.4.3
+    roctracer-dev:
+      buildable: false
+      externals:
+      - spec: roctracer-dev@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocprim:
+      buildable: false
+      externals:
+      - spec: rocprim@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocrand:
+      buildable: false
+      externals:
+      - spec: rocrand@6.4.3
+        prefix: /opt/rocm-6.4.3
+    hipsolver:
+      buildable: false
+      externals:
+      - spec: hipsolver@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocsolver:
+      buildable: false
+      externals:
+      - spec: rocsolver@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocsparse:
+      buildable: false
+      externals:
+      - spec: rocsparse@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocthrust:
+      buildable: false
+      externals:
+      - spec: rocthrust@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocprofiler-dev:
+      buildable: false
+      externals:
+      - spec: rocprofiler-dev@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocprofiler-sdk:
+      buildable: false
+      externals:
+      - spec: rocprofiler-sdk@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocm-core:
+      buildable: false
+      externals:
+      - spec: rocm-core@6.4.3
+        prefix: /opt/rocm-6.4.3
+    rocm-openmp-extras:
+      buildable: false
+      externals:
+      - spec: rocm-openmp-extras@6.4.3
+        prefix: /opt/rocm-6.4.3
+  
+  specs:
+  ## ROCM NOARCH
+  - hpctoolkit +rocm
+  - tau +mpi +rocm +rocprofiler-sdk +syscall +ompt +python +ittnotify
+
+  ## ROCM 908
+  - amrex +rocm amdgpu_target=gfx908
+  - arborx +rocm amdgpu_target=gfx908
+  - cabana +rocm amdgpu_target=gfx908 ^kokkos +rocm amdgpu_target=gfx908
+  - caliper +rocm amdgpu_target=gfx908
+  - chai tests=none +rocm amdgpu_target=gfx908
+  - fftx +rocm amdgpu_target=gfx908
+  - gasnet +rocm amdgpu_target=gfx908
+  - ginkgo +rocm amdgpu_target=gfx908
+  - heffte +rocm amdgpu_target=gfx908
+  - hypre +rocm amdgpu_target=gfx908
+  - kokkos +rocm amdgpu_target=gfx908
+  - legion +rocm amdgpu_target=gfx908
+  - libceed +rocm amdgpu_target=gfx908
+  - magma ~cuda +rocm amdgpu_target=gfx908
+  - mfem +rocm amdgpu_target=gfx908
+  - papi +rocm amdgpu_target=gfx908
+  - petsc +rocm amdgpu_target=gfx908
+  - raja ~openmp +rocm amdgpu_target=gfx908
+  - slate +rocm amdgpu_target=gfx908
+  - slepc +rocm amdgpu_target=gfx908 ^petsc +rocm amdgpu_target=gfx908
+  - strumpack ~slate +rocm amdgpu_target=gfx908
+  - sundials +rocm amdgpu_target=gfx908
+  - superlu-dist +rocm amdgpu_target=gfx908
+  - tasmanian ~openmp +rocm amdgpu_target=gfx908
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx908
+  - umpire +rocm amdgpu_target=gfx908
+  - upcxx +rocm amdgpu_target=gfx908
+  - vtk-m ~openmp +rocm amdgpu_target=gfx908
+  # - chapel +rocm amdgpu_target=gfx908       # requires rocm <=6.2
+  # - cp2k +mpi +rocm amdgpu_target=gfx908    # cp2k-2025.2: /opt/rocm-6.4.3/include/hip/hip_runtime_api.h:722:29: error: expected unqualified-id before numeric constant
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx908 ~ipopt cxxflags="-Wno-error=non-pod-varargs" ^hiop@1.0.0 ~sparse +mpi +raja +rocm amdgpu_target=gfx908
+  # - hpx +rocm amdgpu_target=gfx908          # hpx-1.6.0: FAILED: [code=1] libs/core/thread_pools/CMakeFiles/hpx_thread_pools.dir/src/scheduled_thread_pool.cpp.o: hpx/concurrency/deque.hpp:146:26: error: no member named 'load' in 'deque_anchor<T>'
+  # - lbann ~cuda +rocm amdgpu_target=gfx908  # aluminum-1.4.1: CMake Error at CMakeLists.txt:371 (find_package): Could not find a configuration file for package "hip" that is compatible with requested version "5.0". The following configuration files were considered but not accepted: /opt/rocm-6.4.3/lib/cmake/hip/hip-config.cmake, version: 6.4.43484
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx908 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none  # paraview-5.13.3: FAILED: [code=1] VTK/ThirdParty/vtkm/vtkvtkm/vtk-m/vtkm/filter/contour/CMakeFiles/vtkm_filter_contour.dir/MIRFilter.cxx.o: vtkm/filter/contour/worklet/mir/MIRTables.h:11405:20: error: no member named 'CellFacePortal' in 'MIRDevicePortal<DeviceAdapter>'; did you mean 'CellEdgesPortal'?
+
+  ## ROCM 90a
+  - amrex +rocm amdgpu_target=gfx90a
+  - arborx +rocm amdgpu_target=gfx90a
+  - cabana +rocm amdgpu_target=gfx90a ^kokkos +rocm amdgpu_target=gfx90a
+  - caliper +rocm amdgpu_target=gfx90a
+  - chai tests=none +rocm amdgpu_target=gfx90a
+  - fftx +rocm amdgpu_target=gfx90a
+  - gasnet +rocm amdgpu_target=gfx90a
+  - ginkgo +rocm amdgpu_target=gfx90a
+  - heffte +rocm amdgpu_target=gfx90a
+  - hypre +rocm amdgpu_target=gfx90a
+  - kokkos +rocm amdgpu_target=gfx90a
+  - legion +rocm amdgpu_target=gfx90a
+  - libceed +rocm amdgpu_target=gfx90a
+  - magma ~cuda +rocm amdgpu_target=gfx90a  
+  - mfem +rocm amdgpu_target=gfx90a
+  - papi +rocm amdgpu_target=gfx90a
+  - petsc +rocm amdgpu_target=gfx90a
+  - raja ~openmp +rocm amdgpu_target=gfx90a
+  - slate +rocm amdgpu_target=gfx90a
+  - slepc +rocm amdgpu_target=gfx90a ^petsc +rocm amdgpu_target=gfx90a
+  - strumpack ~slate +rocm amdgpu_target=gfx90a
+  - sundials +rocm amdgpu_target=gfx90a
+  - superlu-dist +rocm amdgpu_target=gfx90a
+  - tasmanian ~openmp +rocm amdgpu_target=gfx90a
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx90a
+  - umpire +rocm amdgpu_target=gfx90a
+  - upcxx +rocm amdgpu_target=gfx90a
+  - vtk-m ~openmp +rocm amdgpu_target=gfx90a
+  # - chapel +rocm amdgpu_target=gfx90a       # requires rocm <=6.2
+  # - cp2k +mpi +rocm amdgpu_target=gfx90a    # cp2k-2025.2: /opt/rocm-6.4.3/include/hip/hip_runtime_api.h:722:29: error: expected unqualified-id before numeric constant 
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx90a ~ipopt cxxflags="-Wno-error=non-pod-varargs" ^hiop@1.0.0 ~sparse +mpi +raja +rocm amdgpu_target=gfx90a
+  # - hpx +rocm amdgpu_target=gfx90a          # hpx-1.6.0: FAILED: [code=1] libs/core/thread_pools/CMakeFiles/hpx_thread_pools.dir/src/scheduled_thread_pool.cpp.o: hpx/concurrency/deque.hpp:146:26: error: no member named 'load' in 'deque_anchor<T>'
+  # - lbann ~cuda +rocm amdgpu_target=gfx90a  # aluminum-1.4.1: CMake Error at CMakeLists.txt:371 (find_package): Could not find a configuration file for package "hip" that is compatible with requested version "5.0". The following configuration files were considered but not accepted: /opt/rocm-6.4.3/lib/cmake/hip/hip-config.cmake, version: 6.4.43484
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx90a ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # paraview-5.13.3: FAILED: [code=1] VTK/ThirdParty/vtkm/vtkvtkm/vtk-m/vtkm/filter/contour/CMakeFiles/vtkm_filter_contour.dir/MIRFilter.cxx.o: vtkm/filter/contour/worklet/mir/MIRTables.h:11405:20: error: no member named 'CellFacePortal' in 'MIRDevicePortal<DeviceAdapter>'; did you mean 'CellEdgesPortal'?
+
+  ## ROCM 942
+  - amrex +rocm amdgpu_target=gfx942
+  - arborx +rocm amdgpu_target=gfx942
+  - cabana +rocm amdgpu_target=gfx942 ^kokkos +rocm amdgpu_target=gfx942
+  - caliper +rocm amdgpu_target=gfx942
+  - chai tests=none +rocm amdgpu_target=gfx942
+  - fftx +rocm amdgpu_target=gfx942
+  - gasnet +rocm amdgpu_target=gfx942
+  - ginkgo +rocm amdgpu_target=gfx942
+  - heffte +rocm amdgpu_target=gfx942
+  - hypre +rocm amdgpu_target=gfx942
+  - kokkos +rocm amdgpu_target=gfx942
+  - legion +rocm amdgpu_target=gfx942
+  - libceed +rocm amdgpu_target=gfx942
+  - magma ~cuda +rocm amdgpu_target=gfx942
+  - mfem +rocm amdgpu_target=gfx942
+  - papi +rocm amdgpu_target=gfx942
+  - petsc +rocm amdgpu_target=gfx942
+  - raja ~openmp +rocm amdgpu_target=gfx942
+  - slepc +rocm amdgpu_target=gfx942 ^petsc +rocm amdgpu_target=gfx942
+  - strumpack ~slate +rocm amdgpu_target=gfx942
+  - sundials +rocm amdgpu_target=gfx942
+  - superlu-dist +rocm amdgpu_target=gfx942
+  - tasmanian ~openmp +rocm amdgpu_target=gfx942
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx942
+  - umpire +rocm amdgpu_target=gfx942
+  - upcxx +rocm amdgpu_target=gfx942
+  - vtk-m ~openmp +rocm amdgpu_target=gfx942
+  # - chapel +rocm amdgpu_target=gfx942       # requires rocm <=6.2
+  # - cp2k +mpi +rocm amdgpu_target=gfx942    # cp2k-2025.2: /opt/rocm-6.4.3/include/hip/hip_runtime_api.h:722:29: error: expected unqualified-id before numeric constant 
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx942 ~ipopt cxxflags="-Wno-error=non-pod-varargs" ^hiop@1.0.0 ~sparse +mpi +raja +rocm amdgpu_target=gfx942
+  # - hpx +rocm amdgpu_target=gfx942          # hpx-1.6.0: FAILED: [code=1] libs/core/thread_pools/CMakeFiles/hpx_thread_pools.dir/src/scheduled_thread_pool.cpp.o: hpx/concurrency/deque.hpp:146:26: error: no member named 'load' in 'deque_anchor<T>'
+  # - lbann ~cuda +rocm amdgpu_target=gfx942  # aluminum-1.4.1: CMake Error at CMakeLists.txt:371 (find_package): Could not find a configuration file for package "hip" that is compatible with requested version "5.0". The following configuration files were considered but not accepted: /opt/rocm-6.4.3/lib/cmake/hip/hip-config.cmake, version: 6.4.43484
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx942 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none  # kokkos-3.7.02: CMake Error at cmake/kokkos_arch.cmake:587 (MESSAGE): HIP enabled but no AMD GPU architecture currently enabled. 
+  # - slate +rocm amdgpu_target=gfx942        # slate-2025.05.28: unable to find library -lopenblas

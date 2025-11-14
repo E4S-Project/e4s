@@ -1,0 +1,209 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      target: [x86_64_v3]
+      require:
+      - '@:99999999'
+      - 'target=x86_64_v3'
+      providers:
+        blas: [openblas]
+        lapack: [openblas]
+        tbb: [intel-tbb]
+      variants: +mpi
+    c:
+      require: [gcc@13.3.1]
+    cxx:
+      require: [gcc@13.3.1]
+    fortran:
+      require: [gcc@13.3.1]
+    gcc:
+      externals:
+      - spec: gcc@13.3.1 languages:='c,c++,fortran'
+        prefix: /opt/rh/gcc-toolset-13/root/usr
+        extra_attributes:
+          compilers:
+            c: /opt/rh/gcc-toolset-13/root/usr/bin/gcc
+            cxx: /opt/rh/gcc-toolset-13/root/usr/bin/g++
+            fortran: /opt/rh/gcc-toolset-13/root/usr/bin/gfortran
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    blas:
+      require: openblas
+    cmake:
+      require:
+      - '~qtgui'
+      - 'target=x86_64_v3'
+    gmake:
+      require:
+      - '~guile'
+      - 'target=x86_64_v3'
+    hdf5:
+      variants: +fortran +hl +shared
+    lapack:
+      require: openblas
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    openblas:
+      variants: threads=openmp
+    paraview:
+      variants: +qt +examples
+    qt:
+      require: 
+      - '@5.15.16'
+      - 'target=x86_64_v3'
+    raja:
+      variants: +plugins
+    tbb:
+      require: intel-tbb
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    vtk-m:
+      require:
+      - '+examples'
+      - 'target=x86_64_v3'
+    llvm:
+      prefer:
+      - '~lldb~lld~libomptarget~polly~gold'
+      require:
+      - 'build_type=MinSizeRel'
+      - 'target=x86_64_v3'
+    libglx:
+      require: mesa
+    libllvm:
+      require: llvm
+
+    # EXTERNALS
+    python:
+      prefer:
+      - "@3.12.11"
+      externals:
+      - spec: python@3.12.11+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /opt/python/pkgs/python-3.12.11
+    mpi:
+      require: mpich
+    mpich:
+      buildable: false
+      externals:
+      - spec: mpich@4.3.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+        prefix: /opt/mpi/pkgs/mpich-4.3.1
+    cuda:
+      buildable: false
+      prefer:
+      - '@12.9.0'
+      - '@12.8.1'
+      externals:
+      - spec: cuda@12.9.0
+        prefix: /usr/local/cuda-12.9
+      - spec: cuda@12.8.1
+        prefix: /usr/local/cuda-12.8
+
+  specs:
+  ## CUDA NO-ARCH
+  - bricks +cuda
+  - hpctoolkit +cuda
+  - legion +cuda
+  - papi +cuda
+  - tau +mpi +python +cuda +syscall +ittnotify
+  # - flux-core +cuda       # flux-core-0.73.0: configure: ERROR! You probably have to install the development version of the Python package
+
+  ## CUDA 90
+  - adios2 +cuda cuda_arch=90
+  - amrex +cuda cuda_arch=90
+  - arborx +cuda cuda_arch=90 ^kokkos +wrapper
+  - axom +cuda cuda_arch=90
+  - cabana +cuda cuda_arch=90 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=90
+  - caliper +cuda cuda_arch=90
+  - chai tests=none +cuda cuda_arch=90 ^umpire ~shared
+  - chapel +cuda cuda_arch=90 ^llvm targets=x86,nvptx
+  - cp2k smm=blas +mpi +cuda cuda_arch=90
+  - cusz +cuda cuda_arch=90
+  - fftx +cuda cuda_arch=90
+  - flecsi +cuda cuda_arch=90
+  - ginkgo +cuda cuda_arch=90
+  - gromacs +cuda cuda_arch=90
+  - heffte +cuda cuda_arch=90
+  - hpx +cuda cuda_arch=90
+  - hypre +cuda cuda_arch=90
+  - kokkos +wrapper +cuda cuda_arch=90
+  - kokkos-kernels +cuda cuda_arch=90 ^kokkos +wrapper +cuda cuda_arch=90
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=90 # lammps: needs NVIDIA driver
+  - libceed +cuda cuda_arch=90
+  - magma +cuda cuda_arch=90
+  - mfem +cuda cuda_arch=90
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=90
+  - parsec +cuda cuda_arch=90
+  - raja +cuda cuda_arch=90
+  - slate +cuda cuda_arch=90
+  - strumpack ~slate +cuda cuda_arch=90
+  - sundials +cuda cuda_arch=90
+  - superlu-dist +cuda cuda_arch=90
+  - tasmanian +cuda cuda_arch=90
+  - trilinos +cuda cuda_arch=90
+  - umpire ~shared +cuda cuda_arch=90
+  - upcxx +cuda cuda_arch=90          # upcxx: needs NVIDIA driver
+  - vtk-m +cuda cuda_arch=90
+  - zfp +cuda cuda_arch=90
+  # - ascent +cuda cuda_arch=90       # ascent: https://github.com/spack/spack/issues/38045
+  # - dealii +cuda cuda_arch=90       # dealii: conflicts with '+cuda ^cuda@12:' 
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=90 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=90 # hiop conflicts with cuda@12: required for cuda_arch=90
+  # - lbann +cuda cuda_arch=90        # 
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=90 ^cusz +cuda cuda_arch=90 # py-numcodecs-0.15.0: ?? 
+  # - omega-h +cuda cuda_arch=90      # omega-h: https://github.com/spack/spack/issues/39535
+  # - paraview ~qt ~examples +cuda cuda_arch=90 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # concretize fails due to cuda unsat
+  # - petsc +cuda cuda_arch=90        # petsc-3.24.0: /opt/rh/gcc-toolset-13/root/usr/libexec/gcc/x86_64-redhat-linux/13/ld: cannot find -lpetsc-ufod4vtr9mqHvKIQiVAm: No such file or directory
+  # - slepc +cuda cuda_arch=90        # petsc-3.24.0: /opt/rh/gcc-toolset-13/root/usr/libexec/gcc/x86_64-redhat-linux/13/ld: cannot find -lpetsc-ufod4vtr9mqHvKIQiVAm: No such file or directory
+
+  ## CUDA 120
+  - adios2 +cuda cuda_arch=120
+  - arborx +cuda cuda_arch=120 ^kokkos +wrapper
+  - cabana +cuda cuda_arch=120 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=120
+  - caliper +cuda cuda_arch=120
+  - chai tests=none +cuda cuda_arch=120 ^umpire ~shared
+  - chapel +cuda cuda_arch=120 ^llvm targets=x86,nvptx
+  - cusz +cuda cuda_arch=120
+  - fftx +cuda cuda_arch=120
+  - flecsi +cuda cuda_arch=120
+  - ginkgo +cuda cuda_arch=120
+  - heffte +cuda cuda_arch=120
+  - hpx +cuda cuda_arch=120
+  - hypre +cuda cuda_arch=120
+  - kokkos +wrapper +cuda cuda_arch=120
+  - kokkos-kernels +cuda cuda_arch=120 ^kokkos +wrapper +cuda cuda_arch=120
+  - libceed +cuda cuda_arch=120
+  - magma +cuda cuda_arch=120
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=120
+  - parsec +cuda cuda_arch=120
+  - slate +cuda cuda_arch=120
+  - strumpack ~slate +cuda cuda_arch=120
+  - sundials +cuda cuda_arch=120
+  - superlu-dist +cuda cuda_arch=120
+  - tasmanian +cuda cuda_arch=120
+  - umpire ~shared +cuda cuda_arch=120
+  - vtk-m +cuda cuda_arch=120
+  - zfp +cuda cuda_arch=120
+  # - amrex +cuda cuda_arch=120                   # amrex-25.03: Unknown CUDA Architecture Name 12.0 in CUDA_SELECT_NVCC_ARCH_FLAGS
+  # - ascent +cuda cuda_arch=120                  # ascent: https://github.com/spack/spack/issues/38045
+  # - axom +cuda cuda_arch=120                    # raja-2024.07.0: RAJA requires minimum CUDA compute architecture of 35
+  # - cp2k smm=blas +mpi +cuda cuda_arch=120      # cp2k only supports cuda_arch ('35', '37', '60', '70', '80', '90')
+  # - dealii +cuda cuda_arch=120                  # dealii: conflicts with '+cuda ^cuda@12:' 
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=120 ~ipopt ^hiop@1.0.0 ~sparse +mpi +raja ~rocm +cuda cuda_arch=120 # hiop conflicts with cuda@12: required for cuda_arch=120
+  # - gromacs +cuda cuda_arch=120                 # gromacs-2024.4: ptxas error: Value of threads per SM for entry _Z23nbnxn_kernel_prune_cudaILb0EEv13NBAtomDataGpu10NBParamGpuN5Nbnxm9gpu_plistEi is out of range. .minnctapersm will be ignored
+  # - lbann +cuda cuda_arch=120                   # dihydrogen: gpu/memory_utils.cpp:112:34: error: 'MemoryPool' is not a member of 'hydrogen::cub'
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=120 ^cusz +cuda cuda_arch=120 # py-numcodecs-0.15.0: ?? 
+  # - mfem +cuda cuda_arch=120                    # mfem-4.7.0: Killed
+  # - omega-h +cuda cuda_arch=120                 # omega-h: https://github.com/spack/spack/issues/39535
+  # - raja +cuda cuda_arch=120                    # raja-2024.07.0: RAJA requires minimum CUDA compute architecture of 35
+  # - trilinos +cuda cuda_arch=120                # kokkos-4.5.01: @16.1.0 needs kokkos 4.5.01 which doesn't support blackwell
+  # - petsc +cuda cuda_arch=120                   # petsc-3.24.0: /opt/rh/gcc-toolset-13/root/usr/libexec/gcc/x86_64-redhat-linux/13/ld: cannot find -lpetsc-ufod4vtr9mqHvKIQiVAm: No such file or directory
+  # - slepc +cuda cuda_arch=120                   # petsc-3.24.0: /opt/rh/gcc-toolset-13/root/usr/libexec/gcc/x86_64-redhat-linux/13/ld: cannot find -lpetsc-ufod4vtr9mqHvKIQiVAm: No such file or directory

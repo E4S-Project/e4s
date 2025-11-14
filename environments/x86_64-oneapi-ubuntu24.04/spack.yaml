@@ -1,0 +1,134 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  packages:
+    all:
+      target: [x86_64_v3]
+      require:
+      - '@:99999999'
+      - 'target=x86_64_v3'
+      providers:
+        c: [intel-oneapi-compilers, gcc]
+        cxx: [intel-oneapi-compilers, gcc]
+        fortran: [intel-oneapi-compilers, gcc]
+        blas: [openblas]
+        tbb: [intel-tbb]
+      variants: +mpi
+    gcc:
+      externals:
+      - spec: gcc@13.3.0 languages:='c,c++,fortran'
+        prefix: /usr
+        extra_attributes:
+          compilers:
+            c: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fortran: /usr/bin/gfortran
+    intel-oneapi-compilers:
+      externals:
+      - spec: intel-oneapi-compilers@2025.2.1
+        prefix: /opt/intel/oneapi
+        extra_attributes:
+          compilers:
+            c: /opt/intel/oneapi/compiler/2025.2/bin/icx
+            cxx: /opt/intel/oneapi/compiler/2025.2/bin/icpx
+            fortran: /opt/intel/oneapi/compiler/2025.2/bin/ifx
+    elfutils:
+      variants: +bzip2 ~nls +xz
+    hdf5:
+      variants: +fortran +hl +shared
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+    libunwind:
+      variants: +pic +xz
+    ncurses:
+      variants: +termlib
+    openblas:
+      variants: threads=openmp
+      require: 'cppflags="-O1" target=x86_64_v3'
+    trilinos:
+      variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+        +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+        +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+        +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+    xz:
+      variants: +pic
+    gcc-runtime:
+      require:
+      - 'target=x86_64_v3' # %gcc'
+    binutils:
+      variants: +ld +gold +headers +libiberty ~nls
+    rust:
+      require:
+      - 'target=x86_64_v3' # %gcc' 
+    bison:
+      require:
+      - 'target=x86_64_v3' #%gcc'
+    raja:
+      variants: +plugins
+    paraview:
+      variants: +qt +examples
+
+    ## EXTERNALS
+    python:
+      prefer:
+      - "@3.12.11"
+      externals:
+      - spec: python@3.12.11+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+        prefix: /opt/python/pkgs/python-3.12.11
+    mpi:
+      require: intel-oneapi-mpi
+    mpich:
+      buildable: false
+      externals:
+      - spec: mpich@4.3.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+        prefix: /opt/mpi/pkgs/mpich-4.3.1
+
+
+    ## ONEAPI STACK
+    intel-oneapi-mpi:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-mpi@2021.16.0
+        prefix: /opt/intel/oneapi
+        modules: [mpi/2021.16]
+    intel-oneapi-mkl:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-mkl@2025.2.0
+        prefix: /opt/intel/oneapi
+        modules: [mkl/2025.2]
+    intel-oneapi-dpl:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-dpl@2022.9.0
+        prefix: /opt/intel/oneapi
+        modules: [dpl/2022.9]
+    intel-oneapi-tbb:
+      buildable: false
+      externals:
+      - spec: intel-oneapi-tbb@2022.2.0
+        prefix: /opt/intel/oneapi
+        modules: [tbb/2022.2]
+
+  specs:
+  - aml +level_zero
+  - amrex +sycl
+  - arborx +sycl ^kokkos +sycl +openmp cxxstd=17
+  - cabana +sycl ^kokkos +sycl +openmp cxxstd=17
+  - ginkgo +sycl
+  - heffte +sycl
+  - hpctoolkit +level_zero
+  - kokkos +sycl +openmp cxxstd=17
+  - kokkos-kernels ^kokkos +sycl +openmp cxxstd=17
+  - petsc +sycl
+  - sundials +sycl +examples-install cxxstd=17
+  - tau +mpi +opencl +python +level_zero +force-legacy-l0 +syscall
+  - tau +mpi +opencl +python +level_zero +syscall
+  - upcxx +level_zero
+  # - hypre +sycl       # hypre-2.33.0: /usr/bin/ld: /tmp/icpx-a94d9327aa/mpistubs-76720a.o: in function `hypre_MPI_Init': mpistubs.c:(.text+0x11): undefined reference to `MPI_Init'
+  # - slate +sycl       # intel-oneapi-mkl: MKL with OpenMP threading requires GCC, clang, or Intel compilers
+
