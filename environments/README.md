@@ -51,34 +51,34 @@ $> spack buildcache list -al
   * For `cuda_arch=80`, `cuda_arch=90`, `cuda_arch=120`
   * Built and tested using:
     * `Ubuntu 24.04, GCC 13.3.0, CUDA 12.9
-    * `ecpe4s/e4s-release-base-cuda-x86_64:25.11`
+    * `ecpe4s/e4s-mpi-cuda-x86_64:v4.3.1-v12.9.1-1762471956`
 
 * Model environment for NVIDIA GPUs on aarch64 is:
   * `aarch64-gcc-cuda-ubuntu24.04/spack.yaml`
   * For `cuda_arch=80`, `cuda_arch=90`, `cuda_arch=120`
   * Built and tested using:
     * `Ubuntu 24.04, GCC 13.3.0, CUDA 12.9`
-    * `ecpe4s/e4s-release-base-cuda-aarch64:25.11`
+    * `ecpe4s/e4s-mpi-cuda-aarch64:v4.3.1-v12.9.1-1761673584`
 
 * Model environment for AMD GPUs on x86_64 is:
   * `x86_64-gcc-rocm-ubuntu24.04/spack.yaml`
   * For `amdgpu_target=gfx908`, `amdgpu_target=gfx90a`, `amdgpu_target=gfx942`
   * Built and tested using:
     * `Ubuntu 24.04, GCC 13.3.0, ROCm 6.4.3`
-    * `ecpe4s/e4s-release-base-rocm-x86_64:25.11`
+    * `ecpe4s/e4s-mpi-rocm-x86_64:v4.3.1-v6.4.3-1762472541`
 
 * Model environment for Intel GPUs on x86_64 is:
   * `x86_64-oneapi-ubuntu24.04/spack.yaml`
   * Built and tested using:
     * `Ubuntu 24.04, OneAPI 2025.2`
-    * `ecpe4s/e4s-release-base-oneapi-x86_64:25.11`
+    * `ecpe4s/e4s-mpi-oneapi-x86_64:v2025.2-1762472549`
 
 * Model environment for NVIDIA GPUs on ppc64le is:
   * `ppc64le-gcc-cuda-ubuntu20.04/spack.yaml`
   * For `cuda_arch=70`
   * Built and tested using:
     * `Ubuntu 20.04, GCC 9.4.0, CUDA 11.4`
-    * `ecpe4s/e4s-release-base-cuda-ppc64:25.11`
+    * `ecpe4s/e4s-mpi-cuda-ppc64le:v4.3.1-v11.2.2-1761859241`
 
 ## Example output of `spack find`
 
@@ -105,4 +105,5 @@ chapel@2.6.0         globalarrays@5.8.2     lammps@20250722        nekbone@17.0 
 charliecloud@0.40    glvis@4.4              lbann@0.104            netcdf-fortran@4.6.2     pumi@2.2.9              swig@4.0.2-fortran    zfp@1.0.1
 conduit@0.9.5        gmp@6.3.0              legion@25.03.0         netlib-scalapack@2.2.2   py-cinemasci@1.7.0      sz@2.1.12.5
 ```
+
 
