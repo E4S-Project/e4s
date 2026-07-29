@@ -1,0 +1,17 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+
+  specs:
+  - bricks +cuda
+  - flux-core +cuda
+  - hpctoolkit +cuda ^dyninst@13.0.0
+  - papi +cuda
+  - tau +mpi +python +cuda +syscall +ittnotify +julia +perfetto libunwind=none +dyninst ^intel-tbb@2022.3.0

@@ -1,0 +1,17 @@
+packages:
+  cuda:
+    prefer:
+    - '@12.9.1'
+    externals:
+    - spec: cuda@12.9.1
+      prefix: /usr/local/cuda-12.9
+  llvm:
+    prefer:
+    - '~lldb~lld~libomptarget~polly~gold'
+    require:
+    - 'build_type=MinSizeRel'
+    - 'target=x86_64_v3'
+  libglx:
+    require: mesa
+  libllvm:
+    require: llvm

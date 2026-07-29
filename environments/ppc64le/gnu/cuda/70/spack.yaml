@@ -1,0 +1,58 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - adios2 +cuda cuda_arch=70
+  - amrex +cuda cuda_arch=70
+  - cabana +cuda cuda_arch=70 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=70
+  - caliper +cuda cuda_arch=70
+  - chai tests=none +cuda cuda_arch=70 ^umpire ~shared
+  - fftx +cuda cuda_arch=70
+  - ginkgo +cuda cuda_arch=70
+  - heffte +cuda cuda_arch=70
+  - hpx +cuda cuda_arch=70
+  - hypre +cuda cuda_arch=70
+  - kokkos +wrapper +cuda cuda_arch=70
+  - kokkos-kernels +cuda cuda_arch=70 ^kokkos +wrapper +cuda cuda_arch=70
+  - libceed +cuda cuda_arch=70
+  - magma +cuda cuda_arch=70
+  - mfem +cuda cuda_arch=70
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=70
+  - omega-h +cuda cuda_arch=70
+  - parsec +cuda cuda_arch=70
+  - petsc +cuda cuda_arch=70
+  - slepc +cuda cuda_arch=70
+  - strumpack ~slate +cuda cuda_arch=70
+  - sundials +cuda cuda_arch=70
+  - superlu-dist +cuda cuda_arch=70
+  - tasmanian +cuda cuda_arch=70
+  - umpire ~shared +cuda cuda_arch=70
+  - vtk-m +cuda cuda_arch=70
+  - zfp +cuda cuda_arch=70
+
+  # new errors
+  # - arborx +cuda cuda_arch=70 ^kokkos +wrapper # boost-1.86.0-pprs7qb2ayqvvfxie2vp3qcnbrn7bult/include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed
+  # - ascent +cuda cuda_arch=70             # https://github.com/spack/spack/issues/38045
+  # - axom +cuda cuda_arch=70               # raja-2025.12.2: CMake Error at /spack/opt/spack/linux-ppc64le/blt-0.7.2-rojow3cgpp3gmz36mubfrzwaasc72el6/cmake/thirdparty/BLTSetupCUDA.cmake:129 (message): CUDA 11.4 does not support C++20.
+  # - chapel +cuda cuda_arch=70             # chapel-2.3.0: Error: Chapel requires a CUDA version between 11.7 and 13
+  # - cp2k smm=blas +mpi +cuda cuda_arch=70 # grpp/grpp_specfunc_dawson.c:444:29: error: initializer element is not constant
+  # - cusz +cuda cuda_arch=70               # cusz-0.14.0: psz/src/kernel/detail/l23_c.cuhip.inl(316): error: no instance of function template "psz::KERNEL_CUHIP_c_lorenzo_1d1l" matches the argument list
+  # - dealii +cuda cuda_arch=70             # boost-1.86.0-pprs7qb2ayqvvfxie2vp3qcnbrn7bult/include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=70 ~ipopt # raja-2025.12.2: CUDA 11.4 does not support C++20.
+  # - flecsi +cuda cuda_arch=70             # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?
+  # - gromacs +cuda cuda_arch=70            # gromacs-2026.1: CMake Error at cmake/gmxTestCompilerProblems.cmake:76 (message): GCC version 11 or later required.  Earlier versions may not have full C++17
+  # - lbann +cuda cuda_arch=70              # lbann-0.104: layers/transform/cereal_registration/../permute/cutensor_support.hpp:95:18: error: 'cutensorInit' was not declared in this scope; did you mean 'cutensorPlan_t'?
+  # - legion +cuda cuda_arch=70             # realm-26.03.0-legion: Could NOT find CUDAToolkit: Found unsuitable version "11.4.152", but required is at least "11.7"
+  # - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=70 ^cusz +cuda cuda_arch=70 # depends_on("cuda@11.7.1:", when="+cuda")
+  # - paraview +cuda cuda_arch=70           # Could NOT find X11 (missing: X11_X11_INCLUDE_PATH X11_X11_LIB) CMake Error at VTK/CMake/vtkModule.cmake:5400 (message): Could not find the X11 external dependency.
+  # - raja +cuda cuda_arch=70               # raja-2025.12.2: CMake Error at /spack/opt/spack/linux-ppc64le/blt-0.7.2-rojow3cgpp3gmz36mubfrzwaasc72el6/cmake/thirdparty/BLTSetupCUDA.cmake:129 (message): CUDA 11.4 does not support C++20.
+  # - slate +cuda cuda_arch=70              # blaspp-2025.05.28: nvcc fatal   : Unsupported gpu architecture 'compute_No CUDA devices found.'
+  # - trilinos +cuda cuda_arch=70           # boost-1.86.0-pprs7qb2ayqvvfxie2vp3qcnbrn7bult/include/boost/unordered/detail/prime_fmod.hpp(67): error: incomplete type is not allowed

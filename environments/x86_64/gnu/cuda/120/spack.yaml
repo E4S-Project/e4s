@@ -1,0 +1,58 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - adios2 +mpi +hdf5 +campaign +python +xrootd +cuda cuda_arch=120
+  - arborx +cuda cuda_arch=120
+  - axom +cuda cuda_arch=120
+  - caliper +cuda cuda_arch=120
+  - chai tests=none +cuda cuda_arch=120 ^umpire ~shared
+  - chapel +cuda cuda_arch=120 ^llvm targets=x86,nvptx
+  - cusz +cuda cuda_arch=120
+  - fftx +cuda cuda_arch=120
+  - ginkgo +cuda cuda_arch=120
+  - gromacs +cuda cuda_arch=120
+  - heffte +cuda cuda_arch=120
+  - hpx +cuda cuda_arch=120
+  - hypre +cuda cuda_arch=120
+  - kokkos +wrapper +cuda cuda_arch=120
+  - kokkos-kernels +cuda cuda_arch=120 ^kokkos +wrapper +cuda cuda_arch=120
+  - legion +cuda cuda_arch=120
+  - libceed +cuda cuda_arch=120
+  - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=120 ^cusz +cuda cuda_arch=120  ^lua@5.4.8 
+  - magma +cuda cuda_arch=120
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=120
+  - omega-h +cuda cuda_arch=120
+  - parsec +cuda cuda_arch=120
+  - petsc +cuda cuda_arch=120
+  - raja +cuda cuda_arch=120
+  - slate +cuda cuda_arch=120
+  - slepc +cuda cuda_arch=120
+  - strumpack ~slate +cuda cuda_arch=120
+  - sundials +cuda cuda_arch=120
+  - superlu-dist +cuda cuda_arch=120
+  - tasmanian +cuda cuda_arch=120
+  - trilinos +cuda cuda_arch=120
+  - umpire ~shared +cuda cuda_arch=120
+  - vtk-m +cuda cuda_arch=120
+  - zfp +cuda cuda_arch=120
+
+  # new errors, need to investigate...
+  # - ascent +cuda cuda_arch=120                  # ascent: https://github.com/spack/spack/issues/38045
+  # - cabana +cuda cuda_arch=120 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=120 # kokkos-4.6.02: SpackError: Unsupported CUDA arch: 120
+  # - cp2k smm=blas +mpi +cuda cuda_arch=120      # cp2k only supports cuda_arch ('35', '37', '60', '70', '80', '90')
+  # - dealii +cuda cuda_arch=120                  # dealii: conflicts with '+cuda ^cuda@12:' 
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=120 ~ipopt ^hiop ~sparse +mpi +raja ~rocm +cuda cuda_arch=120 # tpl/spdlog/include/spdlog/fmt/bundled/core.h:329:30: error: redefinition of 'struct fmt::v11::type_identity<T>'
+  # - flecsi +cuda cuda_arch=120                  # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?  
+  # - lbann +cuda cuda_arch=120                   # dihydrogen-0.3.0: CMake Error at cmake/modules/SetupCUDAToolkit.cmake:33 (target_link_libraries): The link interface of target "h2::cuda_toolkit" contains: CUDA::nvToolsExt but the target was not found.
+  # - mfem +cuda cuda_arch=120                    # mfem-4.7.0: Killed
+  # - paraview ~qt ~examples +cuda cuda_arch=120 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # concretizer fails due to cuda unsat  
+

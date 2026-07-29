@@ -1,0 +1,8 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: when_possible
+
+  specs: []

@@ -1,0 +1,56 @@
+--- math_functions.h	2026-05-16 22:40:30.822328079 +0000
++++ math_functions.h.patched	2026-05-22 22:49:35.909539515 +0000
+@@ -594,7 +594,7 @@
+  *
+  * \note_accuracy_double
+  */
+-extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ double                 rsqrt(double x);
++extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ double                 rsqrt(double x) noexcept (true);
+
+ /**
+  * \ingroup CUDA_MATH_SINGLE
+@@ -618,7 +618,7 @@
+  *
+  * \note_accuracy_single
+  */
+-extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ float                  rsqrtf(float x);
++extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ float                  rsqrtf(float x) noexcept (true);
+
+ #if defined(__QNX__) && !defined(_LIBCPP_VERSION)
+ namespace std {
+@@ -2553,7 +2553,7 @@
+  *
+  * \note_accuracy_double
+  */
+-extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ double                 sinpi(double x);
++extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ double                 sinpi(double x) noexcept (true);
+ /**
+  * \ingroup CUDA_MATH_SINGLE
+  * \brief Calculate the sine of the input argument
+@@ -2576,7 +2576,7 @@
+  *
+  * \note_accuracy_single
+  */
+-extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ float                  sinpif(float x);
++extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ float                  sinpif(float x) noexcept (true);
+ /**
+  * \ingroup CUDA_MATH_DOUBLE
+  * \brief Calculate the cosine of the input argument
+@@ -2598,7 +2598,7 @@
+  *
+  * \note_accuracy_double
+  */
+-extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ double                 cospi(double x);
++extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ double                 cospi(double x) noexcept (true);
+ /**
+  * \ingroup CUDA_MATH_SINGLE
+  * \brief Calculate the cosine of the input argument
+@@ -2620,7 +2620,7 @@
+  *
+  * \note_accuracy_single
+  */
+-extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ float                  cospif(float x);
++extern __DEVICE_FUNCTIONS_DECL__ __device_builtin__ float                  cospif(float x) noexcept (true);
+ /**
+  * \ingroup CUDA_MATH_DOUBLE
+  * \brief  Calculate the sine and cosine of the first input argument

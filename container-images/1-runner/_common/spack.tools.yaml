@@ -1,0 +1,15 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: when_possible
+
+  specs:
+  - ccache
+  - cmake
+  - environment-modules
+  - gmake
+  - libtree
+  - ninja
+  - patchelf

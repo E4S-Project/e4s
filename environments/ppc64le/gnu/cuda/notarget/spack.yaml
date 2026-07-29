@@ -1,0 +1,19 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - bricks +cuda
+  - flux-core +cuda
+  # - hpctoolkit +cuda ^dyninst@13.0.0
+  - tau +mpi +cuda +dyninst  ^intel-tbb@2022.3.0   # +syscall fails: https://github.com/spack/spack/pull/40830#issuecomment-1790799772;
+
+  # errors:
+  # - papi +cuda              # cuda/cupti_profiler.c:2878:36: error: 'NVPW_MetricsEvaluator_GetMetricRawDependencies_Params' {aka 'struct NVPW_MetricsEvaluator_GetMetricRawDependencies_Params'} has no member named 'ppOptionalRawDependencies'; did you mean 'ppRawDependencies'?

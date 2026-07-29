@@ -1,0 +1,13 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - hpctoolkit +rocm ^dyninst@13.0.0
+  - tau +mpi +rocm +rocprofiler-sdk +syscall +ompt +python +dyninst ^intel-tbb@2022.3.0

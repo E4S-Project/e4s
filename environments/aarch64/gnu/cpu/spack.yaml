@@ -1,0 +1,148 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - adios
+  - adios2 +mpi +hdf5 +campaign +python +xrootd
+  - alquimia
+  - aml
+  - amrex
+  - arborx
+  - argobots
+  - ascent
+  - axom
+    #  - bolt
+  - boost +thread +chrono
+  - butterflypack
+  - cabana
+  # - caliper
+  - chai tests=none
+  - chapel ~cuda ~rocm
+  - charliecloud
+  - conduit
+  - cp2k +mpi
+  - darshan-runtime
+  - darshan-util
+  - datatransferkit
+  - dyninst
+  - e4s-alc
+  - e4s-cl
+  - exaworks
+  - faodel
+  - fftx
+  - flit
+  - flux-core
+  - fpm
+  - gasnet
+  - ginkgo
+  - globalarrays
+  # - glvis ^mesa@23.2.1
+  - gmp
+  - gotcha
+  - gptune ~mpispawn
+  - gromacs
+  - h5bench
+  - hdf5
+  - hdf5-vol-async
+  - hdf5-vol-cache
+  - hdf5-vol-log
+  - heffte +fftw
+  # - hpctoolkit ^dyninst@13.0.0
+  # - hpx networking=mpi
+  - hypre
+  - kokkos +openmp
+  - kokkos-kernels +openmp
+  - laghos ^mfem~cuda
+  - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff
+  - lbann
+  - legion
+  - libcatalyst
+  - libceed
+  - libnrm
+  - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp
+  - libquo
+  # - libunwind
+  - loki
+  - mercury
+  - metall
+  - mfem
+  - mgard +serial +openmp +timing +unstructured ~cuda
+  - mpark-variant
+  - mpifileutils ~xattr
+  - nccmp
+  - nco
+  - nek5000 +mpi ~visit
+  - nekbone +mpi
+  - netcdf-fortran
+  - netlib-scalapack
+  - nrm
+  - omega-h
+  - openfoam
+  - openmpi
+  - openpmd-api
+  - papi
+  - papyrus
+  - parallel-netcdf
+  # - paraview +qt
+  - parsec ~cuda
+  - pdt
+  - petsc
+  - phist
+  - plasma
+  - plumed
+  - precice
+  - pruners-ninja
+  - pumi
+  - py-cinemasci
+  - py-h5py
+  - py-jupyterhub
+  - py-libensemble
+  - py-petsc4py
+  - qthreads scheduler=distrib
+  - quantum-espresso
+  - raja
+  - rempi
+  - scr
+  - slate ~cuda
+  - slepc
+  - stc
+  - strumpack ~slate
+  - sundials
+  - superlu
+  - superlu-dist
+  - swig@4.0.2-fortran
+  - sz
+  - sz3
+  - tasmanian
+  - tau +mpi +python +syscall +dyninst +ompt +ittnotify +julia +perfetto libunwind=none ^intel-tbb@2022.3.0
+  - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  - turbine
+  - umap
+  - umpire
+  - upcxx
+  - veloc
+  - vtk-m
+  - wannier90
+  - warpx +python
+  - wps
+  - wrf
+  - zfp
+
+  # new errors, need to investigate...
+  # - bricks ~cuda                                # bricks-2023.08.25: ../stencils/cpuvfold.h:27:2: error: #error "This is for SVE512"
+  # - dealii                                      # lac/petsc_compatibility.cc:73:11: error: 'struct _p_SNES' has no member named 'domainerror'
+  # - exago +mpi ~ipopt +hiop ~python +raja       # raja-0.14.0: c++20 is an invalid entry for BLT_CXX_STD.  Valid Options are ( c++98, c++11, c++14, c++17 )
+  # - flecsi                                      # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?
+  # - fortrilinos                                 # trilinos-14.0.0: packages/teuchos/core/src/Teuchos_BigUInt.hpp:329:10: error: no match for 'operator[]' (operand types are 'Teuchos::BigUInt<34>' and 'int')
+  # - nwchem                                      # /usr/bin/ld: cannot find -lintl: No such file or directory
+  # - unifyfs                                     # examples/src/testutil.c:20:12: error: static declaration of 'asprintf' follows non-static declaration
+  # - variorum                                    # variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
+  # - visit ~gui                                  # vtk: '%gcc@13' conflicts with '@9.2'
+  # - xyce +mpi +shared +pymi +pymi_static_tpls   # libopenblas.a(blas_server.o): undefined reference to symbol 'omp_get_num_threads@@@@OMP_1.0'

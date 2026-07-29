@@ -1,0 +1,47 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - amrex +rocm amdgpu_target=gfx90a
+  - caliper +rocm amdgpu_target=gfx90a
+  - chai tests=none +rocm amdgpu_target=gfx90a
+  - gasnet +rocm amdgpu_target=gfx90a
+  - heffte +rocm amdgpu_target=gfx90a
+  - hypre +rocm amdgpu_target=gfx90a
+  - kokkos +rocm amdgpu_target=gfx90a
+  - legion +rocm amdgpu_target=gfx90a
+  - libceed +rocm amdgpu_target=gfx90a
+  - magma ~cuda +rocm amdgpu_target=gfx90a
+  - mfem +rocm amdgpu_target=gfx90a
+  - papi +rocm amdgpu_target=gfx90a
+  # - petsc +rocm amdgpu_target=gfx90a
+  - raja ~openmp +rocm amdgpu_target=gfx90a
+  - slate +rocm amdgpu_target=gfx90a
+  # - slepc +rocm amdgpu_target=gfx90a ^petsc +rocm amdgpu_target=gfx90a
+  - sundials +rocm amdgpu_target=gfx90a
+  - superlu-dist +rocm amdgpu_target=gfx90a
+  - tasmanian ~openmp +rocm amdgpu_target=gfx90a
+  # - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack ~ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu ~stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long +rocm amdgpu_target=gfx90a
+  - umpire +rocm amdgpu_target=gfx90a
+  - upcxx +rocm amdgpu_target=gfx90a
+  - vtk-m ~openmp +rocm amdgpu_target=gfx90a
+
+  # new errors, need to investigate...
+  # - arborx +rocm amdgpu_target=gfx90a             # kokkos-5.1.1: CMake Error at cmake/kokkos_functions.cmake:992 (message): The compiler for CXX can not consume flag(s) -fno-gpu-rdc -xhip --rocm-path=/opt/rocm-7.2.2 --offload-arch=gfx908 in combination with the CMAKE_CXX_FLAGS=.  Please check the given configuration.
+  # - cabana +rocm amdgpu_target=gfx90a ^kokkos +rocm amdgpu_target=gfx90a # kokkos-5.1.1: CMake Error at cmake/kokkos_functions.cmake:992 (message): The compiler for CXX can not consume flag(s) -fno-gpu-rdc -xhip --rocm-path=/opt/rocm-7.2.2 --offload-arch=gfx908 in combination with the CMAKE_CXX_FLAGS=.  Please check the given configuration.
+  # - chapel +rocm amdgpu_target=gfx90a             # rocm version constrained, 7.2 not allowed
+  # - cp2k +mpi +rocm amdgpu_target=gfx90a          # cp2k-2025.2: https://github.com/spack/spack/issues/49544
+  # - exago +mpi +python +raja +hiop +rocm amdgpu_target=gfx90a ~ipopt cxxflags="-Wno-error=non-pod-varargs" # hiop-1.2.0: LinAlg/hiopVectorHip.cpp:682:23: error: out-of-line definition of 'logBarrier_local' does not match any declaration in 'hiop::hiopVectorHip'
+  # - fftx +rocm amdgpu_target=gfx90a               # hipbackend.hpp:138:29: error: nomatching function for call to 'memset'
+  # - ginkgo +rocm amdgpu_target=gfx90a             # rocm version constrained, 7.2 not allowed
+  # - hpx +rocm amdgpu_target=gfx90a                # CMake Error at cmake/HPX_Message.cmake:51 (message): ERROR: HPX needs support for C++11 std::atomic
+  # - lbann ~cuda +rocm amdgpu_target=gfx90a        # rocm version constrained, 7.2 not allowed
+  # - paraview ~examples ~qt +rocm amdgpu_target=gfx90a ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # kokkos-5.1.1: CMake Error at cmake/kokkos_functions.cmake:992 (message): The compiler for CXX can not consume flag(s) -fno-gpu-rdc -xhip --rocm-path=/opt/rocm-7.2.2 --offload-arch=gfx90a in combination with the CMAKE_CXX_FLAGS=.  Please check the given configuration.
+  # - strumpack ~slate +rocm amdgpu_target=gfx90a   # rocm version constrained, 7.2 not allowed

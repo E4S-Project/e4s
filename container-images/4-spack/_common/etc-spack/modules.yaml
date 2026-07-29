@@ -1,0 +1,72 @@
+modules:
+  default:
+    enable:
+    - tcl
+    tcl:
+      projections:
+        all: '{name}/{version}'
+      verbose: true
+      hash_length: 0
+      hide_implicits: true
+      all:
+        autoload: direct
+        environment:
+          set:
+            '{name}_ROOT': '{PREFIX}'
+        suffixes:
+          +rocm amdgpu_target=gfx908: gfx908
+          +rocm amdgpu_target=gfx90a: gfx90a
+          +rocm amdgpu_target=gfx942: gfx942
+          +cuda cuda_arch=70: cuda70
+          +cuda cuda_arch=75: cuda75
+          +cuda cuda_arch=80: cuda80
+          +cuda cuda_arch=89: cuda89
+          +cuda cuda_arch=90: cuda90
+          +cuda cuda_arch=120: cuda120
+          +openmp: openmp
+          +sycl: sycl
+          +ze: level-zero
+          +level_zero: level-zero
+      kokkos-kernels:
+        suffixes:
+          ^kokkos+sycl: sycl
+      conduit:
+        suffixes:
+          +python: py
+      hdf5-vol-log:
+        suffixes:
+          ^hdf5 +threadsafe: threadsafe
+      cabana:
+        suffixes:
+          +rocm: rocm
+          ^kokkos +rocm amdgpu_target=gfx908: gfx908
+          ^kokkos +rocm amdgpu_target=gfx90a: gfx90a
+          ^kokkos +rocm amdgpu_target=gfx942: gfx942
+          ^kokkos +cuda cuda_arch=70: cuda70
+          ^kokkos +cuda cuda_arch=75: cuda75
+          ^kokkos +cuda cuda_arch=80: cuda80
+          ^kokkos +cuda cuda_arch=89: cuda89
+          ^kokkos +cuda cuda_arch=90: cuda90
+          ^kokkos +cuda cuda_arch=120: cuda120
+      tau:
+        suffixes:
+          +cuda: cuda
+          +rocm: rocm
+      hpctoolkit:
+        suffixes:
+          +cuda: cuda
+          +rocm: rocm
+      bricks:
+        suffixes:
+          +cuda: cuda
+          +rocm: rocm
+      flux-core:
+        suffixes:
+          +cuda: cuda
+          +rocm: rocm
+      papi:
+        suffixes:
+          +cuda: cuda
+      libcatalyst:
+        suffixes:
+          ^zlib-ng+new_strategies: zlib-new

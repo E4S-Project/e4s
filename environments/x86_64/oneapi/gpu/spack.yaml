@@ -1,0 +1,28 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - aml +level_zero
+  - amrex +sycl
+  - arborx +sycl ^kokkos +sycl +openmp
+  - cabana +sycl ^kokkos +sycl +openmp
+  - hpctoolkit +level_zero ^dyninst@13.0.0
+  - kokkos +sycl +openmp
+  - tau +mpi +opencl +python +level_zero +syscall +ittnotify +dyninst
+  - upcxx +level_zero
+
+  # new errors, need to investigate...
+  # - ginkgo +sycl                                    # icpx: error: unknown argument: '-fsycl-device-lib=all'
+  # - heffte +sycl                                    # heffte_backend_oneapi.h:18:10: fatal error: 'oneapi/mkl/dfti.hpp' file not found
+  # - hypre +sycl                                     # Could NOT find IntelSYCL (missing: SYCL_INCLUDE_DIR SYCL_LIBRARY_DIR SYCL_LIBRARY) (found version "202012")
+  # - kokkos-kernels ^kokkos +sycl +openmp # kokkos-kernels-5.1.1: batched/dense/impl/KokkosBatched_HostLevel_Gemm_DblBuf_Impl.hpp:229:24: error: 'BatchedDblBufGemm<KokkosBlas::Trans::Transpose, KokkosBlas::Trans::NoTranspose, KokkosBatched::BatchLayout::Right, KokkosBatched::BatchedGemmHandle, double, Kokkos::View<double ***, Kokkos::LayoutLeft, Kokkos::Device<Kokkos::SYCL, Kokkos::SYCLDeviceUSMSpace>, Kokkos::MemoryTraits<1>>, Kokkos::View<double ***, Kokkos::LayoutLeft, Kokkos::Device<Kokkos::SYCL, Kokkos::SYCLDeviceUSMSpace>, Kokkos::MemoryTraits<1>>, Kokkos::View<double ***, Kokkos::LayoutLeft, Kokkos::Device<Kokkos::SYCL, Kokkos::SYCLDeviceUSMSpace>, Kokkos::MemoryTraits<1>>, KokkosBatched::BoundsCheck::No, KokkosBatched::AlphaTag::Yes, 32, 32, 8> &' cannotbe used as the type of a kernel parameter
+  # - petsc +sycl                                     # kokkos-kernels-5.1.1: batched/dense/impl/KokkosBatched_HostLevel_Gemm_DblBuf_Impl.hpp:229:24: error: 'BatchedDblBufGemm<KokkosBlas::Trans::NoTranspose, KokkosBlas::Trans::NoTranspose, KokkosBatched::BatchLayout::Right, KokkosBatched::BatchedGemmHandle, double, Kokkos::View<double ***, Kokkos::LayoutLeft, Kokkos::Device<Kokkos::SYCL, Kokkos::SYCLDeviceUSMSpace>, Kokkos::MemoryTraits<1>>, Kokkos::View<double ***, Kokkos::LayoutLeft, Kokkos::Device<Kokkos::SYCL, Kokkos::SYCLDeviceUSMSpace>, Kokkos::MemoryTraits<1>>, Kokkos::View<double ***, Kokkos::LayoutLeft, Kokkos::Device<Kokkos::SYCL, Kokkos::SYCLDeviceUSMSpace>, Kokkos::MemoryTraits<1>>, KokkosBatched::BoundsCheck::No, KokkosBatched::AlphaTag::Yes, 32, 32, 8> &' cannot be used as the type of a kernel parameter
+  # - slate +sycl                                     # make[3]: *** [CMakeFiles/slate.dir/build.make:1804: CMakeFiles/slate.dir/src/scale_row_col.cc.o] Error 1: error: invalid LLVM IR input: Instruction operands must be first-class values!
+  # - sundials +sycl +examples-install                # CMake Error at cmake/macros/SundialsOption.cmake:243 (message): Value of CMAKE_CXX_STANDARD must be one of 17, 20, 23

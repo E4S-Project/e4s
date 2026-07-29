@@ -1,0 +1,69 @@
+packages:
+  all:
+    target: [ppc64le]
+    require:
+    - '@:99999999'
+    - 'target=ppc64le'
+    providers:
+      blas: [openblas]
+      lapack: [openblas]
+      mpi: [mpich]
+    variants: +mpi
+
+  gcc:
+    externals:
+    - spec: gcc@9.4.0 languages:='c,c++,fortran'
+      prefix: /usr
+      extra_attributes:
+        compilers:
+          c: /usr/bin/gcc
+          cxx: /usr/bin/g++
+          fortran: /usr/bin/gfortran
+  c:
+    require: [gcc@9.4.0]
+  cxx:
+    require: [gcc@9.4.0]
+  fortran:
+    require: [gcc@9.4.0]
+
+  binutils:
+    variants: +ld +gold +headers +libiberty ~nls
+  elfutils:
+    variants: +bzip2 ~nls +xz
+  hdf5:
+    variants: +fortran +hl +shared
+  libfabric:
+    variants: fabrics=sockets,tcp,udp,rxm
+  libunwind:
+    variants: +pic +xz
+  openblas:
+    variants: threads=openmp
+  trilinos:
+    variants: +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext
+      +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu
+      +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos
+      +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
+  xz:
+    variants: +pic
+  faodel:
+    require: '~tcmalloc target=ppc64le'
+  tbb:
+    require: intel-tbb
+  vtk-m:
+    require: '+examples target=ppc64le'
+  raja:
+    variants: +plugins
+  paraview:
+    variants: +qt +examples
+  python:
+    prefer:
+    - '@3.10.14'
+
+  # externals
+  mpi:
+    require: mpich
+  mpich:
+    buildable: false
+    externals:
+    - spec: mpich@5.0.1~hwloc+hydra+libxml2+romio~verbs~wrapperrpath device=ch4 netmod=ofi
+      prefix: /opt/mpi/pkgs/mpich-5.0.1

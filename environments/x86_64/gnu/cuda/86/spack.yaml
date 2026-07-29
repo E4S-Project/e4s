@@ -1,0 +1,58 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - adios2 +mpi +hdf5 +campaign +python +xrootd +cuda cuda_arch=86
+  - amrex +cuda cuda_arch=86
+  - arborx +cuda cuda_arch=86
+  - axom +cuda cuda_arch=86
+  - cabana +cuda cuda_arch=86 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=86
+  - caliper +cuda cuda_arch=86
+  - chai tests=none +cuda cuda_arch=86 ^umpire ~shared
+  - chapel +cuda cuda_arch=86 ^llvm targets=x86,nvptx
+  - cusz +cuda cuda_arch=86
+  - fftx +cuda cuda_arch=86
+  - ginkgo +cuda cuda_arch=86
+  - gromacs +cuda cuda_arch=86
+  - heffte +cuda cuda_arch=86
+  - hpx +cuda cuda_arch=86
+  - hypre +cuda cuda_arch=86
+  - kokkos +wrapper +cuda cuda_arch=86
+  - kokkos-kernels +cuda cuda_arch=86 ^kokkos +wrapper +cuda cuda_arch=86
+  - legion +cuda cuda_arch=86
+  - libceed +cuda cuda_arch=86
+  - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf +cusz +mgard +cuda cuda_arch=86 ^cusz +cuda cuda_arch=86  ^lua@5.4.8 
+  - magma +cuda cuda_arch=86
+  - mfem +cuda cuda_arch=86
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=86
+  - omega-h +cuda cuda_arch=86
+  - parsec +cuda cuda_arch=86
+  - petsc +cuda cuda_arch=86
+  - raja +cuda cuda_arch=86
+  - slate +cuda cuda_arch=86
+  - slepc +cuda cuda_arch=86
+  - strumpack ~slate +cuda cuda_arch=86
+  - sundials +cuda cuda_arch=86
+  - superlu-dist +cuda cuda_arch=86
+  - tasmanian +cuda cuda_arch=86
+  - trilinos +cuda cuda_arch=86
+  - umpire ~shared +cuda cuda_arch=86
+  - vtk-m +cuda cuda_arch=86
+  - zfp +cuda cuda_arch=86
+
+  # new errors, need to investigate:
+  # - ascent +cuda cuda_arch=86               # ascent: https://github.com/spack/spack/issues/38045
+  # - cp2k smm=blas +mpi +cuda cuda_arch=86   # cp2k: cp2k only supports cuda_arch ('35', '37', '60', '70', '80', '90')
+  # - dealii +cuda cuda_arch=86               # dealii: conflicts with '+cuda ^cuda@12:' 
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=86 ~ipopt ^hiop ~sparse +mpi +raja ~rocm +cuda cuda_arch=86 # camp-2025.12.0-ltgi5redeekhn3nxjqcz44tg2u5tajx2/include/camp/resource/cuda.hpp:191:11: error: 'reportError' is not a member of 'camp'
+  # - flecsi +cuda cuda_arch=86               # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?  
+  # - lbann +cuda cuda_arch=86                # dihydrogen-0.3.0: CMake Error at cmake/modules/SetupCUDAToolkit.cmake:33 (target_link_libraries): The link interface of target "h2::cuda_toolkit" contains: CUDA::nvToolsExt but the target was not found.
+  # - paraview ~qt ~examples +cuda cuda_arch=86 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # concretize fails due to cuda unsat

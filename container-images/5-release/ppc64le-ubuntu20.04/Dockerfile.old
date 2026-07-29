@@ -1,0 +1,249 @@
+# check=skip=InvalidDefaultArgInFrom
+
+ARG CUDA_BASE_IMAGE
+ARG FINAL_BASE_IMAGE
+ARG GENERIC_BASE_IMAGE
+
+
+## SPACK
+FROM $GENERIC_BASE_IMAGE AS spack
+
+ARG SPACK_CORE_CHECKOUT
+ARG SPACK_CORE_REPO
+ARG SPACK_CORE_ROOT
+ARG SPACK_MIRROR
+ARG SPACK_PACKAGES_CHECKOUT
+ARG SPACK_PACKAGES_REPO
+ARG SPACK_PACKAGES_ROOT
+
+RUN git clone --quiet $SPACK_PACKAGES_REPO $SPACK_PACKAGES_ROOT \
+ && git -C $SPACK_PACKAGES_ROOT checkout --quiet $SPACK_PACKAGES_CHECKOUT
+
+RUN git clone --quiet $SPACK_CORE_REPO $SPACK_CORE_ROOT \
+ && git -C $SPACK_CORE_ROOT checkout --quiet $SPACK_CORE_CHECKOUT \
+ && . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && export SPACK_DISABLE_LOCAL_CONFIG=1 \
+ && spack repo set --destination $SPACK_PACKAGES_ROOT builtin \
+ && spack config --scope site add "config:db_lock_timeout:480" \
+ && spack config --scope site add "config:connect_timeout:60" \
+ && spack mirror add --scope site E4S $SPACK_MIRROR \
+ && spack buildcache keys -it
+
+
+## ETC
+FROM $GENERIC_BASE_IMAGE AS etc
+COPY /utilities.sh /etc/e4s/
+COPY /install-spack-packages.sh /etc/e4s/
+COPY spack-config/*.yaml /etc/spack/
+
+
+## CPU SPACK CONCRETIZE
+FROM $CUDA_BASE_IMAGE AS spack-cpu-concretize
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+
+COPY --from=spack $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+
+ENV TARGET=cpu
+ENV TARGET_DIR=/etc/e4s/$TARGET-env
+
+WORKDIR $TARGET_DIR
+
+COPY /spack-env/spack.$TARGET.yaml $TARGET_DIR/spack.yaml
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack -e . concretize -f | tee concretize.log
+
+
+## CUDA-NOARCH SPACK CONCRETIZE
+FROM $CUDA_BASE_IMAGE AS spack-cuda-noarch-concretize
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+
+COPY --from=spack $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+
+ENV TARGET=cuda-noarch
+ENV TARGET_DIR=/etc/e4s/$TARGET-env
+
+WORKDIR $TARGET_DIR
+
+COPY /spack-env/spack.$TARGET.yaml $TARGET_DIR/spack.yaml
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack -e . concretize -f | tee concretize.log
+
+
+## CUDA-70 SPACK CONCRETIZE
+FROM $CUDA_BASE_IMAGE AS spack-cuda-70-concretize
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+
+COPY --from=spack $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+
+ENV TARGET=cuda-70
+ENV TARGET_DIR=/etc/e4s/$TARGET-env
+
+WORKDIR $TARGET_DIR
+
+COPY /spack-env/spack.$TARGET.yaml $TARGET_DIR/spack.yaml
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack -e . concretize -f | tee concretize.log
+
+
+## CUDA-70 SPACK INSTALL
+FROM $CUDA_BASE_IMAGE AS spack-cuda-70
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+
+COPY --from=spack $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+COPY --from=spack-cuda-70-concretize /etc/e4s/cuda-70-env /etc/e4s/cuda-70-env
+COPY --from=etc /etc/e4s /etc/e4s
+COPY --from=etc /etc/spack /etc/spack
+
+ENV TARGET_DIR=/etc/e4s/cpu-env
+COPY --from=spack-cpu-concretize $TARGET_DIR $TARGET_DIR
+WORKDIR $TARGET_DIR
+RUN /etc/e4s/install-spack-packages.sh
+
+ENV TARGET_DIR=/etc/e4s/cuda-70-env
+COPY --from=spack-cuda-70-concretize $TARGET_DIR $TARGET_DIR
+WORKDIR $TARGET_DIR
+RUN /etc/e4s/install-spack-packages.sh
+
+ENV TARGET_DIR=/etc/e4s/cuda-noarch-env
+COPY --from=spack-cuda-noarch-concretize $TARGET_DIR $TARGET_DIR
+WORKDIR $TARGET_DIR
+RUN /etc/e4s/install-spack-packages.sh
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mark -e mpich \
+ && spack module tcl refresh --delete-tree -y
+
+
+FROM $FINAL_BASE_IMAGE AS final-base
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Los_Angeles
+
+RUN rm -f /etc/apt/apt.conf.d/docker-clean \
+ && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt update -y \
+ && apt install -y \
+        bc \
+        clinfo \
+        csh \
+        firefox \
+        git-lfs \
+        imagemagick \
+        libfreetype6-dev \
+        libhdf5-dev \
+        libnl-3-dev \
+        libnl-route-3-dev \
+        libqt5gui5 \
+        libxi-dev \
+        libxrender-dev \
+        libxtst-dev \
+        openjdk-11-jdk \
+        pkg-config \
+        tcsh \
+        xterm \
+        zsh \
+&& apt autoremove -y
+
+COPY /utilities.sh /opt/
+
+RUN mkdir /usr/local/codium \
+ && cd /usr/local/codium \
+ && wget -q https://github.com/VSCodium/vscodium/releases/download/1.99.32846/VSCodium-linux-ppc64le-1.99.32846.tar.gz \
+ && tar xzf VSCodium-linux-ppc64le-1.99.32846.tar.gz \
+ && rm -rf VSCodium-linux-ppc64le-1.99.32846.tar.gz \
+ && echo export PATH=/usr/local/codium/bin:'$PATH' >> /etc/bash.bashrc
+
+# # Fix paraprof 3d render segfault- downgrade to glx/mesa versions used in 24.11 release
+# RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+#     --mount=type=cache,target=/var/lib/apt,sharing=locked \
+#     apt install -y --allow-downgrades \
+#       libegl-mesa0=24.0.5-1ubuntu1 \
+#       libgl1-mesa-dri=24.0.5-1ubuntu1 \
+#       libglapi-mesa=24.0.5-1ubuntu1 \
+#       libglx-mesa0=24.0.5-1ubuntu1 \
+#       mesa-utils-bin=9.0.0-2 \
+#       mesa-utils=9.0.0-2 \
+#       mesa-vulkan-drivers=24.0.5-1ubuntu1 \
+#       libgbm1=24.0.5-1ubuntu1
+
+RUN cd /opt \
+ && wget -q http://tau.uoregon.edu/demo.tgz \
+ && tar xzf demo.tgz \
+ && rm -rf demo.tgz \
+ && sed -i 's@load tau@load tau/2.35-cuda@g' /opt/demo/CoMD/bin/rt.sh \
+ && cd /opt/demo \
+ && git clone --quiet https://github.com/ParaToolsInc/e4s-cloud-examples.git \
+ && rm -rf e4s-cloud-examples/.git \
+ && (cd e4s-cloud-examples && ./fetch-all.sh)
+
+COPY julia/examples /opt/demo/julia-examples
+
+RUN chmod -R o+rX /root \
+ && chmod -R g+rwX /root
+
+ENV TF_CPP_MIN_LOG_LEVEL=2
+ENV PYTHONWARNINGS="ignore::FutureWarning,ignore::DeprecationWarning,ignore::RuntimeWarning"
+
+ENTRYPOINT ["/bin/bash", "--rcfile", "/etc/bash.bashrc"]
+
+
+## FINAL CUDA 70
+FROM final-base AS final-cuda-70
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+
+COPY --from=spack-cuda-70 /etc/spack /etc/spack
+COPY --from=spack-cuda-70 /etc/e4s /etc/e4s
+COPY --from=spack-cuda-70 $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack-cuda-70 $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+
+ENV UV_LINK_MODE=copy
+
+COPY /install-python-pkgs-cuda.sh /
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,src=wheels,dst=/wheels \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    /install-python-pkgs-cuda.sh \
+ && rm -f /install-python-pkgs-cuda.sh \
+ && chmod -R o+rX /root \
+ && chmod -R g+rwX /root
+
+ENV JULIA_CPU_TARGET="pwr8"
+COPY /install-julia-cuda.sh /
+RUN /install-julia-cuda.sh \
+ && rm -f /install-julia-cuda.sh \
+ && chmod -R o+rX /root \
+ && chmod -R g+rwX /root
+
+COPY e4s-chain-spack.sh /etc/e4s/
+
+COPY /install-bashrc.sh /
+RUN /install-bashrc.sh && rm /install-bashrc.sh
+
+RUN updatedb
+
+RUN chmod -R o+rX /root \
+ && chmod -R g+rwX /root
+
+WORKDIR /

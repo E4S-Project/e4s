@@ -1,0 +1,19 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - flux-core +cuda
+  # - hpctoolkit +cuda ^dyninst@13.0.0
+  - tau +mpi +python +cuda +syscall +ittnotify +julia +perfetto libunwind=none +dyninst  ^intel-tbb@2022.3.0
+  
+  # new errors, need to investigate...
+  # - bricks +cuda                    # VSBrick-cond.py-SVE512-8x8x8-8:622:11: error: 'svst1_u32' was not declared in this scope; did you mean 'vst1_u32'?
+  # - papi +cuda                      # /usr/local/cuda-12.6/extras/CUPTI/include/cupti_activity.h:1890:23: error: expected ';' before 'typedef'

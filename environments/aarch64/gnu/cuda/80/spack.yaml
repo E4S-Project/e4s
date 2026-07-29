@@ -1,0 +1,58 @@
+spack:
+  include:
+  - ../_config/packages.yaml
+  - ../../_config/packages.yaml
+
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: false
+  
+  specs:
+  - adios2 +mpi +hdf5 +campaign +python +xrootd +cuda cuda_arch=80
+  - amrex +cuda cuda_arch=80
+  - arborx +cuda cuda_arch=80
+  - axom +cuda cuda_arch=80
+  - cabana +cuda cuda_arch=80 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=80
+  # - caliper +cuda cuda_arch=80
+  - chai tests=none +cuda cuda_arch=80 ^umpire ~shared
+  - cp2k smm=blas +mpi +cuda cuda_arch=80
+  - cusz +cuda cuda_arch=80
+  - fftx +cuda cuda_arch=80
+  - ginkgo +cuda cuda_arch=80
+  - gromacs +cuda cuda_arch=80
+  - heffte +cuda cuda_arch=80
+  # - hpx +cuda cuda_arch=80
+  - hypre +cuda cuda_arch=80
+  - kokkos +wrapper +cuda cuda_arch=80
+  - kokkos-kernels +cuda cuda_arch=80 ^kokkos +wrapper +cuda cuda_arch=80
+  - legion +cuda cuda_arch=80
+  - libceed +cuda cuda_arch=80
+  - libpressio +bitgrooming +bzip2 +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp +json +remote +netcdf ~cusz +mgard +cuda cuda_arch=80 ^py-numcodecs@0.12.1 # py-numcodecs-0.15.0: needs newer python>=3.11
+  - magma +cuda cuda_arch=80
+  - mfem +cuda cuda_arch=80
+  - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=80
+  - omega-h +cuda cuda_arch=80
+  - parsec +cuda cuda_arch=80
+  - petsc +cuda cuda_arch=80
+  - raja +cuda cuda_arch=80
+  - slate +cuda cuda_arch=80
+  - slepc +cuda cuda_arch=80
+  - strumpack ~slate +cuda cuda_arch=80
+  - sundials +cuda cuda_arch=80
+  - superlu-dist +cuda cuda_arch=80
+  - tasmanian +cuda cuda_arch=80
+  - trilinos +cuda cuda_arch=80
+  - umpire ~shared +cuda cuda_arch=80
+  - vtk-m +cuda cuda_arch=80
+  - zfp +cuda cuda_arch=80
+
+  # new errors, need to investigate...
+  # - ascent +cuda cuda_arch=80           # ascent: https://github.com/spack/spack/issues/38045
+  # - chapel +cuda cuda_arch=80           # /usr/include/aarch64-linux-gnu/bits/math-vector.h:108:9: error: unknown type name '__SVBool_t'
+  # - dealii +cuda cuda_arch=80           # dealii: conflicts with '+cuda ^cuda@12:'
+  # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=80 ~ipopt ^hiop ~sparse +mpi +raja ~rocm +cuda cuda_arch=80  # camp-2025.12.0-ue25ch4xr54odu2pyjlbgy3h5t7jx6im/include/camp/helpers.hpp:265:24: error: 'is_lvalue_reference_v' is not a member of 'std'; did you mean 'is_lvalue_reference'?
+  # - flecsi +cuda cuda_arch=80           # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?
+  # - lbann +cuda cuda_arch=80            # dihydrogen-0.3.0: CMake Error at cmake/modules/SetupCUDAToolkit.cmake:33 (target_link_libraries): The link interface of target "h2::cuda_toolkit" contains: CUDA::nvToolsExt but the target was not found.
+  # - paraview +cuda cuda_arch=80         # viskores-1.1/viskores/cont/cuda/DeviceAdapterCuda.h:38:2: error: #error When Viskores is built with CUDA enabled all compilation units that include DeviceAdapterTagCuda must use the cuda compiler

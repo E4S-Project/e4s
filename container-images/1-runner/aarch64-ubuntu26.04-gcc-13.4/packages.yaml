@@ -1,0 +1,16 @@
+packages:
+  c:
+    require: [gcc@13.4.0]
+  cxx:
+    require: [gcc@13.4.0]
+  fortran:
+    require: [gcc@13.4.0]
+  gcc:
+    externals:
+    - spec: gcc@13.4.0 languages:='c,c++,fortran'
+      prefix: /usr
+      extra_attributes:
+        compilers:
+          c: /usr/bin/gcc
+          cxx: /usr/bin/g++
+          fortran: /usr/bin/gfortran

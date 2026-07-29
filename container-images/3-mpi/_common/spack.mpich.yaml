@@ -1,0 +1,12 @@
+spack:
+  view: false
+
+  concretizer:
+    reuse: false
+    unify: when_possible
+
+  packages:
+    libfabric:
+      variants: fabrics=sockets,tcp,udp,rxm
+
+  specs: []

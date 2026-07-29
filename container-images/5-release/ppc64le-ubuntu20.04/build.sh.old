@@ -1,0 +1,75 @@
+#!/bin/bash -e
+
+. assets/utilities.sh
+
+require_env IMAGE_TARGET
+
+if [[ ! "${IMAGE_TARGET}" =~ ^(cuda-70)$ ]] ; then
+  echo "error: IMAGE_TARGET should be set to one of (cuda-70)"
+  exit 1
+fi
+
+. vars.env
+
+spack_core_checkout=v1.1.1
+spack_core_repo=https://github.com/spack/spack
+spack_core_root=/spack
+spack_packages_checkout=860cf8674eba29f944af15c88f8b4fbadbd0e3c8
+spack_packages_repo=https://github.com/eugeneswalker/spack-packages
+spack_packages_root=/spack-packages
+spack_mirror=${SPACK_MIRROR:-cache.e4s.io/26.06}
+
+pretty_date=$(printf '%(%Y.%m.%d)T' -1)
+timestamp=$(date +%s)
+registry=${REGISTRY:-ecpe4s}
+tag=${BUILD_TAG:-26.06.$timestamp}
+
+if [[ $IMAGE_TARGET =~ "cuda" ]] ; then
+  name=e4s-cuda-ppc64le
+  tag=cuda$(echo $IMAGE_TARGET | cut -d- -f2)-$tag
+fi
+
+output_image="${registry}/${name}:${tag}"
+
+generic_base_image=ecpe4s/ubuntu20.04-runner-ppc64le-gcc-11.4:1779820027
+cuda_base_image=ecpe4s/e4s-mpi-cuda-ppc64le:v4.3.2-v11.2.2-1779820055
+
+if [[ $IMAGE_TARGET =~ "cuda" ]] ; then
+  final_base_image=$cuda_base_image
+else
+  _err error: failed to determine final base image from IMAGE_TARGET: $IMAGE_TARGET
+  exit 1
+fi
+
+if [[ $IMAGE_TARGET =~ "cuda" ]] ; then
+  cd assets
+  tarball=ml-ubuntu20.04-ppc64le-cuda-2.tgz
+  if [[ ! -f $tarball ]]; then
+    wget -q https://cache.e4s.io/$(python3 -c "import urllib.parse; print(urllib.parse.quote('''${tarball}'''))")
+    if [[ -d wheels.bak ]] ; then
+      rm -rf wheels.bak
+    fi
+    mv wheels{,.bak} >/dev/null 2>&1 || true
+    tar xzf $tarball
+  fi
+  cd ..
+fi
+
+cmd docker build \
+ --build-arg IMAGE_TARGET=$IMAGE_TARGET \
+ --build-arg FINAL_BASE_IMAGE="$final_base_image" \
+ --build-arg CUDA_BASE_IMAGE="$cuda_base_image" \
+ --build-arg GENERIC_BASE_IMAGE="$generic_base_image" \
+ --build-arg SPACK_CORE_CHECKOUT=$spack_core_checkout \
+ --build-arg SPACK_CORE_REPO=$spack_core_repo \
+ --build-arg SPACK_CORE_ROOT=$spack_core_root \
+ --build-arg SPACK_PACKAGES_CHECKOUT=$spack_packages_checkout \
+ --build-arg SPACK_PACKAGES_REPO=$spack_packages_repo \
+ --build-arg SPACK_PACKAGES_ROOT=$spack_packages_root \
+ --build-arg SPACK_MIRROR=https://$spack_mirror \
+ --target final-$IMAGE_TARGET \
+ -t "${output_image}" \
+ --progress=plain \
+ -f Dockerfile \
+ assets
+
