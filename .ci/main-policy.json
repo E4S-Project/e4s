@@ -1,0 +1,40 @@
+{
+  "ID": "",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowListBucketOnlyForSpecificPrefix",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${S3_BUCKET}"
+      ],
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "mr",
+            "e4s-builds/*",
+            "e4s-builds",
+            "mr/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "AllowAllObjectActionsInPrefix",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:DeleteObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${S3_BUCKET}/e4s-builds/*",
+        "arn:aws:s3:::${S3_BUCKET}/mr/*"
+      ],
+      "Condition": {}
+    }
+  ]
+}
