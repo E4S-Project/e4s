@@ -218,6 +218,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         zsh \
 && apt autoremove -y
 
+# Disabled: https://github.com/E4S-Project/e4s/issues/172
 # RUN curl -fsSL https://ollama.com/install.sh | sh
 
 # RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \

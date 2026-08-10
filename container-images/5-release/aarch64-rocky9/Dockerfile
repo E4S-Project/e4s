@@ -284,6 +284,7 @@ RUN dnf install -y epel-release \
         xdg-utils \
         xterm
 
+# Disabled: https://github.com/E4S-Project/e4s/issues/172
 # RUN curl -fsSL https://ollama.com/install.sh | sh
 
 COPY google-cloud-sdk.repo /etc/yum.repos.d/google-cloud-sdk.repo
