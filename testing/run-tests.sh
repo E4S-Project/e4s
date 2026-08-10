@@ -26,7 +26,7 @@ SKIP_TESTS_x86_64_rocky_cpu="cabana dyninst tau bricks charliecloud e4s-alc e4s-
 SKIP_TESTS_x86_64_rocky_cuda_90="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_rocky_cuda_120="heffte-cuda papi-cuda petsc-cuda sundials-cuda"
 SKIP_TESTS_x86_64_ubuntu_cpu="cabana dyninst tau variorum bricks charliecloud darshan-util e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plasma plumed umap warpx wps wrf gotcha"
-SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda libceed-cuda gromacs-cuda"
+SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_ubuntu_cuda_90="heffte-cuda papi-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_ubuntu_cuda_120="heffte-cuda kokkos-kernels-cuda papi-cuda petsc-cuda sundials-cuda"
 SKIP_TESTS_x86_64_ubuntu_rocm_942="amrex-rocm hypre-rocm magma-rocm umpire-rocm heffte-rocm slate-rocm tasmanian-rocm"
@@ -51,21 +51,17 @@ case "$TEST_TARGET" in
         which mpiexec
         which mpicc
         cat ./settings.sh
-        echo "Running OneAPI Tests"
         ;;
     *rocm*)
         TEST_DIR=./rocm_tests/
-        echo "Running ROCM Tests"
 
         ;;
     *cuda*)
         TEST_DIR=./cuda_tests/
-        echo "Running CUDA Tests"
         ;;
     "cpu")
         #CPU basted tests should be more parallel-run tolerant
         PROC_ARG=()
-        echo "Running CPU Tests"
         ;;
     *)
         echo "Unknown target: $TEST_TARGET"
@@ -82,7 +78,7 @@ PLATFORM_SKIP_NAME="SKIP_TESTS_${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
 PLATFORM_SKIP_NAME="${PLATFORM_SKIP_NAME//-/_}"
 SKIP_TESTS="${!PLATFORM_SKIP_NAME}"
 
-echo "Running on Platform: ${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
+echo "Running on Platform: ${PLATFORM_SKIP_NAME}"
 echo "Skipping tests: \"$SKIP_TESTS\""
 
 
@@ -95,9 +91,9 @@ fi
 
 #We might need to limit the number of processes to avoid contention (--processes 1). Color used to break some ci interfaces but we can experiment with that later as well. Return code is the number of failed tests.
 
-start_section "Running: time stdbuf -oL -eL ./test-all.sh --json  --color-off ${PROC_ARG[@]}  ${SKIP_ARG[@]}  $TEST_DIR"
+start_section "Running: time ./test-all.sh --json  --color-off ${PROC_ARG[@]}  ${SKIP_ARG[@]}  $TEST_DIR"
 
-time stdbuf -oL -eL ./test-all.sh --json --color-off "${PROC_ARG[@]}"  "${SKIP_ARG[@]}"  "$TEST_DIR"
+time ./test-all.sh --json --color-off "${PROC_ARG[@]}"  "${SKIP_ARG[@]}"  "$TEST_DIR"
 TESTEXIT=$?
 
 end_section
@@ -106,30 +102,21 @@ json_files=(json-outputs/*.json)
 JSON_FILE="${json_files[0]}"
 if [ ! -f "$JSON_FILE" ]; then
     echo "Error: No JSON files found in json-outputs/"
-    exit 1
+    exit $TESTEXIT
 fi
 
 cp $JSON_FILE $ARTIFACTS
 
-# Define ANSI color codes
-GREEN_BOLD='\033[1;32m'
-COLOR_RESET='\033[0m'
-
-printf "${GREEN_BOLD}"
-echo "Successful Tests:"
-./process-json.sh "$JSON_FILE"
-printf "${COLOR_RESET}"
-
 STEPS=("setup" "clean" "compile" "run")
 all_failed_tests=()
 for step in "${STEPS[@]}"; do
-    #echo "Checking failed tests for step: $step..."
+    echo "Checking failed tests for step: $step..."
 
     failed_tests=$(./process-json.sh "$JSON_FILE" "$step" "fail" 2>/dev/null)
 
     if [ -n "$failed_tests" ]; then
         step_dir="$ARTIFACTS/$step"
-        echo "-> $step Failures found! Creating directory: $step_dir for:"
+        echo "-> Failures found! Creating directory: $step_dir for:"
         echo "$failed_tests"
         mkdir -p "$step_dir"
 
@@ -173,12 +160,13 @@ for step in "${STEPS[@]}"; do
                     fi
 
         done <<< "$failed_tests"
-    #else
-    #    echo "-> No failures for $step."
-    echo "--------------------------------------"
+    else
+        echo "-> No failures for $step."
     fi
-    
+    echo "--------------------------------------"
 done
+
+echo "Logs processed."
 
 if [ ${#all_failed_tests[@]} -gt 0 ]; then
     # Flatten the array elements into a single space-separated string
@@ -188,7 +176,7 @@ if [ ${#all_failed_tests[@]} -gt 0 ]; then
     echo "${PLATFORM_SKIP_NAME}=\"$failing_tests_str\""
 fi
 
-#echo "Logs processed."
+echo "Logs processed."
 
 
 exit $TESTEXIT
