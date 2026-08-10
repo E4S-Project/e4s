@@ -140,6 +140,7 @@ spec:
       - release-x86_64-rocky-all
       - release-x86_64-rocky-cpu
       - release-x86_64-rocky-cuda-all
+      - sif-all
 ---
 
 
@@ -7713,6 +7714,7 @@ x86_64-ubuntu-release-cpu-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -7784,6 +7786,7 @@ x86_64-ubuntu-release-cuda-80-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-80/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -7866,6 +7869,7 @@ x86_64-ubuntu-release-cuda-90-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -7948,6 +7952,7 @@ x86_64-ubuntu-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -8030,6 +8035,7 @@ x86_64-ubuntu-release-rocm-908-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-908/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -8107,6 +8113,7 @@ x86_64-ubuntu-release-rocm-90a-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-90a/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -8184,6 +8191,7 @@ x86_64-ubuntu-release-rocm-942-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-942/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -8261,6 +8269,7 @@ x86_64-ubuntu-release-oneapi-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-oneapi/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -8334,6 +8343,7 @@ x86_64-rocky-release-cpu-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cpu/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -8407,6 +8417,7 @@ x86_64-rocky-release-cuda-90-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -8490,6 +8501,7 @@ x86_64-rocky-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -8570,6 +8582,7 @@ aarch64-ubuntu-release-cpu-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
@@ -8643,6 +8656,7 @@ aarch64-ubuntu-release-cuda-80-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-80/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
@@ -8724,6 +8738,7 @@ aarch64-ubuntu-release-cuda-90-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
@@ -8805,6 +8820,7 @@ aarch64-ubuntu-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-120/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
@@ -8882,6 +8898,7 @@ aarch64-rocky-release-cpu-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cpu/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
@@ -8955,6 +8972,7 @@ aarch64-rocky-release-cuda-90-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
@@ -9038,6 +9056,7 @@ aarch64-rocky-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
@@ -9118,6 +9137,7 @@ ppc64le-ubuntu-release-cpu-sif:
   - if: $CONTAINER_TARGET =~ /release-ppc64le-all/
   - if: $CONTAINER_TARGET =~ /release-ppc64le-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-ppc64le-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
@@ -9189,6 +9209,7 @@ ppc64le-ubuntu-release-cuda-70-sif:
   - if: $CONTAINER_TARGET =~ /release-ppc64le-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-ppc64le-ubuntu-cuda-all/
   - if: $CONTAINER_TARGET =~ /release-ppc64le-ubuntu-cuda-70/
+  - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
