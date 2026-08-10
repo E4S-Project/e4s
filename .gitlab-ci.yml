@@ -1,12 +1,17 @@
 spec:
   inputs: 
+    disable_sif:
+      default: "false"
+      options:
+      - "false"
+      - "true"
     disable_tests:
       default: "false"
       options:
       - "false"
       - "true"
     disable_oneapi: 
-      default: "false"
+      default: "true"
       options:
       - "false"
       - "true"
@@ -200,6 +205,7 @@ variables:
   - clear_aws_env_credentials
   - export SIGNING_KEY=$PRIVATE_DIR/key.priv
   - base64 -d $SIGNING_KEY_PATH_B64 > $SIGNING_KEY
+  - env | grep AWS
   after_script:
   - rm -rf $PRIVATE_DIR
 
@@ -289,11 +295,11 @@ load-image-refs:
       dotenv: $CI_PROJECT_DIR/build.env
   id_tokens:
     GITLAB_OIDC_TOKEN:
-      aud: a62a90a71a37ce443a9fae87d1ec4bf1043b3dfdff4a1d5591310eece3cf4862
+      aud: 0a7421ace6e98b2ff2715e93f3c04a7d9fa703296f4bd897908e1ac82c22ef17
   script:
   - env | grep S3_
   - unset AWS_CONFIG_FILE
-  - export AWS_ENDPOINT_URL_STS=https://uo-spack-mirror.e4s.io:9000
+  - export AWS_ENDPOINT_URL_STS=https://uo-spack-mirror.e4s.io:9002
   - >
     if [[ "$CI_PIPELINE_SOURCE" == "merge_request_event" ]]; then
       policy_file_in=$CI_PROJECT_DIR/.ci/merge-request-policy.json
@@ -304,11 +310,11 @@ load-image-refs:
   - envsubst '$S3_BUCKET,$CI_MERGE_REQUEST_IID' <$policy_file_in >$policy
   - >
     aws_sts_output=$(aws sts assume-role-with-web-identity
-    --role-arn arn:rustfs:iam::123456789012:role/RustfsS3AccessRole
+    --role-arn arn:minio:iam:::role/ZM0mPWBxe-nLE6gPCGm8uu5IWmk
     --role-session-name "GitLabRunner-${CI_PROJECT_ID}-${CI_PIPELINE_ID}"
     --web-identity-token $GITLAB_OIDC_TOKEN
     --policy file://$policy
-    --duration-seconds 43200
+    --duration-seconds 64800
     --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]'
     --output text)
   - printf "AWS_ACCESS_KEY_ID=%s\nAWS_SECRET_ACCESS_KEY=%s\nAWS_SESSION_TOKEN=%s\n" $aws_sts_output >> $CI_PROJECT_DIR/build.env
@@ -5287,6 +5293,10 @@ x86_64-gnu-cpu:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cpu/**/*
@@ -5294,6 +5304,10 @@ x86_64-gnu-cpu:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cpu/**/*
@@ -5328,6 +5342,10 @@ x86_64-gnu-cpu-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-rocky9/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cpu/**/*
@@ -5335,6 +5353,10 @@ x86_64-gnu-cpu-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-rocky9/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cpu/**/*
@@ -5373,6 +5395,12 @@ x86_64-gnu-cuda-80:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5381,6 +5409,12 @@ x86_64-gnu-cuda-80:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5420,6 +5454,12 @@ x86_64-gnu-cuda-80-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5428,6 +5468,12 @@ x86_64-gnu-cuda-80-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5467,6 +5513,12 @@ x86_64-gnu-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5475,6 +5527,12 @@ x86_64-gnu-cuda-90:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5514,6 +5572,12 @@ x86_64-gnu-cuda-90-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5522,6 +5586,12 @@ x86_64-gnu-cuda-90-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5561,6 +5631,12 @@ x86_64-gnu-cuda-89:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5569,6 +5645,12 @@ x86_64-gnu-cuda-89:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5608,6 +5690,12 @@ x86_64-gnu-cuda-89-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5616,6 +5704,12 @@ x86_64-gnu-cuda-89-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5655,6 +5749,12 @@ x86_64-gnu-cuda-86:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5663,6 +5763,12 @@ x86_64-gnu-cuda-86:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5702,6 +5808,12 @@ x86_64-gnu-cuda-86-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5710,6 +5822,12 @@ x86_64-gnu-cuda-86-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5750,6 +5868,12 @@ x86_64-gnu-cuda-90-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-rocky9/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5758,6 +5882,12 @@ x86_64-gnu-cuda-90-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-rocky9/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5798,6 +5928,12 @@ x86_64-gnu-cuda-90-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-rocky9/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5806,6 +5942,12 @@ x86_64-gnu-cuda-90-driver-reqd-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-rocky9/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5845,6 +5987,12 @@ x86_64-gnu-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5853,6 +6001,12 @@ x86_64-gnu-cuda-120:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5892,6 +6046,12 @@ x86_64-gnu-cuda-120-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5900,6 +6060,12 @@ x86_64-gnu-cuda-120-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5940,6 +6106,12 @@ x86_64-gnu-cuda-120-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-rocky9/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5948,6 +6120,12 @@ x86_64-gnu-cuda-120-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-rocky9/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -5988,6 +6166,12 @@ x86_64-gnu-cuda-120-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-rocky9/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -5996,6 +6180,12 @@ x86_64-gnu-cuda-120-driver-reqd-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-rocky9/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -6035,6 +6225,12 @@ x86_64-gnu-cuda-notarget:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -6043,6 +6239,12 @@ x86_64-gnu-cuda-notarget:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -6082,6 +6284,12 @@ x86_64-gnu-cuda-notarget-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-rocky9/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
@@ -6090,6 +6298,12 @@ x86_64-gnu-cuda-notarget-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-rocky9/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
@@ -6129,6 +6343,12 @@ x86_64-gnu-rocm-gfx908:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/rocm/_config/**/*
@@ -6137,6 +6357,12 @@ x86_64-gnu-rocm-gfx908:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/rocm/_config/**/*
@@ -6176,6 +6402,12 @@ x86_64-gnu-rocm-gfx90a:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/rocm/_config/**/*
@@ -6184,6 +6416,12 @@ x86_64-gnu-rocm-gfx90a:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/rocm/_config/**/*
@@ -6223,6 +6461,12 @@ x86_64-gnu-rocm-gfx942:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/rocm/_config/**/*
@@ -6231,6 +6475,12 @@ x86_64-gnu-rocm-gfx942:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/rocm/_config/**/*
@@ -6270,6 +6520,12 @@ x86_64-gnu-rocm-notarget:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/rocm/_config/**/*
@@ -6278,6 +6534,12 @@ x86_64-gnu-rocm-notarget:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/rocm/_config/**/*
@@ -6317,6 +6579,12 @@ x86_64-oneapi-cpu:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/oneapi/_config/**/*
     - environments/x86_64/oneapi/cpu/**/*
@@ -6324,6 +6592,12 @@ x86_64-oneapi-cpu:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/oneapi/_config/**/*
       - environments/x86_64/oneapi/cpu/**/*
@@ -6360,6 +6634,12 @@ x86_64-oneapi-gpu:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/x86_64/oneapi/_config/**/*
     - environments/x86_64/oneapi/gpu/**/*
@@ -6367,6 +6647,12 @@ x86_64-oneapi-gpu:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/x86_64/oneapi/_config/**/*
       - environments/x86_64/oneapi/gpu/**/*
@@ -6399,6 +6685,10 @@ aarch64-gnu-cpu:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cpu/**/*
@@ -6406,6 +6696,10 @@ aarch64-gnu-cpu:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cpu/**/*
@@ -6440,6 +6734,10 @@ aarch64-gnu-cpu-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-rocky9/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cpu/**/*
@@ -6447,6 +6745,10 @@ aarch64-gnu-cpu-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-rocky9/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cpu/**/*
@@ -6484,6 +6786,12 @@ aarch64-gnu-cuda-80:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6492,6 +6800,12 @@ aarch64-gnu-cuda-80:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6530,6 +6844,12 @@ aarch64-gnu-cuda-80-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6538,6 +6858,12 @@ aarch64-gnu-cuda-80-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6576,6 +6902,12 @@ aarch64-gnu-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6584,6 +6916,12 @@ aarch64-gnu-cuda-90:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6622,6 +6960,12 @@ aarch64-gnu-cuda-90-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6630,6 +6974,12 @@ aarch64-gnu-cuda-90-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6670,6 +7020,12 @@ aarch64-gnu-cuda-90-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-rocky9/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6678,6 +7034,12 @@ aarch64-gnu-cuda-90-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-rocky9/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6718,6 +7080,12 @@ aarch64-gnu-cuda-90-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-rocky9/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6726,6 +7094,12 @@ aarch64-gnu-cuda-90-driver-reqd-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-rocky9/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6764,6 +7138,12 @@ aarch64-gnu-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6772,6 +7152,12 @@ aarch64-gnu-cuda-120:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6810,6 +7196,12 @@ aarch64-gnu-cuda-120-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6818,6 +7210,12 @@ aarch64-gnu-cuda-120-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6858,6 +7256,12 @@ aarch64-gnu-cuda-120-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-rocky9/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6866,6 +7270,12 @@ aarch64-gnu-cuda-120-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-rocky9/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6906,6 +7316,12 @@ aarch64-gnu-cuda-120-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-rocky9/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6914,6 +7330,12 @@ aarch64-gnu-cuda-120-driver-reqd-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-rocky9/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6952,6 +7374,12 @@ aarch64-gnu-cuda-notarget:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -6960,6 +7388,12 @@ aarch64-gnu-cuda-notarget:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -6999,6 +7433,12 @@ aarch64-gnu-cuda-notarget-rocky:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-rocky9/**/*
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
@@ -7007,6 +7447,12 @@ aarch64-gnu-cuda-notarget-rocky:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-rocky9/**/*
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
@@ -7040,6 +7486,10 @@ ppc64le-gnu-cpu:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cpu/**/*
@@ -7047,6 +7497,10 @@ ppc64le-gnu-cpu:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cpu/**/*
@@ -7084,6 +7538,12 @@ ppc64le-gnu-cuda-70:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
@@ -7092,6 +7552,12 @@ ppc64le-gnu-cuda-70:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
@@ -7130,6 +7596,12 @@ ppc64le-gnu-cuda-70-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
@@ -7138,6 +7610,12 @@ ppc64le-gnu-cuda-70-driver-reqd:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
@@ -7176,6 +7654,12 @@ ppc64le-gnu-cuda-notarget:
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
@@ -7184,6 +7668,12 @@ ppc64le-gnu-cuda-notarget:
     changes:
       paths:
       - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
@@ -7203,6 +7693,8 @@ x86_64-ubuntu-release-cpu-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7269,6 +7761,8 @@ x86_64-ubuntu-release-cuda-80-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7349,6 +7843,8 @@ x86_64-ubuntu-release-cuda-90-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7429,6 +7925,8 @@ x86_64-ubuntu-release-cuda-120-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7509,6 +8007,8 @@ x86_64-ubuntu-release-rocm-908-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7584,6 +8084,8 @@ x86_64-ubuntu-release-rocm-90a-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7659,6 +8161,8 @@ x86_64-ubuntu-release-rocm-942-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7734,6 +8238,8 @@ x86_64-ubuntu-release-oneapi-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -7808,6 +8314,8 @@ x86_64-rocky-release-cpu-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -7876,6 +8384,8 @@ x86_64-rocky-release-cuda-90-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -7957,6 +8467,8 @@ x86_64-rocky-release-cuda-120-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -8038,6 +8550,8 @@ aarch64-ubuntu-release-cpu-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -8104,6 +8618,10 @@ aarch64-ubuntu-release-cuda-80-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -8183,6 +8701,8 @@ aarch64-ubuntu-release-cuda-90-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -8262,6 +8782,8 @@ aarch64-ubuntu-release-cuda-120-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -8340,6 +8862,8 @@ aarch64-rocky-release-cpu-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -8408,6 +8932,8 @@ aarch64-rocky-release-cuda-90-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -8489,6 +9015,8 @@ aarch64-rocky-release-cuda-120-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -8570,6 +9098,8 @@ ppc64le-ubuntu-release-cpu-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_PPC64LE == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -8636,6 +9166,8 @@ ppc64le-ubuntu-release-cuda-70-sif:
     optional: true
   stage: Build SIF Images
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_PPC64LE == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10331,6 +10863,8 @@ x86_64-ubuntu-release-cpu-sif-test:
   - job: x86_64-ubuntu-release-cpu-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10402,6 +10936,8 @@ x86_64-ubuntu-release-cuda-80-sif-test:
   - job: x86_64-ubuntu-release-cuda-80-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10485,6 +11021,8 @@ x86_64-ubuntu-release-cuda-90-sif-test:
   - job: x86_64-ubuntu-release-cuda-90-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10568,6 +11106,8 @@ x86_64-ubuntu-release-cuda-120-sif-test:
   - job: x86_64-ubuntu-release-cuda-120-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10651,6 +11191,8 @@ x86_64-ubuntu-release-cuda-120-sif-test:
 #   - job: x86_64-ubuntu-release-rocm-908-sif
 #     optional: true
 #   rules:
+  # - if: $DISABLE_SIF == "true"
+  #   when: never
 #   - if: $DISABLE_X86_64 == "true"
 #     when: never
 #   - if: $DISABLE_UBUNTU == "true"
@@ -10729,6 +11271,8 @@ x86_64-ubuntu-release-rocm-90a-sif-test:
   - job: x86_64-ubuntu-release-rocm-90a-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10807,6 +11351,8 @@ x86_64-ubuntu-release-rocm-942-sif-test:
   - job: x86_64-ubuntu-release-rocm-942-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -10885,6 +11431,8 @@ x86_64-ubuntu-release-rocm-942-sif-test:
 #   - job: x86_64-ubuntu-release-oneapi-sif
 #     optional: true
 #   rules:
+  # - if: $DISABLE_SIF == "true"
+  #   when: never
 #   - if: $DISABLE_X86_64 == "true"
 #     when: never
 #   - if: $DISABLE_UBUNTU == "true"
@@ -10962,6 +11510,8 @@ x86_64-rocky-release-cpu-sif-test:
   - job: x86_64-rocky-release-cpu-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -11033,6 +11583,8 @@ x86_64-rocky-release-cuda-90-sif-test:
   - job: x86_64-rocky-release-cuda-90-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -11117,6 +11669,8 @@ x86_64-rocky-release-cuda-120-sif-test:
   - job: x86_64-rocky-release-cuda-120-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_X86_64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -11201,6 +11755,8 @@ aarch64-ubuntu-release-cpu-sif-test:
   - job: aarch64-ubuntu-release-cpu-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -11270,6 +11826,8 @@ aarch64-ubuntu-release-cpu-sif-test:
 #   - job: aarch64-ubuntu-release-cuda-80-sif
 #     optional: true
 #   rules:
+  # - if: $DISABLE_SIF == "true"
+  #   when: never
 #   - if: $DISABLE_AARCH64 == "true"
 #     when: never
 #   - if: $DISABLE_UBUNTU == "true"
@@ -11352,6 +11910,8 @@ aarch64-ubuntu-release-cuda-90-sif-test:
   - job: aarch64-ubuntu-release-cuda-90-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -11434,6 +11994,8 @@ aarch64-ubuntu-release-cuda-120-sif-test:
   - job: aarch64-ubuntu-release-cuda-120-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -11515,6 +12077,8 @@ aarch64-rocky-release-cpu-sif-test:
   - job: aarch64-rocky-release-cpu-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -11586,6 +12150,8 @@ aarch64-rocky-release-cuda-90-sif-test:
   - job: aarch64-rocky-release-cuda-90-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -11670,6 +12236,8 @@ aarch64-rocky-release-cuda-120-sif-test:
   - job: aarch64-rocky-release-cuda-120-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_AARCH64 == "true"
     when: never
   - if: $DISABLE_ROCKY == "true"
@@ -11754,6 +12322,8 @@ ppc64le-ubuntu-release-cpu-sif-test:
   - job: ppc64le-ubuntu-release-cpu-sif
     optional: true
   rules:
+  - if: $DISABLE_SIF == "true"
+    when: never 
   - if: $DISABLE_PPC64LE == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
