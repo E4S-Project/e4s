@@ -125,9 +125,12 @@ spec:
       - mpi-rocky-cpu
       - mpi-rocky-cuda
       - spack-all
-      - spack-x86_64
-      - spack-aarch64
-      - spack-ppc64le
+      - spack-x86_64-all
+      - spack-x86_64-oneapi
+      - spack-x86_64-cuda
+      - spack-x86_64-rocm
+      - spack-aarch64-all
+      - spack-ppc64le-all
       - release-all 
       - release-ubuntu-all
       - release-rocky-all
@@ -135,10 +138,8 @@ spec:
       - release-aarch64-all
       - release-ppc64le-all
       - release-x86_64-ubuntu-all
-      - release-x86_64-ubuntu-cpu
       - release-x86_64-ubuntu-cuda-all
       - release-x86_64-rocky-all
-      - release-x86_64-rocky-cpu
       - release-x86_64-rocky-cuda-all
       - sif-all
 ---
@@ -1543,7 +1544,8 @@ x86_64-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-x86_64/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1600,7 +1602,8 @@ x86_64-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-x86_64/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1659,7 +1662,8 @@ x86_64-ubuntu-spack-rocm:
   - if: $CONTAINER_TARGET =~ /mpi-rocm/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-x86_64/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-rocm/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1719,7 +1723,8 @@ x86_64-ubuntu-spack-oneapi:
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-x86_64/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-oneapi/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1776,7 +1781,8 @@ aarch64-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-aarch64/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1833,7 +1839,8 @@ aarch64-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-aarch64/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1890,7 +1897,8 @@ ppc64le-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-ppc64le/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
@@ -1947,7 +1955,8 @@ ppc64le-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CONTAINER_TARGET =~ /spack-all/
-  - if: $CONTAINER_TARGET =~ /spack-ppc64le/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - .gitlab-ci.yml
