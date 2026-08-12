@@ -4,11 +4,9 @@ function start_section() {
   local section_title="$1"
   export SECTION_ID=$(echo "$section_title" | tr -C 'a-zA-Z0-9' '_')
   echo -e "\e[0Ksection_start:$(date +%s):${SECTION_ID}[collapsed=true]\r\e[0K\e[1;36m${section_title}\e[0m"
-  set -x
 }
 
 function end_section() {
-  set +x
   echo -e "\e[0Ksection_end:$(date +%s):${SECTION_ID}\r\e[0K"
 }
 
@@ -26,7 +24,7 @@ SKIP_TESTS_x86_64_rocky_cpu="cabana dyninst tau bricks charliecloud e4s-alc e4s-
 SKIP_TESTS_x86_64_rocky_cuda_90="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_rocky_cuda_120="heffte-cuda papi-cuda petsc-cuda sundials-cuda"
 SKIP_TESTS_x86_64_ubuntu_cpu="cabana dyninst tau variorum bricks charliecloud darshan-util e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plasma plumed umap warpx wps wrf gotcha"
-SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda"
+SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda libceed-cuda gromacs-cuda"
 SKIP_TESTS_x86_64_ubuntu_cuda_90="heffte-cuda papi-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_ubuntu_cuda_120="heffte-cuda kokkos-kernels-cuda papi-cuda petsc-cuda sundials-cuda"
 SKIP_TESTS_x86_64_ubuntu_rocm_942="amrex-rocm hypre-rocm magma-rocm umpire-rocm heffte-rocm slate-rocm tasmanian-rocm"
@@ -51,17 +49,21 @@ case "$TEST_TARGET" in
         which mpiexec
         which mpicc
         cat ./settings.sh
+        echo "Running OneAPI Tests"
         ;;
     *rocm*)
         TEST_DIR=./rocm_tests/
+        echo "Running ROCM Tests"
 
         ;;
     *cuda*)
         TEST_DIR=./cuda_tests/
+        echo "Running CUDA Tests"
         ;;
     "cpu")
         #CPU basted tests should be more parallel-run tolerant
         PROC_ARG=()
+        echo "Running CPU Tests"
         ;;
     *)
         echo "Unknown target: $TEST_TARGET"
@@ -78,7 +80,7 @@ PLATFORM_SKIP_NAME="SKIP_TESTS_${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
 PLATFORM_SKIP_NAME="${PLATFORM_SKIP_NAME//-/_}"
 SKIP_TESTS="${!PLATFORM_SKIP_NAME}"
 
-echo "Running on Platform: ${PLATFORM_SKIP_NAME}"
+echo "Running on Platform: ${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
 echo "Skipping tests: \"$SKIP_TESTS\""
 
 
@@ -91,6 +93,8 @@ fi
 
 #We might need to limit the number of processes to avoid contention (--processes 1). Color used to break some ci interfaces but we can experiment with that later as well. Return code is the number of failed tests.
 
+#stdbuf -oL -eL didn't help with live-updating web log
+
 start_section "Running: time ./test-all.sh --json  --color-off ${PROC_ARG[@]}  ${SKIP_ARG[@]}  $TEST_DIR"
 
 time ./test-all.sh --json --color-off "${PROC_ARG[@]}"  "${SKIP_ARG[@]}"  "$TEST_DIR"
@@ -102,42 +106,80 @@ json_files=(json-outputs/*.json)
 JSON_FILE="${json_files[0]}"
 if [ ! -f "$JSON_FILE" ]; then
     echo "Error: No JSON files found in json-outputs/"
-    exit $TESTEXIT
+    exit 1
 fi
 
 cp $JSON_FILE $ARTIFACTS
 
+GREEN_BOLD='\033[1;32m'
+YELLOW_BOLD='\033[1;33m'
+COLOR_RESET='\033[0m'
+
 STEPS=("setup" "clean" "compile" "run")
+STATUSES=("pass" "fail")   # skip is intentionally omitted
+
+declare -A fail_counts_by_step
+total_passed=0
+total_failed=0
+
+echo -e "${GREEN_BOLD}Successful Tests:${COLOR_RESET}"
+passed_tests=$(./process-json.sh "$JSON_FILE")
+
+if [ -n "$passed_tests" ]; then
+    while IFS= read -r test_name; do
+        [ -z "$test_name" ] && continue
+        total_passed=$((total_passed + 1))
+
+        test_dir="./validation_tests/$test_name"
+
+        shopt -s nullglob
+        run_logs=("$test_dir"/run-*.log)
+        shopt -u nullglob
+
+        start_section "$test_name"
+        if [ ${#run_logs[@]} -gt 0 ]; then
+            for log_file in "${run_logs[@]}"; do
+                echo -e "${YELLOW_BOLD}--- Tail of $(basename "$log_file") ---${COLOR_RESET}"
+                tail -n 300 "$log_file"
+            done
+        else
+            echo "   Warning: No run-*.log files found for $test_name"
+        fi
+        end_section
+    done <<< "$passed_tests"
+else
+    echo "  (none)"
+fi
+echo "--------------------------------------"
+
 all_failed_tests=()
-for step in "${STEPS[@]}"; do
-    echo "Checking failed tests for step: $step..."
+for status in "${STATUSES[@]}"; do
+    for step in "${STEPS[@]}"; do
+        tests=$(./process-json.sh "$JSON_FILE" "$step" "$status" 2>/dev/null)
+        [ -z "$tests" ] && continue
 
-    failed_tests=$(./process-json.sh "$JSON_FILE" "$step" "fail" 2>/dev/null)
-
-    if [ -n "$failed_tests" ]; then
-        step_dir="$ARTIFACTS/$step"
-        echo "-> Failures found! Creating directory: $step_dir for:"
-        echo "$failed_tests"
+        step_dir="$ARTIFACTS/$status/$step"
+        echo "-> $step ($status): saving logs to $step_dir"
         mkdir -p "$step_dir"
 
-        # Read each failed test name line-by-line
         while IFS= read -r test_name; do
-            # Skip empty lines
             [ -z "$test_name" ] && continue
-            all_failed_tests+=("$test_name")
+
+            if [ "$status" = "fail" ]; then
+                all_failed_tests+=("$test_name")
+                fail_counts_by_step["$step"]=$(( ${fail_counts_by_step["$step"]:-0} + 1 ))
+                total_failed=$((total_failed + 1))
+            fi
 
             test_dir="./validation_tests/$test_name"
-            
+
             if [ -d "$test_dir" ]; then
-                # Use subshell and 'nullglob' to prevent cp errors if no .log files exist
                 (
                     shopt -s nullglob
                     log_files=("$test_dir"/*.log)
-                    
                     if [ ${#log_files[@]} -gt 0 ]; then
-                        echo "   Copying logs for: $test_name"
-                        mkdir -p "$step_dir"/"$test_name"
-                        cp "${log_files[@]}" "$step_dir"/"$test_name"
+                        mkdir -p "$step_dir/$test_name"
+                        cp "${log_files[@]}" "$step_dir/$test_name"
                     else
                         echo "   Warning: No .log files found in $test_dir"
                     fi
@@ -146,37 +188,47 @@ for step in "${STEPS[@]}"; do
                 echo "   Warning: Test directory $test_dir does not exist!"
             fi
 
-            step_logs=("$test_dir/$step"-*.log)
+            if [ "$status" = "fail" ]; then
+                shopt -s nullglob
+                step_logs=("$test_dir/$step"-*.log)
+                shopt -u nullglob
 
-                    if [ ${#step_logs[@]} -gt 0 ]; then
-                        start_section "Failure Log ($step): $test_name"
-
-                        for log_file in "${step_logs[@]}"; do
-                            echo -e "\e[1;33m--- Tail of $(basename "$log_file") ---\e[0m"
-                            tail -n 300 "$log_file"
-                        done
-
-                        end_section
-                    fi
-
-        done <<< "$failed_tests"
-    else
-        echo "-> No failures for $step."
-    fi
-    echo "--------------------------------------"
+                if [ ${#step_logs[@]} -gt 0 ]; then
+                    start_section "Failure Log ($step): $test_name"
+                    for log_file in "${step_logs[@]}"; do
+                        echo -e "${YELLOW_BOLD}--- Tail of $(basename "$log_file") ---${COLOR_RESET}"
+                        tail -n 300 "$log_file"
+                    done
+                    end_section
+                fi
+            fi
+        done <<< "$tests"
+        echo "--------------------------------------"
+    done
 done
 
-echo "Logs processed."
+echo "========================================"
+echo "SUMMARY"
+echo "  Passed: $total_passed"
+echo "  Failed: $total_failed"
+if [ "$total_failed" -gt 0 ]; then
+    echo "  Failures by step:"
+    for step in "${STEPS[@]}"; do
+        count="${fail_counts_by_step[$step]:-0}"
+        [ "$count" -gt 0 ] && echo "    $step: $count"
+    done
+fi
+echo "========================================"
 
-if [ ${#all_failed_tests[@]} -gt 0 ]; then
+#if [ ${#all_failed_tests[@]} -gt 0 ]; then
     # Flatten the array elements into a single space-separated string
-    failing_tests_str="${all_failed_tests[*]}"
+#    failing_tests_str="${all_failed_tests[*]}"
 
     # Print a single clean line you can copy-paste to the top of this script
-    echo "${PLATFORM_SKIP_NAME}=\"$failing_tests_str\""
-fi
+#    echo "${PLATFORM_SKIP_NAME}=\"$failing_tests_str\""
+#fi
 
-echo "Logs processed."
+#echo "Logs processed."
 
 
 exit $TESTEXIT
