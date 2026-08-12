@@ -62,7 +62,7 @@ cmd docker build \
  --build-arg SPACK_PACKAGES_CHECKOUT=$spack_packages_checkout \
  --build-arg SPACK_PACKAGES_REPO=$spack_packages_repo \
  --build-arg SPACK_PACKAGES_ROOT=$spack_packages_root \
- --build-arg SPACK_MIRROR=https://$spack_mirror \
+ --build-arg SPACK_MIRROR=$spack_mirror \
  --build-arg BUILDER_IMAGE=$builder_source_image \
  --build-arg FINAL_IMAGE_BASE=$final_image_base \
  --progress=plain \
