@@ -37,7 +37,7 @@ rocm_source_image=${ROCM_SOURCE_IMAGE:-$UBUNTU_X86_64_ROCM_IMAGE}
 rocm_output_tag=v$mpich_version-v7.2.3-$timestamp
 
 oneapi_source_image=${ONEAPI_SOURCE_IMAGE:-$UBUNTU_X86_64_ONEAPI_IMAGE}
-oneapi_output_tag=v2026.0.0-$timestamp
+oneapi_output_tag=v2026.1.0-$timestamp
 
 cpu_source_image=$builder_source_image
 cpu_output_tag=v$mpich_version-$timestamp

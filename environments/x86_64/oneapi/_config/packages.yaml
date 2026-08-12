@@ -14,13 +14,13 @@ packages:
 
   intel-oneapi-compilers:
     externals:
-    - spec: intel-oneapi-compilers@2026.0.0
+    - spec: intel-oneapi-compilers@2026.1.0
       prefix: /opt/intel/oneapi
       extra_attributes:
         compilers:
-          c: /opt/intel/oneapi/compiler/2026.0/bin/icx
-          cxx: /opt/intel/oneapi/compiler/2026.0/bin/icpx
-          fortran: /opt/intel/oneapi/compiler/2026.0/bin/ifx
+          c: /opt/intel/oneapi/compiler/2026.1/bin/icx
+          cxx: /opt/intel/oneapi/compiler/2026.1/bin/icpx
+          fortran: /opt/intel/oneapi/compiler/2026.1/bin/ifx
   gcc:
     externals:
     - spec: gcc@13.3.0 languages:='c,c++,fortran'
@@ -83,9 +83,9 @@ packages:
     prefer:
     - '@2026.0.0'
     externals:
-    - spec: intel-oneapi-mkl@2026.0.0
+    - spec: intel-oneapi-mkl@2026.1.0
       prefix: /opt/intel/oneapi
-      modules: [mkl/2026.0]
+      modules: [mkl/2026.1]
   intel-oneapi-dpl:
     buildable: false
     externals:
@@ -95,11 +95,11 @@ packages:
   intel-oneapi-tbb:
     buildable: false
     externals:
-    - spec: intel-oneapi-tbb@2023.0.0
+    - spec: intel-oneapi-tbb@2023.1.0
       prefix: /opt/intel/oneapi
-      modules: [tbb/2023.0]
+      modules: [tbb/2023.1]
   oneapi-igc:
     buildable: false
     externals:
-    - spec: oneapi-igc@1.0.10409
+    - spec: oneapi-igc@2.11.43-1146
       prefix: /usr
