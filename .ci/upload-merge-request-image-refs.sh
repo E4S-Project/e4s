@@ -50,7 +50,7 @@ cmd 'echo $OUTPUT_IMAGE > $IMAGE_LABEL'
 cmd cat $IMAGE_LABEL
 
 if [[ "$(arch)" == "ppc64le" ]]; then
-  cmd mc cp $IMAGE_LABEL s3/${S3_BUCKET}/mr/${iid}/
+  cmd mc cp $IMAGE_LABEL s3/${S3_BUCKET}/mr/${iid}/manifests/
 else
-  cmd aws s3 cp $IMAGE_LABEL s3://${S3_BUCKET}/mr/${iid}/
+  cmd aws s3 cp $IMAGE_LABEL s3://${S3_BUCKET}/mr/${iid}/manifests/
 fi

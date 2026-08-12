@@ -60,9 +60,9 @@ iid=$CI_MERGE_REQUEST_IID
 cmd export AWS_ENDPOINT_URL_S3=$S3_ENDPOINT
 
 if [[ "$(arch)" == "ppc64le" ]]; then
-  cmd mc cp --recursive s3/${S3_BUCKET}/mr/${iid}/ manifests && found=true || found=false
+  cmd mc cp --recursive s3/${S3_BUCKET}/mr/${iid}/manifests/ manifests && found=true || found=false
 else
-  cmd aws s3 cp --recursive s3://${S3_BUCKET}/mr/${iid}/ manifests && found=true || found=false
+  cmd aws s3 cp --recursive s3://${S3_BUCKET}/mr/${iid}/manifests/ manifests && found=true || found=false
 fi
 
 if is_false $found; then

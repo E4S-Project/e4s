@@ -15,9 +15,13 @@
         "StringLike": {
           "s3:prefix": [
             "mr",
+            "mr/*",
             "e4s-builds/*",
             "e4s-builds",
-            "mr/*"
+            "runners/*",
+            "runners",
+            "mpi/*",
+            "mpi"
           ]
         }
       }
@@ -32,9 +36,10 @@
       ],
       "Resource": [
         "arn:aws:s3:::${S3_BUCKET}/e4s-builds/*",
+        "arn:aws:s3:::${S3_BUCKET}/runners/*",
+        "arn:aws:s3:::${S3_BUCKET}/mpi/*",
         "arn:aws:s3:::${S3_BUCKET}/mr/*"
-      ],
-      "Condition": {}
+      ]
     }
   ]
 }
