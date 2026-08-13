@@ -28,9 +28,6 @@ require_env \
 name=e4s-mpi-$target-aarch64
 timestamp=$(date +%s)
 
-s3_bucket=${S3_BUCKET:-cache.e4s.io}
-s3_endpoint=${S3_ENDPOINT:-https://uo-spack-mirror.e4s.io:9000}
-
 builder_source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_AARCH64_RUNNER_IMAGE}
 
 cuda_source_image=${CUDA_SOURCE_IMAGE:-$UBUNTU_AARCH64_CUDA_IMAGE}
