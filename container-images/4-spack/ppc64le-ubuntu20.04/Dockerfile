@@ -65,6 +65,9 @@ COPY --from=spack-common install-external-specs.sh /tmp
 RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
  && /tmp/install-external-specs.sh /etc/spack/packages.yaml
 
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack module tcl refresh --delete-tree -y
+
 # Copy helper files and documentation to /etc/e4s
 RUN mkdir -p /etc/e4s
 COPY --from=spack_env gnu/_config /etc/e4s/_config
@@ -122,6 +125,9 @@ RUN python3 \
 COPY --from=spack-common install-external-specs.sh /tmp
 RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
  && /tmp/install-external-specs.sh /etc/spack/packages.yaml
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack module tcl refresh --delete-tree -y
 
 # Copy helper files and documentation to /etc/e4s
 RUN mkdir -p /etc/e4s
