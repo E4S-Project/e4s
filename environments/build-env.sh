@@ -90,9 +90,9 @@ elif [[ "$(arch)" == "ppc64le" ]]; then
   padding=128
 fi
 
-spack_core_checkout=v1.2.1
+spack_core_checkout=v1.2.2
 spack_core_repo=https://github.com/spack/spack
-spack_packages_checkout=eb2a393c5a41c6a9ae576d9693fe2b23e8fc5a6d
+spack_packages_checkout=f020fd1efba40bf592537c5d0dd47f9d5c73d278
 spack_packages_repo=https://github.com/spack/spack-packages
 
 shared_dir=/e4s-shared
@@ -179,10 +179,10 @@ git -C $spack_packages_root rev-parse HEAD >> $spack_refs
 cmd 'spack config blame packages > blame-packages.log'
 cmd save blame-packages.log
 
-cmd sha256sum $spack_refs
+cmd sha256sum $spack_refs 
 cmd sha256sum $1/spack.yaml
 
-if [[ "$1" == *"rocm"* || "$1" == *"oneapi"* || "$1" == "cpu" ]]; then
+if [[ "$1" == *"rocm"* || "$1" == *"oneapi"* || "$1" == *"cpu"* ]]; then
   cmd sha256sum $1/../_config/packages.yaml
   hash=$(cat $spack_refs $1/../_config/packages.yaml $1/spack.yaml | sha256sum | cut -d' ' -f1)
 elif [[ "$1" == *"cuda"* ]]; then

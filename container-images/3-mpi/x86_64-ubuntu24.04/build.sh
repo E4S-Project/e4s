@@ -2,7 +2,7 @@
 
 . ../../../image-refs.env
 . ../../../vars.env
-. ../vars.env
+. ../_common/vars.env
 
 common_scripts=$(realpath ../../_common)
 . $common_scripts/utilities.sh

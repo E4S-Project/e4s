@@ -34,6 +34,8 @@ require_env \
 require_env \
   AWS_CONFIG_FILE
 
+force_cached_lockfile=${FORCE_CACHED_LOCKFILE:-false}
+
 pretty_date=$(printf '%(%Y.%m.%d)T' -1)
 timestamp=$(date +%s)
 common_tag=${BUILD_TAG:-26.06.$timestamp}
@@ -132,6 +134,7 @@ cmd docker build \
  --build-arg SPACK_PACKAGES_ROOT=$spack_packages_root \
  --build-arg SPACK_MIRROR=$spack_mirror \
  --build-arg PY_TARBALL=$py_tarball \
+ --build-arg FORCE_CACHED_LOCKFILE=$force_cached_lockfile  \
  --target final-$target \
  --build-context container-common=../../_common \
  --build-context release-common=../_common \

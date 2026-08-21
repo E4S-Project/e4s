@@ -2,7 +2,7 @@ spec:
   inputs: 
     disable_sif:
       default: "false"
-      options:
+      options: 
       - "false"
       - "true"
     disable_tests:
@@ -215,6 +215,7 @@ variables:
   script:
   - cd container-images/$IMAGE_PATH
   - export SAVE_OUTPUT_REF=$ARTIFACTS/image-ref.txt
+  - export FORCE_CACHED_LOCKFILE=true
   - ./build.sh $IMAGE_TARGET
   - export OUTPUT_IMAGE=$(cat $SAVE_OUTPUT_REF)
   - echo $IMAGE_LABEL=$OUTPUT_IMAGE >> $CI_PROJECT_DIR/build.env
@@ -255,19 +256,27 @@ variables:
   timeout: 2 hours
   script:
   - docker_image=${!SOURCE_IMAGE_LABEL}
-  - repo="${docker_image##*/}"
+  - repo="${docker_image##*/}" 
   - repo=$(echo $repo | tr ':' '-' | tr '.' '-')
   - tarfile=${repo}.tar
+  - export OUTPUT_DIR=/data/e4s-ci
+  - >
+    if [[ ! -d $OUTPUT_DIR ]]; then
+      OUTPUT_DIR=.
+    else
+      export SINGULARITY_CACHEDIR=$OUTPUT_DIR/singularity-cache
+    fi
   - export OUTPUT_IMAGE=${repo}.sif
-  - docker save $docker_image -o $tarfile
-  - singularity build $OUTPUT_IMAGE docker-archive://$tarfile
+  - docker save $docker_image -o $OUTPUT_DIR/$tarfile
+  - singularity build ${OUTPUT_DIR}/${OUTPUT_IMAGE} docker-archive://${OUTPUT_DIR}/${tarfile}
+  - rm -f ${OUTPUT_DIR}/${tarfile}
   - >
     if [[ "$(arch)" == "ppc64le" ]]; then
-      mc cp $OUTPUT_IMAGE s3/${S3_BUCKET}/${S3_PREFIX}/
+      mc cp ${OUTPUT_DIR}/${OUTPUT_IMAGE} s3/${S3_BUCKET}/${S3_PREFIX}/
     else
-      aws s3 cp $OUTPUT_IMAGE s3://${S3_BUCKET}/${S3_PREFIX}/
+      aws s3 cp ${OUTPUT_DIR}/${OUTPUT_IMAGE} s3://${S3_BUCKET}/${S3_PREFIX}/
     fi
-  - rm -rf $OUTPUT_IMAGE 
+  - rm -rf ${OUTPUT_DIR}/${OUTPUT_IMAGE}
   - echo $IMAGE_LABEL=$OUTPUT_IMAGE >> $CI_PROJECT_DIR/build.env
   - >
     [[ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]] && exit 0
@@ -351,6 +360,7 @@ x86_64-ubuntu-runner:
   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -358,6 +368,7 @@ x86_64-ubuntu-runner:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -386,6 +397,7 @@ x86_64-rocky-runner:
   - if: $CONTAINER_TARGET =~ /runner-rocky/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -393,6 +405,7 @@ x86_64-rocky-runner:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -421,6 +434,7 @@ aarch64-ubuntu-runner:
   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -428,6 +442,7 @@ aarch64-ubuntu-runner:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -456,6 +471,7 @@ aarch64-rocky-runner:
   - if: $CONTAINER_TARGET =~ /runner-rocky/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -463,6 +479,7 @@ aarch64-rocky-runner:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -491,6 +508,7 @@ ppc64le-ubuntu-runner:
   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -498,6 +516,7 @@ ppc64le-ubuntu-runner:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -537,6 +556,7 @@ x86_64-ubuntu-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-cuda-x86_64/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -545,6 +565,7 @@ x86_64-ubuntu-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -585,6 +606,7 @@ x86_64-ubuntu-rocm:
   - if: $CONTAINER_TARGET =~ /gpu-rocm-x86_64/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -593,6 +615,7 @@ x86_64-ubuntu-rocm:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -633,6 +656,7 @@ x86_64-ubuntu-oneapi:
   - if: $CONTAINER_TARGET =~ /gpu-oneapi-x86_64/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -641,6 +665,7 @@ x86_64-ubuntu-oneapi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -680,6 +705,7 @@ x86_64-rocky-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-cuda-x86_64/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -688,6 +714,7 @@ x86_64-rocky-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -727,6 +754,7 @@ aarch64-ubuntu-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-cuda-aarch64/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -735,6 +763,7 @@ aarch64-ubuntu-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -772,6 +801,7 @@ aarch64-rocky-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-cuda-aarch64/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -780,6 +810,7 @@ aarch64-rocky-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -819,6 +850,7 @@ ppc64le-ubuntu-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-cuda-ppc64le/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -827,6 +859,7 @@ ppc64le-ubuntu-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -868,6 +901,7 @@ x86_64-ubuntu-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -877,6 +911,7 @@ x86_64-ubuntu-cpu-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -927,6 +962,7 @@ x86_64-ubuntu-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -937,6 +973,7 @@ x86_64-ubuntu-cuda-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -988,6 +1025,7 @@ x86_64-ubuntu-rocm-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml 
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -998,6 +1036,7 @@ x86_64-ubuntu-rocm-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1050,6 +1089,7 @@ x86_64-ubuntu-oneapi-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-oneapi/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1060,6 +1100,7 @@ x86_64-ubuntu-oneapi-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1102,6 +1143,7 @@ x86_64-rocky-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1111,6 +1153,7 @@ x86_64-rocky-cpu-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1160,6 +1203,7 @@ x86_64-rocky-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1170,6 +1214,7 @@ x86_64-rocky-cuda-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1212,6 +1257,7 @@ aarch64-ubuntu-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1221,6 +1267,7 @@ aarch64-ubuntu-cpu-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1271,6 +1318,7 @@ aarch64-ubuntu-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1281,6 +1329,7 @@ aarch64-ubuntu-cuda-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1323,6 +1372,7 @@ aarch64-rocky-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1332,6 +1382,7 @@ aarch64-rocky-cpu-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1382,6 +1433,7 @@ aarch64-rocky-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1392,6 +1444,7 @@ aarch64-rocky-cuda-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1434,6 +1487,7 @@ ppc64le-ubuntu-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1443,6 +1497,7 @@ ppc64le-ubuntu-cpu-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1493,6 +1548,7 @@ ppc64le-ubuntu-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1503,6 +1559,7 @@ ppc64le-ubuntu-cuda-mpi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1548,6 +1605,7 @@ x86_64-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /spack-x86_64-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1559,6 +1617,7 @@ x86_64-ubuntu-spack-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1606,6 +1665,7 @@ x86_64-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /spack-x86_64-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1618,6 +1678,7 @@ x86_64-ubuntu-spack-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1666,6 +1727,7 @@ x86_64-ubuntu-spack-rocm:
   - if: $CONTAINER_TARGET =~ /spack-x86_64-rocm/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1678,6 +1740,7 @@ x86_64-ubuntu-spack-rocm:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1727,6 +1790,7 @@ x86_64-ubuntu-spack-oneapi:
   - if: $CONTAINER_TARGET =~ /spack-x86_64-oneapi/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1739,6 +1803,7 @@ x86_64-ubuntu-spack-oneapi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1785,6 +1850,7 @@ aarch64-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /spack-aarch64-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1796,6 +1862,7 @@ aarch64-ubuntu-spack-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1843,6 +1910,7 @@ aarch64-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /spack-aarch64-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1855,6 +1923,7 @@ aarch64-ubuntu-spack-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1901,6 +1970,7 @@ ppc64le-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /spack-ppc64le-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1912,6 +1982,7 @@ ppc64le-ubuntu-spack-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -1959,6 +2030,7 @@ ppc64le-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /spack-ppc64le-cuda/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -1971,6 +2043,7 @@ ppc64le-ubuntu-spack-cuda:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -2004,6 +2077,7 @@ x86_64-gnu-cpu-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2011,6 +2085,7 @@ x86_64-gnu-cpu-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2039,6 +2114,7 @@ x86_64-gnu-cpu-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2046,6 +2122,7 @@ x86_64-gnu-cpu-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2076,6 +2153,7 @@ x86_64-gnu-cuda-80-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2084,6 +2162,7 @@ x86_64-gnu-cuda-80-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2115,6 +2194,7 @@ x86_64-gnu-cuda-80-driver-reqd-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2123,6 +2203,7 @@ x86_64-gnu-cuda-80-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2154,6 +2235,7 @@ x86_64-gnu-cuda-90-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2162,6 +2244,7 @@ x86_64-gnu-cuda-90-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2193,6 +2276,7 @@ x86_64-gnu-cuda-90-driver-reqd-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2201,6 +2285,7 @@ x86_64-gnu-cuda-90-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2232,6 +2317,7 @@ x86_64-gnu-cuda-89-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2240,6 +2326,7 @@ x86_64-gnu-cuda-89-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2271,6 +2358,7 @@ x86_64-gnu-cuda-89-driver-reqd-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2279,6 +2367,7 @@ x86_64-gnu-cuda-89-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2310,6 +2399,7 @@ x86_64-gnu-cuda-86-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2318,6 +2408,7 @@ x86_64-gnu-cuda-86-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2349,6 +2440,7 @@ x86_64-gnu-cuda-86-driver-reqd-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2357,6 +2449,7 @@ x86_64-gnu-cuda-86-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2389,6 +2482,7 @@ x86_64-gnu-cuda-90-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2397,6 +2491,7 @@ x86_64-gnu-cuda-90-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2429,6 +2524,7 @@ x86_64-gnu-cuda-90-driver-reqd-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2437,6 +2533,7 @@ x86_64-gnu-cuda-90-driver-reqd-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2468,6 +2565,7 @@ x86_64-gnu-cuda-120-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2476,6 +2574,7 @@ x86_64-gnu-cuda-120-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2507,6 +2606,7 @@ x86_64-gnu-cuda-120-driver-reqd-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2515,6 +2615,7 @@ x86_64-gnu-cuda-120-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2547,6 +2648,7 @@ x86_64-gnu-cuda-120-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2555,6 +2657,7 @@ x86_64-gnu-cuda-120-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2587,6 +2690,7 @@ x86_64-gnu-cuda-120-driver-reqd-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2595,6 +2699,7 @@ x86_64-gnu-cuda-120-driver-reqd-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2626,6 +2731,7 @@ x86_64-gnu-cuda-notarget-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2634,6 +2740,7 @@ x86_64-gnu-cuda-notarget-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2665,6 +2772,7 @@ x86_64-gnu-cuda-notarget-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2673,6 +2781,7 @@ x86_64-gnu-cuda-notarget-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2704,6 +2813,7 @@ x86_64-gnu-rocm-gfx908-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2712,6 +2822,7 @@ x86_64-gnu-rocm-gfx908-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2743,6 +2854,7 @@ x86_64-gnu-rocm-gfx90a-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2751,6 +2863,7 @@ x86_64-gnu-rocm-gfx90a-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2782,6 +2895,7 @@ x86_64-gnu-rocm-gfx942-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2790,6 +2904,7 @@ x86_64-gnu-rocm-gfx942-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2821,6 +2936,7 @@ x86_64-gnu-rocm-notarget-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -2829,6 +2945,7 @@ x86_64-gnu-rocm-notarget-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -2860,6 +2977,7 @@ x86_64-oneapi-cpu-status:
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/oneapi/_config/**/*
@@ -2867,6 +2985,7 @@ x86_64-oneapi-cpu-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/oneapi/_config/**/*
@@ -2895,6 +3014,7 @@ x86_64-oneapi-gpu-status:
   - if: $SPACK_TARGET =~ /x86_64-oneapi-gpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/oneapi/_config/**/*
@@ -2902,6 +3022,7 @@ x86_64-oneapi-gpu-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/oneapi/_config/**/*
@@ -2928,6 +3049,7 @@ aarch64-gnu-cpu-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -2935,6 +3057,7 @@ aarch64-gnu-cpu-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -2963,6 +3086,7 @@ aarch64-gnu-cpu-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -2970,6 +3094,7 @@ aarch64-gnu-cpu-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -2999,6 +3124,7 @@ aarch64-gnu-cuda-80-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3007,6 +3133,7 @@ aarch64-gnu-cuda-80-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3037,6 +3164,7 @@ aarch64-gnu-cuda-80-driver-reqd-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3045,6 +3173,7 @@ aarch64-gnu-cuda-80-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3075,6 +3204,7 @@ aarch64-gnu-cuda-90-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3083,6 +3213,7 @@ aarch64-gnu-cuda-90-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3113,6 +3244,7 @@ aarch64-gnu-cuda-90-driver-reqd-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3121,6 +3253,7 @@ aarch64-gnu-cuda-90-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3153,6 +3286,7 @@ aarch64-gnu-cuda-90-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3161,6 +3295,7 @@ aarch64-gnu-cuda-90-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3193,6 +3328,7 @@ aarch64-gnu-cuda-90-driver-reqd-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3201,6 +3337,7 @@ aarch64-gnu-cuda-90-driver-reqd-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3231,6 +3368,7 @@ aarch64-gnu-cuda-120-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3239,6 +3377,7 @@ aarch64-gnu-cuda-120-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3269,6 +3408,7 @@ aarch64-gnu-cuda-120-driver-reqd-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3277,6 +3417,7 @@ aarch64-gnu-cuda-120-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3309,6 +3450,7 @@ aarch64-gnu-cuda-120-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3317,6 +3459,7 @@ aarch64-gnu-cuda-120-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3349,6 +3492,7 @@ aarch64-gnu-cuda-120-driver-reqd-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3357,6 +3501,7 @@ aarch64-gnu-cuda-120-driver-reqd-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3387,6 +3532,7 @@ aarch64-gnu-cuda-notarget-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3395,6 +3541,7 @@ aarch64-gnu-cuda-notarget-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3426,6 +3573,7 @@ aarch64-gnu-cuda-notarget-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -3434,6 +3582,7 @@ aarch64-gnu-cuda-notarget-rocky-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -3461,6 +3610,7 @@ ppc64le-gnu-cpu-status:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -3468,6 +3618,7 @@ ppc64le-gnu-cpu-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -3497,6 +3648,7 @@ ppc64le-gnu-cuda-70-status:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -3505,6 +3657,7 @@ ppc64le-gnu-cuda-70-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -3535,6 +3688,7 @@ ppc64le-gnu-cuda-70-driver-reqd-status:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -3543,6 +3697,7 @@ ppc64le-gnu-cuda-70-driver-reqd-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -3573,6 +3728,7 @@ ppc64le-gnu-cuda-notarget-status:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -3581,6 +3737,7 @@ ppc64le-gnu-cuda-notarget-status:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -3633,6 +3790,7 @@ x86_64-ubuntu-release-cpu:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -3648,6 +3806,7 @@ x86_64-ubuntu-release-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -3716,6 +3875,7 @@ x86_64-ubuntu-release-cuda-80:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -3735,6 +3895,7 @@ x86_64-ubuntu-release-cuda-80:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -3806,6 +3967,7 @@ x86_64-ubuntu-release-cuda-90:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -3825,6 +3987,7 @@ x86_64-ubuntu-release-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -3896,6 +4059,7 @@ x86_64-ubuntu-release-cuda-120:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -3915,6 +4079,7 @@ x86_64-ubuntu-release-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -3983,6 +4148,7 @@ x86_64-ubuntu-release-rocm-908:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -4000,6 +4166,7 @@ x86_64-ubuntu-release-rocm-908:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -4066,6 +4233,7 @@ x86_64-ubuntu-release-rocm-90a:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -4083,6 +4251,7 @@ x86_64-ubuntu-release-rocm-90a:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -4149,6 +4318,7 @@ x86_64-ubuntu-release-rocm-942:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -4166,6 +4336,7 @@ x86_64-ubuntu-release-rocm-942:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -4231,6 +4402,7 @@ x86_64-ubuntu-release-oneapi:
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/oneapi/_config/**/*
@@ -4248,6 +4420,7 @@ x86_64-ubuntu-release-oneapi:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/oneapi/_config/**/*
@@ -4309,6 +4482,7 @@ x86_64-rocky-release-cpu:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -4324,6 +4498,7 @@ x86_64-rocky-release-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -4392,6 +4567,7 @@ x86_64-rocky-release-cuda-90:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -4411,6 +4587,7 @@ x86_64-rocky-release-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -4483,6 +4660,7 @@ x86_64-rocky-release-cuda-120:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -4502,6 +4680,7 @@ x86_64-rocky-release-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -4563,6 +4742,7 @@ aarch64-ubuntu-release-cpu:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -4578,6 +4758,7 @@ aarch64-ubuntu-release-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -4644,6 +4825,7 @@ aarch64-ubuntu-release-cuda-80:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -4663,6 +4845,7 @@ aarch64-ubuntu-release-cuda-80:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -4733,6 +4916,7 @@ aarch64-ubuntu-release-cuda-90:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -4752,6 +4936,7 @@ aarch64-ubuntu-release-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -4822,6 +5007,7 @@ aarch64-ubuntu-release-cuda-120:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -4841,6 +5027,7 @@ aarch64-ubuntu-release-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -4903,6 +5090,7 @@ aarch64-rocky-release-cpu:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -4918,6 +5106,7 @@ aarch64-rocky-release-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -4986,6 +5175,7 @@ aarch64-rocky-release-cuda-90:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -5005,6 +5195,7 @@ aarch64-rocky-release-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -5077,6 +5268,7 @@ aarch64-rocky-release-cuda-120:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -5096,6 +5288,7 @@ aarch64-rocky-release-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -5157,6 +5350,7 @@ ppc64le-ubuntu-release-cpu:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -5172,6 +5366,7 @@ ppc64le-ubuntu-release-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -5238,6 +5433,7 @@ ppc64le-ubuntu-release-cuda-70:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -5257,6 +5453,7 @@ ppc64le-ubuntu-release-cuda-70:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -5302,6 +5499,7 @@ x86_64-gnu-cpu:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5313,6 +5511,7 @@ x86_64-gnu-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5351,6 +5550,7 @@ x86_64-gnu-cpu-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -5362,6 +5562,7 @@ x86_64-gnu-cpu-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -5404,6 +5605,7 @@ x86_64-gnu-cuda-80:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5418,6 +5620,7 @@ x86_64-gnu-cuda-80:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5463,6 +5666,7 @@ x86_64-gnu-cuda-80-driver-reqd:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5477,6 +5681,7 @@ x86_64-gnu-cuda-80-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5522,6 +5727,7 @@ x86_64-gnu-cuda-90:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5536,6 +5742,7 @@ x86_64-gnu-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5581,6 +5788,7 @@ x86_64-gnu-cuda-90-driver-reqd:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5595,6 +5803,7 @@ x86_64-gnu-cuda-90-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5640,6 +5849,7 @@ x86_64-gnu-cuda-89:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5654,6 +5864,7 @@ x86_64-gnu-cuda-89:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5699,6 +5910,7 @@ x86_64-gnu-cuda-89-driver-reqd:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5713,6 +5925,7 @@ x86_64-gnu-cuda-89-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5758,6 +5971,7 @@ x86_64-gnu-cuda-86:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5772,6 +5986,7 @@ x86_64-gnu-cuda-86:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5817,6 +6032,7 @@ x86_64-gnu-cuda-86-driver-reqd:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5831,6 +6047,7 @@ x86_64-gnu-cuda-86-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -5877,6 +6094,7 @@ x86_64-gnu-cuda-90-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -5891,6 +6109,7 @@ x86_64-gnu-cuda-90-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -5937,6 +6156,7 @@ x86_64-gnu-cuda-90-driver-reqd-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -5951,6 +6171,7 @@ x86_64-gnu-cuda-90-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -5996,6 +6217,7 @@ x86_64-gnu-cuda-120:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6010,6 +6232,7 @@ x86_64-gnu-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6055,6 +6278,7 @@ x86_64-gnu-cuda-120-driver-reqd:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6069,6 +6293,7 @@ x86_64-gnu-cuda-120-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6115,6 +6340,7 @@ x86_64-gnu-cuda-120-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -6129,6 +6355,7 @@ x86_64-gnu-cuda-120-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -6175,6 +6402,7 @@ x86_64-gnu-cuda-120-driver-reqd-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -6189,6 +6417,7 @@ x86_64-gnu-cuda-120-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -6234,6 +6463,7 @@ x86_64-gnu-cuda-notarget:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6248,6 +6478,7 @@ x86_64-gnu-cuda-notarget:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6293,6 +6524,7 @@ x86_64-gnu-cuda-notarget-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -6307,6 +6539,7 @@ x86_64-gnu-cuda-notarget-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
@@ -6352,6 +6585,7 @@ x86_64-gnu-rocm-gfx908:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6366,6 +6600,7 @@ x86_64-gnu-rocm-gfx908:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6411,6 +6646,7 @@ x86_64-gnu-rocm-gfx90a:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6425,6 +6661,7 @@ x86_64-gnu-rocm-gfx90a:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6470,6 +6707,7 @@ x86_64-gnu-rocm-gfx942:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6484,6 +6722,7 @@ x86_64-gnu-rocm-gfx942:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6529,6 +6768,7 @@ x86_64-gnu-rocm-notarget:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6543,6 +6783,7 @@ x86_64-gnu-rocm-notarget:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6588,6 +6829,7 @@ x86_64-oneapi-cpu:
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6601,6 +6843,7 @@ x86_64-oneapi-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6643,6 +6886,7 @@ x86_64-oneapi-gpu:
   - if: $SPACK_TARGET =~ /x86_64-oneapi-gpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6656,6 +6900,7 @@ x86_64-oneapi-gpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
@@ -6694,6 +6939,7 @@ aarch64-gnu-cpu:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6705,6 +6951,7 @@ aarch64-gnu-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6743,6 +6990,7 @@ aarch64-gnu-cpu-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -6754,6 +7002,7 @@ aarch64-gnu-cpu-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -6795,6 +7044,7 @@ aarch64-gnu-cuda-80:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6809,6 +7059,7 @@ aarch64-gnu-cuda-80:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6853,6 +7104,7 @@ aarch64-gnu-cuda-80-driver-reqd:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6867,6 +7119,7 @@ aarch64-gnu-cuda-80-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6911,6 +7164,7 @@ aarch64-gnu-cuda-90:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6925,6 +7179,7 @@ aarch64-gnu-cuda-90:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6969,6 +7224,7 @@ aarch64-gnu-cuda-90-driver-reqd:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -6983,6 +7239,7 @@ aarch64-gnu-cuda-90-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7029,6 +7286,7 @@ aarch64-gnu-cuda-90-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7043,6 +7301,7 @@ aarch64-gnu-cuda-90-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7089,6 +7348,7 @@ aarch64-gnu-cuda-90-driver-reqd-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7103,6 +7363,7 @@ aarch64-gnu-cuda-90-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7147,6 +7408,7 @@ aarch64-gnu-cuda-120:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7161,6 +7423,7 @@ aarch64-gnu-cuda-120:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7205,6 +7468,7 @@ aarch64-gnu-cuda-120-driver-reqd:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7219,6 +7483,7 @@ aarch64-gnu-cuda-120-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7265,6 +7530,7 @@ aarch64-gnu-cuda-120-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7279,6 +7545,7 @@ aarch64-gnu-cuda-120-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7325,6 +7592,7 @@ aarch64-gnu-cuda-120-driver-reqd-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7339,6 +7607,7 @@ aarch64-gnu-cuda-120-driver-reqd-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7383,6 +7652,7 @@ aarch64-gnu-cuda-notarget:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7397,6 +7667,7 @@ aarch64-gnu-cuda-notarget:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
@@ -7442,6 +7713,7 @@ aarch64-gnu-cuda-notarget-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7456,6 +7728,7 @@ aarch64-gnu-cuda-notarget-rocky:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
@@ -7495,6 +7768,7 @@ ppc64le-gnu-cpu:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7506,6 +7780,7 @@ ppc64le-gnu-cpu:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7547,6 +7822,7 @@ ppc64le-gnu-cuda-70:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7561,6 +7837,7 @@ ppc64le-gnu-cuda-70:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7605,6 +7882,7 @@ ppc64le-gnu-cuda-70-driver-reqd:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7619,6 +7897,7 @@ ppc64le-gnu-cuda-70-driver-reqd:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7663,6 +7942,7 @@ ppc64le-gnu-cuda-notarget:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7677,6 +7957,7 @@ ppc64le-gnu-cuda-notarget:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
@@ -7731,6 +8012,7 @@ x86_64-ubuntu-release-cpu-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -7746,6 +8028,7 @@ x86_64-ubuntu-release-cpu-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -7805,6 +8088,7 @@ x86_64-ubuntu-release-cuda-80-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -7824,6 +8108,7 @@ x86_64-ubuntu-release-cuda-80-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -7888,6 +8173,7 @@ x86_64-ubuntu-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -7907,6 +8193,7 @@ x86_64-ubuntu-release-cuda-90-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -7971,6 +8258,7 @@ x86_64-ubuntu-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -7990,6 +8278,7 @@ x86_64-ubuntu-release-cuda-120-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8053,6 +8342,7 @@ x86_64-ubuntu-release-rocm-908-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -8070,6 +8360,7 @@ x86_64-ubuntu-release-rocm-908-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8131,6 +8422,7 @@ x86_64-ubuntu-release-rocm-90a-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -8148,6 +8440,7 @@ x86_64-ubuntu-release-rocm-90a-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8209,6 +8502,7 @@ x86_64-ubuntu-release-rocm-942-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -8226,6 +8520,7 @@ x86_64-ubuntu-release-rocm-942-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8286,6 +8581,7 @@ x86_64-ubuntu-release-oneapi-sif:
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/oneapi/_config/**/*
@@ -8303,6 +8599,7 @@ x86_64-ubuntu-release-oneapi-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/oneapi/_config/**/*
@@ -8361,6 +8658,7 @@ x86_64-rocky-release-cpu-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -8376,6 +8674,7 @@ x86_64-rocky-release-cpu-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8437,6 +8736,7 @@ x86_64-rocky-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -8456,6 +8756,7 @@ x86_64-rocky-release-cuda-90-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8521,6 +8822,7 @@ x86_64-rocky-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -8540,6 +8842,7 @@ x86_64-rocky-release-cuda-120-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -8598,6 +8901,7 @@ aarch64-ubuntu-release-cpu-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -8613,6 +8917,7 @@ aarch64-ubuntu-release-cpu-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -8674,6 +8979,7 @@ aarch64-ubuntu-release-cuda-80-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -8693,6 +8999,7 @@ aarch64-ubuntu-release-cuda-80-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -8756,6 +9063,7 @@ aarch64-ubuntu-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -8775,6 +9083,7 @@ aarch64-ubuntu-release-cuda-90-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -8838,6 +9147,7 @@ aarch64-ubuntu-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -8857,6 +9167,7 @@ aarch64-ubuntu-release-cuda-120-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -8916,6 +9227,7 @@ aarch64-rocky-release-cpu-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -8931,6 +9243,7 @@ aarch64-rocky-release-cpu-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -8992,6 +9305,7 @@ aarch64-rocky-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -9011,6 +9325,7 @@ aarch64-rocky-release-cuda-90-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -9076,6 +9391,7 @@ aarch64-rocky-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -9095,6 +9411,7 @@ aarch64-rocky-release-cuda-120-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -9153,6 +9470,7 @@ ppc64le-ubuntu-release-cpu-sif:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -9168,6 +9486,7 @@ ppc64le-ubuntu-release-cpu-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -9227,6 +9546,7 @@ ppc64le-ubuntu-release-cuda-70-sif:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -9246,6 +9566,7 @@ ppc64le-ubuntu-release-cuda-70-sif:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -9307,6 +9628,7 @@ x86_64-ubuntu-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -9323,6 +9645,7 @@ x86_64-ubuntu-release-cpu-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -9385,6 +9708,7 @@ x86_64-ubuntu-release-cuda-80-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -9405,6 +9729,7 @@ x86_64-ubuntu-release-cuda-80-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -9470,6 +9795,7 @@ x86_64-ubuntu-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -9490,6 +9816,7 @@ x86_64-ubuntu-release-cuda-90-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -9555,6 +9882,7 @@ x86_64-ubuntu-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -9575,6 +9903,7 @@ x86_64-ubuntu-release-cuda-120-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -9799,6 +10128,7 @@ x86_64-ubuntu-release-rocm-942-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -9817,6 +10147,7 @@ x86_64-ubuntu-release-rocm-942-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -9955,6 +10286,7 @@ x86_64-rocky-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -9971,6 +10303,7 @@ x86_64-rocky-release-cpu-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -10033,6 +10366,7 @@ x86_64-rocky-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -10053,6 +10387,7 @@ x86_64-rocky-release-cuda-90-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -10119,6 +10454,7 @@ x86_64-rocky-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -10139,6 +10475,7 @@ x86_64-rocky-release-cuda-120-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -10198,6 +10535,7 @@ aarch64-ubuntu-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -10214,6 +10552,7 @@ aarch64-ubuntu-release-cpu-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -10358,6 +10697,7 @@ aarch64-ubuntu-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -10378,6 +10718,7 @@ aarch64-ubuntu-release-cuda-90-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -10442,6 +10783,7 @@ aarch64-ubuntu-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -10462,6 +10804,7 @@ aarch64-ubuntu-release-cuda-120-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -10522,6 +10865,7 @@ aarch64-rocky-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -10538,6 +10882,7 @@ aarch64-rocky-release-cpu-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -10600,6 +10945,7 @@ aarch64-rocky-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -10620,6 +10966,7 @@ aarch64-rocky-release-cuda-90-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -10686,6 +11033,7 @@ aarch64-rocky-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -10706,6 +11054,7 @@ aarch64-rocky-release-cuda-120-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -10765,6 +11114,7 @@ ppc64le-ubuntu-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -10781,6 +11131,7 @@ ppc64le-ubuntu-release-cpu-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -10841,6 +11192,7 @@ ppc64le-ubuntu-release-cuda-70-docker-test:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -10861,6 +11213,7 @@ ppc64le-ubuntu-release-cuda-70-docker-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -10922,6 +11275,7 @@ x86_64-ubuntu-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -10938,6 +11292,7 @@ x86_64-ubuntu-release-cpu-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11000,6 +11355,7 @@ x86_64-ubuntu-release-cuda-80-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11020,6 +11376,7 @@ x86_64-ubuntu-release-cuda-80-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11085,6 +11442,7 @@ x86_64-ubuntu-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11105,6 +11463,7 @@ x86_64-ubuntu-release-cuda-90-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11170,6 +11529,7 @@ x86_64-ubuntu-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11190,6 +11550,7 @@ x86_64-ubuntu-release-cuda-120-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11334,6 +11695,7 @@ x86_64-ubuntu-release-rocm-90a-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11352,6 +11714,7 @@ x86_64-ubuntu-release-rocm-90a-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11414,6 +11777,7 @@ x86_64-ubuntu-release-rocm-942-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11432,6 +11796,7 @@ x86_64-ubuntu-release-rocm-942-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11570,6 +11935,7 @@ x86_64-rocky-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11586,6 +11952,7 @@ x86_64-rocky-release-cpu-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11648,6 +12015,7 @@ x86_64-rocky-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11668,6 +12036,7 @@ x86_64-rocky-release-cuda-90-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11734,6 +12103,7 @@ x86_64-rocky-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/x86_64/gnu/_config/**/*
@@ -11754,6 +12124,7 @@ x86_64-rocky-release-cuda-120-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/x86_64/gnu/_config/**/*
@@ -11813,6 +12184,7 @@ aarch64-ubuntu-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -11829,6 +12201,7 @@ aarch64-ubuntu-release-cpu-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -11973,6 +12346,7 @@ aarch64-ubuntu-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -11993,6 +12367,7 @@ aarch64-ubuntu-release-cuda-90-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -12057,6 +12432,7 @@ aarch64-ubuntu-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -12077,6 +12453,7 @@ aarch64-ubuntu-release-cuda-120-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -12137,6 +12514,7 @@ aarch64-rocky-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -12153,6 +12531,7 @@ aarch64-rocky-release-cpu-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -12215,6 +12594,7 @@ aarch64-rocky-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -12235,6 +12615,7 @@ aarch64-rocky-release-cuda-90-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -12301,6 +12682,7 @@ aarch64-rocky-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/aarch64/gnu/_config/**/*
@@ -12321,6 +12703,7 @@ aarch64-rocky-release-cuda-120-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/aarch64/gnu/_config/**/*
@@ -12380,6 +12763,7 @@ ppc64le-ubuntu-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -12396,6 +12780,7 @@ ppc64le-ubuntu-release-cpu-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*
@@ -12454,6 +12839,7 @@ ppc64le-ubuntu-release-cuda-70-sif-test:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
+    - vars.env
     - .gitlab-ci.yml
     - environments/build-env.sh
     - environments/ppc64le/gnu/_config/**/*
@@ -12474,6 +12860,7 @@ ppc64le-ubuntu-release-cuda-70-sif-test:
   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
     changes:
       paths:
+      - vars.env
       - .gitlab-ci.yml
       - environments/build-env.sh
       - environments/ppc64le/gnu/_config/**/*

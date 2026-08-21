@@ -2,7 +2,7 @@
 
 . ../../../image-refs.env
 . ../../../vars.env
-. ../vars.env
+. ../_common/vars.env
 
 name=ubuntu26.04-runner-aarch64-gcc-13.4
 output_image="${REGISTRY:-esw123}/${name}:${BUILD_TAG:-$(date +%s)}"

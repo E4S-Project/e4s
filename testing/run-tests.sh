@@ -14,20 +14,22 @@ function end_section() {
 echo Ready to run tests for $TEST_TARGET
 
 
-SKIP_TESTS_aarch64_rocky_cpu="cabana dyninst tau zfp charliecloud e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plumed umap wps wrf gotcha"
-SKIP_TESTS_aarch64_rocky_cuda_90="zfp-cuda amrex-cuda heffte-cuda hypre-cuda petsc-cuda raja-cuda strumpack-cuda sundials-cuda tasmanian-cuda"
+SKIP_TESTS_aarch64_rocky_cpu="cabana dyninst zfp charliecloud e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plumed umap wps wrf"
+SKIP_TESTS_aarch64_rocky_cuda_90="zfp-cuda amrex-cuda heffte-cuda petsc-cuda sundials-cuda"
 SKIP_TESTS_aarch64_rocky_cuda_120="amrex-cuda zfp-cuda heffte-cuda petsc-cuda sundials-cuda"
-SKIP_TESTS_aarch64_ubuntu_cpu="cabana dyninst tau charliecloud darshan-util e4s-alc e4s-cl gotcha gptune hdf5 hdf5-vol-async plasma plumed umap wps wrf gotcha"
-SKIP_TESTS_aarch64_ubuntu_cuda_90="amrex-cuda heffte-cuda hypre-cuda raja-cuda strumpack-cuda sundials-cuda tasmanian-cuda"
-SKIP_TESTS_aarch64_ubuntu_cuda_120="amrex-cuda heffte-cuda petsc-cuda slate-cuda sundials-cuda"
-SKIP_TESTS_x86_64_rocky_cpu="cabana dyninst tau bricks charliecloud e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plumed umap variorum warpx wps wrf gotcha"
+SKIP_TESTS_aarch64_ubuntu_cpu="cabana dyninst charliecloud darshan-util e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plasma plumed umap wps wrf"
+SKIP_TESTS_aarch64_ubuntu_cuda_90="amrex-cuda heffte-cuda sundials-cuda"
+SKIP_TESTS_aarch64_ubuntu_cuda_120="amrex-cuda heffte-cuda sundials-cuda"
+SKIP_TESTS_x86_64_rocky_cpu="cabana dyninst bricks charliecloud e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plumed umap variorum warpx wps wrf"
 SKIP_TESTS_x86_64_rocky_cuda_90="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_rocky_cuda_120="heffte-cuda papi-cuda petsc-cuda sundials-cuda"
-SKIP_TESTS_x86_64_ubuntu_cpu="cabana dyninst tau variorum bricks charliecloud darshan-util e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plasma plumed umap warpx wps wrf gotcha"
-SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda petsc-cuda sundials-cuda amrex-cuda libceed-cuda gromacs-cuda"
+SKIP_TESTS_x86_64_ubuntu_cpu="cabana dyninst variorum bricks charliecloud darshan-util e4s-alc e4s-cl gptune hdf5 hdf5-vol-async plasma plumed umap warpx wps wrf"
+SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda sundials-cuda amrex-cuda libceed-cuda"
 SKIP_TESTS_x86_64_ubuntu_cuda_90="heffte-cuda papi-cuda sundials-cuda amrex-cuda"
-SKIP_TESTS_x86_64_ubuntu_cuda_120="heffte-cuda kokkos-kernels-cuda papi-cuda petsc-cuda sundials-cuda"
+SKIP_TESTS_x86_64_ubuntu_cuda_120="heffte-cuda papi-cuda sundials-cuda"
 SKIP_TESTS_x86_64_ubuntu_rocm_942="amrex-rocm hypre-rocm magma-rocm umpire-rocm heffte-rocm slate-rocm tasmanian-rocm"
+SKIP_TESTS_ppc64le_ubuntu_cpu="arborx axom boost chai dyninst libunwind mercury raja umpire bricks butterflypack darshan-util e4s-alc e4s-cl gasnet hdf5 hdf5-vol-async plumed py-libensemble umap unifyfs warpx wps wrf"
+SKIP_TESTS_ppc64le_ubuntu_cuda_70="amrex-cuda chai-cuda mfem-cuda tau-cuda umpire-cuda adios2-cuda heffte-cuda sundials-cuda"
 
 
 

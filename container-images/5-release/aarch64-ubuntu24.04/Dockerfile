@@ -81,6 +81,7 @@ COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
 ARG SPACK_MIRROR
 ARG S3_ENDPOINT
+ARG FORCE_CACHED_LOCKFILE
 
 WORKDIR /etc/e4s/cuda/120
 RUN /etc/e4s/concretize-spack-env.sh
@@ -105,6 +106,7 @@ COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
 ARG SPACK_MIRROR
 ARG S3_ENDPOINT
+ARG FORCE_CACHED_LOCKFILE
 
 WORKDIR /etc/e4s/cuda/90
 RUN /etc/e4s/concretize-spack-env.sh
@@ -129,6 +131,7 @@ COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
 ARG SPACK_MIRROR
 ARG S3_ENDPOINT
+ARG FORCE_CACHED_LOCKFILE
 
 WORKDIR /etc/e4s/cuda/80
 RUN /etc/e4s/concretize-spack-env.sh
@@ -152,6 +155,7 @@ COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
 ARG SPACK_MIRROR
 ARG S3_ENDPOINT
+ARG FORCE_CACHED_LOCKFILE
 
 WORKDIR /etc/e4s/cuda/notarget
 RUN /etc/e4s/concretize-spack-env.sh
@@ -171,6 +175,7 @@ COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
 ARG SPACK_MIRROR
 ARG S3_ENDPOINT
+ARG FORCE_CACHED_LOCKFILE
 
 WORKDIR /etc/e4s/cpu
 RUN /etc/e4s/concretize-spack-env.sh
@@ -503,6 +508,12 @@ COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
 COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
 
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
+
 ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
@@ -533,6 +544,12 @@ COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
 COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
 
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
+
 ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
@@ -562,6 +579,12 @@ COPY --from=spack-cuda-80 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
 COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
 
 ARG IMAGE_TARGET
 
@@ -612,6 +635,12 @@ COPY --from=spack-cpu /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
 COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
 
 ARG IMAGE_TARGET
 

@@ -33,7 +33,7 @@ is_empty() {
 }
 
 is_true() {
-  if [[ $1 == "true" ]]; then
+  if [[ "$1" == "true" ]]; then
     return 0
   fi
   return 1

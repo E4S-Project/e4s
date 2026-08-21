@@ -18,6 +18,6 @@ julia --project -e 'using Pkg; Pkg.instantiate()'
 julia -e 'using Pkg; Pkg.add("MPI")'
 julia -e 'using MPI; print(MPI.Get_library_version())' | grep -i mpich >/dev/null 2>&1
 
-julia -e 'using Pkg; Pkg.add("CUDA")'
-julia -e 'using CUDA; CUDA.set_runtime_version!(v"11.2"; local_toolkit=true)'
-julia -e 'using CUDA; CUDA.precompile_runtime()'
+# julia -e 'using Pkg; Pkg.add("CUDA")'
+# julia -e 'using CUDA; CUDA.set_runtime_version!(v"11.2"; local_toolkit=true)'
+# julia -e 'using CUDA; CUDA.precompile_runtime()'
