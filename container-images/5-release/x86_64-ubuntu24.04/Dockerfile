@@ -93,7 +93,6 @@ COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-env gnu/_config /etc/e4s/_config
 COPY --from=spack-env gnu/cuda/_config /etc/e4s/cuda/_config
 COPY --from=spack-env gnu/cuda/120 /etc/e4s/cuda/120
-COPY --from=spack-env gnu/cuda/120_driver_reqd /etc/e4s/cuda/120_driver_reqd
 COPY --from=etc /etc/e4s/utilities.sh /etc/e4s
 COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
@@ -102,9 +101,6 @@ ARG S3_ENDPOINT
 ARG FORCE_CACHED_LOCKFILE
 
 WORKDIR /etc/e4s/cuda/120
-RUN /etc/e4s/concretize-spack-env.sh
-
-WORKDIR /etc/e4s/cuda/120_driver_reqd
 RUN /etc/e4s/concretize-spack-env.sh
 
 
@@ -118,7 +114,6 @@ COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-env gnu/_config /etc/e4s/_config
 COPY --from=spack-env gnu/cuda/_config /etc/e4s/cuda/_config
 COPY --from=spack-env gnu/cuda/90 /etc/e4s/cuda/90
-COPY --from=spack-env gnu/cuda/90_driver_reqd /etc/e4s/cuda/90_driver_reqd
 COPY --from=etc /etc/e4s/utilities.sh /etc/e4s
 COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
@@ -129,8 +124,6 @@ ARG FORCE_CACHED_LOCKFILE
 WORKDIR /etc/e4s/cuda/90
 RUN /etc/e4s/concretize-spack-env.sh
 
-WORKDIR /etc/e4s/cuda/90_driver_reqd
-RUN /etc/e4s/concretize-spack-env.sh
 
 
 ## CUDA-80 SPACK CONCRETIZE
@@ -143,7 +136,6 @@ COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-env gnu/_config /etc/e4s/_config
 COPY --from=spack-env gnu/cuda/_config /etc/e4s/cuda/_config
 COPY --from=spack-env gnu/cuda/80 /etc/e4s/cuda/80
-COPY --from=spack-env gnu/cuda/80_driver_reqd /etc/e4s/cuda/80_driver_reqd
 COPY --from=etc /etc/e4s/utilities.sh /etc/e4s
 COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
@@ -154,8 +146,6 @@ ARG FORCE_CACHED_LOCKFILE
 WORKDIR /etc/e4s/cuda/80
 RUN /etc/e4s/concretize-spack-env.sh
 
-WORKDIR /etc/e4s/cuda/80_driver_reqd
-RUN /etc/e4s/concretize-spack-env.sh
 
 
 ## CUDA-NOARCH SPACK CONCRETIZE
@@ -347,10 +337,6 @@ WORKDIR /etc/e4s/cuda/120
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
 
-WORKDIR /etc/e4s/cuda/120_driver_reqd
-RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
-    /etc/e4s/install-spack-packages.sh
-
 WORKDIR /etc/e4s/cuda/notarget
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
@@ -381,10 +367,6 @@ WORKDIR /etc/e4s/cuda/90
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
 
-WORKDIR /etc/e4s/cuda/90_driver_reqd
-RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
-    /etc/e4s/install-spack-packages.sh
-
 WORKDIR /etc/e4s/cuda/notarget
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
@@ -411,10 +393,6 @@ ARG SPACK_MIRROR
 ARG S3_ENDPOINT
 
 WORKDIR /etc/e4s/cuda/80
-RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
-    /etc/e4s/install-spack-packages.sh
-
-WORKDIR /etc/e4s/cuda/80_driver_reqd
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
 

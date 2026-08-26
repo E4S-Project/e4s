@@ -202,7 +202,7 @@ variables:
   - export AWS_ENDPOINT_URL_S3=$S3_ENDPOINT
   - mkdir -p $PRIVATE_DIR
   - . .ci/credential-helpers.sh
-  - aws_env_to_aws_disk $PRIVATE_DIR 
+  - aws_env_to_aws_disk $PRIVATE_DIR
   - if [[ "$(arch)" == "ppc64le" ]]; then aws_env_to_minio_disk $PRIVATE_DIR; fi
   - clear_aws_env_credentials
   - export SIGNING_KEY=$PRIVATE_DIR/key.priv
@@ -226,15 +226,19 @@ variables:
     [[ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]] && exit 0
   - cd $CI_PROJECT_DIR/.ci && ./upload-merge-request-image-refs.sh
 
-.build_env:
+.build-env:
   script:
+  - f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libcuda.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+  - f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libnvidia-ml.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+  - echo /usr/local/cuda/targets/x86_64-linux/lib/stubs > /etc/ld.so.conf.d/cuda-stubs.conf
+  - ldconfig -v &>/dev/null
   - cd environments
   - ./build-env.sh $TARGET_ENV
   after_script:
   - if ! [[ -z "${PRIVATE_DIR+x}" ]] && [[ -d $PRIVATE_DIR ]]; then echo rm -rf $PRIVATE_DIR; fi
   - echo "jobstatus_${CI_JOB_NAME//-/_}=$CI_JOB_STATUS" >> $CI_PROJECT_DIR/build.env
 
-.build_env_status_check:
+.build-env-status-check:
   tags: [uoregon-e4s-project, docker, cpu-only, x86_64]
   script:
   - env | grep jobstatus_
@@ -2058,7 +2062,7 @@ ppc64le-ubuntu-spack-cuda:
 
 ## STATUS CHECKS
 x86_64-gnu-cpu-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2094,7 +2098,7 @@ x86_64-gnu-cpu-status:
 
 
 x86_64-gnu-cpu-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2131,7 +2135,7 @@ x86_64-gnu-cpu-rocky-status:
 
 
 x86_64-gnu-cuda-80-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2171,49 +2175,8 @@ x86_64-gnu-cuda-80-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-80-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-80-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-90-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2253,49 +2216,8 @@ x86_64-gnu-cuda-90-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-90-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-90-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-89-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2335,49 +2257,8 @@ x86_64-gnu-cuda-89-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-89-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-89-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/89_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/89_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-86-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2417,49 +2298,9 @@ x86_64-gnu-cuda-86-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-86-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-86-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/86_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/86_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
 
 x86_64-gnu-cuda-90-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2500,50 +2341,9 @@ x86_64-gnu-cuda-90-rocky-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-90-driver-reqd-rocky-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-90-driver-reqd-rocky
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
 
 x86_64-gnu-cuda-120-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2583,49 +2383,8 @@ x86_64-gnu-cuda-120-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-120-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-120-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-120-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2666,50 +2425,8 @@ x86_64-gnu-cuda-120-rocky-status:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-120-driver-reqd-rocky-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cuda-120-driver-reqd-rocky
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-notarget-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2750,7 +2467,7 @@ x86_64-gnu-cuda-notarget-status:
 
 
 x86_64-gnu-cuda-notarget-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2791,7 +2508,7 @@ x86_64-gnu-cuda-notarget-rocky-status:
 
 
 x86_64-gnu-rocm-gfx908-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2832,7 +2549,7 @@ x86_64-gnu-rocm-gfx908-status:
 
 
 x86_64-gnu-rocm-gfx90a-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2873,7 +2590,7 @@ x86_64-gnu-rocm-gfx90a-status:
 
 
 x86_64-gnu-rocm-gfx942-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2914,7 +2631,7 @@ x86_64-gnu-rocm-gfx942-status:
 
 
 x86_64-gnu-rocm-notarget-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2955,7 +2672,7 @@ x86_64-gnu-rocm-notarget-status:
 
 
 x86_64-oneapi-cpu-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -2993,7 +2710,7 @@ x86_64-oneapi-cpu-status:
       compare_to: 'refs/heads/main'
 
 x86_64-oneapi-gpu-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3031,7 +2748,7 @@ x86_64-oneapi-gpu-status:
 
 
 aarch64-gnu-cpu-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3066,7 +2783,7 @@ aarch64-gnu-cpu-status:
 
 
 aarch64-gnu-cpu-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3103,7 +2820,7 @@ aarch64-gnu-cpu-rocky-status:
 
 
 aarch64-gnu-cuda-80-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3142,48 +2859,8 @@ aarch64-gnu-cuda-80-status:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-80-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cuda-80-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-90-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3222,48 +2899,8 @@ aarch64-gnu-cuda-90-status:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-90-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cuda-90-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-90-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3304,50 +2941,8 @@ aarch64-gnu-cuda-90-rocky-status:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-90-driver-reqd-rocky-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cuda-90-driver-reqd-rocky
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-120-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3386,48 +2981,8 @@ aarch64-gnu-cuda-120-status:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-120-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cuda-120-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-120-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3468,50 +3023,8 @@ aarch64-gnu-cuda-120-rocky-status:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-120-driver-reqd-rocky-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cuda-120-driver-reqd-rocky
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-notarget-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3551,7 +3064,7 @@ aarch64-gnu-cuda-notarget-status:
 
 
 aarch64-gnu-cuda-notarget-rocky-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3592,7 +3105,7 @@ aarch64-gnu-cuda-notarget-rocky-status:
 
 
 ppc64le-gnu-cpu-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3627,7 +3140,7 @@ ppc64le-gnu-cpu-status:
 
 
 ppc64le-gnu-cuda-70-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3666,48 +3179,8 @@ ppc64le-gnu-cuda-70-status:
       compare_to: 'refs/heads/main'
 
 
-ppc64le-gnu-cuda-70-driver-reqd-status:
-  extends: [.common, .build_env_status_check]
-  stage: Status Check
-  needs:
-  - load-image-refs
-  - job: ppc64le-gnu-cuda-70-driver-reqd
-    optional: true
-    artifacts: true
-  rules:
-  - if: $DISABLE_PPC64LE == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /ppc64le-all/
-  - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
-  - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - environments/build-env.sh
-    - environments/ppc64le/gnu/_config/**/*
-    - environments/ppc64le/gnu/cuda/_config/**/*
-    - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - environments/build-env.sh
-      - environments/ppc64le/gnu/_config/**/*
-      - environments/ppc64le/gnu/cuda/_config/**/*
-      - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 ppc64le-gnu-cuda-notarget-status:
-  extends: [.common, .build_env_status_check]
+  extends: [.common, .build-env-status-check]
   stage: Status Check
   needs:
   - load-image-refs
@@ -3838,8 +3311,6 @@ x86_64-ubuntu-release-cuda-80:
     optional: true
   - job: x86_64-gnu-cuda-80-status
     optional: true
-  - job: x86_64-gnu-cuda-80-driver-reqd-status
-    optional: true
   - job: x86_64-gnu-cuda-notarget-status
     optional: true
   stage: Build Release Images
@@ -3881,7 +3352,6 @@ x86_64-ubuntu-release-cuda-80:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/80/**/*
-    - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -3901,7 +3371,6 @@ x86_64-ubuntu-release-cuda-80:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/80/**/*
-      - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -3929,8 +3398,6 @@ x86_64-ubuntu-release-cuda-90:
   - job: x86_64-ubuntu-cuda-mpi
     optional: true
   - job: x86_64-gnu-cuda-90-status
-    optional: true
-  - job: x86_64-gnu-cuda-90-driver-reqd-status
     optional: true
   - job: x86_64-gnu-cuda-notarget-status
     optional: true
@@ -3973,7 +3440,6 @@ x86_64-ubuntu-release-cuda-90:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -3993,7 +3459,6 @@ x86_64-ubuntu-release-cuda-90:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -4021,8 +3486,6 @@ x86_64-ubuntu-release-cuda-120:
   - job: x86_64-ubuntu-cuda-mpi
     optional: true
   - job: x86_64-gnu-cuda-120-status
-    optional: true
-  - job: x86_64-gnu-cuda-120-driver-reqd-status
     optional: true
   - job: x86_64-gnu-cuda-notarget-status
     optional: true
@@ -4065,7 +3528,6 @@ x86_64-ubuntu-release-cuda-120:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -4085,7 +3547,6 @@ x86_64-ubuntu-release-cuda-120:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -4529,8 +3990,6 @@ x86_64-rocky-release-cuda-90:
     optional: true
   - job: x86_64-gnu-cuda-90-rocky-status
     optional: true
-  - job: x86_64-gnu-cuda-90-driver-reqd-rocky-status
-    optional: true
   - job: x86_64-gnu-cuda-notarget-rocky-status
     optional: true
   stage: Build Release Images
@@ -4573,7 +4032,6 @@ x86_64-rocky-release-cuda-90:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -4593,7 +4051,6 @@ x86_64-rocky-release-cuda-90:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -4621,8 +4078,6 @@ x86_64-rocky-release-cuda-120:
   - job: x86_64-rocky-cuda-mpi
     optional: true
   - job: x86_64-gnu-cuda-120-rocky-status
-    optional: true
-  - job: x86_64-gnu-cuda-120-driver-reqd-rocky-status
     optional: true
   - job: x86_64-gnu-cuda-notarget-rocky-status
     optional: true
@@ -4666,7 +4121,6 @@ x86_64-rocky-release-cuda-120:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -4686,7 +4140,6 @@ x86_64-rocky-release-cuda-120:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -4789,8 +4242,6 @@ aarch64-ubuntu-release-cuda-80:
     optional: true
   - job: aarch64-gnu-cuda-80-status
     optional: true
-  - job: aarch64-gnu-cuda-80-driver-reqd-status
-    optional: true
   - job: aarch64-gnu-cuda-notarget-status
     optional: true
   stage: Build Release Images
@@ -4831,7 +4282,6 @@ aarch64-ubuntu-release-cuda-80:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/80/**/*
-    - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -4851,7 +4301,6 @@ aarch64-ubuntu-release-cuda-80:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/80/**/*
-      - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -4879,8 +4328,6 @@ aarch64-ubuntu-release-cuda-90:
   - job: aarch64-ubuntu-cuda-mpi
     optional: true
   - job: aarch64-gnu-cuda-90-status
-    optional: true
-  - job: aarch64-gnu-cuda-90-driver-reqd-status
     optional: true
   - job: aarch64-gnu-cuda-notarget-status
     optional: true
@@ -4922,7 +4369,6 @@ aarch64-ubuntu-release-cuda-90:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -4942,7 +4388,6 @@ aarch64-ubuntu-release-cuda-90:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -4970,8 +4415,6 @@ aarch64-ubuntu-release-cuda-120:
   - job: aarch64-ubuntu-cuda-mpi
     optional: true
   - job: aarch64-gnu-cuda-120-status
-    optional: true
-  - job: aarch64-gnu-cuda-120-driver-reqd-status
     optional: true
   - job: aarch64-gnu-cuda-notarget-status
     optional: true
@@ -5013,7 +4456,6 @@ aarch64-ubuntu-release-cuda-120:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -5033,7 +4475,6 @@ aarch64-ubuntu-release-cuda-120:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -5137,8 +4578,6 @@ aarch64-rocky-release-cuda-90:
     optional: true
   - job: aarch64-gnu-cuda-90-rocky-status
     optional: true
-  - job: aarch64-gnu-cuda-90-driver-reqd-rocky-status
-    optional: true
   - job: aarch64-gnu-cuda-notarget-rocky-status
     optional: true
   stage: Build Release Images
@@ -5181,7 +4620,6 @@ aarch64-rocky-release-cuda-90:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -5201,7 +4639,6 @@ aarch64-rocky-release-cuda-90:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -5229,8 +4666,6 @@ aarch64-rocky-release-cuda-120:
   - job: aarch64-rocky-cuda-mpi
     optional: true
   - job: aarch64-gnu-cuda-120-rocky-status
-    optional: true
-  - job: aarch64-gnu-cuda-120-driver-reqd-rocky-status
     optional: true
   - job: aarch64-gnu-cuda-notarget-rocky-status
     optional: true
@@ -5274,7 +4709,6 @@ aarch64-rocky-release-cuda-120:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -5294,7 +4728,6 @@ aarch64-rocky-release-cuda-120:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -5397,8 +4830,6 @@ ppc64le-ubuntu-release-cuda-70:
     optional: true
   - job: ppc64le-gnu-cuda-70-status
     optional: true
-  - job: ppc64le-gnu-cuda-70-driver-reqd-status
-    optional: true
   - job: ppc64le-gnu-cuda-notarget-status
     optional: true
   stage: Build Release Images
@@ -5439,7 +4870,6 @@ ppc64le-ubuntu-release-cuda-70:
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
     - environments/ppc64le/gnu/cuda/70/**/*
-    - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
     - environments/ppc64le/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -5459,7 +4889,6 @@ ppc64le-ubuntu-release-cuda-70:
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
       - environments/ppc64le/gnu/cuda/70/**/*
-      - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
       - environments/ppc64le/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -5476,7 +4905,7 @@ ppc64le-ubuntu-release-cuda-70:
 x86_64-gnu-cpu:
   variables:
     TARGET_ENV: x86_64/gnu/cpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -5526,7 +4955,7 @@ x86_64-gnu-cpu:
 x86_64-gnu-cpu-rocky:
   variables:
     TARGET_ENV: x86_64/gnu/cpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -5577,7 +5006,7 @@ x86_64-gnu-cpu-rocky:
 x86_64-gnu-cuda-80:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/80
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -5634,72 +5063,10 @@ x86_64-gnu-cuda-80:
       - environments/x86_64/gnu/cuda/80/**/*
       compare_to: 'refs/heads/main'
 
-
-x86_64-gnu-cuda-80-driver-reqd:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/80_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu
-    optional: true
-  - job: x86_64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-90:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/90
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -5756,72 +5123,10 @@ x86_64-gnu-cuda-90:
       - environments/x86_64/gnu/cuda/90/**/*
       compare_to: 'refs/heads/main'
 
-
-x86_64-gnu-cuda-90-driver-reqd:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/90_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu
-    optional: true
-  - job: x86_64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-89:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/89
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -5879,71 +5184,10 @@ x86_64-gnu-cuda-89:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-89-driver-reqd:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/89_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu
-    optional: true
-  - job: x86_64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/89_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/89_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-86:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/86
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6001,71 +5245,10 @@ x86_64-gnu-cuda-86:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-86-driver-reqd:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/86_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu
-    optional: true
-  - job: x86_64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/86_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/86_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-90-rocky:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/90
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6124,72 +5307,10 @@ x86_64-gnu-cuda-90-rocky:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-90-driver-reqd-rocky:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/90_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu-rocky
-    optional: true
-  - job: x86_64-rocky-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $ROCKY_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-rocky9/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-rocky9/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-120:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/120
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6244,74 +5365,13 @@ x86_64-gnu-cuda-120:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      compare_to: 'refs/heads/main'
-
-
-x86_64-gnu-cuda-120-driver-reqd:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/120_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu
-    optional: true
-  - job: x86_64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       compare_to: 'refs/heads/main'
 
 
 x86_64-gnu-cuda-120-rocky:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/120
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6370,72 +5430,10 @@ x86_64-gnu-cuda-120-rocky:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cuda-120-driver-reqd-rocky:
-  variables:
-    TARGET_ENV: x86_64/gnu/cuda/120_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, x86_64, docker, nvidia-driver]
-  stage: Build X86_64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: x86_64-gnu-cpu-rocky
-    optional: true
-  - job: x86_64-rocky-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $ROCKY_X86_64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_X86_64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-all/
-  - if: $SPACK_TARGET =~ /x86_64-rocky-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/x86_64-rocky9-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/x86_64-rocky9/**/*
-    - environments/build-env.sh
-    - environments/x86_64/gnu/_config/**/*
-    - environments/x86_64/gnu/cuda/_config/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/x86_64-rocky9-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/x86_64-rocky9/**/*
-      - environments/build-env.sh
-      - environments/x86_64/gnu/_config/**/*
-      - environments/x86_64/gnu/cuda/_config/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 x86_64-gnu-cuda-notarget:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/notarget
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6496,7 +5494,7 @@ x86_64-gnu-cuda-notarget:
 x86_64-gnu-cuda-notarget-rocky:
   variables:
     TARGET_ENV: x86_64/gnu/cuda/notarget
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6557,7 +5555,7 @@ x86_64-gnu-cuda-notarget-rocky:
 x86_64-gnu-rocm-gfx908:
   variables:
     TARGET_ENV: x86_64/gnu/rocm/gfx908
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6618,7 +5616,7 @@ x86_64-gnu-rocm-gfx908:
 x86_64-gnu-rocm-gfx90a:
   variables:
     TARGET_ENV: x86_64/gnu/rocm/gfx90a
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6679,7 +5677,7 @@ x86_64-gnu-rocm-gfx90a:
 x86_64-gnu-rocm-gfx942:
   variables:
     TARGET_ENV: x86_64/gnu/rocm/gfx942
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6740,7 +5738,7 @@ x86_64-gnu-rocm-gfx942:
 x86_64-gnu-rocm-notarget:
   variables:
     TARGET_ENV: x86_64/gnu/rocm/notarget
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6801,7 +5799,7 @@ x86_64-gnu-rocm-notarget:
 x86_64-oneapi-cpu:
   variables:
     TARGET_ENV: x86_64/oneapi/cpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6859,7 +5857,7 @@ x86_64-oneapi-cpu:
 x86_64-oneapi-gpu:
   variables:
     TARGET_ENV: x86_64/oneapi/gpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
   stage: Build X86_64 Spack Env
   allow_failure: true
@@ -6917,7 +5915,7 @@ x86_64-oneapi-gpu:
 aarch64-gnu-cpu:
   variables:
     TARGET_ENV: aarch64/gnu/cpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   needs:
@@ -6966,7 +5964,7 @@ aarch64-gnu-cpu:
 aarch64-gnu-cpu-rocky:
   variables:
     TARGET_ENV: aarch64/gnu/cpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   needs:
@@ -7017,7 +6015,7 @@ aarch64-gnu-cpu-rocky:
 aarch64-gnu-cuda-80:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/80
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7074,70 +6072,10 @@ aarch64-gnu-cuda-80:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-80-driver-reqd:
-  variables:
-    TARGET_ENV: aarch64/gnu/cuda/80_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, aarch64, docker, nvidia-driver]
-  stage: Build AARCH64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cpu
-    optional: true
-  - job: aarch64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_AARCH64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-90:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/90
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7191,73 +6129,13 @@ aarch64-gnu-cuda-90:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      compare_to: 'refs/heads/main'
-
-
-aarch64-gnu-cuda-90-driver-reqd:
-  variables:
-    TARGET_ENV: aarch64/gnu/cuda/90_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, aarch64, docker, nvidia-driver]
-  stage: Build AARCH64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cpu
-    optional: true
-  - job: aarch64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_AARCH64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       compare_to: 'refs/heads/main'
 
 
 aarch64-gnu-cuda-90-rocky:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/90
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7316,72 +6194,10 @@ aarch64-gnu-cuda-90-rocky:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-90-driver-reqd-rocky:
-  variables:
-    TARGET_ENV: aarch64/gnu/cuda/90_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, aarch64, docker, nvidia-driver]
-  stage: Build AARCH64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cpu-rocky
-    optional: true
-  - job: aarch64-rocky-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $ROCKY_AARCH64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/aarch64-rocky9/**/*
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/aarch64-rocky9/**/*
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-120:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/120
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7435,73 +6251,13 @@ aarch64-gnu-cuda-120:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      compare_to: 'refs/heads/main'
-
-
-aarch64-gnu-cuda-120-driver-reqd:
-  variables:
-    TARGET_ENV: aarch64/gnu/cuda/120_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, aarch64, docker, nvidia-driver]
-  stage: Build AARCH64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cpu
-    optional: true
-  - job: aarch64-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_AARCH64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       compare_to: 'refs/heads/main'
 
 
 aarch64-gnu-cuda-120-rocky:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/120
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7560,72 +6316,10 @@ aarch64-gnu-cuda-120-rocky:
       compare_to: 'refs/heads/main'
 
 
-aarch64-gnu-cuda-120-driver-reqd-rocky:
-  variables:
-    TARGET_ENV: aarch64/gnu/cuda/120_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, aarch64, docker, nvidia-driver]
-  stage: Build AARCH64 Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: aarch64-gnu-cpu-rocky
-    optional: true
-  - job: aarch64-rocky-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $ROCKY_AARCH64_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_AARCH64 == "true"
-    when: never
-  - if: $DISABLE_ROCKY == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-all/
-  - if: $SPACK_TARGET =~ /aarch64-rocky-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/aarch64-rocky9-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/aarch64-rocky9/**/*
-    - environments/build-env.sh
-    - environments/aarch64/gnu/_config/**/*
-    - environments/aarch64/gnu/cuda/_config/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/aarch64-rocky9-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/aarch64-rocky9/**/*
-      - environments/build-env.sh
-      - environments/aarch64/gnu/_config/**/*
-      - environments/aarch64/gnu/cuda/_config/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 aarch64-gnu-cuda-notarget:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/notarget
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7685,7 +6379,7 @@ aarch64-gnu-cuda-notarget:
 aarch64-gnu-cuda-notarget-rocky:
   variables:
     TARGET_ENV: aarch64/gnu/cuda/notarget
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, aarch64, docker, cpu-only]
   stage: Build AARCH64 Spack Env
   allow_failure: true
@@ -7746,7 +6440,7 @@ aarch64-gnu-cuda-notarget-rocky:
 ppc64le-gnu-cpu:
   variables:
     TARGET_ENV: ppc64le/gnu/cpu
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, ppc64le, docker, cpu-only]
   stage: Build PPC64LE Spack Env
   needs:
@@ -7795,7 +6489,7 @@ ppc64le-gnu-cpu:
 ppc64le-gnu-cuda-70:
   variables:
     TARGET_ENV: ppc64le/gnu/cuda/70
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, ppc64le, docker, cpu-only]
   stage: Build PPC64LE Spack Env
   allow_failure: true
@@ -7852,70 +6546,10 @@ ppc64le-gnu-cuda-70:
       compare_to: 'refs/heads/main'
 
 
-ppc64le-gnu-cuda-70-driver-reqd:
-  variables:
-    TARGET_ENV: ppc64le/gnu/cuda/70_driver_reqd
-  extends: [.common, .build_env]
-  tags: [uoregon-e4s-project, ppc64le, docker, nvidia-driver]
-  stage: Build PPC64LE Spack Env
-  allow_failure: true
-  needs:
-  - load-image-refs
-  - job: ppc64le-gnu-cpu
-    optional: true
-  - job: ppc64le-ubuntu-cuda-mpi
-    optional: true
-    artifacts: true
-  timeout: 6 hours
-  image: $UBUNTU_PPC64LE_CUDA_MPI_IMAGE
-  rules:
-  - if: $DISABLE_PPC64LE == "true"
-    when: never
-  - if: $DISABLE_UBUNTU == "true"
-    when: never
-  - if: $DISABLE_CUDA == "true"
-    when: never 
-  - if: $SPACK_TARGET =~ /all-all/
-  - if: $SPACK_TARGET =~ /ppc64le-all/
-  - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
-  - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
-  - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
-  - if: $CI_PIPELINE_SOURCE == "push"
-    changes:
-    - vars.env
-    - .gitlab-ci.yml
-    - container-images/1-runner/_common/**/*
-    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
-    - container-images/2-gpu/_common/**/*
-    - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
-    - container-images/3-mpi/_common/**/*
-    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
-    - environments/build-env.sh
-    - environments/ppc64le/gnu/_config/**/*
-    - environments/ppc64le/gnu/cuda/_config/**/*
-    - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
-  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-    changes:
-      paths:
-      - vars.env
-      - .gitlab-ci.yml
-      - container-images/1-runner/_common/**/*
-      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
-      - container-images/2-gpu/_common/**/*
-      - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
-      - container-images/3-mpi/_common/**/*
-      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
-      - environments/build-env.sh
-      - environments/ppc64le/gnu/_config/**/*
-      - environments/ppc64le/gnu/cuda/_config/**/*
-      - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
-      compare_to: 'refs/heads/main'
-
-
 ppc64le-gnu-cuda-notarget:
   variables:
     TARGET_ENV: ppc64le/gnu/cuda/notarget
-  extends: [.common, .build_env]
+  extends: [.common, .build-env]
   tags: [uoregon-e4s-project, ppc64le, docker, cpu-only]
   stage: Build PPC64LE Spack Env
   allow_failure: true
@@ -8094,7 +6728,6 @@ x86_64-ubuntu-release-cuda-80-sif:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/80/**/*
-    - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -8114,7 +6747,6 @@ x86_64-ubuntu-release-cuda-80-sif:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/80/**/*
-      - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -8179,7 +6811,6 @@ x86_64-ubuntu-release-cuda-90-sif:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -8199,7 +6830,6 @@ x86_64-ubuntu-release-cuda-90-sif:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -8264,7 +6894,6 @@ x86_64-ubuntu-release-cuda-120-sif:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -8284,7 +6913,6 @@ x86_64-ubuntu-release-cuda-120-sif:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -8742,7 +7370,6 @@ x86_64-rocky-release-cuda-90-sif:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -8762,7 +7389,6 @@ x86_64-rocky-release-cuda-90-sif:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -8828,7 +7454,6 @@ x86_64-rocky-release-cuda-120-sif:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -8848,7 +7473,6 @@ x86_64-rocky-release-cuda-120-sif:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -8985,7 +7609,6 @@ aarch64-ubuntu-release-cuda-80-sif:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/80/**/*
-    - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9005,7 +7628,6 @@ aarch64-ubuntu-release-cuda-80-sif:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/80/**/*
-      - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9069,7 +7691,6 @@ aarch64-ubuntu-release-cuda-90-sif:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9089,7 +7710,6 @@ aarch64-ubuntu-release-cuda-90-sif:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9153,7 +7773,6 @@ aarch64-ubuntu-release-cuda-120-sif:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9173,7 +7792,6 @@ aarch64-ubuntu-release-cuda-120-sif:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9311,7 +7929,6 @@ aarch64-rocky-release-cuda-90-sif:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9331,7 +7948,6 @@ aarch64-rocky-release-cuda-90-sif:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9397,7 +8013,6 @@ aarch64-rocky-release-cuda-120-sif:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9417,7 +8032,6 @@ aarch64-rocky-release-cuda-120-sif:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9552,7 +8166,6 @@ ppc64le-ubuntu-release-cuda-70-sif:
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
     - environments/ppc64le/gnu/cuda/70/**/*
-    - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
     - environments/ppc64le/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9572,7 +8185,6 @@ ppc64le-ubuntu-release-cuda-70-sif:
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
       - environments/ppc64le/gnu/cuda/70/**/*
-      - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
       - environments/ppc64le/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9714,7 +8326,6 @@ x86_64-ubuntu-release-cuda-80-docker-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/80/**/*
-    - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9735,7 +8346,6 @@ x86_64-ubuntu-release-cuda-80-docker-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/80/**/*
-      - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9801,7 +8411,6 @@ x86_64-ubuntu-release-cuda-90-docker-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9822,7 +8431,6 @@ x86_64-ubuntu-release-cuda-90-docker-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -9888,7 +8496,6 @@ x86_64-ubuntu-release-cuda-120-docker-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -9909,7 +8516,6 @@ x86_64-ubuntu-release-cuda-120-docker-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -10372,7 +8978,6 @@ x86_64-rocky-release-cuda-90-docker-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -10393,7 +8998,6 @@ x86_64-rocky-release-cuda-90-docker-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -10460,7 +9064,6 @@ x86_64-rocky-release-cuda-120-docker-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -10481,7 +9084,6 @@ x86_64-rocky-release-cuda-120-docker-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -10569,90 +9171,6 @@ aarch64-ubuntu-release-cpu-docker-test:
       compare_to: 'refs/heads/main'
 
 
-# aarch64-ubuntu-release-cuda-80-docker-test:
-#   extends: [.common, .run-tests]
-#   variables:
-#     TEST_TARGET: cuda-80
-#   image:
-#     name: $UBUNTU_AARCH64_RELEASE_CUDA80_IMAGE
-#     entrypoint: [""]
-#   tags: [uoregon-e4s-project, aarch64, docker]
-#   needs:
-#   - load-image-refs
-#   - job: aarch64-ubuntu-release-cuda-80
-#     optional: true
-#   rules:
-#   - if: $DISABLE_AARCH64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_CUDA == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-aarch64/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-aarch64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-aarch64/
-#   - if: $CONTAINER_TARGET =~ /mpi-cuda/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-80/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /aarch64-all/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
-#   - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/aarch64/gnu/_config/**/*
-#     - environments/aarch64/gnu/cuda/_config/**/*
-#     - environments/aarch64/gnu/cuda/80/**/*
-#     - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-#     - environments/aarch64/gnu/cuda/notarget/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/aarch64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/aarch64/gnu/_config/**/*
-#       - environments/aarch64/gnu/cuda/_config/**/*
-#       - environments/aarch64/gnu/cuda/80/**/*
-#       - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-#       - environments/aarch64/gnu/cuda/notarget/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/aarch64-ubuntu24.04/**/*
-#       - testing/**/*      
-#       compare_to: 'refs/heads/main'
-
-
 aarch64-ubuntu-release-cuda-90-docker-test:
   extends: [.common, .run-tests]
   variables:
@@ -10703,7 +9221,6 @@ aarch64-ubuntu-release-cuda-90-docker-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -10724,7 +9241,6 @@ aarch64-ubuntu-release-cuda-90-docker-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -10789,7 +9305,6 @@ aarch64-ubuntu-release-cuda-120-docker-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -10810,7 +9325,6 @@ aarch64-ubuntu-release-cuda-120-docker-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -10951,7 +9465,6 @@ aarch64-rocky-release-cuda-90-docker-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -10972,7 +9485,6 @@ aarch64-rocky-release-cuda-90-docker-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -11039,7 +9551,6 @@ aarch64-rocky-release-cuda-120-docker-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -11060,7 +9571,6 @@ aarch64-rocky-release-cuda-120-docker-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -11198,7 +9708,6 @@ ppc64le-ubuntu-release-cuda-70-docker-test:
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
     - environments/ppc64le/gnu/cuda/70/**/*
-    - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
     - environments/ppc64le/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -11219,7 +9728,6 @@ ppc64le-ubuntu-release-cuda-70-docker-test:
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
       - environments/ppc64le/gnu/cuda/70/**/*
-      - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
       - environments/ppc64le/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -11361,7 +9869,6 @@ x86_64-ubuntu-release-cuda-80-sif-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/80/**/*
-    - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -11382,7 +9889,6 @@ x86_64-ubuntu-release-cuda-80-sif-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/80/**/*
-      - environments/x86_64/gnu/cuda/80_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -11448,7 +9954,6 @@ x86_64-ubuntu-release-cuda-90-sif-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -11469,7 +9974,6 @@ x86_64-ubuntu-release-cuda-90-sif-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -11535,7 +10039,6 @@ x86_64-ubuntu-release-cuda-120-sif-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -11556,7 +10059,6 @@ x86_64-ubuntu-release-cuda-120-sif-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12021,7 +10523,6 @@ x86_64-rocky-release-cuda-90-sif-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/90/**/*
-    - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12042,7 +10543,6 @@ x86_64-rocky-release-cuda-90-sif-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/90/**/*
-      - environments/x86_64/gnu/cuda/90_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12109,7 +10609,6 @@ x86_64-rocky-release-cuda-120-sif-test:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cuda/_config/**/*
     - environments/x86_64/gnu/cuda/120/**/*
-    - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12130,7 +10629,6 @@ x86_64-rocky-release-cuda-120-sif-test:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cuda/_config/**/*
       - environments/x86_64/gnu/cuda/120/**/*
-      - environments/x86_64/gnu/cuda/120_driver_reqd/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12218,90 +10716,6 @@ aarch64-ubuntu-release-cpu-sif-test:
       compare_to: 'refs/heads/main'
 
 
-# aarch64-ubuntu-release-cuda-80-sif-test:
-#   extends: [.common, .run-sif-tests]
-#   variables:
-#     SIF: $UBUNTU_AARCH64_RELEASE_CUDA80_SIF
-#     TEST_TARGET: cuda-80
-#   tags: [uoregon-e4s-project, aarch64, shell]
-#   needs:
-#   - load-image-refs
-#   - job: aarch64-ubuntu-release-cuda-80-sif
-#     optional: true
-#   rules:
-  # - if: $DISABLE_SIF == "true"
-  #   when: never
-#   - if: $DISABLE_AARCH64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_CUDA == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-aarch64/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-aarch64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-aarch64/
-#   - if: $CONTAINER_TARGET =~ /mpi-cuda/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-all/
-#   - if: $CONTAINER_TARGET =~ /release-aarch64-ubuntu-cuda-80/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /aarch64-all/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
-#   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
-#   - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/aarch64/gnu/_config/**/*
-#     - environments/aarch64/gnu/cuda/_config/**/*
-#     - environments/aarch64/gnu/cuda/80/**/*
-#     - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-#     - environments/aarch64/gnu/cuda/notarget/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/aarch64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/aarch64/gnu/_config/**/*
-#       - environments/aarch64/gnu/cuda/_config/**/*
-#       - environments/aarch64/gnu/cuda/80/**/*
-#       - environments/aarch64/gnu/cuda/80_driver_reqd/**/*
-#       - environments/aarch64/gnu/cuda/notarget/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/aarch64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/aarch64-ubuntu24.04/**/*
-#       - testing/**/*      
-#       compare_to: 'refs/heads/main'
-
-
 aarch64-ubuntu-release-cuda-90-sif-test:
   extends: [.common, .run-sif-tests]
   variables:
@@ -12352,7 +10766,6 @@ aarch64-ubuntu-release-cuda-90-sif-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12373,7 +10786,6 @@ aarch64-ubuntu-release-cuda-90-sif-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12438,7 +10850,6 @@ aarch64-ubuntu-release-cuda-120-sif-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12459,7 +10870,6 @@ aarch64-ubuntu-release-cuda-120-sif-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12600,7 +11010,6 @@ aarch64-rocky-release-cuda-90-sif-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/90/**/*
-    - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12621,7 +11030,6 @@ aarch64-rocky-release-cuda-90-sif-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/90/**/*
-      - environments/aarch64/gnu/cuda/90_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12688,7 +11096,6 @@ aarch64-rocky-release-cuda-120-sif-test:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cuda/_config/**/*
     - environments/aarch64/gnu/cuda/120/**/*
-    - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12709,7 +11116,6 @@ aarch64-rocky-release-cuda-120-sif-test:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cuda/_config/**/*
       - environments/aarch64/gnu/cuda/120/**/*
-      - environments/aarch64/gnu/cuda/120_driver_reqd/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
@@ -12845,7 +11251,6 @@ ppc64le-ubuntu-release-cuda-70-sif-test:
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cuda/_config/**/*
     - environments/ppc64le/gnu/cuda/70/**/*
-    - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
     - environments/ppc64le/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
     - container-images/1-runner/_common/**/*
@@ -12866,7 +11271,6 @@ ppc64le-ubuntu-release-cuda-70-sif-test:
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cuda/_config/**/*
       - environments/ppc64le/gnu/cuda/70/**/*
-      - environments/ppc64le/gnu/cuda/70_driver_reqd/**/*
       - environments/ppc64le/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
       - container-images/1-runner/_common/**/*
