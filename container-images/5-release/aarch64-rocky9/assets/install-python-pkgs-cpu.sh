@@ -24,6 +24,7 @@ dnf install -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-fr
 dnf install -y ffmpeg ffmpeg-devel
 
 dnf install -y \
+ hwloc-devel \
  libsndfile-devel \
  sqlite-devel \
  zeromq-devel
@@ -38,6 +39,44 @@ uv pip install \
  --system \
  --no-binary mpi4py \
  -r $reqdir/requirements-2.txt
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ xgboost
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ nixl
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ dspy
+
+uv pip install \
+ --python $python_full_path \
+ --system 'marimo>=0.23.0'
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ trame_vuetify \
+ trame \
+ hpc-campaign \
+ SmilesPE \
+ pynacl
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ hypothesis
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ ucimlrepo
 
 rm -rf /tmp/ml-1
 

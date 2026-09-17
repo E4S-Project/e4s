@@ -36,6 +36,16 @@ uv pip install \
  --no-binary mpi4py \
  -r $reqdir/requirements-2.txt
 
+uv pip install \
+ --python $python_full_path \
+ --system \
+ hypothesis
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ ucimlrepo
+
 rm -rf /tmp/ml-1
 
 fail=0

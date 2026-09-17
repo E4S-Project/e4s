@@ -16,12 +16,14 @@ spack:
   - heffte +rocm amdgpu_target=gfx942
   - hypre +rocm amdgpu_target=gfx942
   - kokkos +rocm amdgpu_target=gfx942
+  # - kokkos-fft device_backend=hipfft ^kokkos +rocm amdgpu_target=gfx942
+  # - kokkos-tools ^kokkos +rocm amdgpu_target=gfx942
   - legion +rocm amdgpu_target=gfx942
   - libceed +rocm amdgpu_target=gfx942
   - magma ~cuda +rocm amdgpu_target=gfx942
   - mfem +rocm amdgpu_target=gfx942
   - papi +rocm amdgpu_target=gfx942
-  # - petsc +rocm amdgpu_target=gfx942
+  # - petsc +metis +hdf5 +hypre +superlu-dist +rocm amdgpu_target=gfx942
   - raja ~openmp +rocm amdgpu_target=gfx942
   - slate +rocm amdgpu_target=gfx942
   # - slepc +rocm amdgpu_target=gfx942 ^petsc +rocm amdgpu_target=gfx942

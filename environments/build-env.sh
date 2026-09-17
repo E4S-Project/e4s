@@ -3,6 +3,17 @@
 # Load helpers and variables
 export CI_ROOT=$(realpath $(git rev-parse --show-toplevel))
 . utilities.sh
+. $CI_ROOT/vars.env
+
+require_env \
+ s3_bucket \
+ s3_endpoint \
+ s3_prefix \
+ spack_core_checkout \
+ spack_core_repo \
+ spack_mirror \
+ spack_packages_checkout \
+ spack_packages_repo \
 
 usage() {
   echo "usage: $0 [--nopush] [--nopad] [--noclone]"
@@ -90,20 +101,20 @@ elif [[ "$(arch)" == "ppc64le" ]]; then
   padding=128
 fi
 
-spack_core_checkout=v1.2.2
-spack_core_repo=https://github.com/spack/spack
-spack_packages_checkout=f020fd1efba40bf592537c5d0dd47f9d5c73d278
-spack_packages_repo=https://github.com/spack/spack-packages
+# spack_core_checkout=v1.2.2
+# spack_core_repo=https://github.com/spack/spack
+# spack_packages_checkout=f020fd1efba40bf592537c5d0dd47f9d5c73d278
+# spack_packages_repo=https://github.com/spack/spack-packages
 
 shared_dir=/e4s-shared
 build_dir=$shared_dir/${spack_core_checkout:0:10}-${spack_packages_checkout:0:10}
 spack_core_root=$build_dir/spack
 spack_packages_root=$build_dir/spack-packages
 
-s3_bucket=${S3_BUCKET:-cache.e4s.io}
-s3_endpoint=${S3_ENDPOINT:-https://uo-spack-mirror.e4s.io:9000}
-s3_prefix=e4s-builds
-spack_mirror=s3://${S3_BUCKET}/$s3_prefix
+# s3_bucket=${S3_BUCKET:-cache.e4s.io}
+# s3_endpoint=${S3_ENDPOINT:-https://uo-spack-mirror.e4s.io:9000}
+# s3_prefix=e4s-builds
+# spack_mirror=s3://${S3_BUCKET}/$s3_prefix
 
 lockfile=$build_dir/.lock
 mkdir -p $build_dir

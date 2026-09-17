@@ -24,7 +24,9 @@ spack:
   - hpx +cuda cuda_arch=120
   - hypre +cuda cuda_arch=120
   - kokkos +wrapper +cuda cuda_arch=120
+  # - kokkos-fft host_backend=cufft ^kokkos +wrapper +cuda cuda_arch=120
   - kokkos-kernels +cuda cuda_arch=120 ^kokkos +wrapper +cuda cuda_arch=120
+  # - kokkos-tools ^kokkos +wrapper +cuda cuda_arch=120
   - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=120 # lammps: needs NVIDIA driver
   - legion +cuda cuda_arch=120
   - libceed +cuda cuda_arch=120
@@ -33,7 +35,7 @@ spack:
   - mgard +serial +openmp +timing +unstructured +cuda cuda_arch=120
   - omega-h +cuda cuda_arch=120
   - parsec +cuda cuda_arch=120
-  - petsc +cuda cuda_arch=120
+  - petsc +metis +hdf5 +hypre +superlu-dist +cuda cuda_arch=120
   - raja +cuda cuda_arch=120
   - slate +cuda cuda_arch=120
   - slepc +cuda cuda_arch=120

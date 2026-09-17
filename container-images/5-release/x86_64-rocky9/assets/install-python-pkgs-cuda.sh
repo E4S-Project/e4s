@@ -73,6 +73,44 @@ uv pip install \
  --system \
  'kernels>=0.12.0,<0.13'
 
+uv pip install \
+ --python $python_full_path \
+ --system \
+ xgboost
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ nixl
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ dspy
+
+uv pip install \
+ --python $python_full_path \
+ --system 'marimo>=0.23.0'
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ trame_vuetify \
+ trame \
+ hpc-campaign \
+ SmilesPE \
+ pynacl
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ hypothesis
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ ucimlrepo
+
 rm -rf /tmp/ml-1
 
 

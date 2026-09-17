@@ -16,12 +16,14 @@ spack:
   - heffte +rocm amdgpu_target=gfx908
   - hypre +rocm amdgpu_target=gfx908
   - kokkos +rocm amdgpu_target=gfx908
+  # - kokkos-fft device_backend=hipfft ^kokkos +rocm amdgpu_target=gfx908
+  # - kokkos-tools ^kokkos +rocm amdgpu_target=gfx908
   - legion +rocm amdgpu_target=gfx908
   - libceed +rocm amdgpu_target=gfx908
   - magma ~cuda +rocm amdgpu_target=gfx908
   - mfem +rocm amdgpu_target=gfx908
   - papi +rocm amdgpu_target=gfx908
-  # - petsc +rocm amdgpu_target=gfx908
+  # - petsc +metis +hdf5 +hypre +superlu-dist +rocm amdgpu_target=gfx908
   - raja ~openmp +rocm amdgpu_target=gfx908
   - slate +rocm amdgpu_target=gfx908
   # - slepc +rocm amdgpu_target=gfx908 ^petsc +rocm amdgpu_target=gfx908

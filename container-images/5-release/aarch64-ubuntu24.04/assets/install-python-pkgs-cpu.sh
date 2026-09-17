@@ -36,6 +36,46 @@ uv pip install \
  --no-binary mpi4py \
  -r $reqdir/requirements-2.txt
 
+uv pip install \
+ --python $python_full_path \
+ --system \
+ xgboost
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ nixl
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ dspy
+
+uv pip install \
+ --python $python_full_path \
+ --system 'marimo>=0.23.0'
+
+apt install -y sqlite3 libsqlite3-dev
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ trame_vuetify \
+ trame \
+ hpc-campaign \
+ SmilesPE \
+ pynacl
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ hypothesis
+
+uv pip install \
+ --python $python_full_path \
+ --system \
+ ucimlrepo
+
 rm -rf /tmp/ml-1
 
 fail=0

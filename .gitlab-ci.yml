@@ -228,9 +228,16 @@ variables:
 
 .build-env:
   script:
-  - f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libcuda.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
-  - f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libnvidia-ml.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
-  - echo /usr/local/cuda/targets/x86_64-linux/lib/stubs > /etc/ld.so.conf.d/cuda-stubs.conf
+  - >
+    if [[ "$(arch)" == "aarch64" ]]; then
+      f=/usr/local/cuda/targets/sbsa-linux/lib/stubs/libcuda.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+      f=/usr/local/cuda/targets/sbsa-linux/lib/stubs/libnvidia-ml.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+      echo /usr/local/cuda/targets/sbsa-linux/lib/stubs > /etc/ld.so.conf.d/cuda-stubs.conf
+    elif [[ "$(arch)" == "x86_64" ]]; then
+      f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libcuda.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+      f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libnvidia-ml.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+      echo /usr/local/cuda/targets/x86_64-linux/lib/stubs > /etc/ld.so.conf.d/cuda-stubs.conf
+    fi
   - ldconfig -v &>/dev/null
   - cd environments
   - ./build-env.sh $TARGET_ENV
@@ -286,9 +293,15 @@ variables:
     [[ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]] && exit 0
   - cd $CI_PROJECT_DIR/.ci && ./upload-merge-request-image-refs.sh
 
-.run-tests:
+.run-docker-tests:
   stage: Test Docker Images
   script:
+  - >
+    if [[ -f /etc/bashrc ]]; then
+      . /etc/bashrc
+    elif [[ -f /etc/bash.bashrc ]]; then
+      . /etc/bash.bashrc
+    fi
   - cd testing
   - ./run-tests.sh $TEST_TARGET
 
@@ -8201,7 +8214,7 @@ ppc64le-ubuntu-release-cuda-70-sif:
 
 ## TEST DOCKER IMAGES
 x86_64-ubuntu-release-cpu-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cpu
   image:
@@ -8276,7 +8289,7 @@ x86_64-ubuntu-release-cpu-docker-test:
 
 
 x86_64-ubuntu-release-cuda-80-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-80
   image:
@@ -8361,7 +8374,7 @@ x86_64-ubuntu-release-cuda-80-docker-test:
 
 
 x86_64-ubuntu-release-cuda-90-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-90
   image:
@@ -8446,7 +8459,7 @@ x86_64-ubuntu-release-cuda-90-docker-test:
 
 
 x86_64-ubuntu-release-cuda-120-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-120
   image:
@@ -8531,7 +8544,7 @@ x86_64-ubuntu-release-cuda-120-docker-test:
 
 
 # x86_64-ubuntu-release-rocm-908-docker-test:
-#   extends: [.common, .run-tests]
+#   extends: [.common, .run-docker-tests]
 #   variables:
 #     TEST_TARGET: rocm-908
 #   image:
@@ -8611,7 +8624,7 @@ x86_64-ubuntu-release-cuda-120-docker-test:
 
 
 # x86_64-ubuntu-release-rocm-90a-docker-test:
-#   extends: [.common, .run-tests]
+#   extends: [.common, .run-docker-tests]
 #   variables:
 #     TEST_TARGET: rocm-90a
 #   image:
@@ -8691,7 +8704,7 @@ x86_64-ubuntu-release-cuda-120-docker-test:
 
 
 x86_64-ubuntu-release-rocm-942-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: rocm-942
   image:
@@ -8773,7 +8786,7 @@ x86_64-ubuntu-release-rocm-942-docker-test:
 
 
 # x86_64-ubuntu-release-oneapi-docker-test:
-#   extends: [.common, .run-tests]
+#   extends: [.common, .run-docker-tests]
 #   variables:
 #     TEST_TARGET: oneapi
 #   image:
@@ -8852,7 +8865,7 @@ x86_64-ubuntu-release-rocm-942-docker-test:
 
 
 x86_64-rocky-release-cpu-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cpu
   image:
@@ -8927,7 +8940,7 @@ x86_64-rocky-release-cpu-docker-test:
 
 
 x86_64-rocky-release-cuda-90-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-90
   image:
@@ -9013,7 +9026,7 @@ x86_64-rocky-release-cuda-90-docker-test:
 
 
 x86_64-rocky-release-cuda-120-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-120
   image:
@@ -9099,7 +9112,7 @@ x86_64-rocky-release-cuda-120-docker-test:
 
 
 aarch64-ubuntu-release-cpu-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cpu
   image:
@@ -9172,7 +9185,7 @@ aarch64-ubuntu-release-cpu-docker-test:
 
 
 aarch64-ubuntu-release-cuda-90-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-90
   image:
@@ -9256,7 +9269,7 @@ aarch64-ubuntu-release-cuda-90-docker-test:
 
 
 aarch64-ubuntu-release-cuda-120-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-120
   image:
@@ -9339,7 +9352,7 @@ aarch64-ubuntu-release-cuda-120-docker-test:
       compare_to: 'refs/heads/main'
 
 aarch64-rocky-release-cpu-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cpu
   image:
@@ -9414,7 +9427,7 @@ aarch64-rocky-release-cpu-docker-test:
 
 
 aarch64-rocky-release-cuda-90-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-90
   image:
@@ -9500,7 +9513,7 @@ aarch64-rocky-release-cuda-90-docker-test:
 
 
 aarch64-rocky-release-cuda-120-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-120
   image:
@@ -9586,7 +9599,7 @@ aarch64-rocky-release-cuda-120-docker-test:
 
 
 ppc64le-ubuntu-release-cpu-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cpu
   image:
@@ -9659,7 +9672,7 @@ ppc64le-ubuntu-release-cpu-docker-test:
 
 
 ppc64le-ubuntu-release-cuda-70-docker-test:
-  extends: [.common, .run-tests]
+  extends: [.common, .run-docker-tests]
   variables:
     TEST_TARGET: cuda-70
   image:
