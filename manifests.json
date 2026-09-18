@@ -1,0 +1,124 @@
+{
+    "e4s-spack-cpu": {
+        "refs": [
+            "UBUNTU_X86_64_SPACK_CPU_IMAGE",
+            "UBUNTU_AARCH64_SPACK_CPU_IMAGE",
+            "UBUNTU_PPC64LE_SPACK_CPU_IMAGE"
+        ]
+    },
+
+    "e4s-spack-cuda": {
+        "refs": [
+            "UBUNTU_X86_64_SPACK_CUDA_IMAGE",
+            "UBUNTU_AARCH64_SPACK_CUDA_IMAGE",
+            "UBUNTU_PPC64LE_SPACK_CUDA_IMAGE"
+        ]
+    },
+
+    "e4s-spack-rocm": {
+        "refs": [
+            "UBUNTU_X86_64_SPACK_ROCM_IMAGE"
+        ]
+    },
+
+    "e4s-cpu": {
+        "refs": [
+            "UBUNTU_X86_64_RELEASE_CPU_IMAGE",
+            "UBUNTU_AARCH64_RELEASE_CPU_IMAGE",
+            "UBUNTU_PPC64LE_RELEASE_CPU_IMAGE"
+        ]
+    },
+
+    "e4s-cpu-rocky": {
+        "refs": [
+            "ROCKY_X86_64_RELEASE_CPU_IMAGE",
+            "ROCKY_AARCH64_RELEASE_CPU_IMAGE"
+        ]
+    },
+
+    "e4s-cuda": {
+        "refs": [
+            "UBUNTU_X86_64_RELEASE_CUDA90_IMAGE",
+            "UBUNTU_AARCH64_RELEASE_CUDA90_IMAGE",
+            "UBUNTU_PPC64LE_RELEASE_CUDA70_IMAGE"
+        ],
+        "images": [
+            { 
+                "tag_suffix": "cuda70",
+                "refs": [
+                    "UBUNTU_PPC64LE_RELEASE_CUDA70_IMAGE"
+                ]
+            },
+            { 
+                "tag_suffix": "cuda80",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_CUDA80_IMAGE",
+                    "UBUNTU_AARCH64_RELEASE_CUDA80_IMAGE"
+                ]
+            },
+            {
+                "tag_suffix": "cuda90",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_CUDA90_IMAGE",
+                    "UBUNTU_AARCH64_RELEASE_CUDA90_IMAGE"
+                ]
+            },
+            {
+                "tag_suffix": "cuda120",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_CUDA120_IMAGE",
+                    "UBUNTU_AARCH64_RELEASE_CUDA120_IMAGE"
+                ]
+            }
+        ]
+    },
+
+    "e4s-cuda-rocky": {
+        "refs": [
+            "ROCKY_X86_64_RELEASE_CUDA90_IMAGE",
+            "ROCKY_AARCH64_RELEASE_CUDA90_IMAGE"
+        ],
+        "images": [
+            {
+                "tag_suffix": "cuda90",
+                "refs": [
+                    "ROCKY_X86_64_RELEASE_CUDA90_IMAGE",
+                    "ROCKY_AARCH64_RELEASE_CUDA90_IMAGE"
+                ]
+            },
+            {
+                "tag_suffix": "cuda120",
+                "refs": [
+                    "ROCKY_X86_64_RELEASE_CUDA120_IMAGE",
+                    "ROCKY_AARCH64_RELEASE_CUDA120_IMAGE"
+                ]
+            }
+        ]
+    },
+
+    "e4s-rocm": {
+        "refs": [
+            "UBUNTU_X86_64_RELEASE_ROCM90A_IMAGE"
+        ],
+        "images": [
+            {
+                "tag_suffix": "gfx908",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_ROCM908_IMAGE"
+                ]
+            },
+            {
+                "tag_suffix": "gfx90a",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_ROCM90A_IMAGE"
+                ]
+            },
+            {
+                "tag_suffix": "gfx942",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_ROCM942_IMAGE"
+                ]
+            }
+        ]
+    }
+}

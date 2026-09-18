@@ -1,3 +1,4 @@
+cmds.sh
 cache
 *.yaml.bak
 .DS_Store
