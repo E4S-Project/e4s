@@ -10,7 +10,7 @@ export julia_global_depot=$julia_global/depot
 export julia_global_load=$julia_global/load
 rm -rf $julia_global_load $julia_global_depot
 mkdir -p $julia_global_depot
-mkdir -p $julia_global_load
+mkdir -p $julia_global_load 
 
 cat <<EOF >$julia_global_load/Project.toml
 [deps]
@@ -103,7 +103,7 @@ export julia_global_load=$julia_global/load
 
 export JULIA_DEPOT_PATH="~/.julia:$julia_global_depot:"
 export JULIA_LOAD_PATH=:$julia_global_load
-export JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
+export JULIA_CPU_TARGET='generic;cortex-a57;thunderx2t99;carmel,clone_all;apple-m1,base(3);neoverse-n1,clone_all;neoverse-512tvb,clone_all;neoverse-v1,base(6);neoverse-v2,base(6)'
 
 julia -e 'using CUDA; CUDA.precompile_runtime()'
 julia -e 'using MPI; using CUDA; using JACC'

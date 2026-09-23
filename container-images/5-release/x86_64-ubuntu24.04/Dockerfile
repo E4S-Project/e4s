@@ -260,8 +260,8 @@ ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
 COPY --from=spack-complete $SPACK_CORE_ROOT $SPACK_CORE_ROOT
 COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
-COPY --from=spack-env oneapi/_config /etc/e4s/_config
-COPY --from=spack-env oneapi/gpu /etc/e4s/gpu
+COPY --from=spack-env oneapi/_config /etc/e4s/oneapi/_config
+COPY --from=spack-env oneapi/gpu /etc/e4s/oneapi/gpu
 COPY --from=etc /etc/e4s/utilities.sh /etc/e4s
 COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
@@ -269,8 +269,8 @@ ARG SPACK_MIRROR
 ARG S3_ENDPOINT
 ARG FORCE_CACHED_LOCKFILE
 
-WORKDIR /etc/e4s/gpu
-RUN /etc/e4s/concretize-spack-env.sh
+WORKDIR /etc/e4s/oneapi/gpu
+# RUN /etc/e4s/concretize-spack-env.sh
 
 
 ## ONEAPI CPU SPACK CONCRETIZE
@@ -280,8 +280,8 @@ ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
 COPY --from=spack-complete $SPACK_CORE_ROOT $SPACK_CORE_ROOT
 COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
-COPY --from=spack-env oneapi/_config /etc/e4s/_config
-COPY --from=spack-env oneapi/cpu /etc/e4s/cpu
+COPY --from=spack-env oneapi/_config /etc/e4s/oneapi/_config
+COPY --from=spack-env oneapi/cpu /etc/e4s/oneapi/cpu
 COPY --from=etc /etc/e4s/utilities.sh /etc/e4s
 COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
 
@@ -289,7 +289,7 @@ ARG SPACK_MIRROR
 ARG S3_ENDPOINT
 ARG FORCE_CACHED_LOCKFILE
 
-WORKDIR /etc/e4s/cpu
+WORKDIR /etc/e4s/oneapi/cpu
 RUN /etc/e4s/concretize-spack-env.sh
 
 
@@ -504,18 +504,18 @@ COPY --from=spack-complete $SPACK_CORE_ROOT $SPACK_CORE_ROOT
 COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=etc /etc/e4s /etc/e4s
 COPY --from=etc /etc/spack /etc/spack
-COPY --from=spack-oneapi-gpu-concretize /etc/e4s/_config /etc/e4s/_config
-COPY --from=spack-oneapi-gpu-concretize /etc/e4s/gpu /etc/e4s/gpu
-COPY --from=spack-oneapi-cpu-concretize /etc/e4s/cpu /etc/e4s/cpu
+COPY --from=spack-oneapi-gpu-concretize /etc/e4s/oneapi/_config /etc/e4s/oneapi/_config
+COPY --from=spack-oneapi-gpu-concretize /etc/e4s/oneapi/gpu /etc/e4s/oneapi/gpu
+COPY --from=spack-oneapi-cpu-concretize /etc/e4s/oneapi/cpu /etc/e4s/oneapi/cpu
 
 ARG SPACK_MIRROR
 ARG S3_ENDPOINT
 
-WORKDIR /etc/e4s/cpu
+WORKDIR /etc/e4s/oneapi/cpu
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
 
-WORKDIR /etc/e4s/gpu
+WORKDIR /etc/e4s/oneapi/gpu
 RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
     /etc/e4s/install-spack-packages.sh
 

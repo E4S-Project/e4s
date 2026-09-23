@@ -14,7 +14,7 @@ packages:
 
   intel-oneapi-compilers:
     externals:
-    - spec: intel-oneapi-compilers@2026.1.0
+    - spec: intel-oneapi-compilers@2026.1.1
       prefix: /opt/intel/oneapi
       extra_attributes:
         compilers:
@@ -89,9 +89,9 @@ packages:
   intel-oneapi-dpl:
     buildable: false
     externals:
-    - spec: intel-oneapi-dpl@2022.12.0
+    - spec: intel-oneapi-dpl@2022.13.0
       prefix: /opt/intel/oneapi
-      modules: [dpl/2022.12]
+      modules: [dpl/2022.13]
   intel-oneapi-tbb:
     buildable: false
     externals:

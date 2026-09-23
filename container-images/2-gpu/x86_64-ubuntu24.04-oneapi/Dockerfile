@@ -16,31 +16,26 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
  && apt update -y \
  && apt install -y intel-oneapi-toolkit=$ONEAPI_VERSION
 
-COPY intel-graphics.sources /etc/apt/sources.list.d/
+# https://dgpu-docs.intel.com/driver/client/overview.html
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt update -y \
- && apt install -y \
-      level-zero-dev \
-      libigc-dev \
-      libigdfcl-dev \
-      libze-intel-gpu-dev
-
-## https://dgpu-docs.intel.com/driver/client/overview.html
-#RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-#    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-#    apt-get install -y software-properties-common \
-# && add-apt-repository -y ppa:kobuk-team/intel-graphics \
-# && apt-get install -y \
-#    clinfo \
-#    intel-gsc \
-#    intel-metrics-discovery \
-#    intel-ocloc \
-#    intel-ocloc-dev \
-#    intel-opencl-icd \
-#    libze-dev \
-#    libze-intel-gpu1 \
-#    libze1
+   --mount=type=cache,target=/var/lib/apt,sharing=locked \
+   apt-get install -y software-properties-common \
+&& add-apt-repository -y ppa:kobuk-team/intel-graphics \
+&& apt-get install -y \
+   clinfo \
+   intel-gsc \
+   intel-metrics-discovery \
+   intel-ocloc \
+   intel-ocloc-dev \
+   intel-opencl-icd \
+   libigc-dev \
+   libigc2 \
+   libigdfcl-dev \
+   libigdgmm12 \
+   libze-dev \
+   libze-intel-gpu-dev \
+   libze-intel-gpu1 \
+   libze1
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \

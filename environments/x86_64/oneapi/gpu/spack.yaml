@@ -15,7 +15,7 @@ spack:
   - cabana +sycl ^kokkos +sycl +openmp
   - hpctoolkit +level_zero ^dyninst@13.0.0
   - kokkos +sycl +openmp
-  - kokkos-tools ^kokkos +sycl +openmp cxxstd=17
+  # - kokkos-tools ^kokkos +sycl +openmp cxxstd=17  # cannot satisfy a requirement for package 'kokkos-tools'.
   - tau +mpi +opencl +python +level_zero +syscall +ittnotify +dyninst
   - upcxx +level_zero
 

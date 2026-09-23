@@ -1,5 +1,10 @@
 spec:
   inputs: 
+    disable_all:
+      default: "false"
+      options: 
+      - "false"
+      - "true"
     disable_sif:
       default: "false"
       options: 
@@ -183,6 +188,7 @@ variables:
   DISABLE_ONEAPI: $[[ inputs.disable_oneapi ]]
   DISABLE_CUDA: $[[ inputs.disable_cuda ]]
   DISABLE_TESTS: $[[ inputs.disable_tests ]]
+  DISABLE_ALL: $[[ inputs.disable_all ]]
 
 
 .common:
@@ -240,6 +246,18 @@ variables:
     fi
   - ldconfig -v &>/dev/null
   - cd environments
+  - >
+    if [[ -f /etc/rcfiles/runner.sh ]]; then
+      . /etc/rcfiles/runner.sh
+    fi
+  - >
+    if [[ -f /opt/intel/oneapi/setvars.sh ]]; then
+      . /opt/intel/oneapi/setvars.sh
+    fi
+  - >
+    if [[ -d /opt/intel/oneapi/modulefiles/ ]]; then
+      module use /opt/intel/oneapi/modulefiles
+    fi
   - ./build-env.sh $TARGET_ENV
   after_script:
   - if ! [[ -z "${PRIVATE_DIR+x}" ]] && [[ -d $PRIVATE_DIR ]]; then echo rm -rf $PRIVATE_DIR; fi
@@ -279,7 +297,7 @@ variables:
     fi
   - export OUTPUT_IMAGE=${repo}.sif
   - docker save $docker_image -o $OUTPUT_DIR/$tarfile
-  - singularity build ${OUTPUT_DIR}/${OUTPUT_IMAGE} docker-archive://${OUTPUT_DIR}/${tarfile}
+  - singularity build --force ${OUTPUT_DIR}/${OUTPUT_IMAGE} docker-archive://${OUTPUT_DIR}/${tarfile}
   - rm -f ${OUTPUT_DIR}/${tarfile}
   - >
     if [[ "$(arch)" == "ppc64le" ]]; then
@@ -375,6 +393,8 @@ x86_64-ubuntu-runner:
   - if: $CONTAINER_TARGET =~ /runner-all/
   - if: $CONTAINER_TARGET =~ /runner-x86_64/
   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -412,6 +432,8 @@ x86_64-rocky-runner:
   - if: $CONTAINER_TARGET =~ /runner-all/
   - if: $CONTAINER_TARGET =~ /runner-x86_64/
   - if: $CONTAINER_TARGET =~ /runner-rocky/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -449,6 +471,8 @@ aarch64-ubuntu-runner:
   - if: $CONTAINER_TARGET =~ /runner-all/
   - if: $CONTAINER_TARGET =~ /runner-aarch64/
   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -486,6 +510,8 @@ aarch64-rocky-runner:
   - if: $CONTAINER_TARGET =~ /runner-all/
   - if: $CONTAINER_TARGET =~ /runner-aarch64/
   - if: $CONTAINER_TARGET =~ /runner-rocky/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -523,6 +549,8 @@ ppc64le-ubuntu-runner:
   - if: $CONTAINER_TARGET =~ /runner-all/
   - if: $CONTAINER_TARGET =~ /runner-ppc64le/
   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -571,6 +599,8 @@ x86_64-ubuntu-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-ubuntu/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-all/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-x86_64/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -621,6 +651,8 @@ x86_64-ubuntu-rocm:
   - if: $CONTAINER_TARGET =~ /gpu-ubuntu/
   - if: $CONTAINER_TARGET =~ /gpu-rocm-all/
   - if: $CONTAINER_TARGET =~ /gpu-rocm-x86_64/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -671,6 +703,8 @@ x86_64-ubuntu-oneapi:
   - if: $CONTAINER_TARGET =~ /gpu-ubuntu/
   - if: $CONTAINER_TARGET =~ /gpu-oneapi-all/
   - if: $CONTAINER_TARGET =~ /gpu-oneapi-x86_64/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -720,6 +754,8 @@ x86_64-rocky-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-rocky/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-all/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-x86_64/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -769,6 +805,8 @@ aarch64-ubuntu-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-ubuntu/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-all/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-aarch64/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -816,6 +854,8 @@ aarch64-rocky-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-rocky/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-all/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-aarch64/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -865,6 +905,8 @@ ppc64le-ubuntu-cuda:
   - if: $CONTAINER_TARGET =~ /gpu-ubuntu/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-all/
   - if: $CONTAINER_TARGET =~ /gpu-cuda-ppc64le/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -916,6 +958,8 @@ x86_64-ubuntu-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -977,6 +1021,8 @@ x86_64-ubuntu-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1040,6 +1086,8 @@ x86_64-ubuntu-rocm-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
   - if: $CONTAINER_TARGET =~ /mpi-rocm/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1104,6 +1152,8 @@ x86_64-ubuntu-oneapi-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
   - if: $CONTAINER_TARGET =~ /mpi-oneapi/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-oneapi/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1158,6 +1208,8 @@ x86_64-rocky-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1218,6 +1270,8 @@ x86_64-rocky-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1272,6 +1326,8 @@ aarch64-ubuntu-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-aarch64/
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1333,6 +1389,8 @@ aarch64-ubuntu-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-aarch64/
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1387,6 +1445,8 @@ aarch64-rocky-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-aarch64/
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1448,6 +1508,8 @@ aarch64-rocky-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-aarch64/
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-rocky-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1502,6 +1564,8 @@ ppc64le-ubuntu-cpu-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ppc64le/
   - if: $CONTAINER_TARGET =~ /mpi-cpu/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1563,6 +1627,8 @@ ppc64le-ubuntu-cuda-mpi:
   - if: $CONTAINER_TARGET =~ /mpi-ppc64le/
   - if: $CONTAINER_TARGET =~ /mpi-cuda/
   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1620,6 +1686,8 @@ x86_64-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1680,6 +1748,8 @@ x86_64-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1742,6 +1812,8 @@ x86_64-ubuntu-spack-rocm:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-rocm/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1805,6 +1877,8 @@ x86_64-ubuntu-spack-oneapi:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
   - if: $CONTAINER_TARGET =~ /spack-x86_64-oneapi/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1865,6 +1939,8 @@ aarch64-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
   - if: $CONTAINER_TARGET =~ /spack-aarch64-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1925,6 +2001,8 @@ aarch64-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
   - if: $CONTAINER_TARGET =~ /spack-aarch64-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -1985,6 +2063,8 @@ ppc64le-ubuntu-spack-cpu:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
   - if: $CONTAINER_TARGET =~ /spack-ppc64le-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2045,6 +2125,8 @@ ppc64le-ubuntu-spack-cuda:
   - if: $CONTAINER_TARGET =~ /spack-all/
   - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
   - if: $CONTAINER_TARGET =~ /spack-ppc64le-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2092,6 +2174,8 @@ x86_64-gnu-cpu-status:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2129,6 +2213,8 @@ x86_64-gnu-cpu-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2168,6 +2254,8 @@ x86_64-gnu-cuda-80-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2209,6 +2297,8 @@ x86_64-gnu-cuda-90-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2250,6 +2340,8 @@ x86_64-gnu-cuda-89-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2291,6 +2383,8 @@ x86_64-gnu-cuda-86-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2334,6 +2428,8 @@ x86_64-gnu-cuda-90-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2376,6 +2472,8 @@ x86_64-gnu-cuda-120-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2418,6 +2516,8 @@ x86_64-gnu-cuda-120-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2459,6 +2559,8 @@ x86_64-gnu-cuda-notarget-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2500,6 +2602,8 @@ x86_64-gnu-cuda-notarget-rocky-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2541,6 +2645,8 @@ x86_64-gnu-rocm-gfx908-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2582,6 +2688,8 @@ x86_64-gnu-rocm-gfx90a-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2623,6 +2731,8 @@ x86_64-gnu-rocm-gfx942-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2664,6 +2774,8 @@ x86_64-gnu-rocm-notarget-status:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2705,6 +2817,8 @@ x86_64-oneapi-cpu-status:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2742,6 +2856,8 @@ x86_64-oneapi-gpu-status:
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-gpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2777,6 +2893,8 @@ aarch64-gnu-cpu-status:
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2814,6 +2932,8 @@ aarch64-gnu-cpu-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2852,6 +2972,8 @@ aarch64-gnu-cuda-80-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2892,6 +3014,8 @@ aarch64-gnu-cuda-90-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2934,6 +3058,8 @@ aarch64-gnu-cuda-90-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -2974,6 +3100,8 @@ aarch64-gnu-cuda-120-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3016,6 +3144,8 @@ aarch64-gnu-cuda-120-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3056,6 +3186,8 @@ aarch64-gnu-cuda-notarget-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3097,6 +3229,8 @@ aarch64-gnu-cuda-notarget-rocky-status:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3134,6 +3268,8 @@ ppc64le-gnu-cpu-status:
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3172,6 +3308,8 @@ ppc64le-gnu-cuda-70-status:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3212,6 +3350,8 @@ ppc64le-gnu-cuda-notarget-status:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3274,6 +3414,8 @@ x86_64-ubuntu-release-cpu:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3357,6 +3499,8 @@ x86_64-ubuntu-release-cuda-80:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3445,6 +3589,8 @@ x86_64-ubuntu-release-cuda-90:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3533,6 +3679,8 @@ x86_64-ubuntu-release-cuda-120:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3620,6 +3768,8 @@ x86_64-ubuntu-release-rocm-908:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3705,6 +3855,8 @@ x86_64-ubuntu-release-rocm-90a:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3790,6 +3942,8 @@ x86_64-ubuntu-release-rocm-942:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3874,6 +4028,8 @@ x86_64-ubuntu-release-oneapi:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -3954,6 +4110,8 @@ x86_64-rocky-release-cpu:
   - if: $SPACK_TARGET =~ /x86_64-rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4037,6 +4195,8 @@ x86_64-rocky-release-cuda-90:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4126,6 +4286,8 @@ x86_64-rocky-release-cuda-120:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4206,6 +4368,8 @@ aarch64-ubuntu-release-cpu:
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4287,6 +4451,8 @@ aarch64-ubuntu-release-cuda-80:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4374,6 +4540,8 @@ aarch64-ubuntu-release-cuda-90:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4461,6 +4629,8 @@ aarch64-ubuntu-release-cuda-120:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4542,6 +4712,8 @@ aarch64-rocky-release-cpu:
   - if: $SPACK_TARGET =~ /aarch64-rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4625,6 +4797,8 @@ aarch64-rocky-release-cuda-90:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4714,6 +4888,8 @@ aarch64-rocky-release-cuda-120:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4794,6 +4970,8 @@ ppc64le-ubuntu-release-cpu:
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4875,6 +5053,8 @@ ppc64le-ubuntu-release-cuda-70:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4939,6 +5119,8 @@ x86_64-gnu-cpu:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -4990,6 +5172,8 @@ x86_64-gnu-cpu-rocky:
   - if: $SPACK_TARGET =~ /x86_64-rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5045,6 +5229,8 @@ x86_64-gnu-cuda-80:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5105,6 +5291,8 @@ x86_64-gnu-cuda-90:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5165,6 +5353,8 @@ x86_64-gnu-cuda-89:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-89/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5226,6 +5416,8 @@ x86_64-gnu-cuda-86:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-86/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5288,6 +5480,8 @@ x86_64-gnu-cuda-90-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5349,6 +5543,8 @@ x86_64-gnu-cuda-120:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5411,6 +5607,8 @@ x86_64-gnu-cuda-120-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5472,6 +5670,8 @@ x86_64-gnu-cuda-notarget:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5533,6 +5733,8 @@ x86_64-gnu-cuda-notarget-rocky:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5594,6 +5796,8 @@ x86_64-gnu-rocm-gfx908:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5655,6 +5859,8 @@ x86_64-gnu-rocm-gfx90a:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5716,6 +5922,8 @@ x86_64-gnu-rocm-gfx942:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5777,6 +5985,8 @@ x86_64-gnu-rocm-notarget:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5838,6 +6048,8 @@ x86_64-oneapi-cpu:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5895,6 +6107,8 @@ x86_64-oneapi-gpu:
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-gpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5948,6 +6162,8 @@ aarch64-gnu-cpu:
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -5999,6 +6215,8 @@ aarch64-gnu-cpu-rocky:
   - if: $SPACK_TARGET =~ /aarch64-rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6053,6 +6271,8 @@ aarch64-gnu-cuda-80:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6113,6 +6333,8 @@ aarch64-gnu-cuda-90:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6175,6 +6397,8 @@ aarch64-gnu-cuda-90-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6235,6 +6459,8 @@ aarch64-gnu-cuda-120:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6297,6 +6523,8 @@ aarch64-gnu-cuda-120-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6357,6 +6585,8 @@ aarch64-gnu-cuda-notarget:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6418,6 +6648,8 @@ aarch64-gnu-cuda-notarget-rocky:
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6473,6 +6705,8 @@ ppc64le-gnu-cpu:
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6527,6 +6761,8 @@ ppc64le-gnu-cuda-70:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6587,6 +6823,8 @@ ppc64le-gnu-cuda-notarget:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6657,6 +6895,8 @@ x86_64-ubuntu-release-cpu-sif:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6733,6 +6973,8 @@ x86_64-ubuntu-release-cuda-80-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6816,6 +7058,8 @@ x86_64-ubuntu-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6899,6 +7143,8 @@ x86_64-ubuntu-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -6981,6 +7227,8 @@ x86_64-ubuntu-release-rocm-908-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7061,6 +7309,8 @@ x86_64-ubuntu-release-rocm-90a-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7141,6 +7391,8 @@ x86_64-ubuntu-release-rocm-942-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7220,6 +7472,8 @@ x86_64-ubuntu-release-oneapi-sif:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7297,6 +7551,8 @@ x86_64-rocky-release-cpu-sif:
   - if: $SPACK_TARGET =~ /x86_64-rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7375,6 +7631,8 @@ x86_64-rocky-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7459,6 +7717,8 @@ x86_64-rocky-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7536,6 +7796,8 @@ aarch64-ubuntu-release-cpu-sif:
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7614,6 +7876,8 @@ aarch64-ubuntu-release-cuda-80-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-80/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7696,6 +7960,8 @@ aarch64-ubuntu-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7778,6 +8044,8 @@ aarch64-ubuntu-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7856,6 +8124,8 @@ aarch64-rocky-release-cpu-sif:
   - if: $SPACK_TARGET =~ /aarch64-rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -7934,6 +8204,8 @@ aarch64-rocky-release-cuda-90-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8018,6 +8290,8 @@ aarch64-rocky-release-cuda-120-sif:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8095,6 +8369,8 @@ ppc64le-ubuntu-release-cpu-sif:
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8171,6 +8447,8 @@ ppc64le-ubuntu-release-cuda-70-sif:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8251,6 +8529,8 @@ x86_64-ubuntu-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8331,6 +8611,8 @@ x86_64-ubuntu-release-cuda-80-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8416,6 +8698,8 @@ x86_64-ubuntu-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8501,6 +8785,8 @@ x86_64-ubuntu-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8585,7 +8871,9 @@ x86_64-ubuntu-release-cuda-120-docker-test:
 #   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
 #   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
 #   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
-#   - if: $CI_PIPELINE_SOURCE == "push"
+#   - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
 #     changes:
 #     - .gitlab-ci.yml
 #     - environments/build-env.sh
@@ -8623,84 +8911,88 @@ x86_64-ubuntu-release-cuda-120-docker-test:
 #       compare_to: 'refs/heads/main'
 
 
-# x86_64-ubuntu-release-rocm-90a-docker-test:
-#   extends: [.common, .run-docker-tests]
-#   variables:
-#     TEST_TARGET: rocm-90a
-#   image:
-#     name: $UBUNTU_X86_64_RELEASE_ROCM90A_IMAGE
-#     entrypoint: [""]
-#   tags: [uoregon-e4s-project, docker-omnia-amd-mi210]
-#   needs:
-#   - load-image-refs
-#   - job: x86_64-ubuntu-release-rocm-90a
-#     optional: true
-#   rules:
-#   - if: $DISABLE_X86_64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_ROCM == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
-#   - if: $CONTAINER_TARGET =~ /mpi-rocm/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-90a/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /x86_64-all/
-#   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
-#   - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/x86_64/gnu/_config/**/*
-#     - environments/x86_64/gnu/rocm/_config/**/*
-#     - environments/x86_64/gnu/rocm/gfx90a/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/x86_64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/x86_64/gnu/_config/**/*
-#       - environments/x86_64/gnu/rocm/_config/**/*
-#       - environments/x86_64/gnu/rocm/gfx90a/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/x86_64-ubuntu24.04/**/*
-#       - testing/**/*
-#       compare_to: 'refs/heads/main'
+x86_64-ubuntu-release-rocm-90a-docker-test:
+  extends: [.common, .run-docker-tests]
+  variables:
+    TEST_TARGET: rocm-90a
+  image:
+    name: $UBUNTU_X86_64_RELEASE_ROCM90A_IMAGE
+    entrypoint: [""]
+  tags: [uoregon-e4s-project, docker-omnia-amd-mi210]
+  needs:
+  - load-image-refs
+  - job: x86_64-ubuntu-release-rocm-90a
+    optional: true
+  rules:
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $DISABLE_TESTS == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-90a/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx90a/**/*
+    - container-images/_common/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+    - testing/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx90a/**/*
+      - container-images/_common/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      - testing/**/*
+      compare_to: 'refs/heads/main'
 
 
 x86_64-ubuntu-release-rocm-942-docker-test:
@@ -8745,6 +9037,8 @@ x86_64-ubuntu-release-rocm-942-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8826,7 +9120,9 @@ x86_64-ubuntu-release-rocm-942-docker-test:
 #   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
 #   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
 #   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
-#   - if: $CI_PIPELINE_SOURCE == "push"
+#   - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
 #     changes:
 #     - .gitlab-ci.yml
 #     - environments/build-env.sh
@@ -8903,6 +9199,8 @@ x86_64-rocky-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -8983,6 +9281,8 @@ x86_64-rocky-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9069,6 +9369,8 @@ x86_64-rocky-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9148,6 +9450,8 @@ aarch64-ubuntu-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9226,6 +9530,8 @@ aarch64-ubuntu-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9310,6 +9616,8 @@ aarch64-ubuntu-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9390,6 +9698,8 @@ aarch64-rocky-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9470,6 +9780,8 @@ aarch64-rocky-release-cuda-90-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9556,6 +9868,8 @@ aarch64-rocky-release-cuda-120-docker-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9635,6 +9949,8 @@ ppc64le-ubuntu-release-cpu-docker-test:
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9713,6 +10029,8 @@ ppc64le-ubuntu-release-cuda-70-docker-test:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9794,6 +10112,8 @@ x86_64-ubuntu-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9874,6 +10194,8 @@ x86_64-ubuntu-release-cuda-80-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-80/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -9959,6 +10281,8 @@ x86_64-ubuntu-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10044,6 +10368,8 @@ x86_64-ubuntu-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10128,7 +10454,9 @@ x86_64-ubuntu-release-cuda-120-sif-test:
 #   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
 #   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
 #   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
-#   - if: $CI_PIPELINE_SOURCE == "push"
+#   - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
 #     changes:
 #     - .gitlab-ci.yml
 #     - environments/build-env.sh
@@ -10208,6 +10536,8 @@ x86_64-ubuntu-release-rocm-90a-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx90a/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10290,6 +10620,8 @@ x86_64-ubuntu-release-rocm-942-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx942/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10371,7 +10703,9 @@ x86_64-ubuntu-release-rocm-942-sif-test:
 #   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
 #   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
 #   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
-#   - if: $CI_PIPELINE_SOURCE == "push"
+#   - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
 #     changes:
 #     - .gitlab-ci.yml
 #     - environments/build-env.sh
@@ -10448,6 +10782,8 @@ x86_64-rocky-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10528,6 +10864,8 @@ x86_64-rocky-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10614,6 +10952,8 @@ x86_64-rocky-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /x86_64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10693,6 +11033,8 @@ aarch64-ubuntu-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10771,6 +11113,8 @@ aarch64-ubuntu-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10855,6 +11199,8 @@ aarch64-ubuntu-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -10935,6 +11281,8 @@ aarch64-rocky-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -11015,6 +11363,8 @@ aarch64-rocky-release-cuda-90-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-90/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -11101,6 +11451,8 @@ aarch64-rocky-release-cuda-120-sif-test:
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-120/
   - if: $SPACK_TARGET =~ /aarch64-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -11180,6 +11532,8 @@ ppc64le-ubuntu-release-cpu-sif-test:
   - if: $SPACK_TARGET =~ /ppc64le-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
@@ -11256,6 +11610,8 @@ ppc64le-ubuntu-release-cuda-70-sif-test:
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-all/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-70/
   - if: $SPACK_TARGET =~ /ppc64le-gnu-cuda-notarget/
+  - if: $DISABLE_ALL == "true"
+    when: never
   - if: $CI_PIPELINE_SOURCE == "push"
     changes:
     - vars.env
