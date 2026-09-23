@@ -28,9 +28,38 @@ SKIP_TESTS_x86_64_ubuntu_cuda_80="heffte-cuda papi-cuda sundials-cuda amrex-cuda
 SKIP_TESTS_x86_64_ubuntu_cuda_90="heffte-cuda papi-cuda sundials-cuda amrex-cuda"
 SKIP_TESTS_x86_64_ubuntu_cuda_120="heffte-cuda papi-cuda sundials-cuda"
 SKIP_TESTS_x86_64_ubuntu_rocm_942="amrex-rocm hypre-rocm magma-rocm umpire-rocm heffte-rocm slate-rocm tasmanian-rocm"
+SKIP_TESTS_x86_64_ubuntu_rocm_90a="heffte-rocm tasmanian-rocm"
 SKIP_TESTS_ppc64le_ubuntu_cpu="arborx axom boost chai dyninst libunwind mercury raja umpire bricks butterflypack darshan-util e4s-alc e4s-cl gasnet hdf5 hdf5-vol-async plumed py-libensemble umap unifyfs warpx wps wrf"
 SKIP_TESTS_ppc64le_ubuntu_cuda_70="amrex-cuda chai-cuda mfem-cuda tau-cuda umpire-cuda adios2-cuda heffte-cuda sundials-cuda"
 
+
+
+OS_NAME=$( [ -f /etc/os-release ] && source /etc/os-release && echo "$ID" || echo "unknown_os" )
+ARCH_NAME=$(arch 2>/dev/null || uname -m)
+TARGET_NAME="${TEST_TARGET:-unknown_target}"
+
+PLATFORM_SKIP_NAME="SKIP_TESTS_${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
+PLATFORM_SKIP_NAME="${PLATFORM_SKIP_NAME//-/_}"
+SKIP_TESTS="${!PLATFORM_SKIP_NAME}"
+
+echo "Running on Platform: ${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
+
+TEST_MODE_FLAG="--skip-tests"
+
+#Create test-skips.md only on branches where we want to test instead of skip the listed files
+if [ -f "test-skips.md" ]; then
+    TEST_MODE_FLAG="--test-only"
+    echo "Found test-skips.md: Running ONLY target tests: \"$SKIP_TESTS\""
+else
+    echo "Skipping tests: \"$SKIP_TESTS\""
+fi
+
+if [ -n "$SKIP_TESTS" ]; then
+    SKIP_ARG=( "$TEST_MODE_FLAG" "$SKIP_TESTS" )
+else
+    echo "Warning? No tests skipped."
+    SKIP_ARG=()
+fi
 
 
 
@@ -72,26 +101,6 @@ case "$TEST_TARGET" in
         ;;
 esac
 
-
-
-OS_NAME=$( [ -f /etc/os-release ] && source /etc/os-release && echo "$ID" || echo "unknown_os" )
-ARCH_NAME=$(arch 2>/dev/null || uname -m)
-TARGET_NAME="${TEST_TARGET:-unknown_target}"
-
-PLATFORM_SKIP_NAME="SKIP_TESTS_${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
-PLATFORM_SKIP_NAME="${PLATFORM_SKIP_NAME//-/_}"
-SKIP_TESTS="${!PLATFORM_SKIP_NAME}"
-
-echo "Running on Platform: ${ARCH_NAME}_${OS_NAME}_${TARGET_NAME}"
-echo "Skipping tests: \"$SKIP_TESTS\""
-
-
-if [ -n "$SKIP_TESTS" ]; then
-    SKIP_ARG=( --skip-tests "$SKIP_TESTS" )
-else
-    echo "Warning? Skipping nothing."
-    SKIP_ARG=()
-fi
 
 #We might need to limit the number of processes to avoid contention (--processes 1). Color used to break some ci interfaces but we can experiment with that later as well. Return code is the number of failed tests.
 
@@ -234,3 +243,4 @@ echo "========================================"
 
 
 exit $TESTEXIT
+
