@@ -346,6 +346,10 @@ RUN chmod -R o+rX /root \
 
 WORKDIR /
 
+ENV MPICH_CC=/usr/bin/gcc-9
+ENV MPICH_CXX=/usr/bin/g++-9
+ENV MPICH_FC=/usr/bin/gfortran-9
+
 
 ## FINAL CPU
 FROM final-base AS final-cpu
@@ -401,3 +405,7 @@ RUN chmod -R o+rX /root \
  && chmod -R go+rwX /etc/e4s /etc/spack
 
 WORKDIR /
+
+ENV MPICH_CC=/usr/bin/gcc-9
+ENV MPICH_CXX=/usr/bin/g++-9
+ENV MPICH_FC=/usr/bin/gfortran-9

@@ -21,6 +21,12 @@
         ]
     },
 
+    "e4s-spack-oneapi": {
+        "refs": [
+            "UBUNTU_X86_64_SPACK_ONEAPI_IMAGE"
+        ]
+    },
+
     "e4s-cpu": {
         "refs": [
             "UBUNTU_X86_64_RELEASE_CPU_IMAGE",
@@ -119,6 +125,12 @@
                     "UBUNTU_X86_64_RELEASE_ROCM942_IMAGE"
                 ]
             }
+        ]
+    },
+
+    "e4s-oneapi": {
+        "refs": [
+            "UBUNTU_X86_64_RELEASE_ONEAPI_IMAGE"
         ]
     }
 }
