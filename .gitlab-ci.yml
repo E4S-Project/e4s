@@ -16,7 +16,7 @@ spec:
       - "false"
       - "true"
     disable_oneapi: 
-      default: "true"
+      default: "false"
       options:
       - "false"
       - "true"
@@ -9079,85 +9079,82 @@ x86_64-ubuntu-release-rocm-942-docker-test:
       compare_to: 'refs/heads/main'
 
 
-# x86_64-ubuntu-release-oneapi-docker-test:
-#   extends: [.common, .run-docker-tests]
-#   variables:
-#     TEST_TARGET: oneapi
-#   image:
-#     name: $UBUNTU_X86_64_RELEASE_ONEAPI_IMAGE
-#     entrypoint: [""]
-#   tags: [uoregon-e4s-project, x86_64, docker]
-#   needs:
-#   - load-image-refs
-#   - job: x86_64-ubuntu-release-oneapi
-#     optional: true
-#   rules:
-#   - if: $DISABLE_X86_64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_ONEAPI == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-x86_64/
-#   - if: $CONTAINER_TARGET =~ /container-oneapi-all/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
-#   - if: $CONTAINER_TARGET =~ /mpi-oneapi/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-oneapi/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-oneapi/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /x86_64-all/
-#   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
-#   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
-#   - if: $DISABLE_ALL == "true"
+x86_64-ubuntu-release-oneapi-docker-test:
+  extends: [.common, .run-docker-tests]
+  variables:
+    TEST_TARGET: oneapi
+  image:
+    name: $UBUNTU_X86_64_RELEASE_ONEAPI_IMAGE
+    entrypoint: [""]
+  tags: [uoregon-e4s-project, docker-stravinsky-intel-b70]
+  needs:
+  - load-image-refs
+  - job: x86_64-ubuntu-release-oneapi
+    optional: true
+  rules:
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ONEAPI == "true"
+    when: never
+  - if: $DISABLE_TESTS == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-oneapi/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-oneapi/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-oneapi-all/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-oneapi-all/
+  - if: $DISABLE_ALL == "true"
     when: never
   - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/x86_64/oneapi/_config/**/*
-#     - environments/x86_64/oneapi/cpu/**/*
-#     - environments/x86_64/oneapi/gpu/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/x86_64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/x86_64/oneapi/_config/**/*
-#       - environments/x86_64/oneapi/cpu/**/*
-#       - environments/x86_64/oneapi/gpu/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/x86_64-ubuntu24.04/**/*
-#       - testing/**/*
-#       compare_to: 'refs/heads/main'
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/oneapi/**/*
+    - container-images/_common/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+    - testing/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/oneapi/**/*
+      - container-images/_common/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      - testing/**/*
+      compare_to: 'refs/heads/main'
 
 
 x86_64-rocky-release-cpu-docker-test:
@@ -10662,85 +10659,82 @@ x86_64-ubuntu-release-rocm-942-sif-test:
       compare_to: 'refs/heads/main'
 
 
-# x86_64-ubuntu-release-oneapi-sif-test:
-#   extends: [.common, .run-sif-tests]
-#   variables:
-#     SIF: $UBUNTU_X86_64_RELEASE_ONEAPI_SIF
-#     TEST_TARGET: oneapi
-#   tags: [uoregon-e4s-project, x86_64, shell]
-#   needs:
-#   - load-image-refs
-#   - job: x86_64-ubuntu-release-oneapi-sif
-#     optional: true
-#   rules:
-  # - if: $DISABLE_SIF == "true"
-  #   when: never
-#   - if: $DISABLE_X86_64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_ONEAPI == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-x86_64/
-#   - if: $CONTAINER_TARGET =~ /container-oneapi-all/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
-#   - if: $CONTAINER_TARGET =~ /mpi-oneapi/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-oneapi/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-oneapi/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /x86_64-all/
-#   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-oneapi-all/
-#   - if: $SPACK_TARGET =~ /x86_64-oneapi-cpu/
-#   - if: $DISABLE_ALL == "true"
+x86_64-ubuntu-release-oneapi-sif-test:
+  extends: [.common, .run-sif-tests]
+  variables:
+    SIF: $UBUNTU_X86_64_RELEASE_ONEAPI_SIF
+    TEST_TARGET: oneapi
+  tags: [uoregon-e4s-project, shell-stravinsky]
+  needs:
+  - load-image-refs
+  - job: x86_64-ubuntu-release-oneapi-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ONEAPI == "true"
+    when: never
+  - if: $DISABLE_TESTS == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-oneapi/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-oneapi/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-oneapi-all/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-oneapi-all/
+  - if: $DISABLE_ALL == "true"
     when: never
   - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/x86_64/oneapi/_config/**/*
-#     - environments/x86_64/oneapi/cpu/**/*
-#     - environments/x86_64/oneapi/gpu/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/x86_64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/x86_64/oneapi/_config/**/*
-#       - environments/x86_64/oneapi/cpu/**/*
-#       - environments/x86_64/oneapi/gpu/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/x86_64-ubuntu24.04/**/*
-#       - testing/**/*
-#       compare_to: 'refs/heads/main'
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/oneapi/**/*
+    - container-images/_common/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+    - testing/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/oneapi/**/*
+      - container-images/_common/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      - testing/**/*
+      compare_to: 'refs/heads/main'
 
 
 x86_64-rocky-release-cpu-sif-test:
