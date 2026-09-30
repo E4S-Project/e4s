@@ -46,7 +46,7 @@ spack:
   # - glvis ^mesa@23.2.1
   - gmp
   - gotcha
-  - gptune ~mpispawn
+  # - gptune ~mpispawn  # failed deps: py-fn-py, openturns
   - gromacs
   - h5bench
   - hdf5

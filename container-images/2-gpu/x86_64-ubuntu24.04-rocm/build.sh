@@ -6,9 +6,9 @@
 require_env REGISTRY
 
 name=e4s-rocm-base-x86_64
-version=v7.2.3
+rocm_version=v7.2.4
 source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_X86_64_RUNNER_IMAGE}
-output_image="${REGISTRY}/${name}:${BUILD_TAG:-$version-$(date +%s)}"
+output_image="${REGISTRY}/${name}:${BUILD_TAG:-$rocm_version-$(date +%s)}"
 
 if is_set SAVE_OUTPUT_REF; then
   echo $output_image > $SAVE_OUTPUT_REF
@@ -17,5 +17,6 @@ fi
 cmd docker build \
  -t "${output_image}" \
  --build-arg SOURCE_IMAGE=$source_image \
+ --build-arg E4S_ROCM_VERSION=$rocm_version \
  --progress=plain \
  -f ./Dockerfile .

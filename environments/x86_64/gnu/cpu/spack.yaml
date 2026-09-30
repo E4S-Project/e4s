@@ -47,7 +47,7 @@ spack:
   - glvis
   - gmp
   - gotcha
-  - gptune ~mpispawn
+  # - gptune ~mpispawn # failed deps: py-fn-py, openturns
   - gromacs
   - h5bench
   - hdf5
@@ -93,7 +93,7 @@ spack:
   - papi
   - papyrus
   - parallel-netcdf
-  - paraview +qt
+  - paraview +qt # does not build in rocky-9 ci env
   - parsec ~cuda
   - pdt
   - petsc +metis +hdf5 +hypre +superlu-dist 
@@ -109,7 +109,7 @@ spack:
   - py-libensemble
   - py-petsc4py
   - qthreads scheduler=distrib
-  - quantum-espresso
+  - quantum-espresso # does not build in rocky-9 ci env: /opt/rh/gcc-toolset-13/root/usr/libexec/gcc/x86_64-redhat-linux/13/ld: use_wannier.f90:(.text+0x2f3e): undefined reference to `GOMP_teams4'
   - raja
   - rempi
   - scr

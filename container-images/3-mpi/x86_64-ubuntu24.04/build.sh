@@ -29,37 +29,47 @@ name=e4s-mpi-$target-x86_64
 timestamp=$(date +%s)
 
 builder_source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_X86_64_RUNNER_IMAGE}
-
-cuda_source_image=${CUDA_SOURCE_IMAGE:-$UBUNTU_X86_64_CUDA_IMAGE}
-cuda_output_tag=v$mpich_version-v12.9.1-$timestamp
-
-rocm_source_image=${ROCM_SOURCE_IMAGE:-$UBUNTU_X86_64_ROCM_IMAGE}
-rocm_output_tag=v$mpich_version-v7.2.3-$timestamp
-
-oneapi_source_image=${ONEAPI_SOURCE_IMAGE:-$UBUNTU_X86_64_ONEAPI_IMAGE}
-oneapi_output_tag=v2026.1.1-$timestamp
-
 cpu_source_image=$builder_source_image
-cpu_output_tag=v$mpich_version-$timestamp
+cuda_source_image=${CUDA_SOURCE_IMAGE:-$UBUNTU_X86_64_CUDA_IMAGE}
+rocm_source_image=${ROCM_SOURCE_IMAGE:-$UBUNTU_X86_64_ROCM_IMAGE}
+oneapi_source_image=${ONEAPI_SOURCE_IMAGE:-$UBUNTU_X86_64_ONEAPI_IMAGE}
 
 final_target=mpich-final
 case $target in
   "cuda")
     final_image_base=$cuda_source_image
-    tag=$cuda_output_tag
+    if ! docker image inspect $final_image_base >/dev/null 2>&1; then docker pull $final_image_base; fi
+    cuda_version=$(docker inspect --format '{{ index .Config.Labels "E4S_CUDA_VERSION" }}' $final_image_base)
+    if [[ -z "$cuda_version" ]]; then
+      _err error: image is missing expected label E4S_CUDA_VERSION
+      _err error: $final_image_base does not have the expected label
+    fi
+    tag=v$mpich_version-$cuda_version-$timestamp
     ;;
   "rocm")
     final_image_base=$rocm_source_image
-    tag=$rocm_output_tag
+    if ! docker image inspect $final_image_base >/dev/null 2>&1; then docker pull $final_image_base; fi
+    rocm_version=$(docker inspect --format '{{ index .Config.Labels "E4S_ROCM_VERSION" }}' $final_image_base)
+    if [[ -z "$rocm_version" ]]; then
+      _err error: image is missing expected label E4S_ROCM_VERSION
+      _err error: $final_image_base does not have the expected label
+    fi
+    tag=v$mpich_version-$rocm_version-$timestamp
     ;;
   "oneapi")
     final_image_base=$oneapi_source_image
+    if ! docker image inspect $final_image_base >/dev/null 2>&1; then docker pull $final_image_base; fi
+    oneapi_version=$(docker inspect --format '{{ index .Config.Labels "E4S_ONEAPI_VERSION" }}' $final_image_base)
+    if [[ -z "$oneapi_version" ]]; then
+      _err error: image is missing expected label E4S_ONEAPI_VERSION
+      _err error: $final_image_base does not have the expected label
+    fi
     final_target=oneapi
-    tag=$oneapi_output_tag
+    tag=$oneapi_version-$timestamp
     ;;
   "cpu")
     final_image_base=$cpu_source_image
-    tag=$cpu_output_tag
+    tag=v$mpich_version-$timestamp
     ;;
 esac
 

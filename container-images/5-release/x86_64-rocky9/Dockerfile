@@ -156,6 +156,7 @@ WORKDIR /etc/e4s/cpu
 # remove paraview+qt before checking for cached lockfile, as this is how it is done in build-env.sh
 RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
  && spack -e . remove 'paraview +qt' || true \
+ && spack -e . remove quantum-espresso || true \
  && /etc/e4s/concretize-spack-env.sh
 
 

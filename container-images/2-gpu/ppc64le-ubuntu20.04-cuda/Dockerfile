@@ -32,3 +32,6 @@ RUN updatedb
 
 ENV PATH=/usr/local/cuda/bin:$PATH
 ENV CUPTI_ROOT=/usr/local/cuda/extras/CUPTI
+
+ARG E4S_CUDA_VERSION
+LABEL E4S_CUDA_VERSION=$E4S_CUDA_VERSION

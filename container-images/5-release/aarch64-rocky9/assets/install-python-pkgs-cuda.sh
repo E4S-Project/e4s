@@ -86,12 +86,12 @@ uv pip install \
  --python $python_full_path \
  --system 'marimo>=0.23.0'
 
+# skipped due to unavailability of adios2 wheel: hpc-campaign \
 uv pip install \
  --python $python_full_path \
  --system \
  trame_vuetify \
  trame \
- hpc-campaign \
  SmilesPE \
  pynacl
 

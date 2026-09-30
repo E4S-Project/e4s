@@ -4,9 +4,9 @@ ARG SOURCE_IMAGE
 
 FROM $SOURCE_IMAGE
 
-ARG RUNFILE_12_9
-RUN --mount=type=bind,from=downloads,src=$RUNFILE_12_9,dst=/$RUNFILE_12_9 \
-    sh /$RUNFILE_12_9 --silent --toolkit
+ARG CUDA_RUNFILE
+RUN --mount=type=bind,from=downloads,src=$CUDA_RUNFILE,dst=/$CUDA_RUNFILE \
+    sh /$CUDA_RUNFILE --silent --toolkit
 
 ARG CUDNN_TARBALL
 RUN --mount=type=bind,from=downloads,src=$CUDNN_TARBALL,dst=/$CUDNN_TARBALL \
@@ -21,3 +21,6 @@ RUN ldconfig -v >/dev/null 2>&1
 RUN updatedb
 
 ENV PATH=/usr/local/cuda/bin:$PATH
+
+ARG E4S_CUDA_VERSION
+LABEL E4S_CUDA_VERSION=$E4S_CUDA_VERSION

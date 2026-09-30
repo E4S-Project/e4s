@@ -1,15 +1,19 @@
 #!/bin/bash
 
-function start_section() {
+start_section() {
   local section_title="$1"
   export SECTION_ID=$(echo "$section_title" | tr -C 'a-zA-Z0-9' '_')
   echo -e "\e[0Ksection_start:$(date +%s):${SECTION_ID}[collapsed=true]\r\e[0K\e[1;36m${section_title}\e[0m"
 }
 
-function end_section() {
+end_section() {
   echo -e "\e[0Ksection_end:$(date +%s):${SECTION_ID}\r\e[0K"
 }
 
+run() {
+    echo "$ $@"
+    "$@"
+}
 
 echo Ready to run tests for $TEST_TARGET
 
@@ -63,23 +67,22 @@ fi
 
 
 
-
 #Clone the testsuite and enter the directory
-git clone https://github.com/E4S-Project/testsuite.git
-cd testsuite/
+run git clone https://github.com/E4S-Project/testsuite.git
+run cd testsuite/
 #Create subdirectories mapped to test types (cpu_tests, gpu_tests, cuda_tests, rocm_tests)
-./make-links.sh > /dev/null
+run ./make-links.sh > /dev/null
 TEST_DIR=./cpu_tests/
 
 PROC_ARG=(--processes 1)
 
 case "$TEST_TARGET" in
     "oneapi")
-        ln -sf ./settings.oneapi.sh ./settings.sh
+        run ln -sf ./settings.oneapi.sh ./settings.sh
         which mpirun
         which mpiexec
         which mpicc
-        cat ./settings.sh
+        run  cat ./settings.sh
         echo "Running OneAPI Tests"
         ;;
     *rocm*)
@@ -101,14 +104,18 @@ case "$TEST_TARGET" in
         ;;
 esac
 
+echo "----------------------------------------"
+echo "  TEST_DIR = $TEST_DIR"
+echo "  PROC_ARG = ${PROC_ARG[*]:-(empty)}"
+echo "----------------------------------------"
 
 #We might need to limit the number of processes to avoid contention (--processes 1). Color used to break some ci interfaces but we can experiment with that later as well. Return code is the number of failed tests.
 
 #stdbuf -oL -eL didn't help with live-updating web log
 
-start_section "Running: time ./test-all.sh --json  --color-off ${PROC_ARG[@]}  ${SKIP_ARG[@]}  $TEST_DIR"
+start_section "Running: Testsuite for $TEST_TARGET"
 
-time ./test-all.sh --json --color-off "${PROC_ARG[@]}"  "${SKIP_ARG[@]}"  "$TEST_DIR"
+time run ./test-all.sh --json --color-off "${PROC_ARG[@]}"  "${SKIP_ARG[@]}"  "$TEST_DIR"
 TESTEXIT=$?
 
 end_section
@@ -120,7 +127,7 @@ if [ ! -f "$JSON_FILE" ]; then
     exit 1
 fi
 
-cp $JSON_FILE $ARTIFACTS
+cp "$JSON_FILE" "$ARTIFACTS"
 
 GREEN_BOLD='\033[1;32m'
 YELLOW_BOLD='\033[1;33m'

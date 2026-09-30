@@ -177,6 +177,7 @@ if [[ $ID =~ "rocky" ]]; then
   sed -i -e '0,/prefix: \/usr/ s@prefix: /usr@prefix: /opt/rh/gcc-toolset-13/root/usr@' $pkgf
 
   cmd spack -e . remove paraview +qt || true
+  cmd spack -e . remove quantum-espresso || true
   popd
 fi
 

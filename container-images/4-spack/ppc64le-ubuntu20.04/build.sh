@@ -26,23 +26,19 @@ name=e4s-spack-$target-ppc64le
 timestamp=$(date +%s)
 
 builder_source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_PPC64LE_RUNNER_IMAGE}
-
 cuda_source_image=${CUDA_MPI_SOURCE_IMAGE:-$UBUNTU_PPC64LE_CUDA_MPI_IMAGE}
-cuda_output_tag=$timestamp
-
 cpu_source_image=${CPU_MPI_SOURCE_IMAGE:-$UBUNTU_PPC64LE_CPU_MPI_IMAGE}
-cpu_output_tag=$timestamp
+
+tag=$timestamp
 
 case $target in
   "cuda")
     final_image_base=$cuda_source_image
     final_target=cuda-final
-    tag=$cuda_output_tag
     ;;
   "cpu")
     final_image_base=$cpu_source_image
     final_target=cpu-final
-    tag=$cpu_output_tag
     ;;
 esac
 

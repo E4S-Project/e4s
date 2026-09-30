@@ -29,22 +29,24 @@ name=e4s-mpi-$target-rocky9-aarch64
 timestamp=$(date +%s)
 
 builder_source_image=${RUNNER_SOURCE_IMAGE:-$ROCKY_AARCH64_RUNNER_IMAGE}
-
 cuda_source_image=${CUDA_SOURCE_IMAGE:-$ROCKY_AARCH64_CUDA_IMAGE}
-cuda_output_tag=v$mpich_version-v12.9.1-$timestamp
-
 cpu_source_image=$builder_source_image
-cpu_output_tag=v$mpich_version-$timestamp
 
 final_target=mpich-final
 case $target in
   "cuda")
     final_image_base=$cuda_source_image
-    tag=$cuda_output_tag
+    if ! docker image inspect $final_image_base >/dev/null 2>&1; then docker pull $final_image_base; fi
+    cuda_version=$(docker inspect --format '{{ index .Config.Labels "E4S_CUDA_VERSION" }}' $final_image_base)
+    if [[ -z "$cuda_version" ]]; then
+      _err error: image is missing expected label E4S_CUDA_VERSION
+      _err error: $final_image_base does not have the expected label
+    fi
+    tag=v$mpich_version-$cuda_version-$timestamp
     ;;
   "cpu")
     final_image_base=$cpu_source_image
-    tag=$cpu_output_tag
+    tag=v$mpich_version-$timestamp
     ;;
 esac
 

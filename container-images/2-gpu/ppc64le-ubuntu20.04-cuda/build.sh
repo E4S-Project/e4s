@@ -6,9 +6,9 @@
 require_env REGISTRY
 
 name=e4s-cuda-base-ppc64le
-version=11.2.2
+cuda_version=11.2.2
 source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_PPC64LE_RUNNER_IMAGE}
-output_image="${REGISTRY}/${name}:${BUILD_TAG:-$version-$(date +%s)}"
+output_image="${REGISTRY}/${name}:${BUILD_TAG:-$cuda_version-$(date +%s)}"
 downloads=${DOWNLOAD_PATH:-$(realpath ./downloads)}
 
 mkdir -p $downloads
@@ -35,5 +35,6 @@ cmd docker build \
  -t "${output_image}" \
  --build-arg SOURCE_IMAGE=$source_image \
  --build-context downloads=$downloads \
+ --build-arg E4S_CUDA_VERSION=$cuda_version \
  --progress=plain \
  -f ./Dockerfile .

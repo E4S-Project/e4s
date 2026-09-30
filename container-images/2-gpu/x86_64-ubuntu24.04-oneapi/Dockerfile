@@ -4,7 +4,7 @@ ARG SOURCE_IMAGE
 
 FROM $SOURCE_IMAGE
 
-ARG ONEAPI_VERSION
+ARG ONEAPI_DEB_VERSION
 
 # https://www.intel.com/content/www/us/en/docs/oneapi-toolkit/installation-guide-linux/latest/install-oneapi-toolkit-with-apt.html#INSTALL-ONEAPI-TOOLKIT-WITH-APT
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   | gpg --dearmor | tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null \
  && echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | tee /etc/apt/sources.list.d/oneAPI.list \
  && apt update -y \
- && apt install -y intel-oneapi-toolkit=$ONEAPI_VERSION
+ && apt install -y intel-oneapi-toolkit=$ONEAPI_DEB_VERSION
 
 # https://dgpu-docs.intel.com/driver/client/overview.html
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -51,6 +51,8 @@ RUN echo '. /opt/intel/oneapi/setvars.sh >/dev/null 2>&1' >> /etc/bash.bashrc \
  && echo module use /opt/intel/oneapi/modulefiles/ >> /etc/bash.bashrc \
  && echo module load mpi >> /etc/bash.bashrc
 
-ENV PATH=/opt/intel/oneapi/compiler/${ONEAPI_VERSION}/bin:/opt/intel/oneapi/mpi/latest/bin:$PATH
-ENV LD_LIBRARY_PATH=/usr/local/lib:/opt/intel/oneapi/compiler/${ONEAPI_VERSION}/lib:/opt/intel/oneapi/mpi/latest/lib
+ENV PATH=/opt/intel/oneapi/compiler/latest/bin:/opt/intel/oneapi/mpi/latest/bin:$PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib:/opt/intel/oneapi/compiler/latest/lib:/opt/intel/oneapi/mpi/latest/lib
 
+ARG E4S_ONEAPI_VERSION
+LABEL E4S_ONEAPI_VERSION=$E4S_ONEAPI_VERSION

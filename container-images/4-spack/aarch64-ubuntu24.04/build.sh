@@ -27,23 +27,19 @@ pretty_date=$(printf '%(%Y.%m.%d)T' -1)
 timestamp=$(date +%s)
 
 builder_source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_AARCH64_RUNNER_IMAGE}
-
 cuda_source_image=${CUDA_MPI_SOURCE_IMAGE:-$UBUNTU_AARCH64_CUDA_MPI_IMAGE}
-cuda_output_tag=$timestamp
-
 cpu_source_image=${CPU_MPI_SOURCE_IMAGE:-$UBUNTU_AARCH64_CPU_MPI_IMAGE}
-cpu_output_tag=$timestamp
+
+tag=$timestamp
 
 case $target in
   "cuda")
     final_image_base=$cuda_source_image
     final_target=cuda-final
-    tag=$cuda_output_tag
     ;;
   "cpu")
     final_image_base=$cpu_source_image
     final_target=cpu-final
-    tag=$cpu_output_tag
     ;;
 esac
 

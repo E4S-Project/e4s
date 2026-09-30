@@ -91,8 +91,8 @@ RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
 
 FROM $BUILDER_IMAGE AS julia
 
-ENV JULIA_VER_MAJ_MIN=1.12
-ENV JULIA_VER_PATCH=6
+ENV JULIA_VER_MAJ_MIN=1.13
+ENV JULIA_VER_PATCH=0
 ENV JULIA_VER=${JULIA_VER_MAJ_MIN}.${JULIA_VER_PATCH}
 ENV JULIA_ARCH=x86_64
 ENV JULIA_ARCH_SHORT=x64
@@ -131,8 +131,8 @@ FROM $FINAL_IMAGE_BASE AS oneapi
 
 COPY --from=julia /usr/local/julia /usr/local/julia
 
-RUN echo /opt/intel/oneapi/mpi/2021.16/opt/mpi/libfabric/lib > /etc/ld.so.conf.d/intel-mpi.conf \
- && echo /opt/intel/oneapi/mpi/2021.16/lib >> /etc/ld.so.conf.d/intel-mpi.conf \
+RUN echo /opt/intel/oneapi/mpi/2021.18/opt/mpi/libfabric/lib > /etc/ld.so.conf.d/intel-mpi.conf \
+ && echo /opt/intel/oneapi/mpi/2021.18/lib >> /etc/ld.so.conf.d/intel-mpi.conf \
  && ldconfig -v >/dev/null 2>&1
 
 RUN echo export PATH='$PATH':/usr/local/julia/bin >> /etc/bash.bashrc

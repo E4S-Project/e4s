@@ -14,13 +14,13 @@ packages:
   llvm-amdgpu:
     buildable: false
     externals:
-    - spec: llvm-amdgpu@7.2.3
-      prefix: /opt/rocm-7.2.3/lib/llvm
+    - spec: llvm-amdgpu@7.2.4
+      prefix: /opt/rocm-7.2.4/lib/llvm
       extra_attributes:
         compilers:
-          c: /opt/rocm-7.2.3/lib/llvm/bin/amdclang
-          cxx: /opt/rocm-7.2.3/lib/llvm/bin/amdclang++
-          fortran: /opt/rocm-7.2.3/lib/llvm/bin/amdflang
+          c: /opt/rocm-7.2.4/lib/llvm/bin/amdclang
+          cxx: /opt/rocm-7.2.4/lib/llvm/bin/amdclang++
+          fortran: /opt/rocm-7.2.4/lib/llvm/bin/amdflang
   gcc:
     externals:
     - spec: gcc@13.3.0 languages:='c,c++,fortran'
@@ -91,176 +91,176 @@ packages:
   amdsmi:
     buildable: false
     externals:
-    - spec: amdsmi@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: amdsmi@7.2.4
+      prefix: /opt/rocm-7.2.4
   comgr:
     buildable: false
     externals:
-    - spec: comgr@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: comgr@7.2.4
+      prefix: /opt/rocm-7.2.4
   hipblas:
     buildable: false
     externals:
-    - spec: hipblas@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hipblas@7.2.4
+      prefix: /opt/rocm-7.2.4
   hipcub:
     buildable: false
     externals:
-    - spec: hipcub@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hipcub@7.2.4
+      prefix: /opt/rocm-7.2.4
   hipfft:
     buildable: false
     externals:
-    - spec: hipfft@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hipfft@7.2.4
+      prefix: /opt/rocm-7.2.4
   hiprand:
     buildable: false
     externals:
-    - spec: hiprand@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hiprand@7.2.4
+      prefix: /opt/rocm-7.2.4
   hipsparse:
     buildable: false
     externals:
-    - spec: hipsparse@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hipsparse@7.2.4
+      prefix: /opt/rocm-7.2.4
   miopen-hip:
     buildable: false
     externals:
-    - spec: miopen-hip@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: miopen-hip@7.2.4
+      prefix: /opt/rocm-7.2.4
   rccl:
     buildable: false
     externals:
-    - spec: rccl@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rccl@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocblas:
     buildable: false
     externals:
-    - spec: rocblas@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocblas@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocfft:
     buildable: false
     externals:
-    - spec: rocfft@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocfft@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-cmake:
     buildable: false
     externals:
-    - spec: rocm-cmake@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-cmake@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-dbgapi:
     buildable: false
     externals:
-    - spec: rocm-dbgapi@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-dbgapi@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-debug-agent:
     buildable: false
     externals:
-    - spec: rocm-debug-agent@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-debug-agent@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-device-libs:
     buildable: false
     externals:
-    - spec: rocm-device-libs@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-device-libs@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-gdb:
     buildable: false
     externals:
-    - spec: rocm-gdb@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-gdb@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-opencl:
     buildable: false
     externals:
-    - spec: rocm-opencl@7.2.3
-      prefix: /opt/rocm-7.2.3opencl
+    - spec: rocm-opencl@7.2.4
+      prefix: /opt/rocm-7.2.4opencl
   rocm-smi-lib:
     buildable: false
     externals:
-    - spec: rocm-smi-lib@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-smi-lib@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocprofiler-systems:
     buildable: false
     externals:
-    - spec: rocprofiler-systems@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocprofiler-systems@7.2.4
+      prefix: /opt/rocm-7.2.4
   hip:
     buildable: false
-    require: ["@7.2.3"]
+    require: ["@7.2.4"]
     externals:
-    - spec: hip@7.2.3 %gcc@13.3.0
-      prefix: /opt/rocm-7.2.3
+    - spec: hip@7.2.4 %gcc@13.3.0
+      prefix: /opt/rocm-7.2.4
   hipify-clang:
     buildable: false
     externals:
-    - spec: hipify-clang@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hipify-clang@7.2.4
+      prefix: /opt/rocm-7.2.4
   hsa-amd-aqlprofile:
     buildable: false
     externals:
-    - spec: hsa-amd-aqlprofile@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hsa-amd-aqlprofile@7.2.4
+      prefix: /opt/rocm-7.2.4
   hsa-rocr-dev:
     buildable: false
     externals:
-    - spec: hsa-rocr-dev@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hsa-rocr-dev@7.2.4
+      prefix: /opt/rocm-7.2.4
   roctracer-dev-api:
     buildable: false
     externals:
-    - spec: roctracer-dev-api@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: roctracer-dev-api@7.2.4
+      prefix: /opt/rocm-7.2.4
   roctracer-dev:
     buildable: false
     externals:
-    - spec: roctracer-dev@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: roctracer-dev@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocprim:
     buildable: false
     externals:
-    - spec: rocprim@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocprim@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocrand:
     buildable: false
     externals:
-    - spec: rocrand@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocrand@7.2.4
+      prefix: /opt/rocm-7.2.4
   hipsolver:
     buildable: false
     externals:
-    - spec: hipsolver@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: hipsolver@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocsolver:
     buildable: false
     externals:
-    - spec: rocsolver@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocsolver@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocsparse:
     buildable: false
     externals:
-    - spec: rocsparse@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocsparse@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocthrust:
     buildable: false
     externals:
-    - spec: rocthrust@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocthrust@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocprofiler-dev:
     buildable: false
     externals:
-    - spec: rocprofiler-dev@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocprofiler-dev@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocprofiler-sdk:
     buildable: false
     externals:
-    - spec: rocprofiler-sdk@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocprofiler-sdk@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-core:
     buildable: false
     externals:
-    - spec: rocm-core@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-core@7.2.4
+      prefix: /opt/rocm-7.2.4
   rocm-openmp-extras:
     buildable: false
     externals:
-    - spec: rocm-openmp-extras@7.2.3
-      prefix: /opt/rocm-7.2.3
+    - spec: rocm-openmp-extras@7.2.4
+      prefix: /opt/rocm-7.2.4

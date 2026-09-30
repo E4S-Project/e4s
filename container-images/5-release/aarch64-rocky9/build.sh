@@ -23,7 +23,8 @@ require_env \
  spack_packages_repo \
  spack_packages_root \
  spack_mirror \
- REGISTRY
+ REGISTRY \
+ E4S_VERSION
 
 [[ -f secrets.env ]] && . $(cat secrets.env) >/dev/null 2>&1
 require_env \
@@ -33,7 +34,7 @@ force_cached_lockfile=${FORCE_CACHED_LOCKFILE:-false}
 
 pretty_date=$(printf '%(%Y.%m.%d)T' -1)
 timestamp=$(date +%s)
-common_tag=${BUILD_TAG:-26.06.$timestamp}
+common_tag=${BUILD_TAG:-${E4S_VERSION}.$timestamp}
 arch_tag=aarch64
 
 generic_base_image=${RUNNER_SOURCE_IMAGE:-$ROCKY_AARCH64_RUNNER_IMAGE}

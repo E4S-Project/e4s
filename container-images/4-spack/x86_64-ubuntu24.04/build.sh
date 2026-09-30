@@ -26,39 +26,29 @@ name=e4s-spack-$target-x86_64
 timestamp=$(date +%s)
 
 builder_source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_X86_64_RUNNER_IMAGE}
-
 cuda_source_image=${CUDA_MPI_SOURCE_IMAGE:-$UBUNTU_X86_64_CUDA_MPI_IMAGE}
-cuda_output_tag=$timestamp
-
 rocm_source_image=${ROCM_MPI_SOURCE_IMAGE:-$UBUNTU_X86_64_ROCM_MPI_IMAGE}
-rocm_output_tag=$timestamp
-
 oneapi_source_image=${ONEAPI_MPI_SOURCE_IMAGE:-$UBUNTU_X86_64_ONEAPI_MPI_IMAGE}
-oneapi_output_tag=$timestamp
-
 cpu_source_image=${CPU_MPI_SOURCE_IMAGE:-$UBUNTU_X86_64_CPU_MPI_IMAGE}
-cpu_output_tag=$timestamp
+
+tag=$timestamp
 
 case $target in
   "cuda")
     final_image_base=$cuda_source_image
     final_target=cuda-final
-    tag=$cuda_output_tag
     ;;
   "rocm")
     final_image_base=$rocm_source_image
     final_target=rocm-final
-    tag=$cpu_output_tag
     ;;
   "oneapi")
     final_image_base=$oneapi_source_image
     final_target=oneapi-final
-    tag=$cpu_output_tag
     ;;
   "cpu")
     final_image_base=$cpu_source_image
     final_target=cpu-final
-    tag=$cpu_output_tag
     ;;
 esac
 

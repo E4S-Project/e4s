@@ -6,10 +6,10 @@
 require_env REGISTRY
 
 name=e4s-oneapi-base-x86_64
-ONEAPI_VERSION=2026.1.1-31
-version=v$(echo $ONEAPI_VERSION | cut -d- -f1)
+ONEAPI_DEB_VERSION=2026.1.1-31
+oneapi_version=v$(echo $ONEAPI_DEB_VERSION | cut -d- -f1)
 source_image=${RUNNER_SOURCE_IMAGE:-$UBUNTU_X86_64_RUNNER_IMAGE}
-output_image="${REGISTRY}/${name}:${BUILD_TAG:-$version-$(date +%s)}"
+output_image="${REGISTRY}/${name}:${BUILD_TAG:-$oneapi_version-$(date +%s)}"
 
 if is_set SAVE_OUTPUT_REF; then
   echo $output_image > $SAVE_OUTPUT_REF
@@ -17,7 +17,8 @@ fi
 
 cmd docker build \
  -t "${output_image}" \
- --build-arg ONEAPI_VERSION=$ONEAPI_VERSION \
+ --build-arg ONEAPI_DEB_VERSION=$ONEAPI_DEB_VERSION \
  --build-arg SOURCE_IMAGE=$source_image \
+ --build-arg E4S_ONEAPI_VERSION=$oneapi_version \
  --progress=plain \
  -f ./Dockerfile .
