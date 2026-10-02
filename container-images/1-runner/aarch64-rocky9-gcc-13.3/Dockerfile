@@ -43,6 +43,26 @@ RUN dnf upgrade -y \
   zsh \
  && dnf autoremove -y
 
+RUN dnf install -y epel-release \
+ && dnf install -y \
+    gdb \
+    valgrind \
+    strace \
+    ltrace \
+    lsof \
+    pax-utils \
+    time \
+    psmisc \
+    htop \
+    nc \
+    iproute \
+    bind-utils \
+    tmux \
+    tree \
+    ripgrep \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
 RUN dnf groupinstall -y 'Development Tools' \
  && dnf install -y gcc-toolset-13 gcc-toolset-13-libatomic-devel \
  && dnf autoremove -y

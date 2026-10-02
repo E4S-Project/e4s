@@ -60,6 +60,27 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   zlib1g-dev \
   zsh
 
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+ && apt-get install -y \
+    gdb \
+    valgrind \
+    strace \
+    ltrace \
+    lsof \
+    pax-utils \
+    time \
+    psmisc \
+    htop \
+    netcat-openbsd \
+    iproute2 \
+    dnsutils \
+    tmux \
+    tree \
+    ripgrep \
+ && rm -rf /var/lib/apt/lists/*
+
 RUN rm -rf /usr/bin/gcc && ln -s /usr/bin/aarch64-linux-gnu-gcc-13 /usr/bin/gcc \
  && rm -rf /usr/bin/g++ && ln -s /usr/bin/aarch64-linux-gnu-g++-13 /usr/bin/g++ \
  && rm -rf /usr/bin/gfortran && ln -s /usr/bin/aarch64-linux-gnu-gfortran-13 /usr/bin/gfortran

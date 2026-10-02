@@ -51,6 +51,27 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     zlib1g-dev \
  && apt autoremove --purge
 
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+ && apt-get install -y \
+    gdb \
+    valgrind \
+    strace \
+    ltrace \
+    lsof \
+    pax-utils \
+    time \
+    psmisc \
+    htop \
+    netcat-openbsd \
+    iproute2 \
+    dnsutils \
+    tmux \
+    tree \
+    ripgrep \
+ && rm -rf /var/lib/apt/lists/*
+
 RUN locale-gen en_US.UTF-8 \
  && ln -s `which python3` /usr/bin/python
 

@@ -16,6 +16,8 @@
           "s3:prefix": [
             "mr",
             "mr/*",
+            "e4s-26.11/*",
+            "e4s-26.11",
             "e4s-builds/*",
             "e4s-builds",
             "runners/*",
@@ -35,6 +37,7 @@
         "s3:PutObject"
       ],
       "Resource": [
+        "arn:aws:s3:::${S3_BUCKET}/e4s-26.11/*",
         "arn:aws:s3:::${S3_BUCKET}/e4s-builds/*",
         "arn:aws:s3:::${S3_BUCKET}/runners/*",
         "arn:aws:s3:::${S3_BUCKET}/mpi/*",

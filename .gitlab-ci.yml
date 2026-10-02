@@ -1,6 +1,6 @@
-spec:
+spec: 
   inputs: 
-    disable_all:
+    disable_all: 
       default: "false"
       options: 
       - "false"
@@ -243,6 +243,10 @@ variables:
       f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libcuda.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
       f=/usr/local/cuda/targets/x86_64-linux/lib/stubs/libnvidia-ml.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
       echo /usr/local/cuda/targets/x86_64-linux/lib/stubs > /etc/ld.so.conf.d/cuda-stubs.conf
+    elif [[ "$(arch)" == "ppc64le" ]]; then
+      f=/usr/local/cuda/targets/ppc64le-linux/lib/stubs/libcuda.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+      f=/usr/local/cuda/targets/ppc64le-linux/lib/stubs/libnvidia-ml.so && [[ -f $f ]] && ln -s $f ${f}.1 || true
+      echo /usr/local/cuda/targets/ppc64le-linux/lib/stubs > /etc/ld.so.conf.d/cuda-stubs.conf
     fi
   - ldconfig -v &>/dev/null
   - cd environments
@@ -296,6 +300,7 @@ variables:
       export SINGULARITY_CACHEDIR=$OUTPUT_DIR/singularity-cache
     fi
   - export OUTPUT_IMAGE=${repo}.sif
+  - docker pull $docker_image
   - docker save $docker_image -o $OUTPUT_DIR/$tarfile
   - singularity build --force ${OUTPUT_DIR}/${OUTPUT_IMAGE} docker-archive://${OUTPUT_DIR}/${tarfile}
   - rm -f ${OUTPUT_DIR}/${tarfile}
@@ -316,9 +321,9 @@ variables:
   script:
   - >
     if [[ -f /etc/bashrc ]]; then
-      . /etc/bashrc
+      PS1=ci . /etc/bashrc
     elif [[ -f /etc/bash.bashrc ]]; then
-      . /etc/bash.bashrc
+      PS1=ci . /etc/bash.bashrc
     fi
   - cd testing
   - ./run-tests.sh $TEST_TARGET
@@ -5095,7 +5100,7 @@ ppc64le-ubuntu-release-cuda-70:
       compare_to: 'refs/heads/main'
 
 
-x86_64-gnu-cpu:
+x86_64-gnu-cpu: 
   variables:
     TARGET_ENV: x86_64/gnu/cpu
   extends: [.common, .build-env]
