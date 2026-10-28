@@ -323,7 +323,7 @@ COPY --from=spack-cuda-70 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -383,7 +383,7 @@ COPY --from=spack-cpu /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR

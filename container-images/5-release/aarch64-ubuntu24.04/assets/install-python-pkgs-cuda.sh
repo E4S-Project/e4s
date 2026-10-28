@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 export site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
-export python_full_path=/opt/python/pkgs/python-3.12.13/bin/python3
+export python_full_path=/opt/python/pkgs/python/bin/python3
 
 cd /tmp
 tar xvf /tmp/downloads/$PY_TARBALL -C /tmp

@@ -19,8 +19,8 @@ touch $rcfile
 chmod +x $rcfile
 
 if [[ $(arch) != "ppc64le" ]]; then
-  require_env PYTHON_PATH PYTHON_VERSION
-  echo export PATH=$PYTHON_PATH/pkgs/python-$PYTHON_VERSION/bin:'$PATH' > $rcfile
+  require_env PYTHON_PATH
+  echo export PATH=$PYTHON_PATH/pkgs/python/bin:'$PATH' > $rcfile
 fi
 
 if [[ $VERSION_ID == "26.04" ]]; then

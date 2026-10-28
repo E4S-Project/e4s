@@ -59,3 +59,12 @@ require_env() {
     exit 1
   fi
 }
+
+get_lib_dir() {
+    local prefix="$1"
+    if [[ -n "$prefix" && -d "$prefix/lib64" ]]; then
+        echo "$prefix/lib64"
+    else
+        echo "$prefix/lib"
+    fi
+}

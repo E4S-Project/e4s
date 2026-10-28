@@ -76,10 +76,10 @@ packages:
   # externals
   python:
     prefer:
-    - '@3.12.13'
+    - '@3.12.14'
     externals:
-    - spec: python@3.12.13+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl+tkinter+uuid+zlib
-      prefix: /opt/python/pkgs/python-3.12.13
+    - spec: python@3.12.14+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl+tkinter+uuid+zlib
+      prefix: /opt/python/pkgs/python
   mpi:
     require: mpich
   mpich:

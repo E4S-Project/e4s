@@ -17,8 +17,8 @@ if ! spack find --format "{hash}" $TAU_SPEC >/dev/null 2>&1; then
 fi
 export TAU_HASH=$(spack find --format "{hash}" $TAU_SPEC)
 export TAU_PATH=$(spack location -i /$TAU_HASH)
-export TAU_SHARED_LIB_PATH=$(ls -d $TAU_PATH/lib/shared-* | grep -v disable)
-export TAU_LIB_PATH=$TAU_PATH/lib
+export TAU_LIB_PATH=$(get_lib_dir "$TAU_PATH")
+export TAU_SHARED_LIB_PATH=$(ls -d "$TAU_LIB_PATH"/shared-* | grep -v disable)
 # export DYNINST_HASH=$(spack find --format "{HASH} {NAME}" --deps /$TAU_HASH  | grep dyninst)
 # export DYNINST_HASH=${DYNINST_HASH##*([[:space:]])}
 # export DYNINST_HASH=$(echo $DYNINST_HASH | cut -d' ' -f1)

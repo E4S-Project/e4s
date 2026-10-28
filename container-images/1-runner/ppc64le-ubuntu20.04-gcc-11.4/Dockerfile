@@ -192,7 +192,7 @@ RUN ln -s /usr/include/powerpc64le-linux-gnu/asm /usr/include/asm \
  && ln -s /usr/include/powerpc64le-linux-gnu/gnu /usr/include/gnu \
  && ln -s /usr/include/powerpc64le-linux-gnu/sys /usr/include/sys
 
-RUN wget -q https://dl.min.io/client/mc/release/linux-ppc64le/mc \
+RUN wget -q -O mc https://github.com/minio/mc/releases/download/RELEASE.2025-08-13T08-35-41Z/mc.linux-ppc64le.RELEASE.2025-08-13T08-35-41Z \
  && chmod +x mc \
  && mv mc /usr/local/bin \
  && /usr/local/bin/mc --version

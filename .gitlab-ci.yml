@@ -171,7 +171,9 @@ stages:
 - Build Minimal Spack Images
 - Status Check
 - Build Release Images
+- SIF Gatekeeper
 - Build SIF Images
+- Test Gatekeeper
 - Test Docker Images
 - Test SIF Images
 
@@ -216,9 +218,11 @@ variables:
   - env | grep AWS
   after_script:
   - rm -rf $PRIVATE_DIR
+  - cat $CI_PROJECT_DIR/build.env
 
 .build-docker-image:
   script:
+  - env | grep -e ^UBUNTU_ -e ^ROCKY_ | sort
   - cd container-images/$IMAGE_PATH
   - export SAVE_OUTPUT_REF=$ARTIFACTS/image-ref.txt
   - export FORCE_CACHED_LOCKFILE=true
@@ -288,6 +292,7 @@ variables:
     S3_PREFIX: e4s-builds/sifs
   timeout: 2 hours
   script:
+  - env | grep -e ^UBUNTU_ -e ^ROCKY_ | sort
   - docker_image=${!SOURCE_IMAGE_LABEL}
   - repo="${docker_image##*/}" 
   - repo=$(echo $repo | tr ':' '-' | tr '.' '-')
@@ -1951,6 +1956,7 @@ aarch64-ubuntu-spack-cpu:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -1963,6 +1969,7 @@ aarch64-ubuntu-spack-cpu:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -2013,6 +2020,7 @@ aarch64-ubuntu-spack-cuda:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -2026,6 +2034,7 @@ aarch64-ubuntu-spack-cuda:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -2075,6 +2084,7 @@ ppc64le-ubuntu-spack-cpu:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -2087,6 +2097,7 @@ ppc64le-ubuntu-spack-cpu:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -2137,6 +2148,7 @@ ppc64le-ubuntu-spack-cuda:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
     - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
@@ -2150,6 +2162,7 @@ ppc64le-ubuntu-spack-cuda:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
       - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
@@ -3429,6 +3442,7 @@ x86_64-ubuntu-release-cpu:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cpu/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -3445,6 +3459,7 @@ x86_64-ubuntu-release-cpu:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cpu/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -3516,6 +3531,7 @@ x86_64-ubuntu-release-cuda-80:
     - environments/x86_64/gnu/cuda/80/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -3535,6 +3551,7 @@ x86_64-ubuntu-release-cuda-80:
       - environments/x86_64/gnu/cuda/80/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -3606,6 +3623,7 @@ x86_64-ubuntu-release-cuda-90:
     - environments/x86_64/gnu/cuda/90/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -3625,6 +3643,7 @@ x86_64-ubuntu-release-cuda-90:
       - environments/x86_64/gnu/cuda/90/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -3676,7 +3695,7 @@ x86_64-ubuntu-release-cuda-120:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -3696,6 +3715,7 @@ x86_64-ubuntu-release-cuda-120:
     - environments/x86_64/gnu/cuda/120/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -3715,6 +3735,7 @@ x86_64-ubuntu-release-cuda-120:
       - environments/x86_64/gnu/cuda/120/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -3784,6 +3805,7 @@ x86_64-ubuntu-release-rocm-908:
     - environments/x86_64/gnu/rocm/_config/**/*
     - environments/x86_64/gnu/rocm/gfx908/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -3802,6 +3824,7 @@ x86_64-ubuntu-release-rocm-908:
       - environments/x86_64/gnu/rocm/_config/**/*
       - environments/x86_64/gnu/rocm/gfx908/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -3871,6 +3894,7 @@ x86_64-ubuntu-release-rocm-90a:
     - environments/x86_64/gnu/rocm/_config/**/*
     - environments/x86_64/gnu/rocm/gfx90a/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -3889,6 +3913,7 @@ x86_64-ubuntu-release-rocm-90a:
       - environments/x86_64/gnu/rocm/_config/**/*
       - environments/x86_64/gnu/rocm/gfx90a/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -3958,6 +3983,7 @@ x86_64-ubuntu-release-rocm-942:
     - environments/x86_64/gnu/rocm/_config/**/*
     - environments/x86_64/gnu/rocm/gfx942/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -3976,6 +4002,7 @@ x86_64-ubuntu-release-rocm-942:
       - environments/x86_64/gnu/rocm/_config/**/*
       - environments/x86_64/gnu/rocm/gfx942/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -4044,6 +4071,7 @@ x86_64-ubuntu-release-oneapi:
     - environments/x86_64/oneapi/cpu/**/*
     - environments/x86_64/oneapi/gpu/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
@@ -4062,6 +4090,7 @@ x86_64-ubuntu-release-oneapi:
       - environments/x86_64/oneapi/cpu/**/*
       - environments/x86_64/oneapi/gpu/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-oneapi/**/*
@@ -4125,6 +4154,7 @@ x86_64-rocky-release-cpu:
     - environments/x86_64/gnu/_config/**/*
     - environments/x86_64/gnu/cpu/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -4141,6 +4171,7 @@ x86_64-rocky-release-cpu:
       - environments/x86_64/gnu/_config/**/*
       - environments/x86_64/gnu/cpu/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -4212,6 +4243,7 @@ x86_64-rocky-release-cuda-90:
     - environments/x86_64/gnu/cuda/90/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-rocky9-cuda/**/*
@@ -4231,6 +4263,7 @@ x86_64-rocky-release-cuda-90:
       - environments/x86_64/gnu/cuda/90/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-rocky9-cuda/**/*
@@ -4282,7 +4315,7 @@ x86_64-rocky-release-cuda-120:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -4303,6 +4336,7 @@ x86_64-rocky-release-cuda-120:
     - environments/x86_64/gnu/cuda/120/**/*
     - environments/x86_64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-rocky9-cuda/**/*
@@ -4322,6 +4356,7 @@ x86_64-rocky-release-cuda-120:
       - environments/x86_64/gnu/cuda/120/**/*
       - environments/x86_64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-rocky9-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-rocky9-cuda/**/*
@@ -4383,6 +4418,7 @@ aarch64-ubuntu-release-cpu:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cpu/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -4399,6 +4435,7 @@ aarch64-ubuntu-release-cpu:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cpu/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -4468,6 +4505,7 @@ aarch64-ubuntu-release-cuda-80:
     - environments/aarch64/gnu/cuda/80/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -4487,6 +4525,7 @@ aarch64-ubuntu-release-cuda-80:
       - environments/aarch64/gnu/cuda/80/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -4557,6 +4596,7 @@ aarch64-ubuntu-release-cuda-90:
     - environments/aarch64/gnu/cuda/90/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -4576,6 +4616,7 @@ aarch64-ubuntu-release-cuda-90:
       - environments/aarch64/gnu/cuda/90/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -4646,6 +4687,7 @@ aarch64-ubuntu-release-cuda-120:
     - environments/aarch64/gnu/cuda/120/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -4665,6 +4707,7 @@ aarch64-ubuntu-release-cuda-120:
       - environments/aarch64/gnu/cuda/120/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
@@ -4727,6 +4770,7 @@ aarch64-rocky-release-cpu:
     - environments/aarch64/gnu/_config/**/*
     - environments/aarch64/gnu/cpu/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -4743,6 +4787,7 @@ aarch64-rocky-release-cpu:
       - environments/aarch64/gnu/_config/**/*
       - environments/aarch64/gnu/cpu/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -4814,6 +4859,7 @@ aarch64-rocky-release-cuda-90:
     - environments/aarch64/gnu/cuda/90/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
     - container-images/2-gpu/aarch64-rocky9-cuda/**/*
@@ -4833,6 +4879,7 @@ aarch64-rocky-release-cuda-90:
       - environments/aarch64/gnu/cuda/90/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
       - container-images/2-gpu/aarch64-rocky9-cuda/**/*
@@ -4884,7 +4931,7 @@ aarch64-rocky-release-cuda-120:
   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
@@ -4905,6 +4952,7 @@ aarch64-rocky-release-cuda-120:
     - environments/aarch64/gnu/cuda/120/**/*
     - environments/aarch64/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
     - container-images/2-gpu/aarch64-rocky9-cuda/**/*
@@ -4924,6 +4972,7 @@ aarch64-rocky-release-cuda-120:
       - environments/aarch64/gnu/cuda/120/**/*
       - environments/aarch64/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/aarch64-rocky9-gcc-13.3/**/*
       - container-images/2-gpu/aarch64-rocky9-cuda/**/*
@@ -4985,6 +5034,7 @@ ppc64le-ubuntu-release-cpu:
     - environments/ppc64le/gnu/_config/**/*
     - environments/ppc64le/gnu/cpu/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
     - container-images/3-mpi/_common/**/*
@@ -5001,6 +5051,7 @@ ppc64le-ubuntu-release-cpu:
       - environments/ppc64le/gnu/_config/**/*
       - environments/ppc64le/gnu/cpu/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
       - container-images/3-mpi/_common/**/*
@@ -5070,6 +5121,7 @@ ppc64le-ubuntu-release-cuda-70:
     - environments/ppc64le/gnu/cuda/70/**/*
     - environments/ppc64le/gnu/cuda/notarget/**/*
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
     - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
@@ -5089,6 +5141,7 @@ ppc64le-ubuntu-release-cuda-70:
       - environments/ppc64le/gnu/cuda/70/**/*
       - environments/ppc64le/gnu/cuda/notarget/**/*
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/ppc64le-ubuntu20.04-gcc-11.4/**/*
       - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
@@ -6862,6 +6915,48 @@ ppc64le-gnu-cuda-notarget:
       compare_to: 'refs/heads/main'
 
 
+Release-SIF-Builds:
+  stage: SIF Gatekeeper
+  tags: [uoregon-e4s-project, docker, cpu-only, x86_64]
+  image: ubuntu:26.04
+  needs: []
+  script:
+  - echo Proceeding to SIF build stage...
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET
+    when: manual
+    allow_failure: false
+  - if: $SPACK_TARGET
+    when: manual
+    allow_failure: false
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    when: manual
+    allow_failure: false
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/**/*
+    - container-images/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    when: manual
+    allow_failure: false
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/**/*
+      - container-images/**/*
+      compare_to: 'refs/heads/main'
+
+
 x86_64-ubuntu-release-cpu-sif:
   extends: [.common, .build-sif-image]
   variables:
@@ -6872,6 +6967,8 @@ x86_64-ubuntu-release-cpu-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-cpu
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -6945,6 +7042,8 @@ x86_64-ubuntu-release-cuda-80-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-80
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7030,6 +7129,8 @@ x86_64-ubuntu-release-cuda-90-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-90
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7115,6 +7216,8 @@ x86_64-ubuntu-release-cuda-120-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-120
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7139,7 +7242,7 @@ x86_64-ubuntu-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-120/
   - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -7200,6 +7303,8 @@ x86_64-ubuntu-release-rocm-908-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-908
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7282,6 +7387,8 @@ x86_64-ubuntu-release-rocm-90a-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-90a
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7364,6 +7471,8 @@ x86_64-ubuntu-release-rocm-942-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-942
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7446,6 +7555,8 @@ x86_64-ubuntu-release-oneapi-sif:
   - load-image-refs
   - job: x86_64-ubuntu-release-oneapi
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7527,6 +7638,8 @@ x86_64-rocky-release-cpu-sif:
   - load-image-refs
   - job: x86_64-rocky-release-cpu
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7602,6 +7715,8 @@ x86_64-rocky-release-cuda-90-sif:
   - load-image-refs
   - job: x86_64-rocky-release-cuda-90
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7688,6 +7803,8 @@ x86_64-rocky-release-cuda-120-sif:
   - load-image-refs
   - job: x86_64-rocky-release-cuda-120
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7712,7 +7829,7 @@ x86_64-rocky-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-120/
   - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
@@ -7774,6 +7891,8 @@ aarch64-ubuntu-release-cpu-sif:
   - load-image-refs
   - job: aarch64-ubuntu-release-cpu
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7847,6 +7966,8 @@ aarch64-ubuntu-release-cuda-80-sif:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-80
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -7933,6 +8054,8 @@ aarch64-ubuntu-release-cuda-90-sif:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-90
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8017,6 +8140,8 @@ aarch64-ubuntu-release-cuda-120-sif:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-120
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8100,6 +8225,8 @@ aarch64-rocky-release-cpu-sif:
   - load-image-refs
   - job: aarch64-rocky-release-cpu
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8175,6 +8302,8 @@ aarch64-rocky-release-cuda-90-sif:
   - load-image-refs
   - job: aarch64-rocky-release-cuda-90
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8261,6 +8390,8 @@ aarch64-rocky-release-cuda-120-sif:
   - load-image-refs
   - job: aarch64-rocky-release-cuda-120
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8285,7 +8416,7 @@ aarch64-rocky-release-cuda-120-sif:
   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-120/
   - if: $CONTAINER_TARGET =~ /sif-all/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
@@ -8347,6 +8478,8 @@ ppc64le-ubuntu-release-cpu-sif:
   - load-image-refs
   - job: ppc64le-ubuntu-release-cpu
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8420,6 +8553,8 @@ ppc64le-ubuntu-release-cuda-70-sif:
   - load-image-refs
   - job: ppc64le-ubuntu-release-cuda-70
     optional: true
+  - job: Release-SIF-Builds
+    optional: false
   stage: Build SIF Images
   rules:
   - if: $DISABLE_SIF == "true"
@@ -8495,6 +8630,50 @@ ppc64le-ubuntu-release-cuda-70-sif:
 
 
 
+Release-Tests:
+  stage: Test Gatekeeper
+  tags: [uoregon-e4s-project, docker, cpu-only, x86_64]
+  image: ubuntu:26.04
+  needs: []
+  script:
+  - echo Proceeding with test stages...
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET
+    when: manual
+    allow_failure: false
+  - if: $SPACK_TARGET
+    when: manual
+    allow_failure: false
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    when: manual
+    allow_failure: false
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/**/*
+    - container-images/**/*
+    - testing/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    when: manual
+    allow_failure: false
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/**/*
+      - container-images/**/*
+      - testing/**/*
+      compare_to: 'refs/heads/main'
+
+
 ## TEST DOCKER IMAGES
 x86_64-ubuntu-release-cpu-docker-test:
   extends: [.common, .run-docker-tests]
@@ -8508,6 +8687,8 @@ x86_64-ubuntu-release-cpu-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cpu
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -8585,6 +8766,8 @@ x86_64-ubuntu-release-cuda-80-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-80
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -8672,6 +8855,8 @@ x86_64-ubuntu-release-cuda-90-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-90
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -8759,6 +8944,8 @@ x86_64-ubuntu-release-cuda-120-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-120
     optional: true
+  - job: Release-Tests
+    optional: false    
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -8782,7 +8969,7 @@ x86_64-ubuntu-release-cuda-120-docker-test:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -8834,88 +9021,6 @@ x86_64-ubuntu-release-cuda-120-docker-test:
       compare_to: 'refs/heads/main'
 
 
-# x86_64-ubuntu-release-rocm-908-docker-test:
-#   extends: [.common, .run-docker-tests]
-#   variables:
-#     TEST_TARGET: rocm-908
-#   image:
-#     name: $UBUNTU_X86_64_RELEASE_ROCM908_IMAGE
-#     entrypoint: [""]
-#   tags: [uoregon-e4s-project, x86_64, docker]
-#   needs:
-#   - load-image-refs
-#   - job: x86_64-ubuntu-release-rocm-908
-#     optional: true
-#   rules:
-#   - if: $DISABLE_X86_64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_ROCM == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
-#   - if: $CONTAINER_TARGET =~ /mpi-rocm/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-908/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /x86_64-all/
-#   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
-#   - if: $DISABLE_ALL == "true"
-    when: never
-  - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/x86_64/gnu/_config/**/*
-#     - environments/x86_64/gnu/rocm/_config/**/*
-#     - environments/x86_64/gnu/rocm/gfx908/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/x86_64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/x86_64/gnu/_config/**/*
-#       - environments/x86_64/gnu/rocm/_config/**/*
-#       - environments/x86_64/gnu/rocm/gfx908/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/x86_64-ubuntu24.04/**/*
-#       - testing/**/*
-#       compare_to: 'refs/heads/main'
-
-
 x86_64-ubuntu-release-rocm-90a-docker-test:
   extends: [.common, .run-docker-tests]
   variables:
@@ -8928,6 +9033,8 @@ x86_64-ubuntu-release-rocm-90a-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-90a
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -9012,6 +9119,8 @@ x86_64-ubuntu-release-rocm-942-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-942
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -9096,6 +9205,8 @@ x86_64-ubuntu-release-oneapi-docker-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-oneapi
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -9174,6 +9285,8 @@ x86_64-rocky-release-cpu-docker-test:
   - load-image-refs
   - job: x86_64-rocky-release-cpu
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -9251,6 +9364,8 @@ x86_64-rocky-release-cuda-90-docker-test:
   - load-image-refs
   - job: x86_64-rocky-release-cuda-90
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -9339,6 +9454,8 @@ x86_64-rocky-release-cuda-120-docker-test:
   - load-image-refs
   - job: x86_64-rocky-release-cuda-120
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_X86_64 == "true"
     when: never
@@ -9362,7 +9479,7 @@ x86_64-rocky-release-cuda-120-docker-test:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -9427,6 +9544,8 @@ aarch64-ubuntu-release-cpu-docker-test:
   - load-image-refs
   - job: aarch64-ubuntu-release-cpu
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_AARCH64 == "true"
     when: never
@@ -9502,6 +9621,8 @@ aarch64-ubuntu-release-cuda-90-docker-test:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-90
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_AARCH64 == "true"
     when: never
@@ -9588,6 +9709,8 @@ aarch64-ubuntu-release-cuda-120-docker-test:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-120
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_AARCH64 == "true"
     when: never
@@ -9673,6 +9796,8 @@ aarch64-rocky-release-cpu-docker-test:
   - load-image-refs
   - job: aarch64-rocky-release-cpu
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_AARCH64 == "true"
     when: never
@@ -9750,6 +9875,8 @@ aarch64-rocky-release-cuda-90-docker-test:
   - load-image-refs
   - job: aarch64-rocky-release-cuda-90
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_AARCH64 == "true"
     when: never
@@ -9838,6 +9965,8 @@ aarch64-rocky-release-cuda-120-docker-test:
   - load-image-refs
   - job: aarch64-rocky-release-cuda-120
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_AARCH64 == "true"
     when: never
@@ -9861,7 +9990,7 @@ aarch64-rocky-release-cuda-120-docker-test:
   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
@@ -9926,6 +10055,8 @@ ppc64le-ubuntu-release-cpu-docker-test:
   - load-image-refs
   - job: ppc64le-ubuntu-release-cpu
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_PPC64LE == "true"
     when: never
@@ -10001,6 +10132,8 @@ ppc64le-ubuntu-release-cuda-70-docker-test:
   - load-image-refs
   - job: ppc64le-ubuntu-release-cuda-70
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_PPC64LE == "true"
     when: never
@@ -10086,6 +10219,8 @@ x86_64-ubuntu-release-cpu-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cpu-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10163,6 +10298,8 @@ x86_64-ubuntu-release-cuda-80-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-80-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10250,6 +10387,8 @@ x86_64-ubuntu-release-cuda-90-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-90-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10337,6 +10476,8 @@ x86_64-ubuntu-release-cuda-120-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-cuda-120-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10362,7 +10503,7 @@ x86_64-ubuntu-release-cuda-120-sif-test:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
@@ -10414,88 +10555,6 @@ x86_64-ubuntu-release-cuda-120-sif-test:
       compare_to: 'refs/heads/main'
 
 
-# x86_64-ubuntu-release-rocm-908-sif-test:
-#   extends: [.common, .run-sif-tests]
-#   variables:
-#     SIF: $UBUNTU_X86_64_RELEASE_ROCM908_SIF
-#     TEST_TARGET: rocm-908
-#   tags: [uoregon-e4s-project, x86_64, shell]
-#   needs:
-#   - load-image-refs
-#   - job: x86_64-ubuntu-release-rocm-908-sif
-#     optional: true
-#   rules:
-  # - if: $DISABLE_SIF == "true"
-  #   when: never
-#   - if: $DISABLE_X86_64 == "true"
-#     when: never
-#   - if: $DISABLE_UBUNTU == "true"
-#     when: never
-#   - if: $DISABLE_ROCM == "true"
-#     when: never
-#   - if: $DISABLE_TESTS == "true"
-#     when: never
-#   - if: $CONTAINER_TARGET =~ /container-all/
-#   - if: $CONTAINER_TARGET =~ /container-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-all/
-#   - if: $CONTAINER_TARGET =~ /runner-x86_64/
-#   - if: $CONTAINER_TARGET =~ /runner-ubuntu/
-#   - if: $CONTAINER_TARGET =~ /mpi-all/
-#   - if: $CONTAINER_TARGET =~ /mpi-x86_64/
-#   - if: $CONTAINER_TARGET =~ /mpi-rocm/
-#   - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
-#   - if: $CONTAINER_TARGET =~ /release-all/
-#   - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
-#   - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-908/
-#   - if: $SPACK_TARGET =~ /all-all/
-#   - if: $SPACK_TARGET =~ /x86_64-all/
-#   - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
-#   - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx908/
-#   - if: $DISABLE_ALL == "true"
-    when: never
-  - if: $CI_PIPELINE_SOURCE == "push"
-#     changes:
-#     - .gitlab-ci.yml
-#     - environments/build-env.sh
-#     - environments/x86_64/gnu/_config/**/*
-#     - environments/x86_64/gnu/rocm/_config/**/*
-#     - environments/x86_64/gnu/rocm/gfx908/**/*
-#     - container-images/_common/**/*
-#     - container-images/1-runner/_common/**/*
-#     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
-#     - container-images/3-mpi/_common/**/*
-#     - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#     - container-images/5-release/_common/**/*
-#     - container-images/5-release/_common_ubuntu/**/*
-#     - container-images/5-release/x86_64-ubuntu24.04/**/*
-#     - testing/**/*
-#   - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     changes:
-#       paths:
-#       - .gitlab-ci.yml
-#       - environments/build-env.sh
-#       - environments/x86_64/gnu/_config/**/*
-#       - environments/x86_64/gnu/rocm/_config/**/*
-#       - environments/x86_64/gnu/rocm/gfx908/**/*
-#       - container-images/_common/**/*
-#       - container-images/1-runner/_common/**/*
-#       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
-#       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
-#       - container-images/3-mpi/_common/**/*
-#       - container-images/3-mpi/x86_64-ubuntu24.04/**/*
-#       - container-images/5-release/_common/**/*
-#       - container-images/5-release/_common_ubuntu/**/*
-#       - container-images/5-release/x86_64-ubuntu24.04/**/*
-#       - testing/**/*
-#       compare_to: 'refs/heads/main'
-
-
 x86_64-ubuntu-release-rocm-90a-sif-test:
   extends: [.common, .run-sif-tests]
   variables:
@@ -10506,6 +10565,8 @@ x86_64-ubuntu-release-rocm-90a-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-90a-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10590,6 +10651,8 @@ x86_64-ubuntu-release-rocm-942-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-rocm-942-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10674,6 +10737,8 @@ x86_64-ubuntu-release-oneapi-sif-test:
   - load-image-refs
   - job: x86_64-ubuntu-release-oneapi-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10752,6 +10817,8 @@ x86_64-rocky-release-cpu-sif-test:
   - load-image-refs
   - job: x86_64-rocky-release-cpu-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10829,6 +10896,8 @@ x86_64-rocky-release-cuda-90-sif-test:
   - load-image-refs
   - job: x86_64-rocky-release-cuda-90-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10917,6 +10986,8 @@ x86_64-rocky-release-cuda-120-sif-test:
   - load-image-refs
   - job: x86_64-rocky-release-cuda-120-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10942,7 +11013,7 @@ x86_64-rocky-release-cuda-120-sif-test:
   - if: $CONTAINER_TARGET =~ /release-x86_64-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-rocky-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /x86_64-all/
@@ -11005,6 +11076,8 @@ aarch64-ubuntu-release-cpu-sif-test:
   - load-image-refs
   - job: aarch64-ubuntu-release-cpu-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -11080,6 +11153,8 @@ aarch64-ubuntu-release-cuda-90-sif-test:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-90-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -11166,6 +11241,8 @@ aarch64-ubuntu-release-cuda-120-sif-test:
   - load-image-refs
   - job: aarch64-ubuntu-release-cuda-120-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -11251,6 +11328,8 @@ aarch64-rocky-release-cpu-sif-test:
   - load-image-refs
   - job: aarch64-rocky-release-cpu-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -11328,6 +11407,8 @@ aarch64-rocky-release-cuda-90-sif-test:
   - load-image-refs
   - job: aarch64-rocky-release-cuda-90-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -11416,6 +11497,8 @@ aarch64-rocky-release-cuda-120-sif-test:
   - load-image-refs
   - job: aarch64-rocky-release-cuda-120-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -11441,7 +11524,7 @@ aarch64-rocky-release-cuda-120-sif-test:
   - if: $CONTAINER_TARGET =~ /release-aarch64-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-all/
   - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-all/
-  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-90/
+  - if: $CONTAINER_TARGET =~ /release-aarch64-rocky-cuda-120/
   - if: $SPACK_TARGET =~ /all-all/
   - if: $SPACK_TARGET =~ /rocky-all/
   - if: $SPACK_TARGET =~ /aarch64-all/
@@ -11504,6 +11587,8 @@ ppc64le-ubuntu-release-cpu-sif-test:
   - load-image-refs
   - job: ppc64le-ubuntu-release-cpu-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_SIF == "true"
     when: never 
@@ -11579,6 +11664,8 @@ ppc64le-ubuntu-release-cuda-70-sif-test:
   - load-image-refs
   - job: ppc64le-ubuntu-release-cuda-70-sif
     optional: true
+  - job: Release-Tests
+    optional: false
   rules:
   - if: $DISABLE_PPC64LE == "true"
     when: never

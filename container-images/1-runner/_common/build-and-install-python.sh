@@ -73,17 +73,18 @@ multi_cmd "$(cat <<EOF
 spack mirror add --scope site remote s3://$PYTHON_MIRROR
 spack buildcache keys -it -y
 spack config add "config:install_tree:root:$PYTHON_PATH/pkgs"
-spack config add "config:install_tree:projections:all:'{name}-{version}'"
+spack config add "config:install_tree:projections:all:'{name}'"
 spack config add "config:db_lock_timeout:120"
 spack config add "config:connect_timeout:60"
 spack -e . install -j8 -p8 --cache-only
 
 ## Install pip
 spack load python
-which python | grep $PYTHON_VERSION
+which python | grep $PYTHON_PATH
+python --version | grep $PYTHON_VERSION
 wget -q https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
-which pip | grep $PYTHON_VERSION
+which pip | grep $PYTHON_PATH
 
 ## Cleanup
 rm -rf .spack-env
@@ -91,16 +92,21 @@ rm -rf .spack-env
 EOF
 )"
 
-# gettext_lib=$(spack location -i gettext)/lib
-# if [[ ! -d $gettext_lib ]] ; then
-#   _err error: gettext_lib var has unexpected value: $gettext_lib
-#   exit 1
-# fi
 
-# python_lib=$(spack location -i python)/lib
-# if [[ ! -d $python_lib ]] ; then
-#   _err error: python_lib var has unexpected value: $python_lib
-#   exit 1
-# fi
+## Symlink needed to fix flux-core and potentially other issues
+## ... finding development headers:
+## You probably have to install the development version of the Python package
+##  for your distribution.  The exact name of this package varies among them.
+gettext_lib=$(spack location -i gettext)/lib
+if [[ ! -d $gettext_lib ]] ; then
+  _err error: gettext_lib var has unexpected value: $gettext_lib
+  exit 1
+fi
 
-# ln -s ${gettext_lib}/libintl.so ${python_lib}/libintl.so
+python_lib=$(spack location -i python)/lib
+if [[ ! -d $python_lib ]] ; then
+  _err error: python_lib var has unexpected value: $python_lib
+  exit 1
+fi
+
+ln -s ${gettext_lib}/libintl.so ${python_lib}/libintl.so

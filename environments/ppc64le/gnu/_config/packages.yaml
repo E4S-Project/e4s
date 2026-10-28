@@ -35,7 +35,7 @@ packages:
   libfabric:
     variants: fabrics=sockets,tcp,udp,rxm
   libunwind:
-    variants: +pic +xz
+    variants: +pic +xz ~tests
   openblas:
     variants: threads=openmp
   trilinos:

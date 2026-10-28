@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 export site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
-export python_full_path=/opt/python/pkgs/python-3.12.13/bin/python3
+export python_full_path=/opt/python/pkgs/python/bin/python3
 
 cd /tmp
 tar xvf /tmp/downloads/$PY_TARBALL -C /tmp
@@ -59,12 +59,12 @@ uv pip install \
  --python $python_full_path \
  --system 'marimo>=0.23.0'
 
+# skipped due to unavailability of adios2 wheel: hpc-campaign \
 uv pip install \
  --python $python_full_path \
  --system \
  trame_vuetify \
  trame \
- hpc-campaign \
  SmilesPE \
  pynacl
 

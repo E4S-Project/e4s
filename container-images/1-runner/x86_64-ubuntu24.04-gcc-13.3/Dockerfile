@@ -160,11 +160,10 @@ RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
 FROM base-0 AS base-1
 
 ARG PYTHON_PATH
-ARG PYTHON_VERSION
 
 COPY --from=python-build $PYTHON_PATH $PYTHON_PATH
 
-ENV PATH=$PYTHON_PATH/pkgs/python-$PYTHON_VERSION/bin:$PATH
+ENV PATH=$PYTHON_PATH/pkgs/python/bin:$PATH
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/root/.cache/uv \

@@ -38,7 +38,7 @@ packages:
   libfabric:
     variants: fabrics=sockets,tcp,udp,rxm
   libunwind:
-    variants: +pic +xz
+    variants: +pic +xz ~tests
   ncurses:
     variants: +termlib
   openblas:
@@ -67,10 +67,10 @@ packages:
   # externals
   python:
     prefer:
-    - '@3.12.13'
+    - '@3.12.14'
     externals:
-    - spec: python@3.12.13+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl+tkinter+uuid+zlib
-      prefix: /opt/python/pkgs/python-3.12.13
+    - spec: python@3.12.14+bz2+crypt+ctypes+dbm+lzma+pyexpat+pythoncmd+readline+sqlite3+ssl+tkinter+uuid+zlib
+      prefix: /opt/python/pkgs/python
   mpi:
     require: intel-oneapi-mpi
   intel-oneapi-mpi:
@@ -78,26 +78,26 @@ packages:
     externals:
     - spec: intel-oneapi-mpi@2021.18.0
       prefix: /opt/intel/oneapi
-      modules: [mpi/2021.18]
+      modules: [mpi/latest]
   intel-oneapi-mkl:
     prefer:
-    - '@2026.0.0'
+    - '@2026.1.0'
     externals:
     - spec: intel-oneapi-mkl@2026.1.0
       prefix: /opt/intel/oneapi
-      modules: [mkl/2026.1]
+      modules: [mkl/latest]
   intel-oneapi-dpl:
     buildable: false
     externals:
     - spec: intel-oneapi-dpl@2022.13.0
       prefix: /opt/intel/oneapi
-      modules: [dpl/2022.13]
+      modules: [dpl/latest]
   intel-oneapi-tbb:
     buildable: false
     externals:
     - spec: intel-oneapi-tbb@2023.1.0
       prefix: /opt/intel/oneapi
-      modules: [tbb/2023.1]
+      modules: [tbb/latest]
   oneapi-igc:
     buildable: false
     externals:

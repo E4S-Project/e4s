@@ -73,6 +73,7 @@ cmd docker build \
  --progress=plain \
  --target $final_target \
  --build-context container-common=../../_common \
+ --build-context common_4_5=../../_common_4_5 \
  --build-context spack-common=../_common \
  --build-context spack_env=../../../environments/x86_64 \
  -f ./Dockerfile \

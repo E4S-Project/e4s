@@ -76,7 +76,7 @@ COPY --from=spack-common README.md pingpong.c e4s-init.sh /etc/e4s
 RUN chmod +x /etc/e4s/e4s-init.sh
 
 # Install e4s-chain-spack script
-COPY --from=container-common --chmod=755 e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 --chmod=755 e4s-chain-spack.sh /etc/e4s/
 
 # Configure bash initialization
 RUN echo . $SPACK_CORE_ROOT/share/spack/setup-env.sh >> /etc/bash.bashrc \

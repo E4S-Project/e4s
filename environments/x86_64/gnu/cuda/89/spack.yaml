@@ -14,21 +14,22 @@ spack:
   - amrex +cuda cuda_arch=89
   - arborx +cuda cuda_arch=89
   - axom +cuda cuda_arch=89
-  - cabana +cuda cuda_arch=89 ^kokkos +wrapper +cuda_lambda +cuda cuda_arch=89
+  - cabana +cuda cuda_arch=89 ^kokkos ~hpx +serial +wrapper +cuda_lambda +cuda cuda_arch=89
   - caliper +cuda cuda_arch=89
   - chai tests=none +cuda cuda_arch=89 ^umpire ~shared
   - chapel +cuda cuda_arch=89 ^llvm targets=x86,nvptx
   - cusz +cuda cuda_arch=89
   - fftx +cuda cuda_arch=89
+  - flecsi +cuda cuda_arch=89
   - ginkgo +cuda cuda_arch=89
   - gromacs +cuda cuda_arch=89
   - heffte +cuda cuda_arch=89
   - hpx +cuda cuda_arch=89
   - hypre +cuda cuda_arch=89
   - kokkos +wrapper +cuda cuda_arch=89
-  # - kokkos-fft host_backend=cufft ^kokkos +wrapper +cuda cuda_arch=89
+  - kokkos-fft device_backend=cufft ^kokkos +wrapper +cuda cuda_arch=89
   - kokkos-kernels +cuda cuda_arch=89 ^kokkos +wrapper +cuda cuda_arch=89
-  # - kokkos-tools ^kokkos +wrapper +cuda cuda_arch=89
+  - kokkos-tools ^kokkos +wrapper +cuda cuda_arch=89
   - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff +cuda cuda_arch=89 # lammps: needs NVIDIA driver
   - legion +cuda cuda_arch=89
   - libceed +cuda cuda_arch=89
@@ -52,11 +53,10 @@ spack:
   - vtk-m +cuda cuda_arch=89
   - zfp +cuda cuda_arch=89
 
-  # new errors, need to investigate:
+  # not installed:
   # - ascent +cuda cuda_arch=89               # ascent: https://github.com/spack/spack/issues/38045
   # - cp2k smm=blas +mpi +cuda cuda_arch=89   # cp2k: cp2k only supports cuda_arch ('35', '37', '60', '70', '80', '90')
   # - dealii +cuda cuda_arch=89               # dealii: conflicts with '+cuda ^cuda@12:' 
   # - exago +mpi +python +raja +hiop ~rocm +cuda cuda_arch=89 ~ipopt ^hiop ~sparse +mpi +raja ~rocm +cuda cuda_arch=89 # camp-2025.12.0-ltgi5redeekhn3nxjqcz44tg2u5tajx2/include/camp/resource/cuda.hpp:191:11: error: 'reportError' is not a member of 'camp'
-  # - flecsi +cuda cuda_arch=89               # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?  
   # - lbann +cuda cuda_arch=89                # dihydrogen-0.3.0: CMake Error at cmake/modules/SetupCUDAToolkit.cmake:33 (target_link_libraries): The link interface of target "h2::cuda_toolkit" contains: CUDA::nvToolsExt but the target was not found.
   # - paraview ~qt ~examples +cuda cuda_arch=89 ^llvm~lldb~lld~libomptarget~polly~gold libunwind=none compiler-rt=none # concretize fails due to cuda unsat

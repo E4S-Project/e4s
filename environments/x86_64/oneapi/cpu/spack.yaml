@@ -52,7 +52,6 @@ spack:
   - hypre
   - kokkos +openmp
   - kokkos-kernels +openmp
-  # - kokkos-tools # cannot satisfy a requirement for package 'kokkos-tools'.
   - laghos ^mfem~cuda
   - legion
   - libcatalyst
@@ -91,6 +90,7 @@ spack:
   - quantum-espresso
   - raja
   - rempi
+  - saltfm
   - scr
   - slate ~cuda
   - stc
@@ -115,6 +115,12 @@ spack:
   - wannier90
   - zfp
 
+  #Utility Packages.
+  - tomcat
+  - guacamole-client
+  - guacamole-server +vnc +webp   
+
+  # not installed:
   # - alquimia                      # petsc-3.21.6: mat/impls/baij/mpi/baijmkl/ftn-custom/zmpibaijmklf.c:14:11: error: call to undeclared function 'MatCreateBAIJMKL'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
   # - chapel ~cuda ~rocm            # llvm-19.1.7: https://github.com/spack/spack/issues/49625
   # - cp2k +mpi                     # dbcsr-2.8.0: FAILED: src/CMakeFiles/dbcsr.dir/dbcsr_api.F-pp.f src/CMakeFiles/dbcsr.dir/dbcsr_api.F.o.ddi: 
@@ -126,6 +132,7 @@ spack:
   # - glvis                         # llvm-17.0.6: https://github.com/spack/spack/issues/49625
   # - gptune ~mpispawn              # py-numpy-2.3.5: numexpr/numexpr_config.hpp:45:13: error: functions that differ only in their return type cannot be overloaded
   # - hdf5-vol-cache                # H5VLcache_ext.c:2038:55: error: incompatible pointer types passing 'char **' to parameter of type 'void **' [-Wincompatible-pointer-types]
+  # - kokkos-tools                  # cannot satisfy a requirement for package 'kokkos-tools'.
   # - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff # CMake: Could NOT find FFTW3 (missing: FFTW3_LIBRARY FFTW3_INCLUDE_DIR)
   # - lbann                         # lbann-0.104: https://github.com/spack/spack/issues/49619
   # - libpressio +bitgrooming +bzip2 ~cuda ~cusz +fpzip +hdf5 +libdistributed +lua +openmp +python +sz +sz3 +unix +zfp # concretize: c-blosc2: conflicts with '%oneapi';

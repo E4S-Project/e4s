@@ -30,7 +30,6 @@ spack:
   - dyninst
   - e4s-alc
   - e4s-cl
-  - exaworks
   - faodel
   - fftx
   - flit
@@ -49,13 +48,10 @@ spack:
   - hdf5-vol-cache
   - hdf5-vol-log
   - heffte +fftw
-  # - hpctoolkit ^dyninst@13.0.0
   - hpx networking=mpi
   - hypre
   - kokkos +openmp
-  # - kokkos-fft host_backend=fftw-openmp
   - kokkos-kernels +openmp
-  # - kokkos-tools
   - laghos ^mfem~cuda
   - lammps +amoeba +asphere +bocs +body +bpm +brownian +cg-dna +cg-spica +class2 +colloid +colvars +compress +coreshell +dielectric +diffraction +dipole +dpd-basic +dpd-meso +dpd-react +dpd-smooth +drude +eff +electrode +extra-compute +extra-dump +extra-fix +extra-molecule +extra-pair +fep +granular +interlayer +kspace +lepton +machdyn +manybody +mc +meam +mesont +misc +ml-iap +ml-pod +ml-snap +mofff +molecule +openmp-package +opt +orient +peri +phonon +plugin +poems +qeq +reaction +reaxff +replica +rigid +shock +sph +spin +srd +tally +uef +voronoi +yaff
   - lbann
@@ -105,7 +101,6 @@ spack:
   - scr
   - slate ~cuda
   - slepc
-  - stc
   - strumpack ~slate
   - sundials
   - superlu
@@ -127,7 +122,7 @@ spack:
   - wrf
   - zfp
   
-  # new errors
+  # not installed:
   # - axom                          # camp-2026.07.1-.../spack-src/include/camp/concepts.hpp:13:10: fatal error: concepts: No such file or directory
   # - chai tests=none               # camp-2026.07.1-.../spack-src/include/camp/concepts.hpp:13:10: fatal error: concepts: No such file or directory
   # - chapel ~cuda ~rocm            # llvm-21.1.8: spack-src/cmake/Modules/../../libc/src/__support/FPUtil/FPBits.h:828:50: error: non-type template argument is not a constant expression
@@ -135,14 +130,20 @@ spack:
   # - cp2k +mpi                     # gcc: error: unrecognized command line option '-march=native'; did you mean '-mcpu=native'?
   # - dealii                        # deal.II/matrix_free/fe_point_evaluation.h:294:23: error: 'const vectorized_value_type' {aka 'const class dealii::VectorizedArray<double, 2>'} has no member named 'sum
   # - exago +mpi ~ipopt +hiop ~python +raja # ipopt-3.14.14: 1 out of 1 hunk FAILED -- saving rejects to file config.guess.rej
+  # - exaworks                      # stc: cve eol apache log4j included
   # - flecsi                        # boost-1.86.0: g++: error: unrecognized command-line option '-std=c++26'; did you mean '-std=c++20'?
   # - gptune                        # py-fn-py-0.6.0: ModuleNotFoundError: No module named 'pkg_resources'
   # - gromacs                       # GCC version 11 or later required.  Earlier versions may not have full C++17
+  # - hpctoolkit ^dyninst@13.0.0
+  # - kokkos-fft host_backend=fftw-openmp
+  # - kokkos-tools
   # - nrm                           # py-scipy@1.18.0: py-pythran-0.19.0-.../lib/python3.14/site-packages/pythran/xsimd/config/xsimd_config.hpp:433:24: error: cannot convert 'int' to '__vector(4) __bool int' in return
   # - paraview +qt ~cuda ~rocm ^qt@5.15.16 # llvm-22.1.3: spack-src/cmake/Modules/../../libc/src/__support/FPUtil/FPBits.h:827:50: error: non-type template argument is not a constant expression
   # - precice                       # TypeError: 'type' object is not subscriptable
   # - py-cinemasci
   # - raja                          # camp-2026.07.1-.../spack-src/include/camp/concepts.hpp:13:10: fatal error: concepts: No such file or directory
+  # - saltfm                        # llvm-22.1.8: FPUtil/FPBits.h:827:50: error: non-type template argument is not a constant expression
+  # - stc                           # stc: cve eol apache log4j included
   # - umpire                        # camp-2026.07.1-.../spack-src/include/camp/concepts.hpp:13:10: fatal error: concepts: No such file or directory
   # - variorum                      # variorum/Intel/variorum_cpuid.c:11:5: error: impossible constraint in 'asm'
   # - visit +gui                    # llvm-22.1.3: spack-src/cmake/Modules/../../libc/src/__support/FPUtil/FPBits.h:827:50: error: non-type template argument is not a constant expression

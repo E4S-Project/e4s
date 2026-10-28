@@ -588,6 +588,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         xdg-utils \
         xterm \
         zsh \
+        xfce4 \
+        xfce4-terminal \
+        tigervnc-standalone-server \
+        tigervnc-tools \
+        dbus-x11 \
+        xauth \
+        fonts-dejavu-core \
 && apt autoremove -y
 
 # Disabled: https://github.com/E4S-Project/e4s/issues/172
@@ -704,6 +711,20 @@ RUN --mount=type=cache,target=/root/.julia \
  && chmod -R g+rwX /root
 
 
+# Hermes Agent (UI is reached through guacamole). User-facing scripts live in /etc/e4s and are
+# symlinked into place; the install script only installs the application.
+COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
+COPY --from=release-common hermes.desktop /etc/e4s/
+RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
+ && ln -sf /etc/e4s/hermes-ui.sh /usr/local/bin/hermes-ui \
+ && ln -sf /etc/e4s/hermes.desktop /usr/share/applications/hermes.desktop
+COPY --chmod=0755 --from=release-common install-hermes.sh /
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    /install-hermes.sh \
+ && rm -f /install-hermes.sh
+
+
 
 
 ## FINAL CUDA 120
@@ -718,7 +739,9 @@ COPY --from=spack-cuda-120 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -753,7 +776,9 @@ COPY --from=spack-cuda-90 /etc/e4s /etc/e4s
  
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -788,7 +813,9 @@ COPY --from=spack-cuda-80 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -844,7 +871,20 @@ COPY --from=spack-cpu /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
+COPY --from=release-common hermes.desktop /etc/e4s/
+RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
+ && ln -sf /etc/e4s/hermes-ui.sh /usr/local/bin/hermes-ui \
+ && ln -sf /etc/e4s/hermes.desktop /usr/share/applications/hermes.desktop
+COPY --chmod=0755 --from=release-common install-hermes.sh /
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    /install-hermes.sh \
+ && rm -f /install-hermes.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -891,6 +931,17 @@ RUN --mount=type=cache,target=/root/.julia \
  && chmod -R o+rX /root \
  && chmod -R g+rwX /root
 
+COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
+COPY --from=release-common hermes.desktop /etc/e4s/
+RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
+ && ln -sf /etc/e4s/hermes-ui.sh /usr/local/bin/hermes-ui \
+ && ln -sf /etc/e4s/hermes.desktop /usr/share/applications/hermes.desktop
+COPY --chmod=0755 --from=release-common install-hermes.sh /
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    /install-hermes.sh \
+ && rm -f /install-hermes.sh
+
 
 ## FINAL ROCM 942
 FROM final-rocm-base AS final-rocm-942
@@ -902,7 +953,9 @@ COPY --from=spack-rocm-942 $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-rocm-942 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG IMAGE_TARGET
 
@@ -930,7 +983,9 @@ COPY --from=spack-rocm-90a $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-rocm-90a /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -964,7 +1019,9 @@ COPY --from=spack-rocm-908 $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-rocm-908 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -1019,48 +1076,22 @@ RUN --mount=type=cache,target=/root/.julia \
  && chmod -R o+rX /root \
  && chmod -R g+rwX /root
 
-ENV METRICS_SOURCE=/tmp/metrics-discovery
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt update -y \
- && apt install -y libdrm-dev \
- && git clone https://github.com/intel/metrics-discovery.git $METRICS_SOURCE \
- && git -C $METRICS_SOURCE checkout 6752a06dea8b979b9827f675629f480778b560e2 \
- && mkdir -p $METRICS_SOURCE/build \
- && cd $METRICS_SOURCE/build \
- && cmake .. \
- && make -j \
- && make -j install \
- && rm -rf $METRICS_SOURCE
-
-ENV METRICS_SOURCE=/tmp/metrics-library
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt update -y \
- && apt install -y libdrm-dev \
- && git clone https://github.com/intel/metrics-library.git $METRICS_SOURCE \
- && git -C $METRICS_SOURCE checkout 1a8ab8667df9582aec346a7078c36ae4c5578743 \
- && mkdir -p $METRICS_SOURCE/build \
- && cd $METRICS_SOURCE/build \
- && cmake .. \
- && make -j \
- && make -j package \
- && dpkg -i intel-metrics-library*.deb \
- && rm -rf $METRICS_SOURCE
-
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    apt-get install -y software-properties-common \
- && add-apt-repository -y ppa:kobuk-team/intel-graphics \
- && apt-get install -y \
-    clinfo \
-    intel-ocloc \
-    intel-ocloc-dev \
-    intel-opencl-icd
-
-COPY --from=container-common utilities.sh /etc/e4s/ 
+COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env oneapi/_config/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
+COPY --from=release-common hermes.desktop /etc/e4s/
+RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
+ && ln -sf /etc/e4s/hermes-ui.sh /usr/local/bin/hermes-ui \
+ && ln -sf /etc/e4s/hermes.desktop /usr/share/applications/hermes.desktop
+COPY --chmod=0755 --from=release-common install-hermes.sh /
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    /install-hermes.sh \
+ && rm -f /install-hermes.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR

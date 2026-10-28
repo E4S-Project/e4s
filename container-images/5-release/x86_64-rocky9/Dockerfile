@@ -274,6 +274,13 @@ RUN dnf install -y epel-release \
         xdg-utils \
         xterm
 
+# Ubuntu xfce4/tigervnc set; xfce and tigervnc come from EPEL/AppStream, verified on rockylinux:9).
+RUN dnf install -y --setopt=install_weak_deps=False \
+         xfce4-session xfwm4 xfdesktop xfce4-panel xfce4-settings xfce4-terminal Thunar \
+         tigervnc-server-minimal tigervnc-server \
+         dbus-x11 dbus-daemon xorg-x11-xauth dejavu-sans-fonts iproute \
+ && dnf clean all
+
 # Disabled: https://github.com/E4S-Project/e4s/issues/172
 # RUN curl -fsSL https://ollama.com/install.sh | sh
 
@@ -374,6 +381,15 @@ RUN --mount=type=cache,target=/root/.julia \
  && chmod -R o+rX /root \
  && chmod -R g+rwX /root
 
+COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
+COPY --from=release-common hermes.desktop /etc/e4s/
+RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
+ && ln -sf /etc/e4s/hermes-ui.sh /usr/local/bin/hermes-ui \
+ && ln -sf /etc/e4s/hermes.desktop /usr/share/applications/hermes.desktop
+COPY --chmod=0755 --from=release-common install-hermes.sh /
+RUN /install-hermes.sh \
+ && rm -f /install-hermes.sh
+
 
 
 
@@ -388,7 +404,9 @@ COPY --from=spack-cuda-120 /etc/spack /etc/spack
 COPY --from=spack-cuda-120 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -424,7 +442,9 @@ COPY --from=spack-cuda-90 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -481,7 +501,18 @@ COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
 COPY --from=rocky-common fixup-compilers.sh /tmp/fixup-compilers.sh
 RUN /tmp/fixup-compilers.sh /etc/spack/packages.yaml
-COPY --from=container-common e4s-chain-spack.sh /etc/e4s/
+COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common guacamole-start.sh /etc/e4s/
+RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
+COPY --from=release-common hermes.desktop /etc/e4s/
+RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
+ && ln -sf /etc/e4s/hermes-ui.sh /usr/local/bin/hermes-ui \
+ && ln -sf /etc/e4s/hermes.desktop /usr/share/applications/hermes.desktop
+COPY --chmod=0755 --from=release-common install-hermes.sh /
+RUN /install-hermes.sh \
+ && rm -f /install-hermes.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR

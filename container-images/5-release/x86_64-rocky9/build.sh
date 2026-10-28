@@ -104,6 +104,7 @@ cmd docker build \
  --build-arg FORCE_CACHED_LOCKFILE=$force_cached_lockfile  \
  --target final-$target \
  --build-context container-common=../../_common \
+ --build-context common_4_5=../../_common_4_5 \
  --build-context release-common=../_common \
  --build-context rocky-common=../_common_rocky \
  --build-context spack-common=../../4-spack/_common \
