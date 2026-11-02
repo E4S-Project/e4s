@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-export SIF_PREFETCH_PATH=~lpeyrala/e4s-images/ci
+export SIF_PREFETCH_PATH=~e4s_fetcher_ci/images/ci
 export SIF_PATH=${SIF_PREFETCH_PATH}/${SIF}
 echo "-----------------"
 echo SIF Prefetch Path: $SIF_PREFETCH_PATH

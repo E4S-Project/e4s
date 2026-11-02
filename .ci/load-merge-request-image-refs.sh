@@ -49,6 +49,12 @@ is_false() {
   ! is_true $1
 }
 
+if [[ $# -ne 1 ]]; then
+  _err "error: exactly one position argument was expected"
+  _err "usage: $0 <output-file>"
+  exit 1
+fi
+
 
 require_env \
  CI_MERGE_REQUEST_IID \
@@ -72,4 +78,5 @@ fi
 
 for ff in $(ls manifests); do
   cmd export $ff=$(cat manifests/${ff})
+  cmd 'echo export '$ff=$(cat manifests/${ff})' >'$1
 done

@@ -6,9 +6,9 @@ export CI_ROOT=$(realpath $(git rev-parse --show-toplevel))
 . $CI_ROOT/vars.env
 
 require_env \
- s3_bucket \
- s3_endpoint \
- s3_prefix \
+ S3_BUCKET \
+ S3_ENDPOINT \
+ S3_PREFIX \
  spack_core_checkout \
  spack_core_repo \
  spack_mirror \
@@ -111,10 +111,10 @@ build_dir=$shared_dir/${spack_core_checkout:0:10}-${spack_packages_checkout:0:10
 spack_core_root=$build_dir/spack
 spack_packages_root=$build_dir/spack-packages
 
-# s3_bucket=${S3_BUCKET:-cache.e4s.io}
-# s3_endpoint=${S3_ENDPOINT:-https://uo-spack-mirror.e4s.io:9000}
-# s3_prefix=e4s-builds
-# spack_mirror=s3://${S3_BUCKET}/$s3_prefix
+# S3_BUCKET=${S3_BUCKET:-cache.e4s.io}
+# S3_ENDPOINT=${S3_ENDPOINT:-https://uo-spack-mirror.e4s.io:9000}
+# S3_PREFIX=e4s-builds
+# spack_mirror=s3://${S3_BUCKET}/$S3_PREFIX
 
 lockfile=$build_dir/.lock
 mkdir -p $build_dir
@@ -151,7 +151,7 @@ cmd spack repo set --destination $spack_packages_root builtin
 cmd spack config add "config:db_lock_timeout:480"
 cmd spack config add "config:connect_timeout:60"
 
-cmd export AWS_ENDPOINT_URL_S3=$s3_endpoint
+cmd export AWS_ENDPOINT_URL_S3=$S3_ENDPOINT
 cmd spack mirror add --autopush --signed e4s $spack_mirror
 
 cmd spack buildcache keys -it -y
@@ -205,10 +205,10 @@ else
   hash=$(cat $spack_refs $1/spack.yaml | sha256sum | cut -d' ' -f1)
 fi
 
-cached_lockfile=s3://${s3_bucket}/${s3_prefix}/cached_lockfiles/$hash
+cached_lockfile=s3://${S3_BUCKET}/${S3_PREFIX}/cached_lockfiles/$hash
 found_lock=false
 if [[ "$(arch)" == "ppc64le" ]]; then
-  cached_lockfile=s3/${s3_bucket}/${s3_prefix}/cached_lockfiles/$hash
+  cached_lockfile=s3/${S3_BUCKET}/${S3_PREFIX}/cached_lockfiles/$hash
   cmd mc cp $cached_lockfile $1/spack.lock && found_lock=true
 else
   cmd aws s3 cp $cached_lockfile $1/spack.lock && found_lock=true

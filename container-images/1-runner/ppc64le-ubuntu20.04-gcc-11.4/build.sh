@@ -10,8 +10,8 @@ common_scripts=$(realpath ../../_common)
 
 require_env \
  REGISTRY \
- s3_bucket \
- s3_endpoint \
+ S3_BUCKET \
+ S3_ENDPOINT \
  python_mirror \
  python_path \
  python_version \
@@ -40,7 +40,7 @@ fi
 
 cmd docker build \
  -t "${output_image}" \
- --build-arg S3_ENDPOINT=$s3_endpoint \
+ --build-arg S3_ENDPOINT=$S3_ENDPOINT \
  --build-arg SPACK_CORE_CHECKOUT=$spack_core_checkout \
  --build-arg SPACK_CORE_REPO=$spack_core_repo \
  --build-arg SPACK_CORE_ROOT=$spack_core_root \

@@ -11,8 +11,8 @@ set_valid_targets cpu cuda
 check_usage $@
 
 require_env \
- s3_bucket \
- s3_endpoint \
+ S3_BUCKET \
+ S3_ENDPOINT \
  spack_core_checkout \
  spack_core_repo \
  spack_core_root \
@@ -50,7 +50,7 @@ fi
 
 cmd docker build \
  -t "${output_img}" \
- --build-arg S3_ENDPOINT=$s3_endpoint \
+ --build-arg S3_ENDPOINT=$S3_ENDPOINT \
  --build-arg SPACK_CORE_CHECKOUT=$spack_core_checkout \
  --build-arg SPACK_CORE_REPO=$spack_core_repo \
  --build-arg SPACK_CORE_ROOT=$spack_core_root \
