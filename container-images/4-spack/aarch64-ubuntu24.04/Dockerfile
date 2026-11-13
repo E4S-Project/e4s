@@ -78,20 +78,19 @@ RUN chmod +x /etc/e4s/e4s-init.sh
 # Install e4s-chain-spack script
 COPY --from=common_4_5 --chmod=755 e4s-chain-spack.sh /etc/e4s/
 
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-aarch64-cpu
+
 # Configure bash initialization
 RUN echo . $SPACK_CORE_ROOT/share/spack/setup-env.sh >> /etc/bash.bashrc \
  && ln -sf /etc/e4s/e4s-chain-spack.sh /usr/local/bin/e4s-chain-spack.sh \
  && echo module use $SPACK_CORE_ROOT/share/spack/modules/linux-ubuntu24.04-x86_64_v3 >> /etc/bash.bashrc \
  && echo module load mpich >> /etc/bash.bashrc \
- && echo . /etc/e4s/e4s-init.sh >> /etc/bash.bashrc
+ && echo . /etc/e4s/e4s-init.sh >> /etc/bash.bashrc \
+ && echo module use '$HOME'/.e4s/$E4S_IID-$E4S_VERSION/modules >> /etc/bash.bashrc
 
 RUN updatedb
-
-RUN chmod -R ugo+rwX $SPACK_CORE_ROOT
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
 
 # Set working directory to root's home for a cleaner user experience
 WORKDIR /root
@@ -140,20 +139,19 @@ RUN chmod +x /etc/e4s/e4s-init.sh
 # Install e4s-chain-spack script
 COPY --from=common_4_5 --chmod=755 e4s-chain-spack.sh /etc/e4s/
 
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-aarch64-cuda
+
 # Configure bash initialization
 RUN echo . $SPACK_CORE_ROOT/share/spack/setup-env.sh >> /etc/bash.bashrc \
  && ln -sf /etc/e4s/e4s-chain-spack.sh /usr/local/bin/e4s-chain-spack.sh \
  && echo module use $SPACK_CORE_ROOT/share/spack/modules/linux-ubuntu24.04-x86_64_v3 >> /etc/bash.bashrc \
  && echo module load mpich >> /etc/bash.bashrc \
- && echo . /etc/e4s/e4s-init.sh >> /etc/bash.bashrc
+ && echo . /etc/e4s/e4s-init.sh >> /etc/bash.bashrc \
+ && echo module use '$HOME'/.e4s/$E4S_IID-$E4S_VERSION/modules >> /etc/bash.bashrc
 
 RUN updatedb
-
-RUN chmod -R ugo+rwX $SPACK_CORE_ROOT
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
 
 # Set working directory to root's home for a cleaner user experience
 WORKDIR /root

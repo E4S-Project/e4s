@@ -166,6 +166,8 @@ stages:
 - Build GPU Images
 - Build MPI Images
 - Build Minimal Spack Images
+- Build Minimal SIF
+- Fetch Minimal SIF
 - Spack Build Dotenv
 - Build X86_64 Spack Env
 - Build AARCH64 Spack Env
@@ -176,9 +178,9 @@ stages:
 - Docker Tests Dotenv
 - Docker Tests
 - Gatekeeper-2
-- Build SIF
+- Build Release SIF
 - Gatekeeper-3
-- Fetch SIF
+- Fetch Release SIF
 - SIF Tests
 - Wrapup
 
@@ -331,7 +333,7 @@ variables:
   - export exists=0
   - |
     if [[ "$(arch)" == "ppc64le" ]]; then
-      if mc ls s3/${S3_BUCKET}/${S3_PREFIX}/sifs/$OUTPUT_IMAGE; then
+      if mc stat s3/${S3_BUCKET}/${S3_PREFIX}/sifs/$OUTPUT_IMAGE; then
         echo Found image: s3/${S3_BUCKET}/${S3_PREFIX}/sifs/$OUTPUT_IMAGE
         echo Build not needed!
         exit 0
@@ -357,6 +359,37 @@ variables:
   - >
     [[ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]] && exit 0
   - cd $CI_PROJECT_DIR/.ci && ./upload-merge-request-image-refs.sh
+
+.fetch-sif:
+  tags: [uoregon-e4s-project, sif-downloader]
+  variables:
+    DOTENV: $CI_PROJECT_DIR/${CI_JOB_ID}.env
+  artifacts:
+    when: always
+    paths:
+    - $ARTIFACTS_REL_PATH
+    reports: 
+      dotenv: $CI_PROJECT_DIR/${CI_JOB_ID}.env
+  script:
+  - >
+    env | grep $IMAGE_LABEL || "WARNING: Missing $IMAGE_LABEL from this pipeline, falling back to image-refs.env"
+  - set -a && . image-refs.env && set +a
+  - env | grep $IMAGE_LABEL
+  - env | grep -e ^UBUNTU_ -e ^ROCKY_ | sort | tee $DOTENV
+  - export SIF=${!IMAGE_LABEL}
+  - export SIF_URL=${S3_ENDPOINT}/${S3_BUCKET}/${S3_PREFIX}/sifs/${SIF}
+  - export DOWNLOAD_PATH=~/images/ci/${SIF}
+  - >
+    if [[ -f $DOWNLOAD_PATH ]]; then echo "SIF already fetched: $DOWNLOAD_PATH" && exit 0 ; fi
+  - wget --quiet -O ~/images/ci/${SIF} -c $SIF_URL
+
+.fetch-minimal-sif:
+  extends: [.fetch-sif]
+  stage: Fetch Minimal SIF
+
+.fetch-release-sif:
+  extends: [.fetch-sif]
+  stage: Fetch Release SIF
 
 .run-docker-tests:
   stage: Docker Tests
@@ -1705,6 +1738,7 @@ x86_64-ubuntu-spack-cpu:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/3-mpi/_common/**/*
@@ -1717,6 +1751,7 @@ x86_64-ubuntu-spack-cpu:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/3-mpi/_common/**/*
@@ -1767,6 +1802,7 @@ x86_64-ubuntu-spack-cuda:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -1780,6 +1816,7 @@ x86_64-ubuntu-spack-cuda:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -1831,6 +1868,7 @@ x86_64-ubuntu-spack-rocm:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -1844,6 +1882,7 @@ x86_64-ubuntu-spack-rocm:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
@@ -1896,6 +1935,7 @@ x86_64-ubuntu-spack-oneapi:
     - vars.env
     - .gitlab-ci.yml
     - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
     - container-images/1-runner/_common/**/*
     - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
     - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -1909,6 +1949,7 @@ x86_64-ubuntu-spack-oneapi:
       - vars.env
       - .gitlab-ci.yml
       - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
       - container-images/1-runner/_common/**/*
       - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
       - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
@@ -2125,6 +2166,1041 @@ ppc64le-ubuntu-spack-cuda:
   stage: Build Minimal Spack Images
   timeout: 6 hours
   rules:
+  - if: $DISABLE_PPC64LE == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_CUDA == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-ppc64le/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+    - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+      - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+      compare_to: 'refs/heads/main'
+
+
+## BUILD MINIMAL SPACK SIF
+Release-Minimal-SIF-Builds:
+  stage: Build Minimal SIF
+  tags: [uoregon-e4s-project, docker, cpu-only]
+  image: ubuntu:26.04
+  retry: 2
+  needs: []
+  script:
+  - echo Proceeding to SIF build stage...
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true" && $DISABLE_AARCH64 == "true" && $DISABLE_PPC64LE == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container/
+  - if: $CONTAINER_TARGET =~ /runner/
+  - if: $CONTAINER_TARGET =~ /mpi/
+  - if: $CONTAINER_TARGET =~ /spack/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/**/*
+    - container-images/3-mpi/**/*
+    - container-images/4-spack/**/*
+    when: manual
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/**/*
+      - container-images/3-mpi/**/*
+      - container-images/4-spack/**/*
+      compare_to: 'refs/heads/main'
+    when: manual
+
+x86_64-ubuntu-spack-cpu-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_X86_64_SPACK_CPU_IMAGE
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_CPU_SIF
+  tags: [uoregon-e4s-project, x86_64, shell]
+  needs:
+  - get-s3-credentials  
+  - job: x86_64-ubuntu-spack-cpu
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-cpu/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+x86_64-ubuntu-spack-cuda-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_X86_64_SPACK_CUDA_IMAGE
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_CUDA_SIF
+  tags: [uoregon-e4s-project, x86_64, shell]
+  needs:
+  - get-s3-credentials  
+  - job: x86_64-ubuntu-spack-cuda
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_CUDA == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+x86_64-ubuntu-spack-rocm-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_X86_64_SPACK_ROCM_IMAGE
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_ROCM_SIF
+  tags: [uoregon-e4s-project, x86_64, shell]
+  needs:
+  - get-s3-credentials  
+  - job: x86_64-ubuntu-spack-rocm
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-rocm/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+x86_64-ubuntu-spack-oneapi-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_X86_64_SPACK_ONEAPI_IMAGE
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_ONEAPI_SIF
+  tags: [uoregon-e4s-project, x86_64, shell]
+  needs:
+  - get-s3-credentials  
+  - job: x86_64-ubuntu-spack-oneapi
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ONEAPI == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /container-oneapi-all/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-oneapi/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+      
+aarch64-ubuntu-spack-cpu-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_AARCH64_SPACK_CPU_IMAGE
+    IMAGE_LABEL: UBUNTU_AARCH64_SPACK_CPU_SIF
+  tags: [uoregon-e4s-project, aarch64, shell]
+  needs:
+  - get-s3-credentials  
+  - job: aarch64-ubuntu-spack-cpu
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_AARCH64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-aarch64/
+  - if: $CONTAINER_TARGET =~ /mpi-cpu/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/aarch64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/aarch64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+aarch64-ubuntu-spack-cuda-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_AARCH64_SPACK_CUDA_IMAGE
+    IMAGE_LABEL: UBUNTU_AARCH64_SPACK_CUDA_SIF
+  tags: [uoregon-e4s-project, aarch64, shell]
+  needs:
+  - get-s3-credentials  
+  - job: aarch64-ubuntu-spack-cuda
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_AARCH64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_CUDA == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-aarch64/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/aarch64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/aarch64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+ppc64le-ubuntu-spack-cpu-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_PPC64LE_SPACK_CPU_IMAGE
+    IMAGE_LABEL: UBUNTU_PPC64LE_SPACK_CPU_SIF
+  tags: [uoregon-e4s-project, ppc64le, shell]
+  needs:
+  - get-s3-credentials  
+  - job: ppc64le-ubuntu-spack-cpu
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_PPC64LE == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-ppc64le/
+  - if: $CONTAINER_TARGET =~ /mpi-cpu/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+      compare_to: 'refs/heads/main'
+
+ppc64le-ubuntu-spack-cuda-sif:
+  extends: [.common, .build-sif-image]
+  stage: Build Minimal SIF
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_PPC64LE_SPACK_CUDA_IMAGE
+    IMAGE_LABEL: UBUNTU_PPC64LE_SPACK_CUDA_SIF
+  tags: [uoregon-e4s-project, ppc64le, shell]
+  needs:
+  - get-s3-credentials  
+  - job: ppc64le-ubuntu-spack-cuda
+    optional: true
+  - job: Release-Minimal-SIF-Builds
+    optional: false
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_PPC64LE == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_CUDA == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-ppc64le/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+    - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+      - container-images/2-gpu/ppc64le-ubuntu20.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+      compare_to: 'refs/heads/main'
+
+
+
+## FETCH MINIMAL SIF
+fetch-x86_64-ubuntu-spack-cpu-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_CPU_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: x86_64-ubuntu-spack-cpu-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-cpu/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-x86_64-ubuntu-spack-cuda-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_CUDA_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: x86_64-ubuntu-spack-cuda-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_CUDA == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-x86_64-ubuntu-spack-rocm-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_ROCM_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: x86_64-ubuntu-spack-rocm-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-rocm/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-x86_64-ubuntu-spack-oneapi-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_X86_64_SPACK_ONEAPI_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: x86_64-ubuntu-spack-oneapi-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ONEAPI == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /container-oneapi-all/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /spack-x86_64-oneapi/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-aarch64-ubuntu-spack-cpu-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_AARCH64_SPACK_CPU_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: aarch64-ubuntu-spack-cpu-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_AARCH64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-aarch64/
+  - if: $CONTAINER_TARGET =~ /mpi-cpu/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/aarch64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/aarch64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-aarch64-ubuntu-spack-cuda-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_AARCH64_SPACK_CUDA_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: aarch64-ubuntu-spack-cuda-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_AARCH64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_CUDA == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-aarch64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-aarch64/
+  - if: $CONTAINER_TARGET =~ /mpi-cuda/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cuda/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-all/
+  - if: $CONTAINER_TARGET =~ /spack-aarch64-cuda/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/aarch64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/aarch64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/aarch64-ubuntu24.04-cuda/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/aarch64-ubuntu24.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/aarch64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-ppc64le-ubuntu-spack-cpu-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_PPC64LE_SPACK_CPU_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: ppc64le-ubuntu-spack-cpu-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_PPC64LE == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-ppc64le/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-ppc64le/
+  - if: $CONTAINER_TARGET =~ /mpi-cpu/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-cpu/
+  - if: $CONTAINER_TARGET =~ /spack-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-all/
+  - if: $CONTAINER_TARGET =~ /spack-ppc64le-cpu/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+    - container-images/4-spack/_common/**/*
+    - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/ppc64le-ubuntu20.04-gcc-13.3/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/ppc64le-ubuntu20.04/**/*
+      - container-images/4-spack/_common/**/*
+      - container-images/4-spack/ppc64le-ubuntu20.04/**/*
+      compare_to: 'refs/heads/main'
+
+fetch-ppc64le-ubuntu-spack-cuda-sif:
+  extends: [.common, .fetch-minimal-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_PPC64LE_SPACK_CUDA_SIF
+  needs:
+  - get-s3-credentials
+  - Release-Minimal-SIF-Builds
+  - job: ppc64le-ubuntu-spack-cuda-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
   - if: $DISABLE_PPC64LE == "true"
     when: never
   - if: $DISABLE_UBUNTU == "true"
@@ -2772,6 +3848,47 @@ x86_64-gnu-rocm-gfx942-status:
       - environments/x86_64/gnu/rocm/gfx942/**/*
       compare_to: 'refs/heads/main'
 
+x86_64-gnu-rocm-gfx950-status:
+  extends: [.common, .build-env-status-check]
+  stage: Status Checks
+  needs:
+  - get-s3-credentials
+  - job: x86_64-gnu-rocm-gfx950
+    optional: true
+    artifacts: true
+  rules:
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx950/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx950/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx950/**/*
+      compare_to: 'refs/heads/main'
 
 x86_64-gnu-rocm-notarget-status:
   extends: [.common, .build-env-status-check]
@@ -4015,6 +5132,93 @@ x86_64-ubuntu-release-rocm-942:
       - container-images/5-release/x86_64-ubuntu24.04/**/*
       compare_to: 'refs/heads/main'
 
+x86_64-ubuntu-release-rocm-950:
+  extends: [.common, .build-docker-image]
+  variables:
+    IMAGE_PATH: 5-release/x86_64-ubuntu24.04
+    IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM950_IMAGE
+    IMAGE_TARGET: rocm-950
+  tags: [uoregon-e4s-project, x86_64, shell]
+  needs:
+  - get-s3-credentials
+  - job: x86_64-ubuntu-runner
+    optional: true
+  - job: x86_64-ubuntu-rocm-mpi
+    optional: true
+  - job: x86_64-gnu-rocm-gfx950-status
+    optional: true
+  - job: x86_64-gnu-rocm-notarget-status
+    optional: true
+  stage: Build Release Images
+  timeout: 6 hours
+  rules:
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-950/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx950/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx950/**/*
+    - container-images/_common/**/*
+    - container-images/_common_4_5/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx950/**/*
+      - container-images/_common/**/*
+      - container-images/_common_4_5/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
 
 x86_64-ubuntu-release-oneapi:
   extends: [.common, .build-docker-image]
@@ -6582,6 +7786,66 @@ x86_64-gnu-rocm-gfx942:
       - environments/x86_64/gnu/rocm/gfx942/**/*
       compare_to: 'refs/heads/main'
 
+x86_64-gnu-rocm-gfx950:
+  variables:
+    TARGET_ENV: x86_64/gnu/rocm/gfx950
+  extends: [.common, .build-env]
+  tags: [uoregon-e4s-project, x86_64, docker, cpu-only]
+  stage: Build X86_64 Spack Env
+  allow_failure: true
+  needs:
+  - get-s3-credentials
+  - x86_64-ubuntu-rocm-mpi-dotenv
+  - job: x86_64-gnu-cpu
+    optional: true
+    artifacts: false
+  timeout: 6 hours
+  image: $UBUNTU_X86_64_ROCM_MPI_IMAGE
+  rules:
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx950/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/_common/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx950/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/_common/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx950/**/*
+      compare_to: 'refs/heads/main'
 
 x86_64-gnu-rocm-notarget:
   variables:
@@ -8975,8 +10239,87 @@ x86_64-ubuntu-release-rocm-942-dotenv:
       - testing/**/*
       compare_to: 'refs/heads/main'
 
+x86_64-ubuntu-release-rocm-950-dotenv:
+  extends: [.dotenv-2]
+  needs:
+  - get-s3-credentials
+  - job: Release-Docker-Tests
+    artifacts: false
+  - job: x86_64-ubuntu-release-rocm-950
+    optional: true 
+  rules:
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $DISABLE_TESTS == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-950/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx950/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx950/**/*
+    - container-images/_common/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+    - testing/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx950/**/*
+      - container-images/_common/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      - testing/**/*
+      compare_to: 'refs/heads/main'
 
-## Build SIF
+
+## Build Release SIF
 x86_64-ubuntu-release-cpu-sif:
   extends: [.common, .build-sif-image]
   variables:
@@ -8989,7 +10332,7 @@ x86_64-ubuntu-release-cpu-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9064,7 +10407,7 @@ x86_64-ubuntu-release-cuda-80-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9151,7 +10494,7 @@ x86_64-ubuntu-release-cuda-90-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9238,7 +10581,7 @@ x86_64-ubuntu-release-cuda-120-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9325,7 +10668,7 @@ x86_64-ubuntu-release-rocm-908-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9409,7 +10752,7 @@ x86_64-ubuntu-release-rocm-90a-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9493,7 +10836,7 @@ x86_64-ubuntu-release-rocm-942-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9564,6 +10907,88 @@ x86_64-ubuntu-release-rocm-942-sif:
       - container-images/5-release/x86_64-ubuntu24.04/**/*
       compare_to: 'refs/heads/main'
 
+x86_64-ubuntu-release-rocm-950-sif:
+  extends: [.common, .build-sif-image]
+  variables:
+    SOURCE_IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM950_IMAGE
+    IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM950_SIF
+  tags: [uoregon-e4s-project, x86_64, shell]
+  needs:
+  - get-s3-credentials
+  - job: x86_64-ubuntu-release-rocm-950
+    optional: true
+  - job: Release-SIF-Builds
+    optional: false
+  stage: Build Release SIF
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-950/
+  - if: $CONTAINER_TARGET =~ /sif-all/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx950/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx950/**/*
+    - container-images/_common/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx950/**/*
+      - container-images/_common/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      compare_to: 'refs/heads/main'
 
 x86_64-ubuntu-release-oneapi-sif:
   extends: [.common, .build-sif-image]
@@ -9577,7 +11002,7 @@ x86_64-ubuntu-release-oneapi-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9660,7 +11085,7 @@ x86_64-rocky-release-cpu-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9737,7 +11162,7 @@ x86_64-rocky-release-cuda-90-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9825,7 +11250,7 @@ x86_64-rocky-release-cuda-120-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9913,7 +11338,7 @@ aarch64-ubuntu-release-cpu-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -9988,7 +11413,7 @@ aarch64-ubuntu-release-cuda-80-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10076,7 +11501,7 @@ aarch64-ubuntu-release-cuda-90-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10162,7 +11587,7 @@ aarch64-ubuntu-release-cuda-120-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10247,7 +11672,7 @@ aarch64-rocky-release-cpu-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10324,7 +11749,7 @@ aarch64-rocky-release-cuda-90-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10412,7 +11837,7 @@ aarch64-rocky-release-cuda-120-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10500,7 +11925,7 @@ ppc64le-ubuntu-release-cpu-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10575,7 +12000,7 @@ ppc64le-ubuntu-release-cuda-70-sif:
     optional: true
   - job: Release-SIF-Builds
     optional: false
-  stage: Build SIF
+  stage: Build Release SIF
   rules:
   - if: $DISABLE_SIF == "true"
     when: never
@@ -10694,34 +12119,9 @@ Release-SIF-Tests:
       compare_to: 'refs/heads/main'
 
 
-.fetch-sif:
-  stage: Fetch SIF
-  tags: [uoregon-e4s-project, sif-downloader]
-  variables:
-    DOTENV: $CI_PROJECT_DIR/${CI_JOB_ID}.env
-  artifacts:
-    when: always
-    paths:
-    - $ARTIFACTS_REL_PATH
-    reports: 
-      dotenv: $CI_PROJECT_DIR/${CI_JOB_ID}.env
-  script:
-  - >
-    env | grep $IMAGE_LABEL || "WARNING: Missing $IMAGE_LABEL from this pipeline, falling back to image-refs.env"
-  - set -a && . image-refs.env && set +a
-  - env | grep $IMAGE_LABEL
-  - env | grep -e ^UBUNTU_ -e ^ROCKY_ | sort | tee $DOTENV
-  - export SIF=${!IMAGE_LABEL}
-  - export SIF_URL=${S3_ENDPOINT}/${S3_BUCKET}/${S3_PREFIX}/sifs/${SIF}
-  - export DOWNLOAD_PATH=~/images/ci/${SIF}
-  - >
-    if [[ -f $DOWNLOAD_PATH ]]; then echo "SIF already fetched: $DOWNLOAD_PATH" && exit 0 ; fi
-  - >
-    wget --quiet -O ~/images/ci/${SIF} -c $SIF_URL || echo "error: failed to fetch: $SIF_URL"
-
-
+## FETCH RELEASE SIF
 fetch-aarch64-rocky-release-cpu-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: ROCKY_AARCH64_RELEASE_CPU_SIF
   needs:
@@ -10799,7 +12199,7 @@ fetch-aarch64-rocky-release-cpu-sif:
 
 
 fetch-aarch64-rocky-release-cuda-90-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: ROCKY_AARCH64_RELEASE_CUDA90_SIF
   needs:
@@ -10887,7 +12287,7 @@ fetch-aarch64-rocky-release-cuda-90-sif:
 
 
 fetch-aarch64-rocky-release-cuda-120-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: ROCKY_AARCH64_RELEASE_CUDA120_SIF
   needs:
@@ -10974,7 +12374,7 @@ fetch-aarch64-rocky-release-cuda-120-sif:
       compare_to: 'refs/heads/main'
 
 fetch-aarch64-rocky-release-cuda-120-sif-sparkfs:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   tags: [uoregon-e4s-project, sif-downloader-sparkfs]
   variables:
     IMAGE_LABEL: ROCKY_AARCH64_RELEASE_CUDA120_SIF
@@ -11063,7 +12463,7 @@ fetch-aarch64-rocky-release-cuda-120-sif-sparkfs:
 
 
 fetch-aarch64-ubuntu-release-cpu-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_AARCH64_RELEASE_CPU_SIF
   needs:
@@ -11137,7 +12537,7 @@ fetch-aarch64-ubuntu-release-cpu-sif:
       compare_to: 'refs/heads/main'
 
 fetch-aarch64-ubuntu-release-cuda-80-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_AARCH64_RELEASE_CUDA80_SIF
   needs:
@@ -11224,7 +12624,7 @@ fetch-aarch64-ubuntu-release-cuda-80-sif:
       compare_to: 'refs/heads/main'
 
 fetch-aarch64-ubuntu-release-cuda-90-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_AARCH64_RELEASE_CUDA90_SIF
   needs:
@@ -11309,7 +12709,7 @@ fetch-aarch64-ubuntu-release-cuda-90-sif:
       compare_to: 'refs/heads/main'
 
 fetch-aarch64-ubuntu-release-cuda-120-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_AARCH64_RELEASE_CUDA120_SIF
   needs:
@@ -11394,7 +12794,7 @@ fetch-aarch64-ubuntu-release-cuda-120-sif:
       compare_to: 'refs/heads/main'
 
 fetch-aarch64-ubuntu-release-cuda-120-sif-sparkfs:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   tags: [uoregon-e4s-project, sif-downloader-sparkfs]
   variables:
     IMAGE_LABEL: UBUNTU_AARCH64_RELEASE_CUDA120_SIF
@@ -11480,7 +12880,7 @@ fetch-aarch64-ubuntu-release-cuda-120-sif-sparkfs:
       compare_to: 'refs/heads/main'
 
 fetch-ppc64le-ubuntu-release-cpu-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_PPC64LE_RELEASE_CPU_SIF
   needs:
@@ -11554,7 +12954,7 @@ fetch-ppc64le-ubuntu-release-cpu-sif:
       compare_to: 'refs/heads/main'
 
 fetch-ppc64le-ubuntu-release-cuda-70-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_PPC64LE_RELEASE_CUDA70_SIF
   needs:
@@ -11639,7 +13039,7 @@ fetch-ppc64le-ubuntu-release-cuda-70-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-rocky-release-cpu-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: ROCKY_X86_64_RELEASE_CPU_SIF
   needs:
@@ -11715,7 +13115,7 @@ fetch-x86_64-rocky-release-cpu-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-rocky-release-cuda-90-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: ROCKY_X86_64_RELEASE_CUDA90_SIF
   needs:
@@ -11802,7 +13202,7 @@ fetch-x86_64-rocky-release-cuda-90-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-rocky-release-cuda-120-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: ROCKY_X86_64_RELEASE_CUDA120_SIF
   needs:
@@ -11889,7 +13289,7 @@ fetch-x86_64-rocky-release-cuda-120-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-cpu-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_CPU_SIF
   needs:
@@ -11963,7 +13363,7 @@ fetch-x86_64-ubuntu-release-cpu-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-cuda-80-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_CUDA80_SIF
   needs:
@@ -12048,7 +13448,7 @@ fetch-x86_64-ubuntu-release-cuda-80-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-cuda-90-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_CUDA90_SIF
   needs:
@@ -12133,7 +13533,7 @@ fetch-x86_64-ubuntu-release-cuda-90-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-cuda-120-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_CUDA120_SIF
   needs:
@@ -12218,7 +13618,7 @@ fetch-x86_64-ubuntu-release-cuda-120-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-oneapi-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ONEAPI_SIF
   needs:
@@ -12294,7 +13694,7 @@ fetch-x86_64-ubuntu-release-oneapi-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-rocm-90a-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM90A_SIF
   needs:
@@ -12376,7 +13776,7 @@ fetch-x86_64-ubuntu-release-rocm-90a-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-rocm-908-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM908_SIF
   needs:
@@ -12459,7 +13859,7 @@ fetch-x86_64-ubuntu-release-rocm-908-sif:
       compare_to: 'refs/heads/main'
 
 fetch-x86_64-ubuntu-release-rocm-942-sif:
-  extends: [.common, .fetch-sif]
+  extends: [.common, .fetch-release-sif]
   variables:
     IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM942_SIF
   needs:
@@ -12541,6 +13941,88 @@ fetch-x86_64-ubuntu-release-rocm-942-sif:
       - testing/**/*
       compare_to: 'refs/heads/main'
 
+fetch-x86_64-ubuntu-release-rocm-950-sif:
+  extends: [.common, .fetch-release-sif]
+  variables:
+    IMAGE_LABEL: UBUNTU_X86_64_RELEASE_ROCM950_SIF
+  needs:
+  - get-s3-credentials
+  - Release-SIF-Tests
+  - job: x86_64-ubuntu-release-rocm-950-sif
+    optional: true
+  rules:
+  - if: $DISABLE_SIF == "true"
+    when: never
+  - if: $DISABLE_X86_64 == "true"
+    when: never
+  - if: $DISABLE_UBUNTU == "true"
+    when: never
+  - if: $DISABLE_ROCM == "true"
+    when: never
+  - if: $DISABLE_TESTS == "true"
+    when: never
+  - if: $CONTAINER_TARGET =~ /container-all/
+  - if: $CONTAINER_TARGET =~ /container-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-all/
+  - if: $CONTAINER_TARGET =~ /runner-x86_64/
+  - if: $CONTAINER_TARGET =~ /runner-ubuntu/
+  - if: $CONTAINER_TARGET =~ /mpi-all/
+  - if: $CONTAINER_TARGET =~ /mpi-x86_64/
+  - if: $CONTAINER_TARGET =~ /mpi-rocm/
+  - if: $CONTAINER_TARGET =~ /mpi-ubuntu-rocm/
+  - if: $CONTAINER_TARGET =~ /release-all/
+  - if: $CONTAINER_TARGET =~ /release-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-all/
+  - if: $CONTAINER_TARGET =~ /release-x86_64-ubuntu-rocm-950/
+  - if: $CONTAINER_TARGET =~ /sif-all/
+  - if: $SPACK_TARGET =~ /all-all/
+  - if: $SPACK_TARGET =~ /x86_64-all/
+  - if: $SPACK_TARGET =~ /x86_64-ubuntu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-all/
+  - if: $SPACK_TARGET =~ /x86_64-gnu-rocm-gfx950/
+  - if: $DISABLE_ALL == "true"
+    when: never
+  - if: $CI_PIPELINE_SOURCE == "push"
+    changes:
+    - vars.env
+    - .gitlab-ci.yml
+    - environments/build-env.sh
+    - environments/x86_64/gnu/_config/**/*
+    - environments/x86_64/gnu/rocm/_config/**/*
+    - environments/x86_64/gnu/rocm/gfx950/**/*
+    - container-images/_common/**/*
+    - container-images/1-runner/_common/**/*
+    - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+    - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+    - container-images/3-mpi/_common/**/*
+    - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+    - container-images/5-release/_common/**/*
+    - container-images/5-release/_common_ubuntu/**/*
+    - container-images/5-release/x86_64-ubuntu24.04/**/*
+    - testing/**/*
+  - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == 'merge_request_event'
+    changes:
+      paths:
+      - vars.env
+      - .gitlab-ci.yml
+      - environments/build-env.sh
+      - environments/x86_64/gnu/_config/**/*
+      - environments/x86_64/gnu/rocm/_config/**/*
+      - environments/x86_64/gnu/rocm/gfx950/**/*
+      - container-images/_common/**/*
+      - container-images/1-runner/_common/**/*
+      - container-images/1-runner/x86_64-ubuntu24.04-gcc-13.3/**/*
+      - container-images/2-gpu/x86_64-ubuntu24.04-rocm/**/*
+      - container-images/3-mpi/_common/**/*
+      - container-images/3-mpi/x86_64-ubuntu24.04/**/*
+      - container-images/5-release/_common/**/*
+      - container-images/5-release/_common_ubuntu/**/*
+      - container-images/5-release/x86_64-ubuntu24.04/**/*
+      - testing/**/*
+      compare_to: 'refs/heads/main'
 
 ## TEST DOCKER IMAGES
 x86_64-ubuntu-release-cpu-docker-test:
@@ -15754,6 +17236,22 @@ Update-Repo-Refs:
     optional: true
   - job: ppc64le-ubuntu-spack-cuda
     optional: true
+  - job: x86_64-ubuntu-spack-cpu-sif
+    optional: true
+  - job: x86_64-ubuntu-spack-cuda-sif
+    optional: true
+  - job: x86_64-ubuntu-spack-rocm-sif
+    optional: true
+  - job: x86_64-ubuntu-spack-oneapi-sif
+    optional: true
+  - job: aarch64-ubuntu-spack-cpu-sif
+    optional: true
+  - job: aarch64-ubuntu-spack-cuda-sif
+    optional: true
+  - job: ppc64le-ubuntu-spack-cpu-sif
+    optional: true
+  - job: ppc64le-ubuntu-spack-cuda-sif
+    optional: true
   - job: aarch64-rocky-release-cpu
     optional: true
   - job: aarch64-rocky-release-cuda-90
@@ -15789,6 +17287,8 @@ Update-Repo-Refs:
   - job: x86_64-ubuntu-release-rocm-908
     optional: true
   - job: x86_64-ubuntu-release-rocm-942
+    optional: true
+  - job: x86_64-ubuntu-release-rocm-950
     optional: true
   - job: ppc64le-ubuntu-release-cpu
     optional: true
@@ -15830,6 +17330,8 @@ Update-Repo-Refs:
     optional: true
   - job: x86_64-ubuntu-release-rocm-942-sif
     optional: true
+  - job: x86_64-ubuntu-release-rocm-950-sif
+    optional: true
   - job: ppc64le-ubuntu-release-cpu-sif
     optional: true
   - job: ppc64le-ubuntu-release-cuda-70-sif
@@ -15868,27 +17370,12 @@ Update-Repo-Refs:
     for ff in $(env | grep -e ^UBUNTU_ -e ^ROCKY_ | sort); do
       kk=$(echo $ff | cut -d'=' -f1)
       vv=$(echo $ff | cut -d'=' -f 2- | rev | cut -d'/' -f1 | rev)
-      sed -i 's|^export '$kk'=.*|export '$kk'=${'$kk':-${REGISTRY}/'$vv'}|' image-refs.env
+      if [[ "$kk" == *"_SIF" ]]; then
+        sed -i 's|^export '$kk'=.*|export '$kk'=${'$kk':-'$vv'}|' image-refs.env
+      else
+        sed -i 's|^export '$kk'=.*|export '$kk'=${'$kk':-${REGISTRY}/'$vv'}|' image-refs.env
+      fi
     done
   - >
     diff image-refs.env image-refs.env.original || true
   - cat image-refs.env | tee $ARTIFACTS_REL_PATH/image-refs.env
-  # - git config user.name e4s-ci
-  # - git config user.email e4s-ci@noemail.com
-  # - export new_branch=update-image-refs-${CI_JOB_ID}
-  # - git checkout -b $new_branch
-  # - git add image-refs.env
-  # - git commit -m 'update image-refs for '$CI_COMMIT_REF_SLUG
-  # - git push -u origin $new_branch
-  # - |
-  #   curl --request POST \
-  #     --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" \
-  #     --header "Content-Type: application/json" \
-  #     --data '{
-  #       "source_branch": "${new_branch}",
-  #       "target_branch": "${CI_COMMIT_REF_NAME}",
-  #       "title": "update image-refs for $CI_COMMIT_REF_NAME",
-  #       "remove_source_branch": "true",
-  #       "description": "update image-refs for images made as part of $CI_COMMIT_REF_NAME pipeline"
-  #     }' \
-  #     "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests"

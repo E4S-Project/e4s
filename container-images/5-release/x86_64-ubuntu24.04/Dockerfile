@@ -169,6 +169,27 @@ WORKDIR /etc/e4s/cuda/notarget
 RUN /etc/e4s/concretize-spack-env.sh
 
 
+## ROCM-950 SPACK CONCRETIZE
+FROM $ROCM_BASE_IMAGE AS spack-rocm-950-concretize
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+COPY --from=spack-complete $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+COPY --from=spack-env gnu/_config /etc/e4s/_config
+COPY --from=spack-env gnu/rocm/_config /etc/e4s/rocm/_config
+COPY --from=spack-env gnu/rocm/gfx950 /etc/e4s/rocm/gfx950
+COPY --from=etc /etc/e4s/utilities.sh /etc/e4s
+COPY --from=etc /etc/e4s/concretize-spack-env.sh /etc/e4s
+
+ARG SPACK_MIRROR
+ARG S3_ENDPOINT
+ARG FORCE_CACHED_LOCKFILE
+
+WORKDIR /etc/e4s/rocm/gfx950
+RUN /etc/e4s/concretize-spack-env.sh
+
+
 ## ROCM-942 SPACK CONCRETIZE
 FROM $ROCM_BASE_IMAGE AS spack-rocm-942-concretize
 
@@ -405,6 +426,71 @@ RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
  && spack module tcl refresh --delete-tree -y
 
 
+## CUDA-80 FULL CPU+GPU SPACK INSTALL
+FROM $CUDA_BASE_IMAGE AS spack-cuda-80-full
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+COPY --from=spack-complete $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+COPY --from=etc /etc/e4s /etc/e4s
+COPY --from=etc /etc/spack /etc/spack
+COPY --from=spack-cpu-concretize /etc/e4s/cpu /etc/e4s/cpu
+COPY --from=spack-cuda-80-concretize /etc/e4s/_config /etc/e4s/_config
+COPY --from=spack-cuda-80-concretize /etc/e4s/cuda /etc/e4s/cuda
+COPY --from=spack-cuda-notarget-concretize /etc/e4s/cuda/notarget /etc/e4s/cuda/notarget
+
+ARG SPACK_MIRROR
+ARG S3_ENDPOINT
+
+WORKDIR /etc/e4s/cpu
+RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
+    /etc/e4s/install-spack-packages.sh
+
+WORKDIR /etc/e4s/cuda/80
+RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
+    /etc/e4s/install-spack-packages.sh
+
+WORKDIR /etc/e4s/cuda/notarget
+RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
+    /etc/e4s/install-spack-packages.sh
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mark -e mpich \
+ && sed -i '/+level_zero: level-zero/a\          ^kokkos +cuda: cuda' /etc/spack/modules.yaml \
+ && chmod go+rwX /etc/spack/modules.yaml \
+ && spack module tcl refresh --delete-tree -y
+
+
+## ROCM-950 SPACK INSTALL
+FROM $ROCM_BASE_IMAGE AS spack-rocm-950
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+COPY --from=spack-complete $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack-complete $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+COPY --from=etc /etc/e4s /etc/e4s
+COPY --from=etc /etc/spack /etc/spack
+COPY --from=spack-rocm-950-concretize /etc/e4s/_config /etc/e4s/_config
+COPY --from=spack-rocm-950-concretize /etc/e4s/rocm /etc/e4s/rocm
+COPY --from=spack-rocm-notarget-concretize /etc/e4s/rocm/notarget /etc/e4s/rocm/notarget
+
+ARG SPACK_MIRROR
+ARG S3_ENDPOINT
+
+WORKDIR /etc/e4s/rocm/gfx950
+RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
+    /etc/e4s/install-spack-packages.sh
+
+WORKDIR /etc/e4s/rocm/notarget
+RUN --mount=type=secret,id=AWS_CONFIG_FILE,required=true \
+    /etc/e4s/install-spack-packages.sh
+
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mark -e mpich \
+ && spack module tcl refresh --delete-tree -y
+
+
 
 ## ROCM-942 SPACK INSTALL
 FROM $ROCM_BASE_IMAGE AS spack-rocm-942
@@ -555,8 +641,14 @@ FROM $FINAL_BASE_IMAGE AS final-base
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
+COPY --from=common_4_5 --chmod=0755 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common --chmod=0755 guacamole-start.sh /etc/e4s/
+
 RUN rm -f /etc/apt/apt.conf.d/docker-clean \
- && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+ && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache \
+ && ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh \
+ && ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole \
+ && ln -sf /etc/e4s/e4s-chain-spack.sh /usr/local/bin/e4s-chain-spack.sh
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -632,25 +724,26 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     /install-paraview-visit.sh \
  && rm -f /install-paraview-visit.sh
-
+ 
 COPY --from=release-common install-nodejs.sh /
 RUN /install-nodejs.sh \
  && rm -f /install-nodejs.sh
+
+COPY --from=release-common install-npm-packages.sh /
+RUN /install-npm-packages.sh \
+ && rm -f /install-npm-packages.sh
 
 RUN cd /opt \
  && wget -q http://tau.uoregon.edu/demo.tgz \
  && tar xzf demo.tgz \
  && rm -rf demo.tgz \
- && sed -i 's@load tau@load tau/2.35.2-cuda@g' /opt/demo/CoMD/bin/rt.sh \
+ && sed -i 's@load tau@load tau/2.36-cuda@g' /opt/demo/CoMD/bin/rt.sh \
  && cd /opt/demo \
  && git clone --quiet https://github.com/ParaToolsInc/e4s-cloud-examples.git \
  && rm -rf e4s-cloud-examples/.git \
  && (cd e4s-cloud-examples && ./fetch-all.sh)
 
 COPY --from=release-common julia/examples /opt/demo/julia-examples
-
-RUN chmod -R o+rX /root \
- && chmod -R g+rwX /root
 
 ENV TF_CPP_MIN_LOG_LEVEL=2
 ENV PYTHONWARNINGS="ignore::FutureWarning,ignore::DeprecationWarning,ignore::RuntimeWarning,ignore::SyntaxWarning"
@@ -675,8 +768,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
  && rm -f cuda-keyring_1.1-1_all.deb \
  && apt update -y \
  && apt install -y \
-     libnccl2=2.28.9-1+cuda12.9 \
-     libnccl-dev=2.28.9-1+cuda12.9 \
+     libnccl2=2.30.7-1+cuda12.9 \
+     libnccl-dev=2.30.7-1+cuda12.9 \
  && apt-mark hold libnccl2 libnccl-dev
 
 RUN cd /tmp \
@@ -689,6 +782,15 @@ RUN cd /tmp \
  && chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda-13.0/lib64/libcudnn* || true \
  && rm -rf $cudnn_tarball cudnn-*-archive
 
+RUN debfile=nvshmem-local-repo-ubuntu2404-3.7.2_3.7.2-1_amd64.deb \
+ && wget -q https://developer.download.nvidia.com/compute/nvshmem/3.7.2/local_installers/$debfile \
+ && dpkg -i $debfile \
+ && rm -rf $debfile \
+ && cp /var/nvshmem-local-repo-ubuntu2404-3.7.2/nvshmem-*-keyring.gpg /usr/share/keyrings/ \
+ && apt update -y \
+ && apt install -y libnvshmem3-cuda-12 libnvshmem3-dev-cuda-12 \
+ && apt-mark hold libnvshmem3-cuda-12 libnvshmem3-dev-cuda-12 
+
 ARG PY_TARBALL
 ENV UV_LINK_MODE=copy
 COPY /install-python-pkgs-cuda.sh /
@@ -698,18 +800,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=bind,source=/downloads,target=/tmp/downloads \
     /install-python-pkgs-cuda.sh \
- && rm -f /install-python-pkgs-cuda.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-python-pkgs-cuda.sh
 
 ENV JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
 COPY /install-julia-pkgs-cuda.sh /
 RUN --mount=type=cache,target=/root/.julia \
     /install-julia-pkgs-cuda.sh \
- && rm -f /install-julia-pkgs-cuda.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
-
+ && rm -f /install-julia-pkgs-cuda.sh
 
 # Hermes Agent (UI is reached through guacamole). User-facing scripts live in /etc/e4s and are
 # symlinked into place; the install script only installs the application.
@@ -724,11 +821,33 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     /install-hermes.sh \
  && rm -f /install-hermes.sh
 
+# Orca IDE (GUI is reached through guacamole): upstream's package, plus the E4S orca-ide
+# dispatcher (/usr/local/bin) and desktop entry, all installed by install-orca.sh.
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    bash /tmp/e4s-common/install-orca.sh
 
+COPY --from=release-common install-npm-packages-openclaw.sh /
+RUN /install-npm-packages-openclaw.sh \
+ && rm -f /install-npm-packages-openclaw.sh
+
+COPY --from=release-common install-ollama.sh /tmp/install-ollama.sh
+RUN ollama_installer=/tmp/install-ollama.sh \
+ && curl -fsSL https://ollama.com/install.sh --output $ollama_installer \
+ && sed -i '/install_cuda_driver_apt() {/a echo Skipping NVIDIA driver install && return' $ollama_installer \
+ && sed -i '/install_cuda_driver_yum() {/a echo Skipping NVIDIA driver install && return' $ollama_installer \
+ && chmod +x $ollama_installer \
+ && $ollama_installer \
+ && rm $ollama_installer
 
 
 ## FINAL CUDA 120
 FROM final-cuda-base AS final-cuda-120
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-cuda120
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -739,9 +858,9 @@ COPY --from=spack-cuda-120 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -753,19 +872,20 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
-
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R g+rwX /root
 
 WORKDIR /
 
 
 ## FINAL CUDA 90
 FROM final-cuda-base AS final-cuda-90
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-cuda90
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -776,9 +896,9 @@ COPY --from=spack-cuda-90 /etc/e4s /etc/e4s
  
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -790,19 +910,20 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
-
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R g+rwX /root
 
 WORKDIR /
 
 
 ## FINAL CUDA 80
 FROM final-cuda-base AS final-cuda-80
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-cuda80
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -813,9 +934,9 @@ COPY --from=spack-cuda-80 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -827,19 +948,60 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
+WORKDIR /
 
-RUN chmod -R o+rX /root \
- && chmod -R g+rwX /root
+
+## FINAL CUDA 80 FULL
+FROM final-cuda-base AS final-cuda-80-full
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-cuda80-full
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+COPY --from=spack-cuda-80-full $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack-cuda-80-full $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+COPY --from=spack-cuda-80-full /etc/spack /etc/spack
+COPY --from=spack-cuda-80-full /etc/e4s /etc/e4s
+
+COPY --from=container-common utilities.sh /etc/e4s/
+COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
+
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
+
+ARG IMAGE_TARGET
+
+COPY /install-bashrc.sh /
+RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
+
+RUN updatedb
+
+RUN chmod -R go+rX /etc/spack
 
 WORKDIR /
 
 
 ## FINAL CPU
 FROM final-base AS final-cpu
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-cpu
 
 ARG PY_TARBALL
 ENV UV_LINK_MODE=copy
@@ -850,17 +1012,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=bind,source=/downloads,target=/tmp/downloads \
     /install-python-pkgs-cpu.sh \
- && rm -f /install-python-pkgs-cpu.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-python-pkgs-cpu.sh
 
 ENV JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
 COPY /install-julia-pkgs-cpu.sh /
 RUN --mount=type=cache,target=/root/.julia \
     /install-julia-pkgs-cpu.sh \
- && rm -f /install-julia-pkgs-cpu.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-julia-pkgs-cpu.sh
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -871,9 +1029,6 @@ COPY --from=spack-cpu /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
 COPY --from=release-common hermes.desktop /etc/e4s/
@@ -886,6 +1041,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     /install-hermes.sh \
  && rm -f /install-hermes.sh
 
+# Orca IDE (GUI is reached through guacamole): upstream's package, plus the E4S orca-ide
+# dispatcher (/usr/local/bin) and desktop entry, all installed by install-orca.sh.
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    bash /tmp/e4s-common/install-orca.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
+
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
 RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
@@ -896,14 +1061,12 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
 WORKDIR /
 
@@ -919,17 +1082,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=bind,source=/downloads,target=/tmp/downloads \
     /install-python-pkgs-rocm.sh \
- && rm -f /install-python-pkgs-rocm.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-python-pkgs-rocm.sh
 
 ENV JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
 COPY /install-julia-pkgs-rocm.sh /
 RUN --mount=type=cache,target=/root/.julia \
     /install-julia-pkgs-rocm.sh \
- && rm -f /install-julia-pkgs-rocm.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-julia-pkgs-rocm.sh
 
 COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
 COPY --from=release-common hermes.desktop /etc/e4s/
@@ -942,9 +1101,56 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     /install-hermes.sh \
  && rm -f /install-hermes.sh
 
+# Orca IDE (GUI is reached through guacamole): upstream's package, plus the E4S orca-ide
+# dispatcher (/usr/local/bin) and desktop entry, all installed by install-orca.sh.
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    bash /tmp/e4s-common/install-orca.sh
+
+## FINAL ROCM 950
+FROM final-rocm-base AS final-rocm-950
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-rocm950
+
+ARG SPACK_CORE_ROOT
+ARG SPACK_PACKAGES_ROOT
+COPY --from=spack-rocm-950 $SPACK_CORE_ROOT $SPACK_CORE_ROOT
+COPY --from=spack-rocm-950 $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
+COPY --from=spack-rocm-950 /etc/e4s /etc/e4s
+COPY --from=container-common utilities.sh /etc/e4s/
+COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
+
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
+
+ARG IMAGE_TARGET
+
+COPY /install-bashrc.sh /
+RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
+
+RUN updatedb
+
+RUN chmod -R go+rwX /etc/e4s /etc/spack
+
+WORKDIR /
 
 ## FINAL ROCM 942
 FROM final-rocm-base AS final-rocm-942
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-rocm942
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -953,28 +1159,36 @@ COPY --from=spack-rocm-942 $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-rocm-942 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
+
+ARG S3_ENDPOINT
+ARG SPACK_MIRROR
+RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
+ && spack mirror add --scope site --s3-endpoint-url $S3_ENDPOINT E4S $SPACK_MIRROR \
+ && spack buildcache keys -ity
 
 ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
 WORKDIR /
 
 
 ## FINAL ROCM 90a
 FROM final-rocm-base AS final-rocm-90a
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-rocm90a
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -983,9 +1197,9 @@ COPY --from=spack-rocm-90a $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-rocm-90a /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -997,20 +1211,22 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
 WORKDIR /
 
 
 ## FINAL ROCM 908
 FROM final-rocm-base AS final-rocm-908
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-rocm908
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -1019,9 +1235,9 @@ COPY --from=spack-rocm-908 $SPACK_PACKAGES_ROOT $SPACK_PACKAGES_ROOT
 COPY --from=spack-rocm-908 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-rocm /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -1033,20 +1249,22 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
 WORKDIR /
 
 
 ## FINAL ONEAPI
 FROM final-base AS final-oneapi
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2404-x86_64-oneapi
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -1064,23 +1282,16 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     --mount=type=bind,source=/downloads,target=/tmp/downloads \
     /install-python-pkgs-oneapi.sh \
- && rm -f /install-python-pkgs-oneapi.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-python-pkgs-oneapi.sh
 
 ENV JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
 COPY /install-julia-pkgs-oneapi.sh /
 RUN --mount=type=cache,target=/root/.julia \
     /install-julia-pkgs-oneapi.sh \
- && rm -f /install-julia-pkgs-oneapi.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-julia-pkgs-oneapi.sh
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env oneapi/_config/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
 COPY --from=release-common hermes.desktop /etc/e4s/
@@ -1093,6 +1304,16 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     /install-hermes.sh \
  && rm -f /install-hermes.sh
 
+# Orca IDE (GUI is reached through guacamole): upstream's package, plus the E4S orca-ide
+# dispatcher (/usr/local/bin) and desktop entry, all installed by install-orca.sh.
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    bash /tmp/e4s-common/install-orca.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
+
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
 RUN . $SPACK_CORE_ROOT/share/spack/setup-env.sh \
@@ -1103,13 +1324,11 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
-
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
 WORKDIR /

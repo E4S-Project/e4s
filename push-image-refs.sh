@@ -1,7 +1,5 @@
 #!/bin/bash
 
-E4S_VER=26.06
-
 if [[ "$(arch)" == "x86_64" ]]; then
   arch=X86_64
 elif [[ "$(arch)" == "aarch64" ]]; then

@@ -31,7 +31,15 @@
 #     or `--writable-tmpfs` to keep that inside the container, or point
 #     GUAC_STATE_DIR at a bind-mounted directory to persist the setup between runs.
 #
+# Options:
+#   --dynamic-resize        let Guacamole resize the VNC desktop to the browser viewport
+#                           (same as GUAC_DYNAMIC_RESIZE=1). Default: the desktop stays fixed
+#                           at VNC_GEOMETRY.
+#                           The policy is applied when Tomcat is started; if Tomcat is already
+#                           running the setting is left unchanged (stop it first).
+#
 # Optional environment variables:
+#   GUAC_DYNAMIC_RESIZE=1  same as --dynamic-resize
 #   GUAC_STATE_DIR         root for all generated state (see above)
 #   SHOW_PUBLIC_IP=1       look up the public IP via ifconfig.me for the SSH hint (off by default)
 #   SSH_HOST=<name/ip>     host to show in the SSH tunnel hint (default: detected LAN IP)
@@ -48,14 +56,31 @@
 #   VNC_ISOLATE            auto (default) | 0 | 1
 #   VNC_CONFIG_DIR         private VNC dir for isolated mode (default $GUAC_HOME/vnc)
 #   VNC_SESSION_CMD        desktop command for isolated mode (default startxfce4)
-#   VNC_GEOMETRY           isolated-mode screen size (default 1920x1080)
+#   VNC_GEOMETRY           fixed screen size (default 1920x1200). Always used in isolated mode;
+#                          in host mode only passed to vncserver when you set it explicitly
 #   VNC_XVNC_ARGS          extra Xvnc arguments for isolated mode
 set -eu
 umask 077
 
-case "${1:-}" in
-    -h|--help) sed -n '2,/^set -eu/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'; exit 0 ;;
-esac
+DYNAMIC_RESIZE=0
+[ "${GUAC_DYNAMIC_RESIZE:-0}" = "1" ] && DYNAMIC_RESIZE=1
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --dynamic-resize)
+            DYNAMIC_RESIZE=1
+            ;;
+        -h|--help)
+            sed -n '2,/^set -eu/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'
+            exit 0
+            ;;
+        *)
+            echo "ERROR: unknown option: $1" >&2
+            echo "Try '$0 --help'." >&2
+            exit 2
+            ;;
+    esac
+    shift
+done
 
 # ==============================================================================
 # Environment detection
@@ -131,6 +156,9 @@ TOMCAT_BASE="$GUAC_STATE_DIR/tomcat-runtime"
 GUAC_HOME="$GUAC_STATE_DIR/.guacamole"
 EXPECTED_GUAC_VERSION="${EXPECTED_GUAC_VERSION:-1.6.0}"
 VNC_CONFIG_DIR="${VNC_CONFIG_DIR:-$GUAC_HOME/vnc}"
+VNC_GEOMETRY_USER_SET=0
+[ -n "${VNC_GEOMETRY:-}" ] && VNC_GEOMETRY_USER_SET=1
+VNC_GEOMETRY="${VNC_GEOMETRY:-1920x1200}"
 
 # java: use PATH, else JAVA_HOME, else a spack JDK (spack load of guacamole-server alone doesn't provide one)
 if ! command -v java >/dev/null 2>&1; then
@@ -442,9 +470,14 @@ launch_isolated_vnc() {
     chmod 600 "$xa"
 
     args=(":$n" -rfbport "$port" -localhost -SecurityTypes VncAuth -rfbauth "$VNC_PASSWD_FILE"
-          -auth "$xa" -nolisten tcp -geometry "${VNC_GEOMETRY:-1920x1080}" -depth 24
+          -auth "$xa" -nolisten tcp -geometry "$VNC_GEOMETRY" -depth 24
           -desktop "guacamole:$n ($(whoami))")
     [ -d /etc/X11/fontpath.d ] && args+=(-fp "catalogue:/etc/X11/fontpath.d")
+    # Pinned mode: have Xvnc itself refuse client resize requests, so the size holds
+    # even if user-mapping.xml is edited or another VNC client connects.
+    if [ "$DYNAMIC_RESIZE" != "1" ]; then
+        args+=(-AcceptSetDesktopSize=0)
+    fi
 
 
 # Xvnc uses Mesa software rendering in headless VNC desktops. Some CUDA
@@ -587,6 +620,46 @@ for p in ET.parse(sys.argv[1]).getroot().iter('param'):
     if p.get('name') == 'password':
         print(p.text or '')
         break
+PYEOF
+}
+
+# Apply the launch-time display policy to the cached connection definition. Only
+# disable-display-resize is touched; credentials, ports and other settings are kept.
+# Must run only when this invocation is going to start Tomcat: Guacamole re-reads
+# user-mapping.xml on change, so rewriting it under a running instance would alter it.
+set_guac_resize_policy() {
+    python3 - "$GUAC_HOME/user-mapping.xml" "$DYNAMIC_RESIZE" <<'PYEOF'
+import os
+import sys
+import tempfile
+import xml.etree.ElementTree as ET
+
+path, dynamic = sys.argv[1], sys.argv[2] == '1'
+tree = ET.parse(path)
+root = tree.getroot()
+
+for conn in root.iter('connection'):
+    protocol = conn.find('protocol')
+    if protocol is None or (protocol.text or '').strip().lower() != 'vnc':
+        continue
+    for param in list(conn.findall('param')):
+        if param.get('name') == 'disable-display-resize':
+            conn.remove(param)
+    if not dynamic:
+        ET.SubElement(conn, 'param', {'name': 'disable-display-resize'}).text = 'true'
+
+if hasattr(ET, 'indent'):
+    ET.indent(tree)
+fd, tmp = tempfile.mkstemp(prefix='.user-mapping.', dir=os.path.dirname(path))
+try:
+    os.close(fd)
+    tree.write(tmp, encoding='utf-8', xml_declaration=True)
+    os.chmod(tmp, 0o600)
+    os.replace(tmp, path)
+except BaseException:
+    try: os.unlink(tmp)
+    except FileNotFoundError: pass
+    raise
 PYEOF
 }
 
@@ -917,6 +990,7 @@ EOF
 
     # Build user-mapping.xml with a real XML writer (safe for &, <, quotes) and SHA-256
     GUAC_USER="$GUAC_USER" GUAC_PASS="$GUAC_PASS" VNC_PASS="$VNC_PASS" VNC_PORT="$VNC_PORT" \
+    DYNAMIC_RESIZE="$DYNAMIC_RESIZE" \
     python3 - "$GUAC_HOME/user-mapping.xml" <<'PYEOF'
 import hashlib
 import os
@@ -931,9 +1005,12 @@ auth = ET.SubElement(root, 'authorize', {
 })
 conn = ET.SubElement(auth, 'connection', {'name': 'Local VNC Session'})
 ET.SubElement(conn, 'protocol').text = 'vnc'
-for name, value in (('hostname', '127.0.0.1'),
-                    ('port', os.environ['VNC_PORT']),
-                    ('password', os.environ['VNC_PASS'])):
+params = [('hostname', '127.0.0.1'),
+          ('port', os.environ['VNC_PORT']),
+          ('password', os.environ['VNC_PASS'])]
+if os.environ.get('DYNAMIC_RESIZE') != '1':
+    params.append(('disable-display-resize', 'true'))
+for name, value in params:
     ET.SubElement(conn, 'param', {'name': name}).text = value
 if hasattr(ET, 'indent'):
     ET.indent(root)
@@ -977,10 +1054,23 @@ if port_in_use "$HTTP_PORT"; then
     echo "================================================="
     echo " Tomcat is ALREADY RUNNING on port $HTTP_PORT; nothing was started or stopped."
     echo " VNC: $VNC_DESC | guacd: Active"
+    if [ "$DYNAMIC_RESIZE" = "1" ]; then
+        echo " NOTE: resize policy NOT changed (--dynamic-resize / GUAC_DYNAMIC_RESIZE applies only"
+        echo "       when this script starts Tomcat). Stop the running instance and re-run."
+    fi
     echo "================================================="
     print_banner "$HTTP_PORT"
     echo "================================================="
     exit 0
+fi
+
+# user-mapping.xml persists across runs. Now that we know we are the ones starting
+# Tomcat, reconcile the requested resize policy so switching modes is never masked.
+set_guac_resize_policy
+if [ "$DYNAMIC_RESIZE" = "1" ]; then
+    echo "Resize policy: dynamic (desktop follows the browser viewport)."
+else
+    echo "Resize policy: fixed at $VNC_GEOMETRY (use --dynamic-resize to follow the browser)."
 fi
 
 # ==============================================================================
@@ -1063,7 +1153,11 @@ case "$VNC_STATE" in
             echo "-> Isolated VNC session :$DISPLAY_NUM is up on port $VNC_PORT (stopped on exit)."
             echo "   Logs: $VNC_CONFIG_DIR/xvnc.log, $VNC_CONFIG_DIR/session.log"
         else
-            "$VNCSERVER_BIN" ":$DISPLAY_NUM" -localhost
+            host_vnc_args=(-localhost)
+            if [ "$VNC_GEOMETRY_USER_SET" = "1" ]; then
+                host_vnc_args+=(-geometry "$VNC_GEOMETRY")
+            fi
+            "$VNCSERVER_BIN" ":$DISPLAY_NUM" "${host_vnc_args[@]}"
             STARTED_VNC_DISPLAY=":$DISPLAY_NUM"
 
             for _ in $(seq 1 15); do
@@ -1128,4 +1222,3 @@ TOMCAT_PID=$!
 
 # Foreground wait lets bash run the INT/TERM traps promptly
 wait "$TOMCAT_PID"
-

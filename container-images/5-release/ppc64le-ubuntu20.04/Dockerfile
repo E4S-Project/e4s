@@ -185,8 +185,11 @@ FROM $FINAL_BASE_IMAGE AS final-base
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Los_Angeles
 
+COPY --from=common_4_5 --chmod=0755 e4s-chain-spack.sh /etc/e4s/
+
 RUN rm -f /etc/apt/apt.conf.d/docker-clean \
- && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+ && echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache \
+ && ln -sf /etc/e4s/e4s-chain-spack.sh /usr/local/bin/e4s-chain-spack.sh
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -314,6 +317,10 @@ RUN /install-julia-pkgs-cuda.sh \
 ## FINAL CUDA 70
 FROM final-cuda-base AS final-cuda-70
 
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2004-ppc64le-cuda70
+
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
 COPY --from=spack-cuda-70 $SPACK_CORE_ROOT $SPACK_CORE_ROOT
@@ -323,7 +330,6 @@ COPY --from=spack-cuda-70 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -335,6 +341,8 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
@@ -353,6 +361,10 @@ ENV MPICH_FC=/usr/bin/gfortran-9
 
 ## FINAL CPU
 FROM final-base AS final-cpu
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=ubuntu2004-ppc64le-cpu
 
 ARG PY_TARBALL
 ENV UV_LINK_MODE=copy
@@ -383,7 +395,6 @@ COPY --from=spack-cpu /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -395,6 +406,8 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 

@@ -20,7 +20,8 @@ require_env \
  spack_packages_repo \
  spack_packages_root \
  spack_mirror \
- REGISTRY
+ REGISTRY \
+ E4S_VERSION
 
 name=e4s-spack-$target-x86_64
 timestamp=$(date +%s)
@@ -60,6 +61,7 @@ fi
 
 cmd docker build \
  -t "${output_img}" \
+ --build-arg E4S_VERSION="$E4S_VERSION" \
  --build-arg S3_ENDPOINT=$S3_ENDPOINT \
  --build-arg SPACK_CORE_CHECKOUT=$spack_core_checkout \
  --build-arg SPACK_CORE_REPO=$spack_core_repo \

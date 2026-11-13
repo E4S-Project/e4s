@@ -1,17 +1,19 @@
 #!/bin/bash
 # `hermes` launcher for E4S images (installed as /usr/local/bin/hermes -> /etc/e4s/hermes-wrapper.sh).
 #
-# Picks a per-user HERMES_HOME, seeds it once per image version, then runs the real hermes.
+# Picks a per-user HERMES_HOME, seeds it once per image version, and runs the real hermes.
+# Bare `hermes dashboard`, `hermes desktop`, and `hermes gui` open the E4S browser launcher.
+# Invocations with arguments continue to the CLI (as used by hermes-ui.sh and for CLI options).
 # /opt/hermes is read-only/shared; every mutable file lives under HERMES_HOME.
 #
 # HERMES_HOME selection (first match wins):
 #   1. HERMES_CONTAINER_HOME            explicit override (e.g. a bind-mounted host directory)
 #   2. E4S_PERSIST_DIR/hermes           shared E4S persistent-data root, if set
-#   3. ${XDG_DATA_HOME:-$HOME/.local/share}/e4s-hermes
+#   3. $HOME/.e4s/${E4S_IID}-${E4S_VERSION}/hermes
 # A HERMES_HOME inherited from the host shell is deliberately ignored: Singularity/Apptainer
 # passes the host environment through and we must not touch the user's host-side Hermes data.
 # Under Singularity/Apptainer, $HOME is normally bind-mounted from the host, so (3) persists
-# in a dedicated e4s-hermes directory that never collides with a host ~/.hermes. With
+# in an image-specific E4S directory that never collides with a host ~/.hermes.
 # --contain/--no-home or a read-only $HOME, bind-mount a host directory and point
 # HERMES_CONTAINER_HOME at it; otherwise this falls back to a throwaway directory in
 # ${TMPDIR:-/tmp} and warns that nothing will persist.
@@ -23,7 +25,10 @@ if [ -z "${E4S_HERMES_WRAPPED:-}" ]; then
   elif [ -n "${E4S_PERSIST_DIR:-}" ]; then
     home="$E4S_PERSIST_DIR/hermes"
   else
-    home="${XDG_DATA_HOME:-$HOME/.local/share}/e4s-hermes"
+    : "${HOME:?hermes: HOME is not set}"
+    : "${E4S_IID:?hermes: E4S_IID is not set}"
+    : "${E4S_VERSION:?hermes: E4S_VERSION is not set}"
+    home="$HOME/.e4s/${E4S_IID}-${E4S_VERSION}/hermes"
   fi
   if ! { ( umask 077; mkdir -p "$home" ) 2>/dev/null && [ -w "$home" ]; }; then
     fallback="${TMPDIR:-/tmp}/e4s-hermes-$(id -un)"
@@ -59,5 +64,10 @@ fi
 
 if ! grep -qx "$(cat /etc/hermes/e4s-ref)" "$HERMES_HOME/.e4s-init-done" 2>/dev/null; then
   /etc/e4s/hermes-init.sh >&2 || echo "[hermes] init reported errors (continuing)" >&2
+fi
+if [ "$#" -eq 1 ]; then
+  case "$1" in
+    dashboard|desktop|gui) exec /etc/e4s/hermes-ui.sh ;;
+  esac
 fi
 exec /opt/hermes/.venv/bin/hermes "$@"

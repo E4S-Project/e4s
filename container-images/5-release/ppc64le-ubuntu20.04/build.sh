@@ -86,6 +86,7 @@ if is_set SAVE_OUTPUT_REF; then
 fi
 
 cmd docker build \
+ --build-arg E4S_VERSION="$E4S_VERSION" \
  --build-arg IMAGE_TARGET="$target" \
  --build-arg FINAL_BASE_IMAGE="$final_base_image" \
  --build-arg CPU_BASE_IMAGE="$cpu_base_image" \

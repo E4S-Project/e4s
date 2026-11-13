@@ -124,6 +124,12 @@
                 "refs": [
                     "UBUNTU_X86_64_RELEASE_ROCM942_IMAGE"
                 ]
+            },
+            {
+                "tag_suffix": "gfx950",
+                "refs": [
+                    "UBUNTU_X86_64_RELEASE_ROCM950_IMAGE"
+                ]
             }
         ]
     },

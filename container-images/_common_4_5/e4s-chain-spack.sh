@@ -1,493 +1,389 @@
 #!/bin/bash
 
+set -o pipefail
+
 show_help() {
-  cat <<EOF
+  cat <<USAGE
 Usage: $0 [options]
-       $0 <SPACK_ROOT>
 
-This script clones a new local Spack installation (named 'spack') and configures
-it to use an upstream Spack installation. It attempts to match the upstream Spack
-version and optionally handles the spack-packages repository (for Spack 1.0+).
-
+Create or reuse a writable Spack chained to an existing upstream Spack.
+By default, Spack and spack-packages are stored under:
+  ~/.e4s/\${E4S_IID}-\${E4S_VERSION}
+--latest initializes both repositories from their current default branches.
+Existing clean checkouts are reused without being updated, whatever commit
+they are at. --latest only affects checkouts that have to be created.
 Options:
-  -u, --upstream <path>      Path to the upstream Spack installation. Defaults to
-                             SPACK_ROOT if loaded, then spack_root_upstream,
-                             then /spack.
-  -l, --local <path>         Path where the new 'spack' directory will be created.
-                             Defaults to current directory. Script will error if
-                             'spack' already exists at this location.
-  -n, --name <name>          Name for the new Spack directory. Defaults to 'spack'.
-  -d, --develop              Use develop version of spack (do not match upstream
-                             version).
-  --full-history             Clone with full git history instead of shallow clone.
-                             Slower but useful for development.
-  -p, --packages <option>    How to handle spack-packages repo (for Spack 1.0+):
-                               'upstream' - use upstream's packages repo (default)
-                               'new' - let spack auto-bootstrap its own packages repo
-  -h, --help                 Display this help message.
-
-Notes:
-  - To set an upstream for an *existing* local Spack, use the following
-    command after initializing your Spack install:
-      spack config --scope site add "upstreams:e4s:install_tree:\$UPSTREAM_SPACK_ROOT/opt/spack"
-  - This script will checkout the spack version matching the upstream spack if possible
-  - For Spack 1.0+, packages are in a separate repository (spack-packages)
-  - Configuration settings (concretizer:reuse, concretizer:unify, mirrors) are
-    automatically copied from upstream using spack config blame
-  - The script will fail if a 'spack' directory already exists at the target location
-
-Examples:
-
-- Single argument mode:
-  $0 /path/to/downstream/spack
-
-- Create downstream Spack in current directory from loaded upstream:
-  $0
-
-- Specify upstream Spack and destination directory:
-  $0 -u /path/to/upstream/spack -l /path/to/install/location
-
-- Create downstream with new local packages repo:
-  $0 -p new
-
-- Create downstream using upstream's packages repo with custom name:
-  $0 -p upstream -n my-spack
-EOF
+  -u, --upstream <path>      Upstream Spack root. Defaults to the currently
+                             loaded SPACK_ROOT, then /spack.
+  -l, --local <path>         Override the E4S release-scoped parent directory.
+  -n, --name <name>          Downstream Spack directory name. Default: spack.
+      --latest               Initialize both repositories from current default branches.
+  -d, --develop              Deprecated alias for --latest.
+      --full-history         Clone full Git history.
+  -h, --help                 Show this help.
+Existing invalid or dirty checkouts are left untouched and cause an error.
+USAGE
   exit "$1"
 }
 
-# Initialize variables
+fail() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+short_sha() {
+  printf '%s' "$1" | cut -c1-12
+}
+
+require_value() {
+  [[ $# -ge 2 && -n "$2" ]] || fail "Option '$1' requires a value"
+}
+
+# Pinned checkout: fetch exactly one commit. Returns non-zero on failure so
+# the caller can remove the partial directory.
+clone_revision() {
+  local repository=$1
+  local commit=$2
+  local destination=$3
+
+  if [[ $full_history -eq 1 ]]; then
+    git clone "$repository" "$destination" || return 1
+    git -C "$destination" checkout -q --detach "$commit" || return 1
+  else
+    mkdir -p "$destination" || return 1
+    git -C "$destination" init -q || return 1
+    git -C "$destination" remote add origin "$repository" || return 1
+    git -C "$destination" fetch --depth 1 origin "$commit" || return 1
+    git -C "$destination" checkout -q --detach FETCH_HEAD || return 1
+  fi
+}
+
+# --latest checkout: current tip of the repository's default branch.
+clone_latest() {
+  local repository=$1
+  local destination=$2
+
+  if [[ $full_history -eq 1 ]]; then
+    git clone "$repository" "$destination" || return 1
+  else
+    git clone --depth 1 "$repository" "$destination" || return 1
+  fi
+}
+
+# Reuse an existing clean checkout (any commit) or create a new one.
+ensure_checkout() {
+  local repository=$1
+  local commit=$2
+  local destination=$3
+  local label=$4
+
+  if [[ -e "$destination" ]]; then
+    [[ -e "$destination/.git" ]] || \
+      fail "$destination already exists but is not a Git checkout ($label). Choose another location or move/remove the existing directory."
+    git -C "$destination" diff --quiet --ignore-submodules -- && \
+      git -C "$destination" diff --cached --quiet --ignore-submodules -- || \
+      fail "$destination has local changes; refusing to reuse this $label checkout. Commit/stash them or choose another location."
+
+    local head
+    head=$(git -C "$destination" rev-parse HEAD 2>/dev/null) || \
+      fail "Could not read HEAD of existing $label checkout $destination"
+    echo "Reusing $label checkout at $(short_sha "$head"): $destination"
+    if [[ $use_latest -eq 1 ]]; then
+      echo "  Note: --latest does not update existing checkouts."
+    elif [[ "$head" != "$commit" ]]; then
+      echo "  Note: differs from the upstream commit $(short_sha "$commit"); reused as-is."
+    fi
+    return 0
+  fi
+
+  if [[ $use_latest -eq 1 ]]; then
+    echo "Creating $label checkout from the default branch: $destination"
+    clone_latest "$repository" "$destination" || {
+      rm -rf "$destination"
+      fail "Failed to clone $label"
+    }
+  else
+    echo "Creating $label checkout at $(short_sha "$commit"): $destination"
+    clone_revision "$repository" "$commit" "$destination" || {
+      rm -rf "$destination"
+      fail "Failed to create $label checkout at commit $commit"
+    }
+  fi
+}
+
 upstream_spack=""
-local_parent_path=""  # Will default to current directory if not specified
-spack_dir_name="spack"  # Name of the Spack directory to create
-local_spack_arg=""  # Optional positional argument: full path to downstream Spack root
-match_version=1
-packages_option="upstream"  # Options: 'upstream', 'new', 'none'
+local_parent_path=""
+spack_dir_name="spack"
+upstream_was_explicit=0
+use_latest=0
 full_history=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -u|--upstream)
-      upstream_spack="$2"
+      require_value "$@"
+      upstream_spack=$2
+      upstream_was_explicit=1
       shift 2
       ;;
     -l|--local)
-      local_parent_path="$2"
+      require_value "$@"
+      local_parent_path=$2
       shift 2
       ;;
     -n|--name)
-      spack_dir_name="$2"
+      require_value "$@"
+      spack_dir_name=$2
       shift 2
       ;;
-    -h|--help)
-      show_help 0
-      ;;
-    -d|--develop)
-      match_version=0
+    --latest|-d|--develop)
+      use_latest=1
       shift
       ;;
     --full-history)
       full_history=1
       shift
       ;;
-    -p|--packages)
-      packages_option="$2"
-      if [[ "$packages_option" != "upstream" && "$packages_option" != "new" ]]; then
-        echo "Error: Invalid packages option '$packages_option'. Must be 'upstream' or 'new'."
-        show_help 1
-      fi
-      shift 2
+    -h|--help)
+      show_help 0
+      ;;
+    -*)
+      fail "Unknown option: $1"
       ;;
     *)
-      if [[ -z "$local_spack_arg" ]]; then
-        local_spack_arg="$1"
-        shift
-      else
-        echo "Error: Too many positional arguments. Expected at most one: <SPACK_ROOT>"
-        show_help 1
-      fi
+      fail "Unexpected positional argument: $1. Use --upstream, --local, or --name."
       ;;
   esac
 done
 
-if [[ -n "$local_spack_arg" && ( -n "$local_parent_path" || "$spack_dir_name" != "spack" ) ]]; then
-  echo "Error: Cannot combine positional <SPACK_ROOT> with -l/--local or -n/--name"
-  show_help 1
-fi
-
-rundir=`pwd`
-
-#Determine Upstream Spack Path
-if [[ -n "$upstream_spack" ]]; then
-  # Upstream Spack path is provided by the user via --upstream
-  : # Do nothing, already set
-elif [[ -n "$SPACK_ROOT" ]]; then
-  # Upstream Spack is loaded and --upstream is not specified
-  upstream_spack="$SPACK_ROOT"
-elif [[ -n "$spack_root_upstream" ]]; then
-  # Compatibility with e4s-chain-spack.sh
-  upstream_spack="$spack_root_upstream"
-else
-  # Compatibility default used by e4s-chain-spack.sh
-  upstream_spack="/spack"
-fi
-
-# Validate upstream Spack by checking essential files
-if [[ ! -d "$upstream_spack" ]]; then
-  echo "Error: Upstream Spack directory does not exist: $upstream_spack"
-  show_help 1
-fi
-
-echo "Validating upstream Spack installation at: $upstream_spack"
-
-# Check for essential Spack files
-missing_files=()
-if [[ ! -f "$upstream_spack/share/spack/setup-env.sh" ]]; then
-  missing_files+=("share/spack/setup-env.sh")
-fi
-if [[ ! -f "$upstream_spack/bin/spack" ]]; then
-  missing_files+=("bin/spack")
-fi
-if [[ ! -d "$upstream_spack/lib/spack" ]]; then
-  missing_files+=("lib/spack/")
-fi
-if [[ ! -d "$upstream_spack/etc/spack" ]]; then
-  missing_files+=("etc/spack/")
-fi
-if [[ ! -d "$upstream_spack/opt/spack" ]]; then
-  echo "Warning: No install tree found at $upstream_spack/opt/spack"
-  echo "         This upstream Spack may not have any packages installed yet."
-fi
-
-if [[ ${#missing_files[@]} -gt 0 ]]; then
-  echo "Error: Invalid upstream Spack installation. Missing required files:"
-  for file in "${missing_files[@]}"; do
-    echo "  - $file"
-  done
-  exit 1
-fi
-
-echo "✓ Upstream Spack validation successful"
-
-# Determine local Spack path
-if [[ -n "$local_spack_arg" ]]; then
-  local_parent_path=$(cd "$(dirname "$local_spack_arg")" && pwd)
-  spack_dir_name=$(basename "$local_spack_arg")
-  local_spack="$local_parent_path/$spack_dir_name"
-  echo "Using explicit downstream path: $local_spack"
-else
-  # Handle Local Spack Parent Path (Default to current directory)
-  if [[ -z "$local_parent_path" ]]; then
-    local_parent_path="."
-    echo "No local path specified, using current directory: $(pwd)"
+if [[ -z "$upstream_spack" ]]; then
+  if [[ -n ${SPACK_ROOT:-} ]]; then
+    upstream_spack=$SPACK_ROOT
+  elif [[ -x /spack/bin/spack ]]; then
+    upstream_spack=/spack
+  else
+    fail "Could not determine an upstream Spack. Load the intended Spack or use --upstream /path/to/spack."
   fi
+fi
+upstream_spack=${upstream_spack%/}
 
-  # Convert to absolute path
-  local_parent_path=$(cd "$local_parent_path" && pwd)
-
-  # Set the actual local Spack path (where we will clone to)
-  local_spack="$local_parent_path/$spack_dir_name"
+# Automatic discovery must not silently chain from an instance managed by this
+# script. Managed instances carry a marker file (written at the end of setup),
+# so this works for any --local or --name. An explicit --upstream is treated as
+# intentional and bypasses this guard.
+if [[ $upstream_was_explicit -eq 0 && -e "$upstream_spack/.e4s-chained" ]]; then
+  fail "Automatically selected SPACK_ROOT is already a managed chained Spack: $upstream_spack. Select the original upstream explicitly with --upstream /path/to/spack. To intentionally chain from this instance, rerun with --upstream '$upstream_spack'."
 fi
 
-# Check if Spack already exists at target location
-if [[ -e "$local_spack" ]]; then
-  echo "Error: '$local_spack' already exists."
-  echo "       Please remove it first, choose a different location with -l,"
-  echo "       or use a different name with -n."
-  exit 1
-fi
+# Print this before validation so every later error identifies the selected source.
+echo "Selected upstream Spack: $upstream_spack"
 
-# Create parent directory if it doesn't exist
-mkdir -p "$local_parent_path"
+[[ -x "$upstream_spack/bin/spack" ]] || fail "No Spack executable at $upstream_spack/bin/spack"
+[[ -f "$upstream_spack/share/spack/setup-env.sh" ]] || \
+  fail "No setup-env.sh under $upstream_spack"
+[[ -d "$upstream_spack/lib/spack" ]] || fail "No lib/spack under $upstream_spack"
+[[ -d "$upstream_spack/etc/spack" ]] || fail "No etc/spack under $upstream_spack"
 
-# Get upstream Spack version using spack debug report
-upstream_version=""
+# Query the upstream with its own executable and without any downstream
+# SPACK_ROOT / SPACK_SYSTEM_CONFIG_PATH leaking into the query.
+upstream_exec() {
+  env -u SPACK_ROOT -u SPACK_SYSTEM_CONFIG_PATH "$upstream_spack/bin/spack" "$@"
+}
+
+upstream_version_output=$(upstream_exec --version 2>/dev/null) || \
+  fail "Could not query upstream Spack version from $upstream_spack"
+upstream_version=$(printf '%s\n' "$upstream_version_output" | awk '{print $1}')
+
 upstream_commit=""
-if [[ $match_version -eq 1 ]]; then
-  # Temporarily activate upstream spack to get version info
-  source "$upstream_spack/share/spack/setup-env.sh" 2>/dev/null
-  
-  # Try to get version from spack debug report
-  # Format: * **Spack:** 1.0.2 (https://github.com/spack/spack/commit/...)
-  upstream_version=$(spack debug report 2>/dev/null | grep -E '^\*\s+\*\*Spack:\*\*' | awk '{print $3}')
-  
-  if [[ -z "$upstream_version" ]]; then
-    echo "Warning: Could not determine upstream Spack version from 'spack debug report'"
-  else
-    echo "Detected upstream Spack version: $upstream_version"
-  fi
-  
-  # Also get commit hash if it's a git repo
-  if [[ -d "$upstream_spack/.git" ]]; then
-    upstream_commit=$(cd "$upstream_spack" && git rev-parse HEAD)
-    echo "Detected upstream Spack commit: $upstream_commit"
-  fi
-  
-  # Deactivate upstream spack
-  unset SPACK_ROOT
+if [[ -d "$upstream_spack/.git" ]]; then
+  upstream_commit=$(git -c safe.directory="$upstream_spack" \
+    -C "$upstream_spack" rev-parse HEAD 2>/dev/null) || upstream_commit=""
+fi
+if [[ -z "$upstream_commit" ]]; then
+  upstream_commit=$(printf '%s\n' "$upstream_version_output" | \
+    sed -n 's/.*(\([0-9a-fA-F]\{40\}\)).*/\1/p' | head -1)
 fi
 
-# Clone Local Spack
-clone_opts=""
-if [[ $full_history -eq 0 ]]; then
-  clone_opts="--depth 1"
-  echo "Using shallow clone (--depth 1) for faster download"
+# The upstream spack-packages commit is only needed to pin a new checkout, so
+# these lookups are best effort and only enforced when not using --latest.
+upstream_packages_commit=""
+upstream_packages_repo=$(upstream_exec repo list 2>/dev/null | \
+  awk '$2 == "builtin" {print $NF; exit}')
+if [[ -n "$upstream_packages_repo" && -d "$upstream_packages_repo" ]]; then
+  upstream_packages_root=${upstream_packages_repo%/repos/spack_repo/builtin}
+  if [[ -d "$upstream_packages_root/.git" ]]; then
+    actual_packages_root=$(git -c safe.directory="$upstream_packages_root" \
+      -C "$upstream_packages_root" rev-parse --show-toplevel 2>/dev/null) || \
+      actual_packages_root=""
+    if [[ "$actual_packages_root" == "$upstream_packages_root" ]]; then
+      upstream_packages_commit=$(git -c safe.directory="$upstream_packages_root" \
+        -C "$upstream_packages_root" rev-parse HEAD 2>/dev/null) || \
+        upstream_packages_commit=""
+    fi
+  fi
+fi
+
+if [[ $use_latest -eq 0 ]]; then
+  [[ -n "$upstream_commit" ]] || \
+    fail "Upstream Spack at '$upstream_spack' reports '$upstream_version_output' without an exact commit. Refusing to select a possibly incompatible release. Use --latest only if version matching is intentionally not required."
+  [[ -n "$upstream_packages_commit" ]] || \
+    fail "Could not determine the upstream spack-packages commit (builtin repo '${upstream_packages_repo:-not found}' is missing, not a Git checkout, or not at its Git root). Use --latest only if version matching is intentionally not required."
+fi
+
+# Locate the upstream install tree rather than assuming <root>/opt/spack.
+upstream_install_root=$(upstream_exec python -c \
+  'import spack.store; print(spack.store.STORE.root)' 2>/dev/null | tail -1)
+if [[ -z "$upstream_install_root" || ! -d "$upstream_install_root" ]]; then
+  upstream_install_root="$upstream_spack/opt/spack"
+fi
+[[ -d "$upstream_install_root" ]] || \
+  fail "Could not locate the upstream install tree (tried $upstream_install_root)"
+
+if [[ -z "$local_parent_path" ]]; then
+  [[ -n ${E4S_IID:-} ]] || fail "E4S_IID must be set when --local is not specified"
+  [[ -n ${E4S_VERSION:-} ]] || fail "E4S_VERSION must be set when --local is not specified"
+  case "$E4S_IID-$E4S_VERSION" in */*|*..*) fail "E4S_IID and E4S_VERSION must not contain / or .." ;; esac
+  local_parent_path="${HOME:?HOME is not set}/.e4s/${E4S_IID}-${E4S_VERSION}"
+fi
+mkdir -p "$local_parent_path" || fail "Could not create $local_parent_path"
+local_parent_path=$(cd "$local_parent_path" && pwd)
+
+local_spack="$local_parent_path/$spack_dir_name"
+local_packages_root="$local_parent_path/spack-packages"
+local_packages_repo="$local_packages_root/repos/spack_repo/builtin"
+local_module_root="$local_parent_path/modules"
+
+echo "Upstream Spack:          $upstream_spack"
+echo "Upstream version:        $upstream_version"
+echo "Upstream install tree:   $upstream_install_root"
+echo "Persistent directory:    $local_parent_path"
+echo "Module directory:        $local_module_root"
+ensure_checkout https://github.com/spack/spack.git "$upstream_commit" "$local_spack" Spack
+ensure_checkout https://github.com/spack/spack-packages.git "$upstream_packages_commit" "$local_packages_root" spack-packages
+[[ -d "$local_packages_repo" ]] || \
+  fail "Checked-out spack-packages repository has no builtin repo at $local_packages_repo"
+
+# Mark this checkout as managed so later automatic upstream discovery refuses
+# to chain from it by accident (see the guard above).
+touch "$local_spack/.e4s-chained" || fail "Could not write marker in $local_spack"
+
+if [[ -d "$upstream_spack/opt/spack/gpg" ]]; then
+  mkdir -p "$local_spack/opt/spack/gpg"
+  cp -a "$upstream_spack/opt/spack/gpg/." "$local_spack/opt/spack/gpg/" 2>/dev/null || true
+  chmod 700 "$local_spack/opt/spack/gpg"
+  chmod -R go-rwx "$local_spack/opt/spack/gpg" 2>/dev/null || true
+fi
+
+# Spack 1.x stores compiler definitions in packages.yaml. E4S supplies its
+# image-specific configuration (packages.yaml, modules.yaml, ...) in the system
+# scope (/etc/spack), which both the upstream and downstream Spack instances
+# read automatically. Do not copy system or user scope files into the
+# persistent checkout, where they could become stale across image use.
+#
+# Only files that live under the upstream's own config directory
+# (<upstream>/etc/spack, excluding defaults; this covers its "spack" and "site"
+# scopes) are copied, and only when they supply concretizer or mirror settings.
+# Query with the upstream executable so SPACK_ROOT stays downstream. Note that
+# a copied file brings along everything else it contains.
+config_files=$(
+  for section in concretizer mirrors; do
+    upstream_exec config blame "$section" 2>/dev/null
+  done | awk '{print $1}' | sed 's/:[0-9]*$//' |
+    awk -v prefix="$upstream_spack/etc/spack/" 'index($0, prefix) == 1' |
+    grep -v '/defaults/' | sort -u
+)
+
+while IFS= read -r config_file; do
+  [[ -n "$config_file" && -f "$config_file" ]] || continue
+  relative_path=${config_file#"$upstream_spack/etc/spack/"}
+  target="$local_spack/etc/spack/$relative_path"
+  mkdir -p "$(dirname "$target")" || fail "Could not create $(dirname "$target")"
+  cp "$config_file" "$target" || fail "Failed to copy $config_file"
+done <<< "$config_files"
+
+# Activate the downstream checkout for the remainder of this process. Because a
+# child script cannot modify its parent's environment, print a source command at
+# the end for the caller's shell.
+source "$local_spack/share/spack/setup-env.sh" || fail "Failed to activate $local_spack"
+
+# Make setup idempotent. Replacing the named upstream avoids duplicate entries
+# when a persistent checkout is reused with the same container installation.
+spack config --scope site remove upstreams:e4s >/dev/null 2>&1 || true
+spack config --scope site add "upstreams:e4s:install_tree:$upstream_install_root" || \
+  fail "Failed to configure E4S upstream install tree"
+
+# Spack 1.x configures the builtin repository as a Git repository whose local
+# checkout is selected by destination. Preserve the built-in Git URL and change
+# only its destination; adding the nested repo path creates an invalid remote
+# repository entry in current Spack.
+spack repo set --scope site --destination "$local_packages_root" builtin >/dev/null || \
+  fail "Failed to configure the local spack-packages checkout"
+configured_packages_root=$(spack repo list 2>/dev/null | \
+  awk '$2 == "builtin" {print $NF; exit}')
+[[ "$configured_packages_root" == "$local_packages_repo" ]] || \
+  fail "Builtin repository validation failed: expected $local_packages_repo, found ${configured_packages_root:-none}"
+
+# Tcl modules. Everything that determines module names and autoload targets
+# (projections, hash_length, hide_implicits, suffixes, autoload) comes from the
+# upstream's system-scope modules.yaml and is inherited unchanged, so downstream
+# modules autoload upstream modules by the same names. Only the location is
+# overridden here, in site scope (which outranks system scope): modules go in
+# the release-scoped directory without an architecture folder. MODULEPATH is
+# deliberately not touched; it is set by the environment.
+#
+# exclude_implicits matches the upstream's module tree, which contains modules
+# for explicitly installed packages only. Without it, downstream modules
+# autoload implicit and external dependencies (for example an external glibc)
+# that have no modulefile on MODULEPATH, and "module load" fails. The trade-off
+# is that implicit dependencies are not autoloaded; link dependencies are
+# reached through RPATH, as with the upstream modules.
+mkdir -p "$local_module_root" || fail "Could not create $local_module_root"
+spack config --scope site remove modules:default:enable >/dev/null 2>&1 || true
+spack config --scope site add "modules:default:roots:tcl:$local_module_root" || fail "Failed to configure Tcl module root"
+spack config --scope site add "modules:default:arch_folder:false" || fail "Failed to disable module arch folder"
+spack config --scope site add "modules:default:tcl:exclude_implicits:true" || fail "Failed to exclude implicit packages from Tcl modules"
+spack config --scope site add "modules:default:enable:[tcl]" || fail "Failed to enable Tcl modules"
+
+spack config get upstreams | grep -q 'e4s:' || fail "E4S upstream configuration validation failed"
+spack config get modules | grep -qF "$local_module_root" || \
+  fail "Tcl module root validation failed: $local_module_root is not in the effective modules configuration"
+
+cat <<SUMMARY
+
+===================================================================
+Downstream Spack Setup Complete
+===================================================================
+  Location:              $local_spack
+  Spack Version:         $(spack --version)
+  Upstream:              $upstream_spack
+  Packages Repo:         $local_packages_root
+  Persistent Directory:  $local_parent_path
+  Module Directory:      $local_module_root
+===================================================================
+SUMMARY
+
+if [[ -t 1 ]]; then
+  bold=$(printf '\033[1m')
+  cyan=$(printf '\033[1;36m')
+  reset=$(printf '\033[0m')
 else
-  echo "Cloning with full git history"
+  bold=""
+  cyan=""
+  reset=""
 fi
 
-if [[ $match_version -eq 1 && -n "$upstream_version" ]]; then
-  echo "Cloning Spack version $upstream_version to $local_spack..."
-  
-  # Try to clone the specific version tag
-  if git clone --branch "v$upstream_version" $clone_opts https://github.com/spack/spack "$local_spack" 2>/dev/null; then
-    echo "Successfully cloned Spack version $upstream_version"
-  elif git clone --branch "$upstream_version" $clone_opts https://github.com/spack/spack "$local_spack" 2>/dev/null; then
-    echo "Successfully cloned Spack version $upstream_version"
-  else
-    echo "Warning: Could not clone specific version $upstream_version."
-    
-    # Try to checkout the specific commit if available
-    if [[ -n "$upstream_commit" ]]; then
-      echo "Attempting to clone and checkout commit $upstream_commit..."
-      # For commit checkout, we need full history
-      if ! git clone https://github.com/spack/spack "$local_spack"; then
-        echo "Error: Failed to clone Spack to $local_spack"
-        show_help 1
-      fi
-      
-      cd "$local_spack"
-      if git checkout "$upstream_commit" 2>/dev/null; then
-        echo "Successfully checked out commit $upstream_commit"
-      else
-        echo "Warning: Could not checkout commit $upstream_commit."
-        echo "This may happen if the upstream is using a private branch or local commits."
-        echo "Attempting to find closest stable version..."
-        
-        # Try to find the closest stable release tag
-        closest_tag=$(git tag -l "v*" --sort=-version:refname | grep -v "dev" | head -1)
-        if [[ -n "$closest_tag" ]]; then
-          git checkout "$closest_tag"
-          echo "Checked out closest stable version: $closest_tag"
-        else
-          echo "Warning: No stable version tags found. Using latest release tag."
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "develop")
-          git checkout "$latest_tag"
-          echo "Checked out: $latest_tag"
-        fi
-      fi
-      cd "$rundir"
-    else
-      echo "Warning: No commit hash available. Cloning latest stable release..."
-      if ! git clone https://github.com/spack/spack "$local_spack"; then
-        echo "Error: Failed to clone Spack to $local_spack"
-        show_help 1
-      fi
-      cd "$local_spack"
-      # Find the latest stable release (avoid dev versions)
-      latest_stable=$(git tag -l "v*" --sort=-version:refname | grep -v "dev" | head -1)
-      if [[ -n "$latest_stable" ]]; then
-        git checkout "$latest_stable"
-        echo "Checked out latest stable version: $latest_stable"
-      else
-        latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "develop")
-        git checkout "$latest_tag"
-        echo "Checked out: $latest_tag"
-      fi
-      cd "$rundir"
-    fi
-  fi
-else
-  echo "Cloning latest stable spack to $local_spack."
-  if ! git clone https://github.com/spack/spack "$local_spack"; then
-    echo "Error: Failed to clone Spack to $local_spack"
-    show_help 1
-  fi
-  # When not matching version, checkout latest stable release instead of develop
-  cd "$local_spack"
-  latest_stable=$(git tag -l "v*" --sort=-version:refname | grep -v "dev" | head -1)
-  if [[ -n "$latest_stable" ]]; then
-    git checkout "$latest_stable"
-    echo "Checked out latest stable version: $latest_stable"
-  fi
-  cd "$rundir"
-fi
+printf '\n%s%sNEXT STEP: activate the writable Spack in this shell%s\n' \
+  "$bold" "$cyan" "$reset"
+printf '%s\n' '-------------------------------------------------------------------'
+printf '  %ssource "%s/share/spack/setup-env.sh"%s\n' \
+  "$bold" "$local_spack" "$reset"
+printf '%s\n' '-------------------------------------------------------------------'
 
-# Handle spack-packages repository (for Spack 1.0+)
-if [[ "$packages_option" == "upstream" ]]; then
-  echo "Configuring to use upstream's spack-packages repository..."
-  
-  # Activate upstream spack to query its repo configuration
-  old_spack_root="$SPACK_ROOT"
-  source "$upstream_spack/share/spack/setup-env.sh" 2>/dev/null
-  
-  # Get the upstream packages repo path using spack repo ls
-  # Format: [+] builtin    v2.2    /path/to/repo
-  # We want the last column (the path)
-  upstream_packages_repo=$(spack repo ls 2>/dev/null | grep builtin | awk '{print $NF}')
-  
-  # Switch to local spack
-  if [[ -n "$old_spack_root" ]]; then
-    source "$old_spack_root/share/spack/setup-env.sh"
-  else
-    source "$local_spack/share/spack/setup-env.sh"
-  fi
-  
-  # Configure local spack to use upstream's packages repo
-  if [[ -n "$upstream_packages_repo" && -d "$upstream_packages_repo" ]]; then
-    if spack repo add "$upstream_packages_repo" 2>/dev/null; then
-      echo "✓ Configured to use upstream packages repo: $upstream_packages_repo"
-    else
-      echo "Warning: Failed to configure upstream packages repo. Spack will auto-bootstrap."
-    fi
-  else
-    echo "No custom packages repository found in upstream. Spack will auto-bootstrap when needed."
-  fi
-  
-elif [[ "$packages_option" == "new" ]]; then
-  echo "Letting Spack auto-bootstrap packages repository when needed..."
-fi
-
-  # Activate local Spack
-  cd "$rundir"
-  if ! source "$local_spack/share/spack/setup-env.sh"; then
-    echo "Failed to activate spack at $local_spack"
-    exit 1
-  fi
-
-  # Enable upstreaming using spack config
-  echo "Enabling upstreaming from $local_spack to $upstream_spack..."
-  if ! spack config --scope site add "upstreams:e4s:install_tree:$upstream_spack/opt/spack"; then
-    echo "Error: Failed to configure upstreaming. Check the Spack configuration." >&2
-    exit 1
-  fi
-
-  # Copy over the upstream compilers.yaml
-  cp $SPACK_ROOT/etc/spack/compilers.yaml{,.bak} >/dev/null 2>&1 || true
-
-  if [[ -f $upstream_spack/etc/spack/compilers.yaml ]] ; then
-    cp $upstream_spack/etc/spack/compilers.yaml $SPACK_ROOT/etc/spack/
-  else
-    echo "Warning: compilers.yaml not found in upstream $upstream_spack/etc/spack/compilers.yaml"
-  fi
-  # Copy GPG keys from upstream for binary package verification
-  echo "Copying GPG keys from upstream..."
-  if [[ -d $upstream_spack/opt/spack/gpg ]] ; then
-    mkdir -p $SPACK_ROOT/opt/spack/gpg
-    if cp -r $upstream_spack/opt/spack/gpg/* $SPACK_ROOT/opt/spack/gpg/ 2>/dev/null; then
-      # Set secure permissions on GPG directory to avoid warnings
-      chmod 700 $SPACK_ROOT/opt/spack/gpg
-      chmod -R go-rwx $SPACK_ROOT/opt/spack/gpg/* 2>/dev/null || true
-      echo "  GPG keys copied successfully"
-    else
-      echo "  Warning: GPG directory exists but no keys found or copy failed"
-    fi
-  else
-    echo "  Warning: No GPG keys found in upstream $upstream_spack/opt/spack/gpg"
-    echo "           Binary package verification may not work"
-  fi
-  # Copy configuration settings from upstream
-  echo "Copying configuration settings from upstream..."
-  
-  # Temporarily activate upstream to use spack config blame
-  old_spack_root="$SPACK_ROOT"
-  source "$upstream_spack/share/spack/setup-env.sh" 2>/dev/null
-  
-  # Get the config files that define key settings using spack config blame
-  # Look for concretizer:reuse, concretizer:unify, and mirrors
-  # Note: awk extracts first column which contains "filepath:linenumber", so we strip the :linenumber part
-  config_files=$(spack config blame config 2>/dev/null | grep -E '(concretizer:|reuse:|unify:)' | awk '{print $1}' | sed 's/:[0-9]*$//' | sort -u)
-  mirrors_files=$(spack config blame mirrors 2>/dev/null | awk '{print $1}' | sed 's/:[0-9]*$//' | sort -u)
-  
-  # Combine and get unique non-default config files
-  # Filter out: default config paths, YAML markers (---), and empty lines
-  all_config_files=$(echo -e "${config_files}\n${mirrors_files}" | grep -v '/defaults/' | grep -v '^---$' | grep -v '^$' | sort -u)
-  
-  # Reactivate downstream spack
-  source "$old_spack_root/share/spack/setup-env.sh"
-  
-  # Copy relevant settings
-  for config_file in $all_config_files; do
-    if [[ -f "$config_file" ]]; then
-      # Determine the scope and filename based on the file's location in upstream
-      # If the file is directly in etc/spack/ (no scope subdirectory), preserve that structure
-      # Otherwise, extract and preserve the scope subdirectory (site, user, system, etc.)
-      config_name=$(basename "$config_file")
-      
-      # Check if file has a scope subdirectory in its path
-      if echo "$config_file" | grep -q "/etc/spack/site/"; then
-        scope="site"
-        echo "  Copying $config_name from site scope..."
-        target_dir="$SPACK_ROOT/etc/spack/site"
-      elif echo "$config_file" | grep -q "/etc/spack/user/"; then
-        scope="user"
-        echo "  Copying $config_name from user scope..."
-        target_dir="$SPACK_ROOT/etc/spack/user"
-      elif echo "$config_file" | grep -q "/etc/spack/system/"; then
-        scope="system"
-        echo "  Copying $config_name from system scope..."
-        target_dir="$SPACK_ROOT/etc/spack/system"
-      else
-        # File is directly in etc/spack/ without a scope subdirectory
-        echo "  Copying $config_name (no scope subdirectory)..."
-        target_dir="$SPACK_ROOT/etc/spack"
-      fi
-      
-      # Copy the file to the downstream spack, preserving the directory structure
-      mkdir -p "$target_dir"
-      cp "$config_file" "$target_dir/$config_name"
-    fi
-  done
-  
-  echo "Configuration settings copied successfully."
-
-  # Validate the configuration
-  echo ""
-  echo "Validating downstream Spack configuration..."
-  
-  # Check that upstreaming is configured
-  if spack config get upstreams | grep -q "e4s:"; then
-    echo "✓ Upstreaming configuration verified"
-  else
-    echo "Warning: Upstreaming may not be configured correctly"
-  fi
-  
-  # Check that setup-env.sh exists
-  if [[ -f "$SPACK_ROOT/share/spack/setup-env.sh" ]]; then
-    echo "✓ Spack setup script exists"
-  else
-    echo "Warning: Spack setup script not found"
-  fi
-  
-  # Check that compilers.yaml was copied
-  if [[ -f "$SPACK_ROOT/etc/spack/compilers.yaml" ]]; then
-    echo "✓ Compilers configuration copied"
-  else
-    echo "Warning: No compilers.yaml found"
-  fi
-  
-  # Check that GPG keys were copied
-  if [[ -d "$SPACK_ROOT/opt/spack/gpg" ]] && [[ -n "$(ls -A $SPACK_ROOT/opt/spack/gpg 2>/dev/null)" ]]; then
-    echo "✓ GPG keys copied"
-  else
-    echo "Warning: No GPG keys found (binary verification may fail)"
-  fi
-
-  # Display configuration summary
-  echo ""
-  echo "==================================================================="
-  echo "Downstream Spack Setup Complete!"
-  echo "==================================================================="
-  echo "  Location:         $local_spack"
-  echo "  Spack Version:    ${upstream_version:-develop/latest}"
-  if [[ -n "$upstream_commit" ]]; then
-    echo "  Commit:           ${upstream_commit:0:12}"
-  fi
-  echo "  Upstream:         $upstream_spack"
-  echo "  Packages Repo:    $packages_option"
-  echo "  Full History:     $([ $full_history -eq 1 ] && echo 'yes' || echo 'no (shallow clone)')"
-  echo ""
-  echo -e "To activate run: \e[1;33msource $local_spack/share/spack/setup-env.sh\e[0m"
-  echo "==================================================================="
-
-exit 0
+# Informational only: MODULEPATH is never modified by this script.
+case ":${MODULEPATH:-}:" in
+  *":$local_module_root:"*) ;;
+  *)
+    printf '\nNote: %s is not in MODULEPATH. Add it (for example with\n' "$local_module_root"
+    printf '  "module use %s") to see modules generated by this Spack.\n' "$local_module_root"
+    ;;
+esac

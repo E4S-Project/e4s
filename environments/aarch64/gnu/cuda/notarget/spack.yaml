@@ -13,8 +13,10 @@ spack:
   - flux-core +cuda
   - hpctoolkit +cuda ^dyninst@13.0.0
   - papi +cuda
-  - tau +mpi +python +cuda +syscall +ittnotify +julia +perfetto libunwind=none +dyninst  ^intel-tbb@2022.3.0
+  - tau +salt +mpi +python +cuda +syscall +ittnotify +julia +perfetto libunwind=none +dyninst  ^intel-tbb@2022.3.0 ^zstd+programs compression:=none
+  - paraview +qt ^llvm@23.1.2+flang ^zstd+programs compression:=none
 
+  - visit +gui
 
   #Utility Packages.
   - tomcat

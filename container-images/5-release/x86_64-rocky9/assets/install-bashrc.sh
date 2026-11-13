@@ -4,6 +4,8 @@
 
 require_env IMAGE_TARGET
 require_env SPACK_CORE_ROOT
+require_env E4S_IID
+require_env E4S_VERSION
 
 . $SPACK_CORE_ROOT/share/spack/setup-env.sh
 # export PARAVIEW_PATH=$(spack location -i paraview+qt) # installed outside spack
@@ -31,6 +33,14 @@ export OPENJDK_HASH=${OPENJDK_HASH##*([[:space:]])}
 export OPENJDK_HASH=$(echo $OPENJDK_HASH | cut -d' ' -f1)
 export OPENJDK_PATH=$(spack location -i /$OPENJDK_HASH)
 
+tau_makefiles=("$TAU_LIB_PATH"/Makefile.tau*)
+
+if (( ${#tau_makefiles[@]} != 1 )) || [[ ! -f "${tau_makefiles[0]}" ]]; then
+    echo "Error: expected exactly 1 Makefile.tau* in $TAU_LIB_PATH" >&2
+    exit 1
+fi
+
+export TAU_MAKEFILE="${tau_makefiles[0]}"
 
 rc=$(mktemp)
 cat <<'EOF' >$rc
@@ -45,6 +55,7 @@ export PYTHONWARNINGS="ignore::FutureWarning,ignore::DeprecationWarning,ignore::
 export PATH=$PATH:$TAU_PATH/bin
 export DYNINSTAPI_RT_LIB=$DYNINST_LIB_PATH/libdyninstAPI_RT.so
 export TAU=$TAU_LIB_PATH
+export TAU_MAKEFILE=$TAU_MAKEFILE
 export LD_LIBRARY_PATH=$TAU_LIB_PATH:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$TAU_SHARED_LIB_PATH:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$DYNINST_LIB_PATH:$LD_LIBRARY_PATH
@@ -56,50 +67,66 @@ module use $SPACK_CORE_ROOT/share/spack/modules/linux-rocky9-x86_64_v3
 module use ~/spack/share/spack/modules/linux-rocky9-x86_64_v3
 export TIKTOKEN_ENCODINGS_BASE=/etc/encodings
 EOF
-envsubst '$SPACK_CORE_ROOT,$TAU_PATH,$TAU_LIB_PATH,$DYNINST_LIB_PATH,$OPENJDK_PATH,$TAU_SHARED_LIB_PATH' < $rc | sponge $rc
+envsubst '$SPACK_CORE_ROOT,$TAU_PATH,$TAU_LIB_PATH,$TAU_MAKEFILE,$DYNINST_LIB_PATH,$OPENJDK_PATH,$TAU_SHARED_LIB_PATH' < $rc | sponge $rc
 cat $rc >> /etc/bashrc
 
 
-if [[ $IMAGE_TARGET =~ "cuda" ]] ; then
-cat <<'EOF' >> /etc/e4s/install-npm-pkgs.sh
-#!/bin/bash
-
-mkdir -p ~/.e4s
-
-npm install -g @google/gemini-cli
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
-
-nemoclaw_done=~/.e4s/nemoclaw_installed
-if [[ ! -f $nemoclaw_done ]]; then
-  nemoclaw_tmpdir=$(mktemp -d)
-  git clone --quiet https://github.com/NVIDIA/NemoClaw $nemoclaw_tmpdir
-  cd $nemoclaw_tmpdir
-  npm install
-  touch $nemoclaw_done
-fi
-
-openclaw_done=~/.e4s/openclaw_installed
-if [[ ! -f $openclaw_done ]]; then
-  openclaw_installer=$(mktemp)
-  curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh --output $openclaw_installer
-  chmod +x $openclaw_installer
-  $openclaw_installer --no-prompt --no-onboard
-  touch $openclaw_done
-fi
-EOF
-chmod +x /etc/e4s/install-npm-pkgs.sh
-
 cat <<'EOF' >> /etc/bashrc
-julia_global=/opt/julia-central
+export PATH=/usr/local/node/bin:$PATH
+
+is_set() {
+  ! [[ -z "${!1+x}" ]];
+}
+
+e4s_state_parent=$HOME
+e4s_state=$(realpath -m $e4s_state_parent/.e4s)
+
+if is_set E4S_IID && is_set E4S_VERSION; then
+  uid=${E4S_IID}-${E4S_VERSION}
+  e4s_state=$(realpath -m $e4s_state_parent/.e4s/$uid)
+fi
+
+e4s_opt=/opt/e4s
+
+julia_global=$e4s_opt/julia
 julia_global_depot=$julia_global/depot
 julia_global_load=$julia_global/load
-export JULIA_HISTORY="~/.julia/logs/repl_history.jl"
-export JULIA_DEPOT_PATH="~/.julia:$julia_global_depot:"
+
+npm_root=$e4s_state/node
+npm_global=$npm_root/global
+
+if [[ -w $e4s_opt ]]; then
+  julia_dotjulia=$julia_global/.julia
+  julia_logs=$julia_dotjulia/logs
+  npm_root=$e4s_opt/node
+  npm_global=$npm_root/global
+else
+  mkdir -p $e4s_state &>/dev/null
+  julia_state=$e4s_state/julia
+  julia_dotjulia=$julia_state/.julia
+  julia_logs=$julia_dotjulia/logs
+  mkdir -p $julia_state &>/dev/null
+  (cp -r $julia_global/.julia $julia_dotjulia &>/dev/null &)
+  npm_root=$e4s_state/node
+  npm_global=$npm_root/global
+  mkdir -p $(dirname $npm_global) &>/dev/null
+  (cp -r $e4s_opt/node/global $npm_global &>/dev/null &)
+fi
+
+export NPM_CONFIG_USERCONFIG=$npm_root/.npmrc
+export NPM_CONFIG_PREFIX=$npm_global
+export PATH=$npm_global/bin:$PATH
+
+echo prefix=$npm_global > $npm_root/.npmrc
+
+npm config set fund false --location=global &>/dev/null
+npm config set update-notifier false &>/dev/null
+
+mkdir -p $julia_logs &>/dev/null
+
+export JULIA_HISTORY="$julia_logs/repl_history.jl"
+export JULIA_DEPOT_PATH="$julia_dotjulia:$julia_global_depot:"
 export JULIA_LOAD_PATH=:$julia_global_load
 export JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
-donefile=/tmp/$(whoami).julia-install
-# (/opt/julia-central/julia-cuda-user-setup.sh >/dev/null 2>&1 &)
-mkdir -p ~/.e4s/logs
-(/etc/e4s/install-npm-pkgs.sh >~/.e4s/logs/e4s-install-npm-pkgs.log 2>&1 &)
+export MODULEPATH="$HOME/.e4s/${E4S_IID}-${E4S_VERSION}/modules${MODULEPATH:+:$MODULEPATH}"
 EOF
-fi

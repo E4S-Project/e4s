@@ -17,7 +17,7 @@ spack:
   - cabana +cuda cuda_arch=90 ^kokkos ~hpx +serial +wrapper +cuda_lambda +cuda cuda_arch=90
   - caliper +cuda cuda_arch=90
   - chai tests=none +cuda cuda_arch=90 ^umpire ~shared
-  - chapel +cuda cuda_arch=90 ^llvm targets=x86,nvptx
+  - chapel +cuda cuda_arch=90 ^llvm@22.1.8 +flang targets=all,x86,nvptx ^zstd+programs compression:=none
   - cp2k smm=blas +mpi +cuda cuda_arch=90
   - cusz +cuda cuda_arch=90
   - fftx +cuda cuda_arch=90

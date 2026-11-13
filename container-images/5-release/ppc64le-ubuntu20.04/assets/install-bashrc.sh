@@ -3,6 +3,8 @@
 . /etc/e4s/utilities.sh
 
 require_env SPACK_CORE_ROOT
+require_env E4S_IID
+require_env E4S_VERSION
 
 . $SPACK_CORE_ROOT/share/spack/setup-env.sh
 export PARAVIEW_PATH=$(spack location -i paraview+qt~cuda)
@@ -27,6 +29,15 @@ export OPENJDK_HASH=$(spack find --format "{HASH} {NAME}" --deps /$TAU_HASH  | g
 export OPENJDK_HASH=${OPENJDK_HASH##*([[:space:]])}
 export OPENJDK_HASH=$(echo $OPENJDK_HASH | cut -d' ' -f1)
 export OPENJDK_PATH=$(spack location -i /$OPENJDK_HASH)
+
+tau_makefiles=("$TAU_LIB_PATH"/Makefile.tau*)
+
+if (( ${#tau_makefiles[@]} != 1 )) || [[ ! -f "${tau_makefiles[0]}" ]]; then
+    echo "Error: expected exactly 1 Makefile.tau* in $TAU_LIB_PATH" >&2
+    exit 1
+fi
+
+export TAU_MAKEFILE="${tau_makefiles[0]}"
 
 apt update -y
 apt install -y moreutils
@@ -56,6 +67,7 @@ export PYTHONWARNINGS="ignore::FutureWarning,ignore::DeprecationWarning,ignore::
 export PATH=$PATH:/usr/local/codium/bin
 export PATH=$PATH:$TAU_PATH/bin
 export TAU=$TAU_LIB_PATH
+export TAU_MAKEFILE=$TAU_MAKEFILE
 export LD_LIBRARY_PATH=$TAU_LIB_PATH:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$TAU_SHARED_LIB_PATH:$LD_LIBRARY_PATH
 export PATH=$PATH:$OPENJDK_PATH/bin
@@ -68,6 +80,10 @@ module use $SPACK_CORE_ROOT/share/spack/modules/linux-ubuntu20.04-ppc64le
 module load mpich
 EOF
 
-envsubst '$SPACK_CORE_ROOT,$TAU_PATH,$TAU_LIB_PATH,$PARAVIEW_PATH,$OPENJDK_PATH,$TAU_SHARED_LIB_PATH' < $rc | sponge $rc
+envsubst '$SPACK_CORE_ROOT,$TAU_PATH,$TAU_LIB_PATH,$TAU_MAKEFILE,$PARAVIEW_PATH,$OPENJDK_PATH,$TAU_SHARED_LIB_PATH' < $rc | sponge $rc
 
 cat $rc >> /etc/bash.bashrc
+
+cat <<'EOF' >> /etc/bash.bashrc
+export MODULEPATH="$HOME/.e4s/${E4S_IID}-${E4S_VERSION}/modules${MODULEPATH:+:$MODULEPATH}"
+EOF

@@ -9,7 +9,7 @@ tar xvf /tmp/downloads/$PY_TARBALL -C /tmp
 wheeldir=$(realpath /tmp/ml-1/wheels)
 reqdir=$(realpath /tmp/ml-1/requirements)
 
-sed -i 's@file:///ml-1@file:///tmp/ml-1@g' $reqdir/requirements-*.txt
+sed -i 's@file:///ml-1@file:///tmp/ml-1@g' $reqdir/*.requirements*.txt
 
 ls -l $wheeldir
 ls -l $reqdir
@@ -18,36 +18,33 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.local/bin/env
 
 uv pip install \
- --python $python_full_path \
  --system \
- -r $reqdir/requirements-torch.txt
+ --python $python_full_path \
+ --pre \
+ -r $reqdir/torch-vllm-rocm-env.requirements.txt
 
 uv pip install \
- --python $python_full_path \
  --system \
- -r $reqdir/requirements-tensorflow.txt
-
-cat <<'EOF' >overrides.txt
-pandas==3.0.3
-dsi-workflow==1.2.1
-EOF
+ --python $python_full_path \
+ -r $reqdir/jax-rocm-env.requirements.txt 
 
 uv pip install \
- --python $python_full_path \
- --overrides overrides.txt \
  --system \
+ --python $python_full_path \
+ -r $reqdir/tensorflow-rocm-env.requirements.txt 
+
+# 403 permission denied; worked for a while, stopped working, unclear why
+# uv pip install \
+#  --system \
+#  --python $python_full_path \
+#  -r $reqdir/xgboost-rocm-env.requirements.txt 
+
+uv pip install \
+ --system \
+ --python $python_full_path \
  --no-binary mpi4py \
- -r $reqdir/requirements-2.txt
-
-uv pip install \
- --python $python_full_path \
- --system \
- hypothesis
-
-uv pip install \
- --python $python_full_path \
- --system \
- ucimlrepo
+ --overrides $reqdir/main-env.requirements.overrides.txt \
+ -r $reqdir/main-env.requirements.txt
 
 rm -rf /tmp/ml-1
 

@@ -10,11 +10,13 @@ common_scripts=$(realpath ../../_common)
 set_valid_targets \
  cpu \
  cuda-80 \
+ cuda-80-full \
  cuda-90 \
  cuda-120 \
  rocm-908 \
  rocm-90a \
  rocm-942 \
+ rocm-950 \
  oneapi
 check_usage $@
 
@@ -49,6 +51,13 @@ oneapi_base_image=${ONEAPI_MPI_SOURCE_IMAGE:-$UBUNTU_X86_64_ONEAPI_MPI_IMAGE}
 cpu_base_image=${CPU_MPI_SOURCE_IMAGE:-$UBUNTU_X86_64_CPU_MPI_IMAGE}
 
 case $target in
+  "cuda-80-full")
+    runtime="cuda"
+    arch=$(echo $target | cut -d- -f2)
+    name=e4s-${runtime}-${arch_tag}-full
+    tag=${runtime}${arch}-${common_tag}
+    final_base_image=$cuda_base_image
+    ;; 
   "cuda"*)
     runtime="cuda"
     arch=$(echo $target | cut -d- -f2)
@@ -88,26 +97,26 @@ mkdir -p $download_dir
 py_tarball=blank
 if [[ $target =~ "cuda" ]]; then
   if mkdir $lockdir; then
-    py_tarball=ml-1-20260523-0532-ubuntu2404-py312-cu130.tgz
-    cmd wget -q -c -P $download_dir https://cache.e4s.io/$py_tarball
+    py_tarball=ubuntu2404-x86_64-cuda-20261112.tgz
+    cmd wget -q -c -P $download_dir https://uo-spack-mirror.e4s.io:9002/cache.e4s.io/e4s-26.11/python-tarballs/$py_tarball
     rm -rf $lockdir
   fi
 elif [[ $target =~ "rocm" ]]; then
   if mkdir $lockdir; then
-    py_tarball=ml-1-20260607-0818-ubuntu2404-x86_64-py312-rocm723.tgz
-    cmd wget -q -c -P $download_dir https://cache.e4s.io/$py_tarball
+    py_tarball=ubuntu2404-x86_64-rocm-20261112.tgz
+    cmd wget -q -c -P $download_dir https://uo-spack-mirror.e4s.io:9002/cache.e4s.io/e4s-26.11/python-tarballs/$py_tarball
     rm -rf $lockdir
   fi
 elif [[ $target =~ "oneapi" ]]; then
   if mkdir $lockdir; then
-    py_tarball=ml-1-20260615-1433-ubuntu2404-x86_64-py312-intel-xpu.tgz
-    cmd wget -q -c -P $download_dir https://oaciss.nic.uoregon.edu/e4s/images/26.06/artifacts/$py_tarball
+    py_tarball=ubuntu2404-x86_64-xpu-20261112.tgz
+    cmd wget -q -c -P $download_dir https://uo-spack-mirror.e4s.io:9002/cache.e4s.io/e4s-26.11/python-tarballs/$py_tarball
     rm -rf $lockdir
   fi
 elif [[ $target =~ "cpu" ]]; then
   if mkdir $lockdir; then
-    py_tarball=ml-1-20260606-1453-ubuntu2404-x86_64-py312-cpu.tgz
-    cmd wget -q -c -P $download_dir https://cache.e4s.io/$py_tarball
+    py_tarball=ubuntu2404-x86_64-cpu-20261112.tgz
+    cmd wget -q -c -P $download_dir https://uo-spack-mirror.e4s.io:9002/cache.e4s.io/e4s-26.11/python-tarballs/$py_tarball
     rm -rf $lockdir
   fi
 fi
@@ -119,6 +128,7 @@ if is_set SAVE_OUTPUT_REF; then
 fi
 
 cmd docker build \
+ --build-arg E4S_VERSION="$E4S_VERSION" \
  --build-arg IMAGE_TARGET="$target" \
  --build-arg FINAL_BASE_IMAGE="$final_base_image" \
  --build-arg CPU_BASE_IMAGE="$cpu_base_image" \

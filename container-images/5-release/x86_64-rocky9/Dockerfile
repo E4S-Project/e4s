@@ -246,9 +246,15 @@ FROM $FINAL_BASE_IMAGE AS final-base
 
 ENV TZ=America/Los_Angeles
 
+COPY --from=common_4_5 --chmod=0755 e4s-chain-spack.sh /etc/e4s/
+COPY --from=release-common --chmod=0755 guacamole-start.sh /etc/e4s/
+
 # RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
 #RUN --mount=type=cache,target=/var/cache/dnf,sharing=private \
 RUN dnf install -y epel-release \
+ && ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh \
+ && ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole \
+ && ln -sf /etc/e4s/e4s-chain-spack.sh /usr/local/bin/e4s-chain-spack.sh \
  && dnf config-manager --set-enabled crb \
  && dnf install -y \
         csh \
@@ -305,30 +311,28 @@ RUN wget --quiet -O firefox-latest.tar.xz "https://download.mozilla.org/?product
  && ln -s /usr/local/firefox/firefox /usr/bin/firefox
 
 COPY /install-paraview-visit.sh /
-# RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
-#RUN --mount=type=cache,target=/var/cache/dnf,sharing=private \
 RUN /install-paraview-visit.sh \
  && rm -f /install-paraview-visit.sh
 
 COPY --from=release-common install-nodejs.sh /
-RUN dnf install -y libatomic \
- && /install-nodejs.sh \
+RUN /install-nodejs.sh \
  && rm -f /install-nodejs.sh
+
+COPY --from=release-common install-npm-packages.sh /
+RUN /install-npm-packages.sh \
+ && rm -f /install-npm-packages.sh
 
 RUN cd /opt \
  && wget -q http://tau.uoregon.edu/demo.tgz \
  && tar xzf demo.tgz \
  && rm -rf demo.tgz \
- && sed -i 's@load tau@load tau/2.35.2-cuda@g' /opt/demo/CoMD/bin/rt.sh \
+ && sed -i 's@load tau@load tau/2.36-cuda@g' /opt/demo/CoMD/bin/rt.sh \
  && cd /opt/demo \
  && git clone --quiet https://github.com/ParaToolsInc/e4s-cloud-examples.git \
  && rm -rf e4s-cloud-examples/.git \
  && (cd e4s-cloud-examples && ./fetch-all.sh)
 
 COPY --from=release-common julia/examples /opt/demo/julia-examples
-
-RUN chmod -R o+rX /root \
- && chmod -R g+rwX /root
 
 ENV TF_CPP_MIN_LOG_LEVEL=2
 ENV PYTHONWARNINGS="ignore::FutureWarning,ignore::DeprecationWarning,ignore::RuntimeWarning,ignore::SyntaxWarning"
@@ -347,7 +351,7 @@ RUN cd /tmp \
  && rm -rf $runfile_13_0_3
 
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo \
- && dnf install -y libnccl-2.29.7-1+cuda12.9 libnccl-devel-2.29.7-1+cuda12.9 libnccl-static-2.29.7-1+cuda12.9 \
+ && dnf install -y libnccl-2.30.7-1+cuda12.9 libnccl-devel-2.30.7-1+cuda12.9 libnccl-static-2.30.7-1+cuda12.9 \
  && dnf versionlock add libnccl*
 
 RUN cd /tmp \
@@ -369,17 +373,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=/downloads,target=/tmp/downloads \
     /install-python-pkgs-cuda.sh \
- && rm -f /install-python-pkgs-cuda.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-python-pkgs-cuda.sh
 
 ENV JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
 COPY /install-julia-pkgs-cuda.sh /
 RUN --mount=type=cache,target=/root/.julia \
     /install-julia-pkgs-cuda.sh \
- && rm -f /install-julia-pkgs-cuda.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-julia-pkgs-cuda.sh
 
 COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
 COPY --from=release-common hermes.desktop /etc/e4s/
@@ -390,11 +390,35 @@ COPY --chmod=0755 --from=release-common install-hermes.sh /
 RUN /install-hermes.sh \
  && rm -f /install-hermes.sh
 
+# Orca IDE (GUI is reached through guacamole): upstream's package, plus the E4S orca-ide
+# dispatcher (/usr/local/bin) and desktop entry, all installed by install-orca.sh.
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-orca.sh
 
+RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo \
+ && dnf clean all \
+ && dnf -y install nvshmem-cuda-12 nvshmem-cuda-13
+
+COPY --from=release-common install-npm-packages-openclaw.sh /
+RUN /install-npm-packages-openclaw.sh \
+ && rm -f /install-npm-packages-openclaw.sh
+
+COPY --from=release-common install-ollama.sh /tmp/install-ollama.sh
+RUN ollama_installer=/tmp/install-ollama.sh \
+ && curl -fsSL https://ollama.com/install.sh --output $ollama_installer \
+ && sed -i '/install_cuda_driver_apt() {/a echo Skipping NVIDIA driver install && return' $ollama_installer \
+ && sed -i '/install_cuda_driver_yum() {/a echo Skipping NVIDIA driver install && return' $ollama_installer \
+ && chmod +x $ollama_installer \
+ && $ollama_installer \
+ && rm $ollama_installer
 
 
 ## FINAL CUDA 120
 FROM final-cuda-base AS final-cuda-120
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=rocky9-x86_64-cuda120
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -404,9 +428,9 @@ COPY --from=spack-cuda-120 /etc/spack /etc/spack
 COPY --from=spack-cuda-120 /etc/e4s /etc/e4s
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -418,20 +442,24 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN alternatives --set java $(realpath /usr/lib/jvm/java-11/bin/java)
 
 WORKDIR /
 
 
 ## FINAL CUDA 90
 FROM final-cuda-base AS final-cuda-90
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=rocky9-x86_64-cuda90
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -442,9 +470,9 @@ COPY --from=spack-cuda-90 /etc/e4s /etc/e4s
 
 COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=etc-spack-cuda /etc/spack/packages.yaml /etc/spack/
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -456,20 +484,24 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN alternatives --set java $(realpath /usr/lib/jvm/java-11/bin/java)
 
 WORKDIR /
 
 
 ## FINAL CPU
 FROM final-base AS final-cpu
+
+ARG E4S_VERSION
+ENV E4S_VERSION=$E4S_VERSION
+ENV E4S_IID=rocky9-x86_64-cpu
 
 ARG PY_TARBALL
 ENV UV_LINK_MODE=copy
@@ -479,16 +511,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=/downloads,target=/tmp/downloads \
     /install-python-pkgs-cpu.sh \
- && rm -f /install-python-pkgs-cpu.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-python-pkgs-cpu.sh
 
 ENV JULIA_CPU_TARGET='generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)'
 COPY /install-julia-pkgs-cpu.sh /
 RUN /install-julia-pkgs-cpu.sh \
- && rm -f /install-julia-pkgs-cpu.sh \
- && chmod -R o+rX /root \
- && chmod -R g+rwX /root
+ && rm -f /install-julia-pkgs-cpu.sh
 
 ARG SPACK_CORE_ROOT
 ARG SPACK_PACKAGES_ROOT
@@ -501,9 +529,6 @@ COPY --from=container-common utilities.sh /etc/e4s/
 COPY --from=spack-env gnu/_config/packages.yaml /etc/spack/
 COPY --from=rocky-common fixup-compilers.sh /tmp/fixup-compilers.sh
 RUN /tmp/fixup-compilers.sh /etc/spack/packages.yaml
-COPY --from=common_4_5 e4s-chain-spack.sh /etc/e4s/
-COPY --from=release-common guacamole-start.sh /etc/e4s/
-RUN ln -sf /etc/e4s/guacamole-start.sh /usr/local/bin/guacamole-start.sh
 
 COPY --chmod=0755 --from=release-common hermes-wrapper.sh hermes-init.sh hermes-ui.sh /etc/e4s/
 COPY --from=release-common hermes.desktop /etc/e4s/
@@ -513,6 +538,14 @@ RUN ln -sf /etc/e4s/hermes-wrapper.sh /usr/local/bin/hermes \
 COPY --chmod=0755 --from=release-common install-hermes.sh /
 RUN /install-hermes.sh \
  && rm -f /install-hermes.sh
+
+# Orca IDE (GUI is reached through guacamole): upstream's package, plus the E4S orca-ide
+# dispatcher (/usr/local/bin) and desktop entry, all installed by install-orca.sh.
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-orca.sh
+
+COPY --from=release-common /install-taucmdr.sh /tmp/install-taucmdr.sh
+RUN /tmp/install-taucmdr.sh && rm -f /tmp/install-taucmdr.sh
 
 ARG S3_ENDPOINT
 ARG SPACK_MIRROR
@@ -524,13 +557,13 @@ ARG IMAGE_TARGET
 
 COPY /install-bashrc.sh /
 RUN /install-bashrc.sh && rm /install-bashrc.sh
+RUN --mount=type=bind,from=release-common,target=/tmp/e4s-common \
+    bash /tmp/e4s-common/install-desktop-entries.sh
 
 RUN updatedb
 
-RUN git -C /spack-packages remote set-url origin https://github.com/spack/spack-packages
+RUN chmod -R go+rwX /etc/e4s /etc/spack
 
-RUN chmod -R o+rX /root \
- && chmod -R go+rwX /root \
- && chmod -R go+rwX /etc/e4s /etc/spack
+RUN alternatives --set java $(realpath /usr/lib/jvm/java-11/bin/java)
 
 WORKDIR /

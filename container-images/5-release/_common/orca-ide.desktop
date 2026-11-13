@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Orca
+Comment=Next-gen IDE for parallel agentic development
+Exec=/usr/local/bin/orca-ide
+TryExec=/usr/local/bin/orca-ide
+Terminal=false
+Type=Application
+Icon=orca-ide
+StartupWMClass=orca
+StartupNotify=true
+Categories=Development;IDE;

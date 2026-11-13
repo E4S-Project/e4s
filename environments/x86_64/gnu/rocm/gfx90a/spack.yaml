@@ -1,5 +1,6 @@
 spack:
   include:
+  - ../../_config/packages.yaml
   - ../_config/packages.yaml
 
   view: false

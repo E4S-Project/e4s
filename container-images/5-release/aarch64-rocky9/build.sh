@@ -68,14 +68,14 @@ py_tarball=blank
 mkdir -p $download_dir
 if [[ $target =~ "cuda" ]]; then
   if mkdir $lockdir; then
-    py_tarball=ml-1-20260604-0926-rocky9-aarch64-py312-cu130.tgz
-    cmd wget -q -c -P $download_dir https://cache.e4s.io/$py_tarball
+    py_tarball=rocky9-aarch64-cuda-20261112.tgz
+    cmd wget -q -c -P $download_dir https://uo-spack-mirror.e4s.io:9002/cache.e4s.io/e4s-26.11/python-tarballs/$py_tarball
     rm -rf $lockdir
   fi
 elif [[ $target =~ "cpu" ]]; then
   if mkdir $lockdir; then
-    py_tarball=ml-1-20260606-1506-rocky9-aarch64-py312-cpu.tgz
-    cmd wget -q -c -P $download_dir https://cache.e4s.io/$py_tarball
+    py_tarball=rocky9-aarch64-cpu-20261112.tgz
+    cmd wget -q -c -P $download_dir https://uo-spack-mirror.e4s.io:9002/cache.e4s.io/e4s-26.11/python-tarballs/$py_tarball
     rm -rf $lockdir
   fi
 fi
@@ -87,6 +87,7 @@ if is_set SAVE_OUTPUT_REF; then
 fi
 
 cmd docker build \
+ --build-arg E4S_VERSION="$E4S_VERSION" \
  --build-arg IMAGE_TARGET="$target" \
  --build-arg FINAL_BASE_IMAGE="$final_base_image" \
  --build-arg CPU_BASE_IMAGE="$cpu_base_image" \

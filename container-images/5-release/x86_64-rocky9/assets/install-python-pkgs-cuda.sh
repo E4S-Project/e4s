@@ -9,7 +9,7 @@ tar xvf /tmp/downloads/$PY_TARBALL -C /tmp
 wheeldir=$(realpath /tmp/ml-1/wheels)
 reqdir=$(realpath /tmp/ml-1/requirements)
 
-sed -i 's@file:///ml-1@file:///tmp/ml-1@g' $reqdir/requirements-*.txt
+sed -i 's@file:///ml-1@file:///tmp/ml-1@g' $reqdir/*.requirements*.txt
 
 ls -l $wheeldir
 ls -l $reqdir
@@ -29,90 +29,13 @@ dnf install -y \
  zeromq-devel
 
 uv pip install \
- --python $python_full_path \
  --system \
- -r $reqdir/requirements-torch.txt
-
-cat <<'EOF' >overrides.txt
-torch==2.11.0+cu130
-EOF
-uv pip install \
  --python $python_full_path \
- --system \
- --overrides overrides.txt \
- $wheeldir/nvidia_resiliency_ext-0.6.0*.whl
-
-uv pip install \
- --python $python_full_path \
- --system \
- --overrides overrides.txt \
- $wheeldir/nvidia_pytriton-0.7.0*.whl
-
-uv pip install \
- --python $python_full_path \
- --system \
  --no-binary mpi4py \
- -r $reqdir/requirements-2.txt \
- --overrides $reqdir/overrides-for-requirements-2-total-install.txt
-
-uv pip install \
- --python $python_full_path \
- --system ray[tune]
-
-uv pip install \
- --python $python_full_path \
- --system rdkit
-
-uv pip install \
- --python $python_full_path \
- --system \
- cupy-cuda13x==14.1.1
-
-uv pip install \
- --python $python_full_path \
- --system \
- 'kernels>=0.12.0,<0.13'
-
-uv pip install \
- --python $python_full_path \
- --system \
- xgboost
-
-uv pip install \
- --python $python_full_path \
- --system \
- nixl
-
-uv pip install \
- --python $python_full_path \
- --system \
- dspy
-
-uv pip install \
- --python $python_full_path \
- --system 'marimo>=0.23.0'
-
-uv pip install \
- --python $python_full_path \
- --system \
- trame_vuetify \
- trame \
- hpc-campaign \
- SmilesPE \
- pynacl
-
-uv pip install \
- --python $python_full_path \
- --system \
- hypothesis
-
-uv pip install \
- --python $python_full_path \
- --system \
- ucimlrepo
+ --overrides $reqdir/main-env.requirements.overrides.txt \
+ -r $reqdir/main-env.requirements.txt
 
 rm -rf /tmp/ml-1
-
 
 # curl --silent -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 # bash ./Miniconda3-latest-Linux-x86_64.sh -b -p /usr/local/miniconda3
@@ -124,11 +47,10 @@ mv libstdc++.so.6.0.32 /lib64
 rm -f /lib64/libstdc++.so.6
 ln -s /lib64/libstdc++.so.6.0.32 /lib64/libstdc++.so.6
 
-
 fail=0
 for pkg in \
   a2a \
-  bionemo \
+  bionemo_ir \
   cupy \
   cv2 \
   geopandas \
@@ -153,7 +75,6 @@ for pkg in \
   requests \
   scipy \
   seaborn \
-  sglang \
   sympy \
   tensorboard \
   tensorflow \
@@ -174,10 +95,6 @@ if [[ $fail -eq 1 ]]; then
   exit 1
 fi
 
-
-# Fix VLLM bug: https://github.com/vllm-project/vllm/issues/22525
-wget -q https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken
-wget -q https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken
-mkdir -p /etc/encodings
-mv *.tiktoken /etc/encodings
-chmod -R o+rwX /etc/encodings
+python3 -m venv --system-site-packages /opt/e4s/venv/nemo
+. /opt/e4s/venv/nemo/bin/activate
+pip install 'nemo-toolkit[asr,tts]' wget

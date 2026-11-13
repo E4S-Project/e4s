@@ -86,5 +86,5 @@ packages:
   julia:
     buildable: false
     externals:
-    - spec: julia@1.12.6
+    - spec: julia@1.13.3
       prefix: /usr/local/julia

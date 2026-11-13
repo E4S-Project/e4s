@@ -9,7 +9,7 @@ tar xvf /tmp/downloads/$PY_TARBALL -C /tmp
 wheeldir=$(realpath /tmp/ml-1/wheels)
 reqdir=$(realpath /tmp/ml-1/requirements)
 
-sed -i 's@file:///ml-1@file:///tmp/ml-1@g' $reqdir/requirements-*.txt
+sed -i 's@file:///ml-1@file:///tmp/ml-1@g' $reqdir/*requirements*.txt
 
 ls -l $wheeldir
 ls -l $reqdir
@@ -26,55 +26,17 @@ apt-get install -y \
   libzmq3-dev
 
 uv pip install \
- --python $python_full_path \
  --system \
- -r $reqdir/requirements-torch.txt
+ --python $python_full_path \
+ --overrides $reqdir/main-env.requirements.overrides.txt \
+ -r $reqdir/torch-cpu-env.requirements.txt
 
 uv pip install \
- --python $python_full_path \
  --system \
+ --python $python_full_path \
  --no-binary mpi4py \
- -r $reqdir/requirements-2.txt
-
-uv pip install \
- --python $python_full_path \
- --system \
- xgboost
-
-uv pip install \
- --python $python_full_path \
- --system \
- nixl
-
-uv pip install \
- --python $python_full_path \
- --system \
- dspy
-
-uv pip install \
- --python $python_full_path \
- --system 'marimo>=0.23.0'
-
-apt install -y sqlite3 libsqlite3-dev
-
-uv pip install \
- --python $python_full_path \
- --system \
- trame_vuetify \
- trame \
- hpc-campaign \
- SmilesPE \
- pynacl
-
-uv pip install \
- --python $python_full_path \
- --system \
- hypothesis
-
-uv pip install \
- --python $python_full_path \
- --system \
- ucimlrepo
+ --overrides $reqdir/main-env.requirements.overrides.txt \
+ -r $reqdir/main-env.requirements.txt
 
 rm -rf /tmp/ml-1
 

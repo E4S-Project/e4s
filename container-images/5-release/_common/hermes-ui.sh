@@ -10,7 +10,8 @@
 #   HERMES_DASHBOARD_PORT   force a specific port instead of a random one
 set -eu
 
-eval "$(E4S_HERMES_PRINT_HOME=1 /etc/e4s/hermes-wrapper.sh)"
+home_export=$(E4S_HERMES_PRINT_HOME=1 /etc/e4s/hermes-wrapper.sh)
+eval "$home_export"
 STATE="$HERMES_HOME/dashboard"        # holds "<pid> <port>"; HERMES_HOME is mode 0700
 LOG="$HERMES_HOME/logs/dashboard.log"
 mkdir -p "$HERMES_HOME/logs"

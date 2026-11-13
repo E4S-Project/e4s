@@ -24,13 +24,14 @@ spack:
   - cabana
   - caliper
   - chai tests=none
-  - chapel ~cuda ~rocm
+  - chapel ~cuda ~rocm ^llvm@22.1.8 +flang ^zstd+programs compression:=none
   - charliecloud
   - conduit
   - cp2k +mpi
   - darshan-runtime
   - darshan-util
   - datatransferkit
+  - diy
   - dyninst
   - e4s-alc
   - e4s-cl
@@ -43,7 +44,7 @@ spack:
   - gasnet
   - ginkgo
   - globalarrays
-  - glvis
+  - glvis ^llvm@22.1.8 +flang ^zstd+programs compression:=none
   - gmp
   - gotcha
   - gromacs
@@ -92,7 +93,7 @@ spack:
   - papi
   - papyrus
   - parallel-netcdf
-  - paraview +qt # does not build in rocky-9 ci env
+  - paraview +qt ^llvm@22.1.8 +flang ^zstd+programs compression:=none # does not build in rocky-9 ci env
   - parsec ~cuda
   - pdt
   - petsc +metis +hdf5 +hypre +superlu-dist 
@@ -102,16 +103,17 @@ spack:
   - precice
   - pruners-ninja
   - pumi
-  - py-cinemasci
+  - py-cinemasci ^llvm@22.1.8 +flang ^zstd+programs compression:=none
   - py-h5py
   - py-jupyterhub
   - py-libensemble
   - py-petsc4py
+  - py-pytuq
   - qthreads scheduler=distrib
   - quantum-espresso # does not build in rocky-9 ci env: /opt/rh/gcc-toolset-13/root/usr/libexec/gcc/x86_64-redhat-linux/13/ld: use_wannier.f90:(.text+0x2f3e): undefined reference to `GOMP_teams4'
   - raja
   - rempi
-  - saltfm
+  - saltfm ^llvm@22.1.8 +flang ^zstd+programs compression:=none
   - scr
   - slate ~cuda
   - slepc
@@ -123,7 +125,7 @@ spack:
   - sz
   - sz3
   - tasmanian
-  - tau +mpi +python +syscall +dyninst +ompt +ittnotify +julia +perfetto libunwind=none ^intel-tbb@2022.3.0
+  - tau +salt +mpi +python +syscall +dyninst +ompt +ittnotify +julia +perfetto libunwind=none ^intel-tbb@2022.3.0 ^llvm@22.1.8 +flang ^zstd+programs compression:=none
   - trilinos +amesos +amesos2 +anasazi +aztec +belos +boost +epetra +epetraext +ifpack +ifpack2 +intrepid +intrepid2 +isorropia +kokkos +ml +minitensor +muelu +nox +piro +phalanx +rol +rythmos +sacado +stk +shards +shylu +stokhos +stratimikos +teko +tempus +tpetra +trilinoscouplings +zoltan +zoltan2 +superlu-dist gotype=long_long
   - turbine
   - umap
@@ -143,6 +145,7 @@ spack:
   - tomcat
   - guacamole-client
   - guacamole-server +vnc +webp
+
   # not installed:
   # - bolt
   # - dealii                                    # lac/petsc_compatibility.cc:73:11: error: 'struct _p_SNES' has no member named 'domainerror'
@@ -151,6 +154,8 @@ spack:
   # - fortrilinos                               # trilinos-14.0.0: teuchos/core/src/Teuchos_BigUIntDecl.hpp:77:23: error: 'std::uint32_t' has not been declared
   # - gptune ~mpispawn # failed deps: py-fn-py, openturns
   # - librom                                    # concretizer: cannot satisfy a requirement for package 'librom'.
+  # - py-exarl                                  # Depends on py-torch, py-tensorflow, unique llvm
+  # - py-ytopt                                  # Dependency py-ray fails to build
   # - stc                                       # stc: cve eol apache log4j included
   # - unifyfs                                   # examples/src/testutil.c:20:12: error: static declaration of 'asprintf' follows non-static declaration
   # - visit                                     # vtk: '%gcc@13' conflicts with '@9.2'

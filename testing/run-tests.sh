@@ -258,50 +258,8 @@ env | sort > "${ARTIFACTS}/initial-env.txt"
     echo "TAU_LIB_PATH=${TAU_LIB_PATH:-<unset>}"
     echo "DYNINST_LIB_PATH=${DYNINST_LIB_PATH:-<unset>}"
 
-#SPACK SKIP TESTS
-SKIP_TESTS_ALL_CPU="adios2 openpmd-api umap plumed e4s-alc warpx"
-SKIP_TESTS_ALL_CUDA="heffte-cuda adios2-cuda"
-SKIP_TESTS_ALL_ROCM=""
-
-SKIP_TESTS_aarch64_rocky_cpu="cabana zfp charliecloud e4s-cl gptune hdf5 hdf5-vol-async umap wps wrf"
-SKIP_TESTS_aarch64_rocky_cuda_90=""
-SKIP_TESTS_aarch64_rocky_cuda_120=""
-SKIP_TESTS_aarch64_ubuntu_cpu="cabana charliecloud darshan-util e4s-cl gptune hdf5 hdf5-vol-async plasma wps wrf"
-SKIP_TESTS_aarch64_ubuntu_cuda_90=""
-SKIP_TESTS_aarch64_ubuntu_cuda_120=""
-
-#dyninst: static initialization segfaults with libtbbmalloc_proxy. Rebuild without tbb and/or report to devs
-SKIP_TESTS_ppc64le_ubuntu_cpu="arborx axom boost dyninst libunwind mercury raja bricks butterflypack darshan-util e4s-alc e4s-cl gasnet hdf5 hdf5-vol-async py-libensemble unifyfs warpx wps wrf libceed"
-SKIP_TESTS_ppc64le_ubuntu_cuda_70=""
-
-SKIP_TESTS_x86_64_rocky_cpu="plasma cabana dyninst charliecloud e4s-cl gptune hdf5 hdf5-vol-async variorum warpx wps wrf"
-SKIP_TESTS_x86_64_rocky_cuda_90="papi-cuda"
-SKIP_TESTS_x86_64_rocky_cuda_120="papi-cuda"
-SKIP_TESTS_x86_64_ubuntu_cpu="plasma cabana variorum charliecloud darshan-util e4s-cl gptune hdf5 hdf5-vol-async warpx wps wrf"
-SKIP_TESTS_x86_64_ubuntu_cuda_80="papi-cuda libceed-cuda"
-SKIP_TESTS_x86_64_ubuntu_cuda_90="papi-cuda petsc-cuda"
-SKIP_TESTS_x86_64_ubuntu_cuda_120="papi-cuda sundials-cuda"
-
-SKIP_TESTS_x86_64_ubuntu_oneapi="cabana charliecloud fortrilinos hpx variorum hdf5-vol-async mercury nekbone plumed stc turbine umap unifyfs"
-
-SKIP_TESTS_x86_64_ubuntu_rocm_90a="heffte-rocm tasmanian-rocm"
-SKIP_TESTS_x86_64_ubuntu_rocm_942="amrex-rocm heffte-rocm slate-rocm tasmanian-rocm"
-
-#NON-SPACK SKIP TESTS
-SKIP_NONSPACK_aarch64_rocky_cuda_90="tensorflow-cuda"
-SKIP_NONSPACK_aarch64_rocky_cuda_120="tensorflow-cuda cv2 jax"
-SKIP_NONSPACK_aarch64_ubuntu_cuda_90="tensorflow-cuda"
-SKIP_NONSPACK_aarch64_ubuntu_cuda_120="tensorflow-cuda jax"
-SKIP_NONSPACK_aarch64_ubuntu_cpu="tensorflow-cuda"
-
-SKIP_NONSPACK_ppc64le_ubuntu_cpu="pytorch pytorch-cuda tensorflow tensorflow-cuda"
-SKIP_NONSPACK_ppc64le_ubuntu_cuda_70="pytorch-cuda"
-
-SKIP_NONSPACK_x86_64_ubuntu_cuda_80="tensorflow"
-SKIP_NONSPACK_x86_64_ubuntu_cuda_90="tensorflow"
-SKIP_NONSPACK_x86_64_ubuntu_rocm_90a="jax tensorflow"
-
-
+# Skip-list definitions are maintained separately because they change frequently
+source "$(dirname "$0")/skip-lists.sh"
 
 OS_NAME=$( [ -f /etc/os-release ] && source /etc/os-release && echo "$ID" || echo "unknown_os" )
 ARCH_NAME=$(arch 2>/dev/null || uname -m)
